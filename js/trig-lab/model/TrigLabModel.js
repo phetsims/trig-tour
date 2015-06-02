@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- *
+ * Main model for Trig Lab Sim
  * @author Michael Dubson (PhET)
  */
 define( function( require ) {
@@ -13,11 +13,14 @@ define( function( require ) {
 
   /**
    * @constructor
+   *
    */
   function TrigLabModel() {
 
-    PropertySet.call( this, {} );
-    this.angle = 0;     //angle is radians
+    PropertySet.call( this, {   
+      angle: 0          //angle in radians
+    } );
+    //this.angle = 0;     //angle is radians
   }
 
   return inherit( PropertySet, TrigLabModel, {
@@ -35,6 +38,11 @@ define( function( require ) {
     },
     setAngleInDegrees: function( angleInDegrees ){
         this.angle = angleInDegrees*Math.PI/180;
+    },
+    setAngleInRadians: function( angleInRads ){
+      this.angle = angleInRads;
     }
+    
+    
   } );
 } );

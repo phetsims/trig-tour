@@ -17,13 +17,24 @@ define( function( require ) {
   function TrigLabModel() {
 
     PropertySet.call( this, {} );
+    this.angle = 0;     //angle is radians
   }
 
   return inherit( PropertySet, TrigLabModel, {
-
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle model animation here.
+    cos: function () {
+      return Math.cos( this.angle );
+    },
+    sin: function () {
+      return Math.sin( this.angle );
+    },
+    tan: function () {
+      return Math.tan( this.angle );
+    },
+    getAngleInDegrees: function () {
+       return this.angle*180/Math.PI;
+    },
+    setAngleInDegrees: function( angleInDegrees ){
+        this.angle = angleInDegrees*Math.PI/180;
     }
   } );
 } );

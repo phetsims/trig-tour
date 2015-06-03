@@ -34,8 +34,8 @@ define( function( require ) {
 
         var stageW = 1054; //width of main stage in pixels
         var stageH = 614;  //height of main stage in pixels
-        var wavelength = stageW/6;  //wavelength of sinusoidal curve in pixels
-        var amplitude = stageH/15;  //amplitude of sinusiodal curve in pixels
+        var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
+        var amplitude = stageH/8;  //amplitude of sinusiodal curve in pixels
         var stageGraphic = new Node();    //provides origin for onTopOfStageGraphics
         var originLocation = new Vector2( 0.5*stageW, 0.7*stageH );
         stageGraphic.translation = originLocation;
@@ -52,8 +52,8 @@ define( function( require ) {
         var sinShape = new Shape();
         var tanShape = new Shape();
 
-        var nbrOfWavelengths = 2*3;
-        var dx = wavelength/40;
+        var nbrOfWavelengths = 2*2;
+        var dx = wavelength/30;
         var nbrOfPoints = (nbrOfWavelengths)*wavelength/dx;
         var xOrigin = 0;
         var yOrigin = 0;
@@ -74,7 +74,8 @@ define( function( require ) {
         var myCosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );//{fill: '#ff0'} );
         stageGraphic.addChild( myCosPath );
         
-        var angleIndicatorGraphic = new Node();
+        var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        stageGraphic.addChild( sinIndicator );
 
         graphView.addChild( stageGraphic );
 
@@ -82,7 +83,7 @@ define( function( require ) {
         stageGraphic.addChild( axesPath );
 
         // When dragging, move the sample element
-        angleIndicatorGraphic.addInputListener( new SimpleDragHandler(
+        sinIndicator.addInputListener( new SimpleDragHandler(
                 {
                     // When dragging across it in a mobile device, pick it up
                     allowTouchSnag: true,
@@ -96,15 +97,20 @@ define( function( require ) {
                     drag: function(e){
                         //console.log('drag event follows: ');
                         var v1 =  angleIndicatorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = v1.angle();
+                        var angle = -v1.angle();        //model angle is opposite of xy coords angle
                         //console.log( 'angle is ' + angle );
-                        model.angle = angle;
+                        //model.angle = angle;
+                        model.setAngle( angle );
                     }
                 } ) );
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
-            angleIndicatorGraphic.translation = angle;
+            var cos = Math.cos( angle );
+            var sin = Math.sin( angle );
+            var xPos = angle/(2*Math.PI)*wavelength;
+            sinIndicator.x = xPos;
+            sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
         } );
 
     }

@@ -18,9 +18,11 @@ define( function( require ) {
   function TrigLabModel() {
 
     PropertySet.call( this, {   
-      angle: 0          //angle in radians
+      angle: 0               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
     } );
-    //this.angle = 0;     //angle is radians
+    this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi
+    this.previousAngle = 0;  //@private, needed to compute angle from smallAngle
+    this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle; needed to compute angle from smallAngle
   }
 
   return inherit( PropertySet, TrigLabModel, {
@@ -41,6 +43,19 @@ define( function( require ) {
     },
     setAngleInRadians: function( angleInRads ){
       this.angle = angleInRads;
+    } ,
+    setAngle: function ( smallAngle ){
+      //console.log('TrigLabModel.setAngle() called.');
+      this.smallAngle = smallAngle;
+      if( this.smallAngle < 0  && this.previousAngle > 2.60 ){
+        this.nbrFullTurns += 1;
+        //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
+      } else if ( this.smallAngle > 0 && this.previousAngle < -2.60) {
+        this.nbrFullTurns -= 1;
+        //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
+      }
+      this.angle = this.nbrFullTurns*2*Math.PI + this.smallAngle;
+      this.previousAngle = smallAngle;
     }
     
     

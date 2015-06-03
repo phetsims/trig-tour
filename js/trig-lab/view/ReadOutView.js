@@ -33,20 +33,30 @@ define( function( require ) {
         } );
 
         var angleReadout = model.angle.toFixed( 1 );      //read from model
+        var sineReadout = model.sin().toFixed( 3 );
         var cosineReadout = model.cos().toFixed( 3 );
 
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         var radius = 200; //radius of unit circle in pixels
-        var stageGraphic = new Node();  //provides origin for onTopOfStageGraphic
-        var angleLabel = new Text( 'angle: ', {
+        var stageGraphic = new Node();  //provides parent and coord origin children
+        var coordinatesLabel = new Text( '(x,y) = ', {
             font: '25px sans-serif'
         } );
-        var cosLabel = new Text('cosine: ', {
+        var coordinatesText = new Text( '( 0, 0 )',{
+            font: '25px sans-serif'
+        });
+        var angleLabel = new Text( 'angle = ', {
+            font: '25px sans-serif'
+        } );
+        var cosLabel = new Text('cosine = ', {
             font: '25px sans-serif'
         } );
         var angleReadoutText = new Text( angleReadout, {
             font: '25px sans-serif'
         }  );
+        var sineReadoutText = new Text( sineReadout, {
+            font: '25px sans-serif'
+        } );
         var cosineReadoutText = new Text( cosineReadout, {
             font: '25px sans-serif'
         } );
@@ -56,11 +66,14 @@ define( function( require ) {
 
         readOutView.addChild( stageGraphic );
 
-
+        stageGraphic.addChild( coordinatesLabel );
+        coordinatesText.translation = new Vector2( coordinatesLabel.right, 0 );
+        coordinatesLabel.addChild( coordinatesText );
+        angleLabel.translation = new Vector2( 0, 30 );
         stageGraphic.addChild( angleLabel );
         angleReadoutText.translation = new Vector2( angleLabel.right, 0 );
         angleLabel.addChild( angleReadoutText );
-        cosLabel.translation = new Vector2( 0, 30 );
+        cosLabel.translation = new Vector2( 0, 2*30 );
         stageGraphic.addChild( cosLabel );
         cosineReadoutText.translation = new Vector2( cosLabel.right, 0 );
         cosLabel.addChild( cosineReadoutText )
@@ -69,9 +82,13 @@ define( function( require ) {
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
-            var angleInDegrees = -angle*180/Math.PI;
-            angleReadoutText.text = angleInDegrees.toFixed( 1 );
-            cosineReadoutText.text = model.cos().toFixed( 3 );
+            var angleInDegrees = angle*180/Math.PI;
+            var sinText = model.sin().toFixed( 3 ) ;
+            var cosText =  model.cos().toFixed( 3 );
+            coordinatesText.text = '( '+ cosText + ', ' + sinText + ' )';
+            angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' degrees';
+            sineReadoutText.text = sinText;
+            cosineReadoutText.text = cosText;
         } );
 
     }

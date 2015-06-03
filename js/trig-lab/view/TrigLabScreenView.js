@@ -13,6 +13,7 @@ define( function ( require ) {
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
+    var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
 
     /**
      * @param {TrigLabModel} trigLabModel
@@ -33,12 +34,14 @@ define( function ( require ) {
         this.addChild( resetAllButton );
         this.addChild( new UnitCircleView( trigLabModel ) );
         this.addChild( new ReadOutView( trigLabModel ));
+        this.addChild( new GraphView( trigLabModel ));
 
         //Test Code follows
         trigLabModel.setAngleInDegrees( 0 );
-        console.log( 'trigLabModel.angle is ' + trigLabModel.angle );
-        console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
-        console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );
+        //console.log( 'trigLabModel.angle is ' + trigLabModel.angle );
+        //console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
+        //console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );
+        console.log('this.layoutBounds = '+this.layoutBounds );
 
     }
 

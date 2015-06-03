@@ -30,9 +30,10 @@ define( function( require ) {
         Node.call( unitCircleView, {
         } );
 
-        var radius = 200; //radius of unit circle in pixels
+        var radius = 150; //radius of unit circle in pixels
         var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides origin for rotorGraphic
-        var rotorGraphic = new Rectangle( 0, 0, radius, 15, { fill: '#090', cursor: 'pointer' } );
+        var rotorWidth = 10
+        var rotorGraphic = new Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         //rotorGraphic.translation = new Vector2( 0, -30 );
         var axleLocation = new Vector2( 1.5*radius, 1.2*radius );
         var mouseDownPosition = new Vector2( 0, 0 );   //just for testing

@@ -42,8 +42,10 @@ define( function ( require ) {
 
         //Layout children Views
         var widthView = unitCircleView.width;
-        unitCircleView.translation = new Vector2( 1.1*widthView/2, 1.1*widthView/2 );
-        readOutView.translation = new Vector2( 1.2*widthView, 30 );
+        unitCircleView.translation = new Vector2( this.layoutBounds.centerX, 1.1*widthView/2 );
+        //readOutView.translation = new Vector2( 1.2*widthView, 30 );
+        readOutView.right = unitCircleView.left ;
+        readOutView.top = 30;
         graphView.x = this.layoutBounds.centerX - 20;
         graphView.bottom = this.layoutBounds.bottom - 20;
         console.log( 'layoutBounds = '+this.layoutBounds );

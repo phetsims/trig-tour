@@ -8,17 +8,14 @@ define( function( require ) {
     'use strict';
 
     // modules
+    var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var inherit = require( 'PHET_CORE/inherit' );
-    var Node = require( 'SCENERY/nodes/Node' );
-    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-    //var Circle = require( 'SCENERY/nodes/Circle' );
     var Line = require( 'SCENERY/nodes/Line' );
-    //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    var Vector2 = require( 'DOT/Vector2' );
-    var Shape = require( 'KITE/Shape' );
+    var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
-
-
+    var Shape = require( 'KITE/Shape' );
+    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+    var Vector2 = require( 'DOT/Vector2' );
     /**
      * Constructor for RotorNode which renders rotor as a scenery node.
      * @param {TrigLabModel} model is the main model of the sim
@@ -36,17 +33,18 @@ define( function( require ) {
         var stageH = 614;  //height of main stage in pixels
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
         var amplitude = stageH/8;  //amplitude of sinusiodal curve in pixels
-        var stageGraphic = new Node();    //provides origin for onTopOfStageGraphics
-        var originLocation = new Vector2( 0.5*stageW, 0.7*stageH );
-        stageGraphic.translation = originLocation;
 
-        //var axesGraphic = new Node();
-        var axesShape = new Shape();
-        axesShape.moveTo( -0.4*stageW, 0 ).lineTo( +0.4*stageW, 0 );
-        axesShape.moveTo( 0, -0.15*stageH ).lineTo( 0, 0.15*stageH );
-        var axesPath = new Path( axesShape, { stroke: '#000', lineWidth: 2} );
-        stageGraphic.addChild( axesPath );
-        
+        //draw x-, y-axes
+        var xAxis = new ArrowNode( -0.45*stageW, 0, 0.45*stageW, 0, { tailWidth: 2 });  //tailX, tailY, tipX, tipY, options
+        var yAxis = new ArrowNode( 0, 1.2*amplitude, 0, -1.3*amplitude, { tailWidth: 2 } );
+        graphView.addChild( xAxis );
+        graphView.addChild( yAxis );
+        //var axesShape = new Shape();
+        //axesShape.moveTo( -0.4*stageW, 0 ).lineTo( +0.4*stageW, 0 );
+        //axesShape.moveTo( 0, -0.15*stageH ).lineTo( 0, 0.15*stageH );
+        //var axesPath = new Path( axesShape, { stroke: '#000', lineWidth: 2} );
+        //graphView.addChild( axesPath );
+
         //Draw sinusoidal curves
         var cosShape = new Shape();
         var sinShape = new Shape();
@@ -70,17 +68,13 @@ define( function( require ) {
 
 
         var sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );//{fill: '#ff0'} );
-        stageGraphic.addChild( sinPath );
         var myCosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );//{fill: '#ff0'} );
-        stageGraphic.addChild( myCosPath );
-        
         var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
-        stageGraphic.addChild( sinIndicator );
 
-        graphView.addChild( stageGraphic );
-
-
-        stageGraphic.addChild( axesPath );
+        graphView.addChild( sinPath );
+        graphView.addChild( myCosPath ) ;
+        graphView.addChild( sinIndicator );
+        //graphView.addChild( axesPath );
 
         // When dragging, move the sample element
         sinIndicator.addInputListener( new SimpleDragHandler(

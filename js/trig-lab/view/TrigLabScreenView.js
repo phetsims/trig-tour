@@ -14,6 +14,7 @@ define( function ( require ) {
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
+    var Vector2 = require( 'DOT/Vector2' );
 
     /**
      * @param {TrigLabModel} trigLabModel
@@ -31,11 +32,21 @@ define( function ( require ) {
             right: this.layoutBounds.maxX - 10,
             bottom: this.layoutBounds.maxY - 10
         } );
-        this.addChild( resetAllButton );
-        this.addChild( new UnitCircleView( trigLabModel ) );
-        this.addChild( new ReadOutView( trigLabModel ));
-        this.addChild( new GraphView( trigLabModel ));
+        this.addChild( resetAllButton )
+        var unitCircleView = new UnitCircleView( trigLabModel );
+        var readOutView = new ReadOutView( trigLabModel );
+        var graphView = new GraphView( trigLabModel );
+        this.addChild( unitCircleView );
+        this.addChild( readOutView );
+        this.addChild( graphView );
 
+        //Layout children Views
+        var widthView = unitCircleView.width;
+        unitCircleView.translation = new Vector2( 1.1*widthView/2, 1.1*widthView/2 );
+        readOutView.translation = new Vector2( 1.2*widthView, 30 );
+        graphView.x = this.layoutBounds.centerX - 20;
+        graphView.bottom = this.layoutBounds.bottom - 20;
+        console.log( 'layoutBounds = '+this.layoutBounds );
         //Test Code follows
         trigLabModel.setAngleInDegrees( 0 );
         //console.log( 'trigLabModel.angle is ' + trigLabModel.angle );

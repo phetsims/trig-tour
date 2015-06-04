@@ -5,20 +5,20 @@ define( function( require ) {
     'use strict';
 
     // modules
-    var inherit = require( 'PHET_CORE/inherit' );
-    var Node = require( 'SCENERY/nodes/Node' );
-    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-    var Circle = require( 'SCENERY/nodes/Circle' );
-    var Line = require( 'SCENERY/nodes/Line' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    var Vector2 = require( 'DOT/Vector2' );
-    var Shape = require( 'KITE/Shape' );
-    var Path = require( 'SCENERY/nodes/Path' );
+    var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
-
+    var Circle = require( 'SCENERY/nodes/Circle' );
+    var inherit = require( 'PHET_CORE/inherit' );
+    var Line = require( 'SCENERY/nodes/Line' );
+    var Node = require( 'SCENERY/nodes/Node' );
+    var Path = require( 'SCENERY/nodes/Path' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+    var Shape = require( 'KITE/Shape' );
+    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+    var Vector2 = require( 'DOT/Vector2' );
 
     /**
-     * Constructor for RotorNode which renders rotor as a scenery node.
+     * View of the unit circle with grabbable radial arm, called the rotor arm
      * @param {TrigLabModel} model is the main model of the sim
      * @constructor
      */
@@ -28,28 +28,28 @@ define( function( require ) {
         this.model = model;
 
         // Call the super constructor
-        Node.call( unitCircleView, {
-        } );
+        Node.call( unitCircleView );
 
         //Draw Unit Circle
         var radius = 150; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides origin for rotorGraphic
-        var axleLocation = new Vector2( 1.5*radius, 1.2*radius );
-        circleGraphic.translation = axleLocation;
+        var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
+        //var axleLocation = new Vector2( 1.5*radius, 1.2*radius );
+        //circleGraphic.translation = axleLocation;
         unitCircleView.addChild( circleGraphic );
 
-        //Draw x-, y-axes on circleGraphic
-        var axesShape = new Shape();
-        axesShape.moveTo( -1.2*radius, 0 ).lineTo( +1.2*radius, 0 );
-        axesShape.moveTo( 0, -1.2*radius ).lineTo( 0, 1.2*radius );
-        var axesPath = new Path( axesShape, { stroke: '#000', lineWidth: 3} );
-        circleGraphic.addChild( axesPath );
+        //Draw x-, y-axes
+        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
+        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
+        circleGraphic.addChild( yAxis );
+        circleGraphic.addChild( xAxis );
 
-        //draw vertical line
+
+        //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
+
         circleGraphic.addChild( vLine );
 
-        //draw horizontal line
+        //draw horizontal (cosine) line on rotor triangle
         var hLine = new Line( 0, 0, radius, 0, {lineWidth: 6, stroke: '#00f'} );
         circleGraphic.addChild( hLine );
 

@@ -8,6 +8,7 @@ define( function ( require ) {
     'use strict';
 
     // modules
+    var ControlPanelView = require( 'TRIG_LAB/trig-lab/view/ControlPanelView' );
     var inherit = require( 'PHET_CORE/inherit' );
     var ScreenView = require( 'JOIST/ScreenView' );
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -15,6 +16,7 @@ define( function ( require ) {
     var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
     var Vector2 = require( 'DOT/Vector2' );
+    var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
 
     /**
      * @param {TrigLabModel} trigLabModel
@@ -36,9 +38,12 @@ define( function ( require ) {
         var unitCircleView = new UnitCircleView( trigLabModel );
         var readOutView = new ReadOutView( trigLabModel );
         var graphView = new GraphView( trigLabModel );
+        var viewProperties = new ViewProperties();
+        var controlPanelView = new ControlPanelView( viewProperties );
         this.addChild( unitCircleView );
         this.addChild( readOutView );
         this.addChild( graphView );
+        this.addChild( controlPanelView );
 
         //Layout children Views
         var widthView = unitCircleView.width;
@@ -55,6 +60,12 @@ define( function ( require ) {
         //console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
         //console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );
         console.log('this.layoutBounds = '+this.layoutBounds );
+
+        viewProperties.graphProperty.link( function( graph ) {
+            graphView.cosVisible = ( graph === 'cos' );
+            graphView.sinVisible = ( graph === 'sin' );
+            graphView.tanVisible = ( graph === 'tan' );
+        } );
 
     }
 

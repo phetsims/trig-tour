@@ -29,30 +29,35 @@ define( function( require ) {
    * @param {TrigLabModel} model is the main model of the sim
    * @constructor
    */
-  function ControlPanelView( model  ) {
+  function ControlPanelView( properties  ) {
 
     var controlPanelView = this;
-    this.model = model;
+    this.properties = properties;
+    //graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
+    //labelsVisible: false,
+    //gridVisible: false,
+    //specialAnglesVisible: false
+
+    //this.model = model;
 
     // Call the super constructor
-    Panel.call( this, content, options );
-    Node.call( controlPanelView, { } );
+    //Node.call( controlPanelView, { } );
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
-    var cosRadioButton = new AquaRadioButton();
-    var sinRadioButton = new AquaRadioButton();
-    var tanRadioButton = new AquaRadioButton();
+    var cosRadioButton = new AquaRadioButton( properties.graph, 'cos', new Text( 'Cos' ));
+    var sinRadioButton = new AquaRadioButton( properties.graph, 'sin', new Text( 'Sin' ));
+    var tanRadioButton = new AquaRadioButton( properties.graph, 'tan', new Text( 'Tan' ));
 
     //3 checkboxes: Labels, Grid, Special Angles
-    var labelsCheckBox = new CheckBox();
-    var gridCheckBox = new CheckBox();
-    var specialAnglesCheckBox = new CheckBox();
+    var labelsCheckBox = new CheckBox( labelsString, properties.labelsVisible );
+    var gridCheckBox = new CheckBox( gridString, properties.gridVisible );
+    var specialAnglesCheckBox = new CheckBox( specialAnglesString, properties.specialAnglesVisible );
 
 
     // Register for synchronization with model.
-    model.angleProperty.link( function( angle ) {
-      onTopOfStageGraphic.rotation = angle;
-    } );
+    //model.angleProperty.link( function( angle ) {
+    //  onTopOfStageGraphic.rotation = angle;
+    //} );
 
     // Adjust touch areas
     var spacing = 20;
@@ -61,7 +66,7 @@ define( function( require ) {
       children: [
         cosRadioButton,
         sinRadioButton,
-        tanRadioButton
+        tanRadioButton,
         new HSeparator( 50 ), //maxControlWidth ),
         labelsCheckBox,
         gridCheckBox,
@@ -71,7 +76,8 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    Panel.call( this, content, options );
+
+    Panel.call( this, content );
 
   }
 

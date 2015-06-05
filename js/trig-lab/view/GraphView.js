@@ -33,6 +33,9 @@ define( function( require ) {
         var stageH = 614;  //height of main stage in pixels
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
         var amplitude = stageH/8;  //amplitude of sinusiodal curve in pixels
+        this.cosVisible = true;
+        this.sinVisible = false;
+        this.tanVisible = false;
 
         //draw x-, y-axes
         var xAxis = new ArrowNode( -0.45*stageW, 0, 0.45*stageW, 0, { tailWidth: 2 });  //tailX, tailY, tipX, tipY, options

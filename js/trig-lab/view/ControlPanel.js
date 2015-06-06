@@ -20,9 +20,9 @@ define( function( require ) {
   var cosText = new Text( 'cos' );
   var sinText = new Text( 'sin' );
   var tanText = new Text( 'tan' );
-  var labelsText =  new Text( 'Labels' );
-  var gridText = new Text( 'Grid' );
-  var specialAnglesText = new Text( 'Special Angles' );
+  var labelsText =  new Text( 'Labels', { fontSize: 20 } );
+  var gridText = new Text( 'Grid', { fontSize: 20 } );
+  var specialAnglesText = new Text( 'Special Angles', { fontSize: 20 } );
 
 
   /**
@@ -48,9 +48,9 @@ define( function( require ) {
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph , properties.graph , properties.graph
-    var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', new Text( 'Cos' ));
-    var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', new Text( 'Sin' ));
-    var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', new Text( 'Tan' ));
+    var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', new Text( 'Cos', { fontSize: 20 } ));
+    var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', new Text( 'Sin', { fontSize: 20 } ));
+    var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', new Text( 'Tan', { fontSize: 20 } ));
 
 
 

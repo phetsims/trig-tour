@@ -61,22 +61,30 @@ define( function( require ) {
         var xPos = xOrigin - nbrOfPoints*dx/2 ;
         sinShape.moveTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
         cosShape.moveTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
+        tanShape.moveTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
 
         //draw sinusoidal curves
         for (var i = 0; i < nbrOfPoints; i++ ){
             xPos += dx;
             sinShape.lineTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
             cosShape.lineTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
+            tanShape.lineTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ));
         }
 
 
-        var sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );//{fill: '#ff0'} );
-        var myCosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );//{fill: '#ff0'} );
+        this.sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );
+        this.cosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );
+        this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
         var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        var cosIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#00f', lineWidth: 6 } );
+        var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } )
 
-        graphView.addChild( sinPath );
-        graphView.addChild( myCosPath ) ;
-        graphView.addChild( sinIndicator );
+        graphView.addChild( this.sinPath );
+        graphView.addChild( this.cosPath );
+        graphView.addChild( this.tanPath );
+        this.sinPath.addChild( sinIndicator );
+        this.cosPath.addChild( cosIndicator );
+        this.tanPath.addChild( tanIndicator );
         //graphView.addChild( axesPath );
 
         // When dragging, move the sample element
@@ -105,9 +113,14 @@ define( function( require ) {
         model.angleProperty.link( function( angle ) {
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
+            var tan = Math.tan( angle );
             var xPos = angle/(2*Math.PI)*wavelength;
             sinIndicator.x = xPos;
+            cosIndicator.x = xPos;
+            tanIndicator.x = xPos;
             sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
+            cosIndicator.setPoint2( 0, -cos*amplitude );
+            tanIndicator.setPoint2( 0, -tan*amplitude );
         } );
 
     }

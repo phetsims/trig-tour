@@ -44,10 +44,7 @@ define( function( require ) {
     // Call the super constructor
     //Node.call( controlPanelView, { } );
 
-    //Test code
-    var prop1 = new Property( true );
-    var prop2 = new Property( false );
-    var prop3 = new Property( false );
+
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph , properties.graph , properties.graph
@@ -62,29 +59,6 @@ define( function( require ) {
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty );
     var specialAnglesCheckBox = new CheckBox( specialAnglesText, properties.specialAnglesVisibleProperty );
 
-    properties.graphProperty.link( function ( isVisible ) {
-      console.log( 'properties.graphProperty is '+ isVisible );
-    } );
-
-    properties.labelsVisibleProperty.link( function ( isVisible ) {
-      console.log( 'labelsVisible is '+ isVisible );
-    } );
-
-    //properties.gridVisible
-    properties.gridVisibleProperty.link( function ( isVisible ) {
-      console.log( 'gridVisible '+ isVisible );
-    } );
-
-    //properties.specialAnglesVisible
-    properties.specialAnglesVisibleProperty.link( function ( isVisible ) {
-      console.log( 'specialAnglesVisible '+ isVisible );
-    } );
-
-
-    // Register for synchronization with model.
-    //model.angleProperty.link( function( angle ) {
-    //  onTopOfStageGraphic.rotation = angle;
-    //} );
 
 
     // Adjust touch areas

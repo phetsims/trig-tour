@@ -54,7 +54,7 @@ define( function( require ) {
         var tanShape = new Shape();
 
         var nbrOfWavelengths = 2*2;
-        var dx = wavelength/30;
+        var dx = wavelength/60;
         var nbrOfPoints = (nbrOfWavelengths)*wavelength/dx;
         var xOrigin = 0;
         var yOrigin = 0;
@@ -68,7 +68,22 @@ define( function( require ) {
             xPos += dx;
             sinShape.lineTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
             cosShape.lineTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
-            tanShape.lineTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ));
+            //tanShape.lineTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ));
+        }
+
+        xPos = xOrigin - nbrOfPoints*dx/2;
+        var tanValue = Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) ;
+        //draw tangent curve cut off at upper and lower limits
+        for ( var i = 0; i < nbrOfPoints; i++ ) {
+
+            tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
+            if ( (tanValue < 2) && (tanValue > -1.5) ) {
+                tanShape.lineTo( xPos, yOrigin - amplitude * tanValue );
+            }
+            else {
+                tanShape.moveTo( xPos, yOrigin - amplitude * tanValue );
+            }
+            xPos += dx;
         }
 
 

@@ -30,9 +30,9 @@ define( function( require ) {
    * @param {TrigLabModel} model is the main model of the sim
    * @constructor
    */
-  function ControlPanelView( properties  ) {
+  function ControlPanel( properties  ) {
 
-    var controlPanelView = this;
+    var controlPanel = this;
     this.properties = properties;
     //graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
     //labelsVisible: false,
@@ -42,7 +42,7 @@ define( function( require ) {
     //this.model = model;
 
     // Call the super constructor
-    //Node.call( controlPanelView, { } );
+    //Node.call( controlPanel, { } );
 
 
 
@@ -83,5 +83,5 @@ define( function( require ) {
 
   }
 
-  return inherit( Panel, ControlPanelView );
+  return inherit( Panel, ControlPanel );
 } )

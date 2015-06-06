@@ -99,6 +99,25 @@ define( function( require ) {
                     }
                 } ) );
 
+        //draw angle arc on unit circle
+        var r = 0.3*radius;   //arc radius
+        var arcShape = new Shape();
+        //arcShape.moveTo( r, 0 );
+        var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 1} );
+        circleGraphic.addChild( angleArcPath );
+        var drawAngleArc = function(){
+            var arcShape = new Shape();
+            arcShape.moveTo( r, 0 );
+            var totalAngle = model.getAngleInRadians();
+            for( var ang = 0; ang <= totalAngle; ang += 0.02 ){
+                //console.log( 'angle is '+ang );
+                arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
+            };
+            //console.log( 'drawAngleArc called. Angle = '+ model.getAngleInDegrees() );
+            angleArcPath.setShape( arcShape );
+
+        };
+
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
             rotorGraphic.rotation = -angle;  //model angle is negative of xy coords angle
@@ -108,6 +127,7 @@ define( function( require ) {
             vLine.x = radius*cos;
             vLine.setPoint2( 0, -radius*sin  );
             hLine.setPoint2( radius*cos, 0 );
+            drawAngleArc();
         } );
 
     }

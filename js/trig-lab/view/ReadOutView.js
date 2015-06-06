@@ -38,30 +38,15 @@ define( function( require ) {
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         //var radius = 200; //radius of unit circle in pixels
         //var stageGraphic = new Node();  //provides parent and coord origin children
-        var coordinatesLabel = new Text( '(x,y) = ', {
-            font: '25px sans-serif'
-        } );
-        var coordinatesReadoutText = new Text( '( 0, 0 )',{
-            font: '25px sans-serif'
-        });
-        var angleLabel = new Text( 'angle = ', {
-            font: '25px sans-serif'
-        } );
-        var angleReadoutText = new Text( angleReadout, {
-            font: '25px sans-serif'
-        }  );
-        var cosLabel = new Text('cosine = ', {
-            font: '25px sans-serif'
-        } );
-        var cosineReadoutText = new Text( cosineReadout, {
-            font: '25px sans-serif'
-        } );
-        var sinLabel = new Text('sine = ', {
-            font: '25px sans-serif'
-        } );
-        var sineReadoutText = new Text( sineReadout, {
-            font: '25px sans-serif'
-        } );
+        var fontInfo = { font: '25px sans-serif' };
+        var coordinatesLabel = new Text( '(x,y) = ', fontInfo );
+        var coordinatesReadoutText = new Text( '( 0, 0 )', fontInfo );
+        var angleLabel = new Text( 'angle = ', fontInfo );
+        var angleReadoutText = new Text( angleReadout, fontInfo );
+        var cosLabel = new Text('cosine = ', fontInfo );
+        var cosineReadoutText = new Text( cosineReadout, fontInfo );
+        var sinLabel = new Text('sine = ', fontInfo );
+        var sineReadoutText = new Text( sineReadout, fontInfo );
 
         //onTopOfStageGraphic.translation = new Vector2( 0, -30 );
         //var originLocation = new Vector2( 2.5*radius, 0.2*radius );

@@ -35,6 +35,9 @@ define( function( require ) {
     tan: function () {
       return Math.tan( this.angle );
     },
+    getAngleInRadians: function(){
+      return this.angle;
+    },
     getAngleInDegrees: function () {
        return this.angle*180/Math.PI;
     },

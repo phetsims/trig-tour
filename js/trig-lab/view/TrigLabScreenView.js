@@ -39,6 +39,7 @@ define( function ( require ) {
         var readOutView = new ReadOutView( trigLabModel );
         var graphView = new GraphView( trigLabModel );
         var viewProperties = new ViewProperties();
+        //console.log('viewProperties.graph is '+viewProperties.graph);
         var controlPanelView = new ControlPanelView( viewProperties );
         this.addChild( unitCircleView );
         this.addChild( readOutView );
@@ -53,6 +54,8 @@ define( function ( require ) {
         readOutView.top = 30;
         graphView.x = this.layoutBounds.centerX - 20;
         graphView.bottom = this.layoutBounds.bottom - 20;
+        controlPanelView.right = this.layoutBounds.right - 20;
+        controlPanelView.top = this.layoutBounds.top - 20;
         console.log( 'layoutBounds = '+this.layoutBounds );
         //Test Code follows
         trigLabModel.setAngleInDegrees( 0 );

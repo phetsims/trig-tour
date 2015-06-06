@@ -107,15 +107,25 @@ define( function( require ) {
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
             var arcShape = new Shape();
+            r = 0.3*radius;
             arcShape.moveTo( r, 0 );
             var totalAngle = model.getAngleInRadians();
-            for( var ang = 0; ang <= totalAngle; ang += 0.02 ){
-                //console.log( 'angle is '+ang );
-                arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
-            };
+            if( totalAngle >0 ){
+                for( var ang = 0; ang <= totalAngle; ang += 0.02 ){
+                    //console.log( 'angle is '+ang );
+                    r -= 0.02;
+                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
+                }
+            }else{
+                for( ang = 0; ang >= totalAngle; ang -= 0.02 ){
+                    //console.log( 'angle is '+ang );
+                    r -= 0.02;
+                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
+                }
+            }
+
             //console.log( 'drawAngleArc called. Angle = '+ model.getAngleInDegrees() );
             angleArcPath.setShape( arcShape );
-
         };
 
         // Register for synchronization with model.

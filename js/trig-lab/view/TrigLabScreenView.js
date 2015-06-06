@@ -70,6 +70,9 @@ define( function ( require ) {
             graphView.cosPath.visible = ( graph === 'cos' );
             graphView.sinPath.visible = ( graph === 'sin' );
             graphView.tanPath.visible = ( graph === 'tan' );
+            readOutView.sinLabel.visible = ( graph === 'sin' );
+            readOutView.cosLabel.visible = ( graph === 'cos' );
+            readOutView.tanLabel.visible = ( graph === 'tan' );
         } );
 
     }

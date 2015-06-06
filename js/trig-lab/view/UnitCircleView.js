@@ -103,10 +103,10 @@ define( function( require ) {
         var r = 0.3*radius;   //arc radius
         var arcShape = new Shape();
         //arcShape.moveTo( r, 0 );
-        var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 1} );
+        var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 2} );
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
-            var arcShape = new Shape();
+            var arcShape = new Shape();  //This seems wasteful. But there is now Shape.clear() function
             r = 0.3*radius;
             arcShape.moveTo( r, 0 );
             var totalAngle = model.getAngleInRadians();

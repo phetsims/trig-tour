@@ -32,8 +32,9 @@ define( function( require ) {
         Node.call( readOutView, { } );
 
         var angleReadout = model.angle.toFixed( 1 );      //read from model
-        var sineReadout = model.sin().toFixed( 3 );
-        var cosineReadout = model.cos().toFixed( 3 );
+        var sinReadout = model.sin().toFixed( 3 );
+        var cosReadout = model.cos().toFixed( 3 );
+        var tanReadout = model.tan().toFixed( 3 );
 
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         //var radius = 200; //radius of unit circle in pixels
@@ -43,10 +44,12 @@ define( function( require ) {
         var coordinatesReadoutText = new Text( '( 0, 0 )', fontInfo );
         var angleLabel = new Text( 'angle = ', fontInfo );
         var angleReadoutText = new Text( angleReadout, fontInfo );
-        var cosLabel = new Text('cosine = ', fontInfo );
-        var cosineReadoutText = new Text( cosineReadout, fontInfo );
-        var sinLabel = new Text('sine = ', fontInfo );
-        var sineReadoutText = new Text( sineReadout, fontInfo );
+        this.sinLabel = new Text('sin = ', fontInfo );
+        this.cosLabel = new Text('cos = ', fontInfo );
+        this.tanLabel = new Text('tan = ', fontInfo );
+        var sinReadoutText = new Text( sinReadout, fontInfo );
+        var cosReadoutText = new Text( cosReadout, fontInfo );
+        var tanReadoutText = new Text( tanReadout, fontInfo );
 
         //onTopOfStageGraphic.translation = new Vector2( 0, -30 );
         //var originLocation = new Vector2( 2.5*radius, 0.2*radius );
@@ -57,11 +60,16 @@ define( function( require ) {
         //layout text
         readOutView.addChild( coordinatesLabel );
         readOutView.addChild( angleLabel );
-        readOutView.addChild( cosLabel );
+        readOutView.addChild( this.cosLabel );
+        readOutView.addChild( this.sinLabel );
+        readOutView.addChild( this.tanLabel );
         coordinatesLabel.addChild( coordinatesReadoutText );
         angleLabel.addChild( angleReadoutText );
-        cosLabel.addChild( cosineReadoutText ) ;
+        this.cosLabel.addChild( cosReadoutText ) ;
+        this.sinLabel.addChild( sinReadoutText ) ;
+        this.tanLabel.addChild( tanReadoutText ) ;
 
+        //layout text
         coordinatesLabel.top = 0;  //shouldn't this be unnecesary?
         //coordinatesReadoutText.translation = new Vector2( coordinatesLabel.right, 0 );
         coordinatesReadoutText.left = coordinatesLabel.right;
@@ -71,9 +79,11 @@ define( function( require ) {
         //angleReadoutText.translation = new Vector2( angleLabel.right, 0 );
         angleReadoutText.left =  angleLabel.right ;
         //cosLabel.translation = new Vector2( 0, 2*30 );
-        cosLabel.top = 2*30;
+        this.cosLabel.top = this.sinLabel.top = this.tanLabel.top = 2*30;
         //cosineReadoutText.translation = new Vector2( cosLabel.right, 0 );
-        cosineReadoutText.left =   cosLabel.right ;
+        cosReadoutText.left =   this.cosLabel.right ;
+        sinReadoutText.left =   this.sinLabel.right ;
+        tanReadoutText.left =   this.tanLabel.right ;
 
 
 
@@ -82,10 +92,12 @@ define( function( require ) {
             var angleInDegrees = angle*180/Math.PI;
             var sinText = model.sin().toFixed( 3 ) ;
             var cosText =  model.cos().toFixed( 3 );
+            var tanText =  model.tan().toFixed( 3 );
             coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
             angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' degrees';
-            sineReadoutText.text = sinText;
-            cosineReadoutText.text = cosText;
+            sinReadoutText.text = sinText;
+            cosReadoutText.text = cosText;
+            tanReadoutText.text = tanText;
         } );
 
     }

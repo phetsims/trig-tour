@@ -1,4 +1,5 @@
 /**
+ * Unit Circle View
  * Created by Dubson on 6/2/2015.
  */
 define( function( require ) {
@@ -41,9 +42,19 @@ define( function( require ) {
         //Draw Unit Circle
         var radius = 150; //radius of unit circle in pixels
         var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
-        //var axleLocation = new Vector2( 1.5*radius, 1.2*radius );
-        //circleGraphic.translation = axleLocation;
         unitCircleView.addChild( circleGraphic );
+
+        //Draw 'special angle' locations on unit circle
+        //special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
+        this.specialAnglesNode = new Node();
+        var anglesArray = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
+        var xPos, yPos; //x and y coordinates of special angle on unit circle
+        for (var i = 0; i < anglesArray.length; i++ ){
+            xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
+            yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
+            this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', lineWidth: 1, x: xPos, y: yPos }));
+        }
+        this.addChild( this.specialAnglesNode );
 
         //Draw x-, y-axes
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
@@ -92,8 +103,6 @@ define( function( require ) {
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
         circleGraphic.addChild( rotorGraphic );
         //var mouseDownPosition = new Vector2( 0, 0 );   //just for testing
-
-
 
         ////draw horizontal (cosine) arrow
         //var hArrowShape = new Shape();

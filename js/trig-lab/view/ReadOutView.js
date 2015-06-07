@@ -6,27 +6,25 @@ define( function( require ) {
     'use strict';
 
     // modules
-    var inherit = require( 'PHET_CORE/inherit' );
-    var Node = require( 'SCENERY/nodes/Node' );
-    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Circle = require( 'SCENERY/nodes/Circle' );
+    var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    var Vector2 = require( 'DOT/Vector2' );
-    var Shape = require( 'KITE/Shape' );
+    var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+    var Shape = require( 'KITE/Shape' );
+    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
+    var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var xyEqualsStr = '(x,y) = ';
-    var angleEqualsStr = ' angle = ';
+    var angleEqualsStr = 'angle = ';
     var sinEqualsStr = 'sin = ';
     var cosEqualsStr = 'cos = ';
     var tanEqualsStr = 'tan = ';
     var degreesStr = 'degrees';
     var radiansStr = 'radians';
-
-
 
     /**
      * Constructor for ReadOutView which displays live values of angle, sin, cos, and tan
@@ -38,7 +36,7 @@ define( function( require ) {
         var readOutView = this;
         this.model = model;
         this.radiansDisplayed = 'false'; //{boolean} set by ControlPanel
-        this.units = '';  //{string} 'degrees'|'radians' set by ControlPanel
+        this.units = 'degrees';  //{string} 'degrees'|'radians' set by ControlPanel
 
         // Call the super constructor
         Node.call( readOutView, { } );
@@ -51,11 +49,11 @@ define( function( require ) {
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         //var radius = 200; //radius of unit circle in pixels
         //var stageGraphic = new Node();  //provides parent and coord origin children
-        var fontInfo = { font: '25px sans-serif' };
+        var fontInfo = { font: '20px sans-serif' };
         var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
         var coordinatesReadoutText = new Text( '', fontInfo );
         var angleLabel = new Text( angleEqualsStr, fontInfo );
-        var angleReadoutText = new Text( angleReadout, fontInfo );
+        this.angleReadoutText = new Text( angleReadout, fontInfo );
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
@@ -69,30 +67,24 @@ define( function( require ) {
 
         //readOutView.addChild( stageGraphic );
 
-        //layout text
-        readOutView.addChild( coordinatesLabel );
-        readOutView.addChild( angleLabel );
-        readOutView.addChild( this.cosLabel );
-        readOutView.addChild( this.sinLabel );
-        readOutView.addChild( this.tanLabel );
+        //arrange text
+        this.addChild( coordinatesLabel );
+        this.addChild( angleLabel );
+        this.addChild( this.cosLabel );
+        this.addChild( this.sinLabel );
+        this.addChild( this.tanLabel );
         coordinatesLabel.addChild( coordinatesReadoutText );
-        angleLabel.addChild( angleReadoutText );
+        angleLabel.addChild( this.angleReadoutText );
         this.cosLabel.addChild( cosReadoutText ) ;
         this.sinLabel.addChild( sinReadoutText ) ;
         this.tanLabel.addChild( tanReadoutText ) ;
 
         //layout text
-        coordinatesLabel.top = 0;  //shouldn't this be unnecesary?
-        //coordinatesReadoutText.translation = new Vector2( coordinatesLabel.right, 0 );
+        coordinatesLabel.top = 0;  //shouldn't this be unnecesary? But needed otherwise coordsLable too high
         coordinatesReadoutText.left = coordinatesLabel.right;
-        //angleLabel.translation = new Vector2( 0, 30 );
         angleLabel.top = 30;
-
-        //angleReadoutText.translation = new Vector2( angleLabel.right, 0 );
-        angleReadoutText.left =  angleLabel.right ;
-        //cosLabel.translation = new Vector2( 0, 2*30 );
+        this.angleReadoutText.left =  angleLabel.right ;
         this.cosLabel.top = this.sinLabel.top = this.tanLabel.top = 2*30;
-        //cosineReadoutText.translation = new Vector2( cosLabel.right, 0 );
         cosReadoutText.left =   this.cosLabel.right ;
         sinReadoutText.left =   this.sinLabel.right ;
         tanReadoutText.left =   this.tanLabel.right ;
@@ -107,11 +99,10 @@ define( function( require ) {
             var tanText =  model.tan().toFixed( 3 );
             coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
             if( readOutView.radiansDisplayed ){
-                angleReadoutText.text = angle.toFixed( 3 ) + ' ' + radiansStr;
+                readOutView.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readOutView.units;
             }else{
-                angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + degreesStr;
+                readOutView.angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + readOutView.units;
             }
-
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
             tanReadoutText.text = tanText;
@@ -122,6 +113,11 @@ define( function( require ) {
     return inherit( Node, ReadOutView, {
         setUnits: function( units ){
         this.units = units;
+        if( units === 'radians'){
+            this.angleReadoutText.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
+        }else{
+            this.angleReadoutText.text = this.model.getAngleInDegrees().toFixed( 1 ) + ' ' + units;
+        }
             //console.log(' ReadOutView called. units = ' + units );
     }
     } );

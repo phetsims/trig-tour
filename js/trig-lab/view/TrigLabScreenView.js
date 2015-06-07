@@ -84,8 +84,13 @@ define( function ( require ) {
 
         viewProperties.angleUnitsProperty.link ( function( units ){
             readOutView.radiansDisplayed = ( units === 'radians');
+            readOutView.setUnits( units );
             //readOutView.setUnits( units );
         });
+
+        viewProperties.specialAnglesVisibleProperty.link( function( isVisible ){
+            unitCircleView.specialAnglesNode.visible = isVisible;
+        })
 
     }
 

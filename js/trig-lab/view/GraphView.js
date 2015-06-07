@@ -9,6 +9,7 @@ define( function( require ) {
 
     // modules
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+    var Circle = require( 'SCENERY/nodes/Circle' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
@@ -115,9 +116,17 @@ define( function( require ) {
         this.sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );
         this.cosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );
         this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
+        //sinIndicator is a vertical line on sine curve showing current value of angle and sin(angle)
+        //red dot on top of indicator line echoes red dot on unit circle
         var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
         var cosIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#00f', lineWidth: 6 } );
         var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } )
+        var redDotOnSin = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        var redDotOnCos = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        var redDotOnTan = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        sinIndicator.addChild( redDotOnSin );
+        cosIndicator.addChild( redDotOnCos );
+        tanIndicator.addChild( redDotOnTan );
 
         graphView.addChild( this.sinPath );
         graphView.addChild( this.cosPath );
@@ -164,6 +173,9 @@ define( function( require ) {
             sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
             cosIndicator.setPoint2( 0, -cos*amplitude );
             tanIndicator.setPoint2( 0, -tan*amplitude );
+            redDotOnSin.y = -sin*amplitude;
+            redDotOnCos.y = -cos*amplitude;
+            redDotOnTan.y = -tan*amplitude;
         } );
 
     }

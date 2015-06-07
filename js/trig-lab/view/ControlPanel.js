@@ -8,6 +8,7 @@ define( function( require ) {
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var CheckBox = require( 'SUN/CheckBox' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
@@ -17,12 +18,25 @@ define( function( require ) {
 
 
   //strings
-  var cosText = new Text( 'cos' );
-  var sinText = new Text( 'sin' );
-  var tanText = new Text( 'tan' );
-  var labelsText =  new Text( 'Labels', { fontSize: 20 } );
-  var gridText = new Text( 'Grid', { fontSize: 20 } );
-  var specialAnglesText = new Text( 'Special Angles', { fontSize: 20 } );
+  var cosStr = 'cos';
+  var sinStr = 'sin';
+  var tanStr = 'tan';
+  var degreesStr = 'degrees';
+  var radiansStr = 'radians';
+  var labelsStr = 'Labels';
+  var gridStr = 'Grid';
+  var specialAnglesStr = 'Special angles';
+
+  // Text nodes
+  var fontInfo = { fontSize: 20 };
+  var cosText = new Text( cosStr, fontInfo );
+  var sinText = new Text( sinStr, fontInfo );
+  var tanText = new Text( tanStr, fontInfo );
+  var degreesText = new Text( degreesStr, fontInfo );
+  var radiansText = new Text( radiansStr, fontInfo );
+  var labelsText =  new Text( labelsStr, fontInfo );
+  var gridText = new Text( gridStr, fontInfo );
+  var specialAnglesText = new Text( specialAnglesStr, fontInfo );
 
 
   /**
@@ -48,11 +62,14 @@ define( function( require ) {
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph , properties.graph , properties.graph
-    var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', new Text( 'Cos', { fontSize: 20 } ));
-    var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', new Text( 'Sin', { fontSize: 20 } ));
-    var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', new Text( 'Tan', { fontSize: 20 } ));
+    var fontInfo = { fontSize: 20 };
+    var cosRadioButton = new AquaRadioButton( properties.graphProperty, cosStr, cosText );
+    var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText );
+    var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText );
 
-
+    // 2 radio buttons for display in degrees or radians
+    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, new Text( 'degs', fontInfo ));
+    var radiansRadioButton = new AquaRadioButton(  properties.angleUnitsProperty, radiansStr, new Text( 'rads', fontInfo ));
 
     //3 checkboxes: Labels, Grid, Special Angles
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty );
@@ -64,12 +81,19 @@ define( function( require ) {
     // Adjust touch areas
     var spacing = 20;
 
+
     var content = new VBox( {
       children: [
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( 50 ), //maxControlWidth ),
+        new HSeparator( 100 ), //maxControlWidth ),
+        new HBox( {
+        children: [
+          degreesRadioButton,
+          radiansRadioButton,
+          ]}),
+        new HSeparator( 100 ), //maxControlWidth ),
         labelsCheckBox,
         gridCheckBox,
         specialAnglesCheckBox

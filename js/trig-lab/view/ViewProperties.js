@@ -20,6 +20,7 @@ define( function( require ) {
 
         PropertySet.call( this, {
             graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
+            angleUnits: 'degrees', //{string} which angle units, 'degrees'|'radians'
             labelsVisible: false,
             gridVisible: false,
             specialAnglesVisible: false

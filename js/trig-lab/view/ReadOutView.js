@@ -17,6 +17,16 @@ define( function( require ) {
     var Path = require( 'SCENERY/nodes/Path' );
     var Text = require( 'SCENERY/nodes/Text' );
 
+    //strings
+    var xyEqualsStr = '(x,y) = ';
+    var angleEqualsStr = ' angle = ';
+    var sinEqualsStr = 'sin = ';
+    var cosEqualsStr = 'cos = ';
+    var tanEqualsStr = 'tan = ';
+    var degreesStr = 'degrees';
+    var radiansStr = 'radians';
+
+
 
     /**
      * Constructor for ReadOutView which displays live values of angle, sin, cos, and tan
@@ -40,13 +50,13 @@ define( function( require ) {
         //var radius = 200; //radius of unit circle in pixels
         //var stageGraphic = new Node();  //provides parent and coord origin children
         var fontInfo = { font: '25px sans-serif' };
-        var coordinatesLabel = new Text( '(x,y) = ', fontInfo );
-        var coordinatesReadoutText = new Text( '( 0, 0 )', fontInfo );
-        var angleLabel = new Text( 'angle = ', fontInfo );
+        var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
+        var coordinatesReadoutText = new Text( '', fontInfo );
+        var angleLabel = new Text( angleEqualsStr, fontInfo );
         var angleReadoutText = new Text( angleReadout, fontInfo );
-        this.sinLabel = new Text('sin = ', fontInfo );
-        this.cosLabel = new Text('cos = ', fontInfo );
-        this.tanLabel = new Text('tan = ', fontInfo );
+        this.sinLabel = new Text( sinEqualsStr, fontInfo );
+        this.cosLabel = new Text( cosEqualsStr, fontInfo );
+        this.tanLabel = new Text( tanEqualsStr, fontInfo );
         var sinReadoutText = new Text( sinReadout, fontInfo );
         var cosReadoutText = new Text( cosReadout, fontInfo );
         var tanReadoutText = new Text( tanReadout, fontInfo );
@@ -94,7 +104,7 @@ define( function( require ) {
             var cosText =  model.cos().toFixed( 3 );
             var tanText =  model.tan().toFixed( 3 );
             coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
-            angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' degrees';
+            angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + degreesStr;
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
             tanReadoutText.text = tanText;

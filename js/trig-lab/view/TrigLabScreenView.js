@@ -75,6 +75,10 @@ define( function ( require ) {
             readOutView.tanLabel.visible = ( graph === 'tan' );
         } );
 
+        viewProperties.gridVisibleProperty.link( function( isVisible ){
+            unitCircleView.grid.visible = isVisible;
+        });
+
     }
 
     return inherit( ScreenView, TrigLabScreenView, {} );

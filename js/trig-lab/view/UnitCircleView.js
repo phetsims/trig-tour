@@ -43,10 +43,19 @@ define( function( require ) {
         circleGraphic.addChild( yAxis );
         circleGraphic.addChild( xAxis );
 
+        //Draw Grid
+        var r = radius;
+        var gridShape = new Shape();
+        gridShape.moveTo( -r, -r );
+        gridShape.lineTo( r, -r ).lineTo( r, r ).lineTo( -r, r ).lineTo( -r, -r );
+        gridShape.moveTo( -r, -r/2 ).lineTo( r, -r/2 ).moveTo( -r, r/2 ).lineTo( r, r/2 );
+        gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
+        this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#888' });
+        circleGraphic.addChild( this.grid );
+        this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
-
         circleGraphic.addChild( vLine );
 
         //draw horizontal (cosine) line on rotor triangle

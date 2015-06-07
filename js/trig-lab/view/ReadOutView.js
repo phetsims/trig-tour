@@ -37,6 +37,8 @@ define( function( require ) {
 
         var readOutView = this;
         this.model = model;
+        this.radiansDisplayed = 'false'; //{boolean} set by ControlPanel
+        this.units = '';  //{string} 'degrees'|'radians' set by ControlPanel
 
         // Call the super constructor
         Node.call( readOutView, { } );
@@ -98,13 +100,18 @@ define( function( require ) {
 
 
         // Register for synchronization with model.
-        model.angleProperty.link( function( angle ) {
+        model.angleProperty.link( function( angle ) {    //angle is in radians
             var angleInDegrees = angle*180/Math.PI;
             var sinText = model.sin().toFixed( 3 ) ;
             var cosText =  model.cos().toFixed( 3 );
             var tanText =  model.tan().toFixed( 3 );
             coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
-            angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + degreesStr;
+            if( readOutView.radiansDisplayed ){
+                angleReadoutText.text = angle.toFixed( 3 ) + ' ' + radiansStr;
+            }else{
+                angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + degreesStr;
+            }
+
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
             tanReadoutText.text = tanText;
@@ -112,5 +119,10 @@ define( function( require ) {
 
     }
 
-    return inherit( Node, ReadOutView );
+    return inherit( Node, ReadOutView, {
+        setUnits: function( units ){
+        this.units = units;
+            //console.log(' ReadOutView called. units = ' + units );
+    }
+    } );
 } );

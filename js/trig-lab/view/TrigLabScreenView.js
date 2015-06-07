@@ -70,16 +70,21 @@ define( function ( require ) {
             graphView.cosPath.visible = ( graph === 'cos' );
             graphView.sinPath.visible = ( graph === 'sin' );
             graphView.tanPath.visible = ( graph === 'tan' );
-            readOutView.sinLabel.visible = ( graph === 'sin' );
-            readOutView.cosLabel.visible = ( graph === 'cos' );
-            readOutView.tanLabel.visible = ( graph === 'tan' );
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
+            readOutView.sinLabel.visible = ( graph === 'sin' );
+            readOutView.cosLabel.visible = ( graph === 'cos' );
+            readOutView.tanLabel.visible = ( graph === 'tan' );
         } );
 
         viewProperties.gridVisibleProperty.link( function( isVisible ){
             unitCircleView.grid.visible = isVisible;
+        });
+
+        viewProperties.angleUnitsProperty.link ( function( units ){
+            readOutView.radiansDisplayed = ( units === 'radians');
+            //readOutView.setUnits( units );
         });
 
     }

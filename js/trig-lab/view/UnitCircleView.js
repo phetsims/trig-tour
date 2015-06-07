@@ -15,13 +15,21 @@ define( function( require ) {
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+    var Text = require( 'SCENERY/nodes/Text' );
     var Vector2 = require( 'DOT/Vector2' );
+
+    //strings
+    var xStr = 'x';
+    var yStr = 'y';
+    var oneStr = '1';
+    var thetaStr = 'theta';   //Need Greek symbol
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
      * @param {TrigLabModel} model is the main model of the sim
      * @constructor
      */
+
     function UnitCircleView( model  ) {
 
         var unitCircleView = this;
@@ -42,6 +50,19 @@ define( function( require ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         circleGraphic.addChild( yAxis );
         circleGraphic.addChild( xAxis );
+        //Draw x-, y-axis labels
+        var fontInfo = { font: '25px sans-serif' };
+        var xText = new Text( xStr, fontInfo );
+        var yText = new Text( yStr, fontInfo );
+        xAxis.addChild( xText );
+        yAxis.addChild( yText );
+        //xText.translation = new Vector2( 1.2*radius - 5 - xText.width, xText.height );
+        //yText.translation = new Vector2( -yText.width - 10, -1.2*radius - 10 + yText.height );
+        xText.right = 1.2*radius - 3;
+        xText.top = 0;
+        yText.right = -8;
+        yText.top = -1.2*radius - 2;
+
 
         //Draw Grid
         var r = radius;

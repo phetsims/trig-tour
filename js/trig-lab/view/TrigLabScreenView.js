@@ -56,8 +56,8 @@ define( function ( require ) {
         readOutView.top = 30;
         graphView.x = this.layoutBounds.centerX - 20;
         graphView.bottom = this.layoutBounds.bottom;
-        controlPanel.right = this.layoutBounds.right - 20;
-        controlPanel.top = this.layoutBounds.top - 20;
+        controlPanel.right = this.layoutBounds.right - 40;
+        controlPanel.top = this.layoutBounds.top + 40;
         console.log( 'layoutBounds = '+this.layoutBounds );
         //Test Code follows
         trigLabModel.setAngleInDegrees( 0 );
@@ -73,6 +73,9 @@ define( function ( require ) {
             readOutView.sinLabel.visible = ( graph === 'sin' );
             readOutView.cosLabel.visible = ( graph === 'cos' );
             readOutView.tanLabel.visible = ( graph === 'tan' );
+            graphView.sinThetaLabel.visible = ( graph === 'sin' );
+            graphView.cosThetaLabel.visible = ( graph === 'cos' );
+            graphView.tanThetaLabel.visible = ( graph === 'tan' );
         } );
 
         viewProperties.gridVisibleProperty.link( function( isVisible ){

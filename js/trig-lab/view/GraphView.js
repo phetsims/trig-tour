@@ -15,12 +15,21 @@ define( function( require ) {
     var Path = require( 'SCENERY/nodes/Path' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+    var Text = require( 'SCENERY/nodes/Text' );
     var Vector2 = require( 'DOT/Vector2' );
     /**
      * Constructor for RotorNode which renders rotor as a scenery node.
      * @param {TrigLabModel} model is the main model of the sim
      * @constructor
      */
+
+    //strings
+    var theta = '\u03b8' ; // \u03b8 = unicode for theta
+    var cosTheta = 'cos' + theta ;
+    var sinTheta = 'sin' + theta ;
+    var tanTheta = 'tan' + theta ;
+
+
     function GraphView( model  ) {
 
         var graphView = this;
@@ -32,7 +41,7 @@ define( function( require ) {
         var stageW = 1054; //width of main stage in pixels
         var stageH = 614;  //height of main stage in pixels
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
-        var amplitude = stageH/8;  //amplitude of sinusiodal curve in pixels
+        var amplitude = 70;  //amplitude of sinusiodal curve in pixels
         this.cosVisible = true;
         this.sinVisible = false;
         this.tanVisible = false;
@@ -47,6 +56,21 @@ define( function( require ) {
         //axesShape.moveTo( 0, -0.15*stageH ).lineTo( 0, 0.15*stageH );
         //var axesPath = new Path( axesShape, { stroke: '#000', lineWidth: 2} );
         //graphView.addChild( axesPath );
+
+        //Axes labels
+        var fontInfo = { font: '25px sans-serif' };
+        var thetaLabel = new Text( theta, fontInfo );
+        xAxis.addChild( thetaLabel );
+        thetaLabel.right = xAxis.right;
+        thetaLabel.top = xAxis.bottom;
+        this.cosThetaLabel = new Text( cosTheta, fontInfo );
+        this.sinThetaLabel = new Text( sinTheta, fontInfo );
+        this.tanThetaLabel = new Text( tanTheta, fontInfo );
+        yAxis.addChild( this.cosThetaLabel );
+        yAxis.addChild( this.sinThetaLabel );
+        yAxis.addChild( this.tanThetaLabel );
+        this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right  = yAxis.left - 5;
+        this.cosThetaLabel.top = this.sinThetaLabel.top = this.tanThetaLabel.top =  yAxis.top;
 
         //Draw sinusoidal curves
         var cosShape = new Shape();
@@ -73,6 +97,7 @@ define( function( require ) {
 
         xPos = xOrigin - nbrOfPoints*dx/2;
         var tanValue = Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) ;
+
         //draw tangent curve cut off at upper and lower limits
         for ( var i = 0; i < nbrOfPoints; i++ ) {
 
@@ -101,6 +126,9 @@ define( function( require ) {
         this.cosPath.addChild( cosIndicator );
         this.tanPath.addChild( tanIndicator );
         //graphView.addChild( axesPath );
+
+
+
 
         // When dragging, move the sample element
         sinIndicator.addInputListener( new SimpleDragHandler(

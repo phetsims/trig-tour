@@ -178,7 +178,7 @@ define( function( require ) {
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) ) ;
                 }
             }else{
-                for( var ang = 0; ang >= totalAngle; ang -= dAng ){
+                for( ang = 0; ang >= totalAngle; ang -= dAng ){
                     //console.log( 'angle is '+ang );
                     r -= dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) );
@@ -206,10 +206,10 @@ define( function( require ) {
         var labelCanvas = new Node();
         unitCircleView.addChild( labelCanvas );
         var oneText = new Text( oneStr, fontInfo );
-        var xText = new Text( xStr, fontInfo );
-        var yText = new Text( yStr, fontInfo );
+        xText = new Text( xStr, fontInfo );            //xText, yText already defined above
+        yText = new Text( yStr, fontInfo );
         var thetaText = new Text( thetaStr, fontInfo );
-        var labelsArr = [ oneText, xText, yText, thetaText ]
+        var labelsArr = [ oneText, xText, yText, thetaText ] ;
         labelCanvas.children = labelsArr;
 
         this.setLabelVisibility = function(){
@@ -254,7 +254,7 @@ define( function( require ) {
             //position x-label
             var xPos = 0.5*radius*Math.cos( smallAngle );// - 0.5*xText.width;
             var yPos = 0.6*xText.height;
-            if( smallAngle < 0 ){ yPos = -0.6*xText.height }
+            if( smallAngle < 0 ){ yPos = -0.6*xText.height };
             xText.centerX = xPos;
             xText.centerY = yPos;
             //position y-label
@@ -290,7 +290,7 @@ define( function( require ) {
             vLine.setPoint2( 0, -radius*sin  );
             hLine.setPoint2( radius*cos, 0 );
             drawAngleArc();
-            if( unitCircleView.labelsVisible ){ positionLabels()};
+            if( unitCircleView.labelsVisible ){ positionLabels(); }
         } );
 
     }

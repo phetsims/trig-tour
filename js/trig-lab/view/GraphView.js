@@ -15,7 +15,6 @@ define( function( require ) {
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
     var Shape = require( 'KITE/Shape' );
-    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
     //var Vector2 = require( 'DOT/Vector2' );
     /**
@@ -43,9 +42,9 @@ define( function( require ) {
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
         var amplitude = 70;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
-        this.cosVisible = true;
-        this.sinVisible = false;
-        this.tanVisible = false;
+        //this.cosVisible = true;
+        //this.sinVisible = false;
+        //this.tanVisible = false;
 
         //draw x-, y-axes
         var xAxisLength = 0.9*stageW;
@@ -105,7 +104,7 @@ define( function( require ) {
         tanShape.moveTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
 
         //draw sin and cos curves
-        for (var i = 0; i < nbrOfPoints; i++ ){
+        for ( i = 0; i < nbrOfPoints; i++ ){
             xPos += dx;
             sinShape.lineTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
             cosShape.lineTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));

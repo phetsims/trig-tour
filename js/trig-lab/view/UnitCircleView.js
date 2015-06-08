@@ -171,8 +171,9 @@ define( function( require ) {
             if( Math.abs(totalAngle) < 0.5 ){
                 dAng = 0.02;
             }
+            var ang = 0;  //short for angle
             if( totalAngle >0 ){
-                for( var ang = 0; ang <= totalAngle; ang += dAng ){
+                for( ang = 0; ang <= totalAngle; ang += dAng ){
                     //console.log( 'angle is '+ang );
                     r -= dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) ) ;
@@ -254,7 +255,7 @@ define( function( require ) {
             //position x-label
             var xPos = 0.5*radius*Math.cos( smallAngle );// - 0.5*xText.width;
             var yPos = 0.6*xText.height;
-            if( smallAngle < 0 ){ yPos = -0.6*xText.height };
+            if( smallAngle < 0 ){ yPos = -0.6*xText.height; }
             xText.centerX = xPos;
             xText.centerY = yPos;
             //position y-label

@@ -23,6 +23,7 @@ define( function( require ) {
     this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi
     this.previousAngle = 0;  //@private, needed to compute angle from smallAngle
     this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle; needed to compute angle from smallAngle
+    this.specialAnglesMode = false;  //{boolean} true if special angles (0, 30,45, 60, 90...) only
   }
 
   return inherit( PropertySet, TrigLabModel, {
@@ -41,13 +42,16 @@ define( function( require ) {
     getAngleInDegrees: function () {
        return this.angle*180/Math.PI;
     },
+    getSmallAngleInRadians: function(){
+        return this.smallAngle;
+    },
     setAngleInDegrees: function( angleInDegrees ){
         this.angle = angleInDegrees*Math.PI/180;
     },
     setAngleInRadians: function( angleInRads ){
       this.angle = angleInRads;
     } ,
-    setAngle: function ( smallAngle ){
+    setAngle: function ( smallAngle ){    //smallAngle in rads
       //console.log('TrigLabModel.setAngle() called.');
       this.smallAngle = smallAngle;
       if( this.smallAngle < 0  && this.previousAngle > 2.60 ){
@@ -59,7 +63,24 @@ define( function( require ) {
       }
       this.angle = this.nbrFullTurns*2*Math.PI + this.smallAngle;
       this.previousAngle = smallAngle;
-    }
+    },
+    //takes any small angle in rads and sets current angle to nearest special angle in rads
+    setSpecialAngle: function ( smallAngle ){   //smallAngle in rads
+      var smallAngleInDegs = smallAngle*180/Math.PI;
+      var nearestSpecialAngleInRads = 0;
+      var angles = [-150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
+      var borders = [-165, -142.5, -127.5, -105, -75, -52.5, -37.5, -15, 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165 ] ;
+      for ( var i = 0; i < angles.length; i++ ){
+        if( smallAngleInDegs > borders[i] && smallAngleInDegs < borders[i + 1] ){
+          nearestSpecialAngleInRads = angles[i]*Math.PI/180;
+        }
+        //Must deal with 180 deg angle as a special case.
+        if( smallAngleInDegs > 165 || smallAngleInDegs < -165 ){
+          nearestSpecialAngleInRads = Math.PI;
+        }
+      }//end for
+      this.setAngle( nearestSpecialAngleInRads )
+    }//end setSpecialAngle()
     
     
   } );

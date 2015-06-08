@@ -41,7 +41,7 @@ define( function( require ) {
 
         //Draw Unit Circle
         var radius = 150; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
+        var circleGraphic = new Circle( radius, { stroke:'#555', lineWidth: 2 } );    //provides parent node and origin for rotorGraphic
         unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
@@ -61,7 +61,7 @@ define( function( require ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         circleGraphic.addChild( yAxis );
         circleGraphic.addChild( xAxis );
-        //Draw x-, y-axis labels
+        //Draw and position x-, y-axis labels
         var fontInfo = { font: '25px sans-serif' };
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
@@ -134,7 +134,12 @@ define( function( require ) {
                         var v1 =  rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
                         var angle = -v1.angle();  //model angle is negative of xy coords angle
                         //console.log( 'angle is ' + angle );
-                        model.setAngle( angle );
+                        //console.log( 'UnitCircleView line 137, specialAngleMode = '+ model.specialAnglesMode )
+                        if( !model.specialAnglesMode ){
+                            model.setAngle( angle )
+                        }else{
+                            model.setSpecialAngle( angle );
+                        }
                     }
                 } ) );
 

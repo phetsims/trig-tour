@@ -88,8 +88,13 @@ define( function ( require ) {
             //readOutView.setUnits( units );
         });
 
-        viewProperties.specialAnglesVisibleProperty.link( function( isVisible ){
-            unitCircleView.specialAnglesNode.visible = isVisible;
+        viewProperties.specialAnglesVisibleProperty.link( function( tOrF ){
+            unitCircleView.specialAnglesNode.visible = tOrF;
+            trigLabModel.specialAnglesMode = tOrF;
+            if( tOrF ){
+                var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
+                trigLabModel.setSpecialAngle( currentSmallAngle );
+            }
         })
 
     }

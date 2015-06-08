@@ -79,7 +79,7 @@ define( function( require ) {
           nearestSpecialAngleInRads = Math.PI;
         }
       }//end for
-      this.setAngle( nearestSpecialAngleInRads )
+      this.setAngle( nearestSpecialAngleInRads );
     }//end setSpecialAngle()
     
     

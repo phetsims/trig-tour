@@ -43,15 +43,25 @@ define( function( require ) {
         var stageH = 614;  //height of main stage in pixels
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
         var amplitude = 70;  //amplitude of sinusiodal curve in pixels
+        var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
         this.cosVisible = true;
         this.sinVisible = false;
         this.tanVisible = false;
 
         //draw x-, y-axes
-        var xAxis = new ArrowNode( -0.45*stageW, 0, 0.45*stageW, 0, { tailWidth: 2 });  //tailX, tailY, tipX, tipY, options
+        var xAxisLength = 0.9*stageW;
+        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 2 });  //tailX, tailY, tipX, tipY, options
         var yAxis = new ArrowNode( 0, 1.2*amplitude, 0, -1.3*amplitude, { tailWidth: 2 } );
         graphView.addChild( xAxis );
         graphView.addChild( yAxis );
+        //draw tic marks on x-, y-axes
+        var ticLength = 5;
+        var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: '#fff'});
+        var yTic = new Line( -ticLength, 0, ticLength, 0 );
+
+        //for( var n = )
+
+
         //var axesShape = new Shape();
         //axesShape.moveTo( -0.4*stageW, 0 ).lineTo( +0.4*stageW, 0 );
         //axesShape.moveTo( 0, -0.15*stageH ).lineTo( 0, 0.15*stageH );
@@ -78,7 +88,7 @@ define( function( require ) {
         var sinShape = new Shape();
         var tanShape = new Shape();
 
-        var nbrOfWavelengths = 2*2;
+
         var dx = wavelength/60;
         var nbrOfPoints = (nbrOfWavelengths)*wavelength/dx;
         var xOrigin = 0;

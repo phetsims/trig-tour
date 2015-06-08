@@ -52,25 +52,25 @@ define( function( require ) {
         for (var i = 0; i < anglesArray.length; i++ ){
             xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
-            this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', lineWidth: 1, x: xPos, y: yPos }));
+            this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
         }
-        this.addChild( this.specialAnglesNode );
+        circleGraphic.addChild( this.specialAnglesNode );
 
-        //Draw x-, y-axes
+        //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         circleGraphic.addChild( yAxis );
         circleGraphic.addChild( xAxis );
         //Draw and position x-, y-axis labels
-        var fontInfo = { font: '25px sans-serif' };
+        var fontInfo = { font: '20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );
         yAxis.addChild( yText );
         //xText.translation = new Vector2( 1.2*radius - 5 - xText.width, xText.height );
         //yText.translation = new Vector2( -yText.width - 10, -1.2*radius - 10 + yText.height );
-        xText.right = 1.2*radius - 3;
-        xText.top = 0;
+        xText.right = 1.2*radius - 5;
+        xText.top = 5;
         yText.right = -8;
         yText.top = -1.2*radius - 2;
 
@@ -148,18 +148,17 @@ define( function( require ) {
         var arcShape = new Shape();
         //arcShape.moveTo( r, 0 );
         var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 2} );
-        //following is to speed up code significantly
+        //following code is to speed up drawing
         var emptyBounds = new Bounds2( 0, 0, 0, 0 );
         angleArcPath.computeShapeBounds = function(){
              return emptyBounds;
         } ;
-        //drawAngleArcArrowHead
+        //draw AngleArcArrowHead
         var arrowHeadShape = new Shape();
-        var hW = 7;
-        var hL = 12;
+        var hW = 7;     //arrow head width
+        var hL = 12;    //arrow head length
         arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, hL ).lineTo( hW/2, hL ).close();
         var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: '#000'});
-        //angleArcArrowHead.x = 50; angleArcArrowHead.y = -50;
         angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
@@ -197,9 +196,9 @@ define( function( require ) {
             angleArcArrowHead.y = -r*Math.sin( totalAngle );
             //angleArcArrowHead.rotation = 0;
             if( totalAngle < 0 ){
-                angleArcArrowHead.rotation = Math.PI - totalAngle - 0.12; //model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = Math.PI - totalAngle - (6/r); //model.smallAngle*180/Math.PI;
             }else{
-                angleArcArrowHead.rotation = -totalAngle + 0.12; //-model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = -totalAngle + (6/r); //-model.smallAngle*180/Math.PI;
             }
         };
 

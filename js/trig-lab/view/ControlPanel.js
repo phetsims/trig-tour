@@ -12,7 +12,6 @@ define( function( require ) {
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -113,4 +112,4 @@ define( function( require ) {
   }
 
   return inherit( Panel, ControlPanel );
-} )
+} );

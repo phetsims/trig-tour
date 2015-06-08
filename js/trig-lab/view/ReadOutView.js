@@ -6,16 +6,9 @@ define( function( require ) {
     'use strict';
 
     // modules
-    var Circle = require( 'SCENERY/nodes/Circle' );
     var inherit = require( 'PHET_CORE/inherit' );
-    var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
-    var Path = require( 'SCENERY/nodes/Path' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    var Shape = require( 'KITE/Shape' );
-    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
-    var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var xyEqualsStr = '(x,y) = ';
@@ -23,8 +16,8 @@ define( function( require ) {
     var sinEqualsStr = 'sin = ';
     var cosEqualsStr = 'cos = ';
     var tanEqualsStr = 'tan = ';
-    var degreesStr = 'degrees';
-    var radiansStr = 'radians';
+    //var degreesStr = 'degrees';
+    //var radiansStr = 'radians';
 
     /**
      * Constructor for ReadOutView which displays live values of angle, sin, cos, and tan

@@ -15,7 +15,6 @@ define( function ( require ) {
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
-    var Vector2 = require( 'DOT/Vector2' );
     var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
 
     /**
@@ -34,7 +33,7 @@ define( function ( require ) {
             right: this.layoutBounds.maxX - 10,
             bottom: this.layoutBounds.maxY - 10
         } );
-        this.addChild( resetAllButton )
+        this.addChild( resetAllButton );
         var unitCircleView = new UnitCircleView( trigLabModel );
         var readOutView = new ReadOutView( trigLabModel );
         var graphView = new GraphView( trigLabModel );
@@ -47,9 +46,6 @@ define( function ( require ) {
         this.addChild( controlPanel );
 
         //Layout children Views
-        var widthView = unitCircleView.width;
-        //unitCircleView.translation = new Vector2( this.layoutBounds.centerX, 1.1*widthView/2 );
-        //readOutView.translation = new Vector2( 1.2*widthView, 30 );
         unitCircleView.left = readOutView.right;
         unitCircleView.top = this.layoutBounds.top + 20;
         readOutView.left = this.layoutBounds.left + 20 ;
@@ -78,6 +74,12 @@ define( function ( require ) {
             readOutView.tanLabel.visible = ( graph === 'tan' );
         } );
 
+        viewProperties.labelsVisibleProperty.link( function( isVisible ){
+            unitCircleView.labelsVisible = isVisible;
+            unitCircleView.setLabelVisibility();
+            //unitCircleView.positionLabels( isVisible );
+        });
+
         viewProperties.gridVisibleProperty.link( function( isVisible ){
             unitCircleView.grid.visible = isVisible;
         });
@@ -95,7 +97,7 @@ define( function ( require ) {
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
             }
-        })
+        });
 
     }
 

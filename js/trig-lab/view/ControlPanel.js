@@ -33,8 +33,8 @@ define( function( require ) {
   var cosText = new Text( cosStr, fontInfo );
   var sinText = new Text( sinStr, fontInfo );
   var tanText = new Text( tanStr, fontInfo );
-  var degreesText = new Text( degreesStr, fontInfo );
-  var radiansText = new Text( radiansStr, fontInfo );
+  //var degreesText = new Text( degreesStr, fontInfo );
+  //var radiansText = new Text( radiansStr, fontInfo );
   var degText = new Text( degStr, fontInfo ) ;
   var radText = new Text( radStr, fontInfo );
   var labelsText =  new Text( labelsStr, fontInfo );
@@ -49,7 +49,7 @@ define( function( require ) {
    */
   function ControlPanel( properties  ) {
 
-    var controlPanel = this;
+    //var controlPanel = this;
     this.properties = properties;
     //graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
     //labelsVisible: false,
@@ -65,8 +65,7 @@ define( function( require ) {
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph , properties.graph , properties.graph
-    var fontInfo = { fontSize: 20 };
-    var myRadioButtonOptions = { radius: 10 } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15 } ;
     var cosRadioButton = new AquaRadioButton( properties.graphProperty, cosStr, cosText, myRadioButtonOptions );
     var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText, myRadioButtonOptions );
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText, myRadioButtonOptions );

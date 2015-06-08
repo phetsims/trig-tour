@@ -13,7 +13,6 @@ define( function( require ) {
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
@@ -23,7 +22,7 @@ define( function( require ) {
     var xStr = 'x';
     var yStr = 'y';
     var oneStr = '1';
-    var thetaStr = 'theta';   //Need Greek symbol
+    var thetaStr = '\u03b8' ; // \u03b8 = unicode for theta
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -35,6 +34,8 @@ define( function( require ) {
 
         var unitCircleView = this;
         this.model = model;
+        var trigLabModel = model;
+        this.labelsVisible = 'false';  //set by Control Panel
 
         // Call the super constructor
         Node.call( unitCircleView );
@@ -95,7 +96,6 @@ define( function( require ) {
         circleGraphic.addChild( hLine );
 
         //Draw rotor arm
-        var rotorWidth = 10
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
@@ -136,7 +136,7 @@ define( function( require ) {
                         //console.log( 'angle is ' + angle );
                         //console.log( 'UnitCircleView line 137, specialAngleMode = '+ model.specialAnglesMode )
                         if( !model.specialAnglesMode ){
-                            model.setAngle( angle )
+                            model.setAngle( angle );
                         }else{
                             model.setSpecialAngle( angle );
                         }
@@ -144,15 +144,15 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        var r = 0.3*radius;   //arc radius
+        r = 0.3*radius;   //arc radius = 0.3 of rotor radius
         var arcShape = new Shape();
-        //arcShape.moveTo( r, 0 );
         var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 2} );
         //following code is to speed up drawing
         var emptyBounds = new Bounds2( 0, 0, 0, 0 );
         angleArcPath.computeShapeBounds = function(){
              return emptyBounds;
         } ;
+
         //draw AngleArcArrowHead
         var arrowHeadShape = new Shape();
         var hW = 7;     //arrow head width
@@ -175,13 +175,13 @@ define( function( require ) {
                 for( var ang = 0; ang <= totalAngle; ang += dAng ){
                     //console.log( 'angle is '+ang );
                     r -= dAng;
-                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
+                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) ) ;
                 }
             }else{
-                for( ang = 0; ang >= totalAngle; ang -= dAng ){
+                for( var ang = 0; ang >= totalAngle; ang -= dAng ){
                     //console.log( 'angle is '+ang );
                     r -= dAng;
-                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
+                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) );
                 }
             }
 
@@ -200,7 +200,85 @@ define( function( require ) {
             }else{
                 angleArcArrowHead.rotation = -totalAngle + (6/r); //-model.smallAngle*180/Math.PI;
             }
+        };   //end drawAngleArc
+
+        //position x, y, and one labels on xyR triangle
+        var labelCanvas = new Node();
+        unitCircleView.addChild( labelCanvas );
+        var oneText = new Text( oneStr, fontInfo );
+        var xText = new Text( xStr, fontInfo );
+        var yText = new Text( yStr, fontInfo );
+        var thetaText = new Text( thetaStr, fontInfo );
+        var labelsArr = [ oneText, xText, yText, thetaText ]
+        labelCanvas.children = labelsArr;
+
+        this.setLabelVisibility = function(){
+            positionLabels();
+            for( i = 0; i < labelsArr.length; i++ ){
+                labelsArr[i].visible = unitCircleView.labelsVisible;
+            }
         };
+
+        var positionLabels = function( ){
+            var smallAngle = trigLabModel.getSmallAngleInRadians();
+            var totalAngle = trigLabModel.getAngleInRadians();
+            var pi = Math.PI;
+            //set visibility of labels
+            if( Math.abs( totalAngle ) < 20*pi/180 ){
+                thetaText.visible = false;
+            }else{
+                thetaText.visible = true;
+            }
+            var sAngle = Math.abs( smallAngle*180/pi );
+            if( sAngle < 10 || (180 - sAngle) < 10 ){
+                yText.visible = false;
+            } else{
+                yText.visible = true;
+            }
+            if( Math.abs(90 - sAngle) < 5 ){
+                xText.visible = false;
+            }else{
+                xText.visible = true;
+            }
+            //position one-label
+            var angleOffset = 9*pi/180;
+            var sign = 1;
+
+            if( ( smallAngle > pi/2 && smallAngle < pi ) ||( smallAngle > -pi/2 && smallAngle < 0 )){
+                sign = -1;
+            }
+            var xInPix = radius*Math.cos( smallAngle + sign*angleOffset );
+            var yInPix = radius*Math.sin( smallAngle + sign*angleOffset );
+            oneText.centerX = 0.6*xInPix;// - 0.5*oneText.width;
+            oneText.centerY = - 0.6*yInPix;// -0.5*oneText.height;
+            //position x-label
+            var xPos = 0.5*radius*Math.cos( smallAngle );// - 0.5*xText.width;
+            var yPos = 0.6*xText.height;
+            if( smallAngle < 0 ){ yPos = -0.6*xText.height }
+            xText.centerX = xPos;
+            xText.centerY = yPos;
+            //position y-label
+            sign = 1;
+            if( ( smallAngle > pi/2 && smallAngle < pi ) ||( smallAngle > -pi && smallAngle < -pi/2 )){
+                sign = -1;
+            }
+            xPos = radius*Math.cos(smallAngle)+ sign*xText.width; //- 0.5*xText.width
+            yPos = -0.5*radius*Math.sin( smallAngle );// - 0.5*yText.height;
+            yText.centerX = xPos;
+            yText.centerY = yPos;
+            //show and position theta-label on angle arc if arc is greater than 20 degs
+
+
+            xPos = 0.37*radius*Math.cos( totalAngle/2 );// - 0.5*thetaText.width;
+            yPos = -0.37*radius*Math.sin( totalAngle/2 );// - 0.5*thetaText.height;
+            thetaText.centerX = xPos;
+            thetaText.centerY = yPos;
+            //position x
+            //position y
+            //position 1
+        };//end positionLabels()
+
+
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
@@ -212,6 +290,7 @@ define( function( require ) {
             vLine.setPoint2( 0, -radius*sin  );
             hLine.setPoint2( radius*cos, 0 );
             drawAngleArc();
+            if( unitCircleView.labelsVisible ){ positionLabels()};
         } );
 
     }

@@ -17,7 +17,7 @@ define( function( require ) {
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
-    var Vector2 = require( 'DOT/Vector2' );
+    //var Vector2 = require( 'DOT/Vector2' );
     /**
      * Constructor for RotorNode which renders rotor as a scenery node.
      * @param {TrigLabModel} model is the main model of the sim
@@ -40,7 +40,6 @@ define( function( require ) {
         Node.call( graphView, { } );
 
         var stageW = 1054; //width of main stage in pixels
-        var stageH = 614;  //height of main stage in pixels
         var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
         var amplitude = 70;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
@@ -56,10 +55,17 @@ define( function( require ) {
         graphView.addChild( yAxis );
         //draw tic marks on x-, y-axes
         var ticLength = 5;
-        var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: '#fff'});
-        var yTic = new Line( -ticLength, 0, ticLength, 0 );
+        for( var i = -nbrOfWavelengths; i < nbrOfWavelengths; i++ ){
+            var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: '#000'});
+            xTic.x = i*wavelength/2;
+            xAxis.addChild( xTic );
+        }
+        for( i = -1; i <=1; i+=2 ){
+            var yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: '#000'} );
+            yTic.y = i*amplitude;
+            yAxis.addChild( yTic );
+        }
 
-        //for( var n = )
 
 
         //var axesShape = new Shape();
@@ -69,7 +75,7 @@ define( function( require ) {
         //graphView.addChild( axesPath );
 
         //Axes labels
-        var fontInfo = { font: '25px sans-serif' };
+        var fontInfo = { font: '20px sans-serif' };
         var thetaLabel = new Text( theta, fontInfo );
         xAxis.addChild( thetaLabel );
         thetaLabel.right = xAxis.right;
@@ -98,20 +104,18 @@ define( function( require ) {
         cosShape.moveTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
         tanShape.moveTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
 
-        //draw sinusoidal curves
+        //draw sin and cos curves
         for (var i = 0; i < nbrOfPoints; i++ ){
             xPos += dx;
             sinShape.lineTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
             cosShape.lineTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
-            //tanShape.lineTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ));
         }
 
         xPos = xOrigin - nbrOfPoints*dx/2;
         var tanValue = Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) ;
 
         //draw tangent curve cut off at upper and lower limits
-        for ( var i = 0; i < nbrOfPoints; i++ ) {
-
+        for ( i = 0; i < nbrOfPoints; i++ ) {
             tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
             if ( (tanValue < 2) && (tanValue > -1.5) ) {
                 tanShape.lineTo( xPos, yOrigin - amplitude * tanValue );
@@ -130,7 +134,7 @@ define( function( require ) {
         //red dot on top of indicator line echoes red dot on unit circle
         var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
         var cosIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#00f', lineWidth: 6 } );
-        var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } )
+        var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } ) ;
         var redDotOnSin = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
         var redDotOnCos = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
         var redDotOnTan = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
@@ -149,27 +153,29 @@ define( function( require ) {
 
 
 
+
+
         // When dragging, move the sample element
-        sinIndicator.addInputListener( new SimpleDragHandler(
-                {
-                    // When dragging across it in a mobile device, pick it up
-                    allowTouchSnag: true,
-
-                    start: function (e){
-                        console.log( 'mouse down' );
-                        var mouseDownPosition = e.pointer.point;
-                        console.log( mouseDownPosition );
-                    },
-
-                    drag: function(e){
-                        //console.log('drag event follows: ');
-                        var v1 =  angleIndicatorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = -v1.angle();        //model angle is opposite of xy coords angle
-                        //console.log( 'angle is ' + angle );
-                        //model.angle = angle;
-                        model.setAngle( angle );
-                    }
-                } ) );
+        //sinIndicator.addInputListener( new SimpleDragHandler(
+        //        {
+        //            // When dragging across it in a mobile device, pick it up
+        //            allowTouchSnag: true,
+        //
+        //            start: function (e){
+        //                console.log( 'mouse down' );
+        //                var mouseDownPosition = e.pointer.point;
+        //                console.log( mouseDownPosition );
+        //            },
+        //
+        //            drag: function(e){
+        //                //console.log('drag event follows: ');
+        //                var v1 =  angleIndicatorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
+        //                var angle = -v1.angle();        //model angle is opposite of xy coords angle
+        //                //console.log( 'angle is ' + angle );
+        //                //model.angle = angle;
+        //                model.setAngle( angle );
+        //            }
+        //        } ) );
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {

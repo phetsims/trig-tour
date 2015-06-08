@@ -23,6 +23,8 @@ define( function( require ) {
   var tanStr = 'tan';
   var degreesStr = 'degrees';
   var radiansStr = 'radians';
+  var degStr = 'deg';
+  var radStr = 'rad';
   var labelsStr = 'Labels';
   var gridStr = 'Grid';
   var specialAnglesStr = 'Special angles';
@@ -34,6 +36,8 @@ define( function( require ) {
   var tanText = new Text( tanStr, fontInfo );
   var degreesText = new Text( degreesStr, fontInfo );
   var radiansText = new Text( radiansStr, fontInfo );
+  var degText = new Text( degStr, fontInfo ) ;
+  var radText = new Text( radStr, fontInfo );
   var labelsText =  new Text( labelsStr, fontInfo );
   var gridText = new Text( gridStr, fontInfo );
   var specialAnglesText = new Text( specialAnglesStr, fontInfo );
@@ -63,13 +67,14 @@ define( function( require ) {
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph , properties.graph , properties.graph
     var fontInfo = { fontSize: 20 };
-    var cosRadioButton = new AquaRadioButton( properties.graphProperty, cosStr, cosText );
-    var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText );
-    var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText );
+    var myRadioButtonOptions = { radius: 10 } ;
+    var cosRadioButton = new AquaRadioButton( properties.graphProperty, cosStr, cosText, myRadioButtonOptions );
+    var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText, myRadioButtonOptions );
+    var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText, myRadioButtonOptions );
 
     // 2 radio buttons for display in degrees or radians
-    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, new Text( 'degs', fontInfo ));
-    var radiansRadioButton = new AquaRadioButton(  properties.angleUnitsProperty, radiansStr, new Text( 'rads', fontInfo ));
+    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
+    var radiansRadioButton = new AquaRadioButton(  properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty );

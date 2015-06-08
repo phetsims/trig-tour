@@ -51,7 +51,7 @@ define( function ( require ) {
         //unitCircleView.translation = new Vector2( this.layoutBounds.centerX, 1.1*widthView/2 );
         //readOutView.translation = new Vector2( 1.2*widthView, 30 );
         unitCircleView.left = readOutView.right;
-        unitCircleView.top = this.layoutBounds.top + 20
+        unitCircleView.top = this.layoutBounds.top + 20;
         readOutView.left = this.layoutBounds.left + 20 ;
         readOutView.top = 30;
         graphView.x = this.layoutBounds.centerX - 20;

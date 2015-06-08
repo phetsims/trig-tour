@@ -148,28 +148,59 @@ define( function( require ) {
         var arcShape = new Shape();
         //arcShape.moveTo( r, 0 );
         var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 2} );
+        //following is to speed up code significantly
+        var emptyBounds = new Bounds2( 0, 0, 0, 0 );
+        angleArcPath.computeShapeBounds = function(){
+             return emptyBounds;
+        } ;
+        //drawAngleArcArrowHead
+        var arrowHeadShape = new Shape();
+        var hW = 7;
+        var hL = 12;
+        arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, hL ).lineTo( hW/2, hL ).close();
+        var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: '#000'});
+        //angleArcArrowHead.x = 50; angleArcArrowHead.y = -50;
+        angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
             var arcShape = new Shape();  //This seems wasteful. But there is now Shape.clear() function
             r = 0.3*radius;
             arcShape.moveTo( r, 0 );
             var totalAngle = model.getAngleInRadians();
+
+            var dAng = 0.1;  //delta-angle in radians
+            if( Math.abs(totalAngle) < 0.5 ){
+                dAng = 0.02;
+            }
             if( totalAngle >0 ){
-                for( var ang = 0; ang <= totalAngle; ang += 0.02 ){
+                for( var ang = 0; ang <= totalAngle; ang += dAng ){
                     //console.log( 'angle is '+ang );
-                    r -= 0.02;
+                    r -= dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
                 }
             }else{
-                for( ang = 0; ang >= totalAngle; ang -= 0.02 ){
+                for( ang = 0; ang >= totalAngle; ang -= dAng ){
                     //console.log( 'angle is '+ang );
-                    r -= 0.02;
+                    r -= dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) )
                 }
             }
 
             //console.log( 'drawAngleArc called. Angle = '+ model.getAngleInDegrees() );
             angleArcPath.setShape( arcShape );
+            if( Math.abs( totalAngle ) < 20*Math.PI/180 ){
+                angleArcArrowHead.visible = false;
+            }else{
+                angleArcArrowHead.visible = true;
+            }
+            angleArcArrowHead.x = r*Math.cos( totalAngle );
+            angleArcArrowHead.y = -r*Math.sin( totalAngle );
+            //angleArcArrowHead.rotation = 0;
+            if( totalAngle < 0 ){
+                angleArcArrowHead.rotation = Math.PI - totalAngle - 0.12; //model.smallAngle*180/Math.PI;
+            }else{
+                angleArcArrowHead.rotation = -totalAngle + 0.12; //-model.smallAngle*180/Math.PI;
+            }
         };
 
         // Register for synchronization with model.

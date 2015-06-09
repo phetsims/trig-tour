@@ -22,6 +22,8 @@ define( function( require ) {
     var xStr = 'x';
     var yStr = 'y';
     var oneStr = '1';
+    var plusOneStr = '+1';
+    var minusOneStr = '-1'
     var thetaStr = '\u03b8' ; // \u03b8 = unicode for theta
 
     /**
@@ -42,7 +44,8 @@ define( function( require ) {
 
         //Draw Unit Circle
         var radius = 150; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:'#555', lineWidth: 2 } );    //provides parent node and origin for rotorGraphic
+        var circleGraphic = new Circle( radius, { stroke:'#555' +
+                                                         '', lineWidth: 2 } );    //provides parent node and origin for rotorGraphic
         unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
@@ -72,7 +75,7 @@ define( function( require ) {
         //yText.translation = new Vector2( -yText.width - 10, -1.2*radius - 10 + yText.height );
         xText.right = 1.2*radius - 5;
         xText.top = 5;
-        yText.right = -8;
+        yText.right = -12;
         yText.top = -1.2*radius - 2;
 
 
@@ -84,8 +87,27 @@ define( function( require ) {
         gridShape.moveTo( -r, -r/2 ).lineTo( r, -r/2 ).moveTo( -r, r/2 ).lineTo( r, r/2 );
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#888' });
+        //+1, -1 labels on grid axes
+        fontInfo = { font: '18px sans-serif' };
+        var plusOneXText = new Text( plusOneStr, fontInfo );
+        var minusOneXText = new Text( minusOneStr, fontInfo );
+        var plusOneYText = new Text( plusOneStr, fontInfo );
+        var minusOneYText = new Text( minusOneStr, fontInfo );
+        var oneLabels = [plusOneXText, minusOneXText, plusOneYText, minusOneYText];
+        this.grid.children = oneLabels;
+        //position one labels
+        plusOneXText.left = this.grid.right + 5;
+        plusOneXText.bottom = -5;
+        minusOneXText.right = this.grid.left - 5;
+        minusOneXText.top = 0;
+        plusOneYText.bottom = this.grid.top;
+        plusOneYText.left = 5;
+        minusOneYText.top = this.grid.bottom;
+        minusOneYText.right = -5;
         circleGraphic.addChild( this.grid );
         this.grid.visible = false;
+
+
 
         //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );

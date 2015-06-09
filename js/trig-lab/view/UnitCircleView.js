@@ -57,13 +57,13 @@ define( function( require ) {
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
             this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
         }
-        circleGraphic.addChild( this.specialAnglesNode );
+        //circleGraphic.addChild( this.specialAnglesNode );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
-        circleGraphic.addChild( yAxis );
-        circleGraphic.addChild( xAxis );
+        //circleGraphic.addChild( yAxis );
+        //circleGraphic.addChild( xAxis );
         //Draw and position x-, y-axis labels
         var fontInfo = { font: '20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
@@ -78,7 +78,7 @@ define( function( require ) {
         yText.top = -1.2*radius - 2;
 
 
-        //Draw Grid
+        //Draw Grid, simple square grid, x = +/-1, y = +/-1;
         var r = radius;
         var gridShape = new Shape();
         gridShape.moveTo( -r, -r );
@@ -94,6 +94,7 @@ define( function( require ) {
         var minusOneYText = new Text( minusOneStr, fontInfo );
         var oneLabels = [plusOneXText, minusOneXText, plusOneYText, minusOneYText];
         this.grid.children = oneLabels;
+
         //position one labels
         plusOneXText.left = this.grid.right + 5;
         plusOneXText.bottom = -5;
@@ -103,18 +104,18 @@ define( function( require ) {
         plusOneYText.left = 5;
         minusOneYText.top = this.grid.bottom;
         minusOneYText.right = -5;
-        circleGraphic.addChild( this.grid );
+        //circleGraphic.addChild( this.grid );
         this.grid.visible = false;
 
 
 
         //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
-        circleGraphic.addChild( vLine );
+        //circleGraphic.addChild( vLine );
 
         //draw horizontal (cosine) line on rotor triangle
         var hLine = new Line( 0, 0, radius, 0, {lineWidth: 6, stroke: '#00f'} );
-        circleGraphic.addChild( hLine );
+        //circleGraphic.addChild( hLine );
 
         //Draw rotor arm with grabbable red dot at ennd
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
@@ -122,7 +123,10 @@ define( function( require ) {
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
-        circleGraphic.addChild( rotorGraphic );
+        //circleGraphic.addChild( rotorGraphic );
+
+        //lay on the children!
+        circleGraphic.children = [ this.grid, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
         //var mouseDownPosition = new Vector2( 0, 0 );   //just for testing
 
         ////draw horizontal (cosine) arrow

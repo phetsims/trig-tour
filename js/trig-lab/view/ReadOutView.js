@@ -12,6 +12,7 @@ define( function( require ) {
     var inherit = require( 'PHET_CORE/inherit' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Panel = require( 'SUN/Panel' );
+    var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     var Text = require( 'SCENERY/nodes/Text' );
     var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -23,11 +24,9 @@ define( function( require ) {
     var tanEqualsStr = 'tan = ';
     var degreesStr = 'degrees';
     var radiansStr = 'radians';
-    //var degStr = 'deg';
-    //var radStr = 'rad';
-    //var degreesStr = 'degrees';
-    //var radiansStr = 'radians';
 
+     //constants
+    var DISPLAY_FONT = new PhetFont( 20 );
     /**
      * Constructor for ReadOutView which displays live values of angle, sin, cos, and tan
      * @param {TrigLabModel} model is the main model of the sim
@@ -38,6 +37,7 @@ define( function( require ) {
         var readOutView = this;
         this.model = model;
         this.properties = properties;
+        this.nbrDecimalPlaces = 1;  //number of decimal places for display of angle, controlled by Control Panel
         this.radiansDisplayed = 'false'; //{boolean} set by ControlPanel
         this.units = 'degrees';  //{string} 'degrees'|'radians' set by ControlPanel
 
@@ -52,7 +52,7 @@ define( function( require ) {
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         //var radius = 200; //radius of unit circle in pixels
         //var stageGraphic = new Node();  //provides parent and coord origin children
-        var fontInfo = { font: '20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT }; //{ font: '20px sans-serif' };
         var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
         var coordinatesReadoutText = new Text( '', fontInfo );
         var angleLabel = new Text( angleEqualsStr, fontInfo );
@@ -72,12 +72,11 @@ define( function( require ) {
         var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
         //arrange text
-        var trigLabel = this.cosLabel;  //set from Control Panle
-        //this.addChild( coordinatesLabel );
-        //this.addChild( angleLabel );
-        //this.addChild( this.cosLabel );
-        //this.addChild( this.sinLabel );
-        //this.addChild( this.tanLabel );
+        this.trigLabel = new Node();  //set from Control Panel
+        this.trigLabel.children = [ this.sinLabel, this.cosLabel, this.tanLabel ];
+        this.sinLabel.top = 0;
+        this.cosLabel.top = 0;
+        this.tanLabel.top = 0;
         coordinatesLabel.addChild( coordinatesReadoutText );
         angleLabel.addChild( this.angleReadoutText );
         this.cosLabel.addChild( cosReadoutText ) ;
@@ -97,11 +96,11 @@ define( function( require ) {
         // Adjust touch areas
         var spacing = 20;
 
-        var content = new VBox( {
+        this.content = new VBox( {
             children: [
                 coordinatesLabel,
                 angleLabel,
-                trigLabel,
+                readOutView.trigLabel,
                 new HSeparator( 100 ), //maxControlWidth ),
                 degreesRadioButton,
                 radiansRadioButton,
@@ -110,12 +109,14 @@ define( function( require ) {
             spacing: spacing
         } );
 
+        //{xMargin: 10, yMargin: 10, lineWidth: 2}
+        Panel.call( this, this.content, { xMargin: 15, yMargin: 15, lineWidth: 2 } );
 
-        Panel.call( this, content );
-
-        readOutView.mutate({xMargin: 10, yMargin: 10, lineWidth: 2}) ;
-        readOutView.xMargin = 30;
-        readOutView.lineWidth = 2;
+        //WHY does the following not work?
+         ///this.mutate({xMargin: 10, yMargin: 10, lineWidth: 2}) ;
+        //readOutView.mutate({xMargin: 10, yMargin: 10, lineWidth: 2}) ;
+        //readOutView.xMargin = 30;
+        //readOutView.lineWidth = 2;
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {    //angle is in radians
@@ -127,7 +128,7 @@ define( function( require ) {
             if( readOutView.radiansDisplayed ){
                 readOutView.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readOutView.units;
             }else{
-                readOutView.angleReadoutText.text = angleInDegrees.toFixed( 1 ) + ' ' + readOutView.units;
+                readOutView.angleReadoutText.text = angleInDegrees.toFixed( readOutView.nbrDecimalPlaces ) + ' ' + readOutView.units;
             }
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
@@ -137,16 +138,26 @@ define( function( require ) {
     }
 
 
-
     return inherit( Panel, ReadOutView, {
-        setUnits: function( units ){
-        this.units = units;
-        if( units === 'radians'){
-            this.angleReadoutText.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
-        }else{
-            this.angleReadoutText.text = this.model.getAngleInDegrees().toFixed( 1 ) + ' ' + units;
-        }
+        setUnits: function ( units ) {
+            this.units = units;
+            if ( units === 'radians' ) {
+                this.angleReadoutText.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
+            }
+            else {
+                this.angleReadoutText.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
+            }
             //console.log(' ReadOutView called. units = ' + units );
-    }
+        },
+        setTrigLabel: function ( graph ) {
+            //console.log( 'setTrigLabel called.  graph = ' + graph );
+            this.trigLabel.children[0].visible = ( graph == 'sin' );
+            this.trigLabel.children[1].visible = ( graph == 'cos' );
+            this.trigLabel.children[2].visible = ( graph == 'tan' );
+        } ,
+        setAngleReadoutPrecision: function( nbrDecimalPlaces ){
+            this.nbrDecimalPlaces = nbrDecimalPlaces;
+            console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
+        }
     } );
 } );

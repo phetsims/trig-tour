@@ -71,9 +71,10 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
-            readOutView.sinLabel.visible = ( graph === 'sin' );
-            readOutView.cosLabel.visible = ( graph === 'cos' );
-            readOutView.tanLabel.visible = ( graph === 'tan' );
+            //readOutView.sinLabel.visible = ( graph === 'sin' );
+            //readOutView.cosLabel.visible = ( graph === 'cos' );
+            //readOutView.tanLabel.visible = ( graph === 'tan' );
+            readOutView.setTrigLabel( graph );
         } );
 
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
@@ -98,6 +99,9 @@ define( function ( require ) {
             if( tOrF ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
+                readOutView.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
+            }else{
+                readOutView.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
         });
 

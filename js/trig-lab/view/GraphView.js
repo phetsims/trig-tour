@@ -139,9 +139,9 @@ define( function( require ) {
         this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
         //sinIndicator is a vertical line on sine curve showing current value of angle and sin(angle)
         //red dot on top of indicator line echoes red dot on unit circle
-        var indicatorLine = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
-        var redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
-        indicatorLine.addChild( redDotHandle );
+        this.indicatorLine = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        this.redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        this.indicatorLine.addChild( this.redDotHandle );
         //var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
         //var cosIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#00f', lineWidth: 6 } );
         //var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } ) ;
@@ -155,7 +155,7 @@ define( function( require ) {
         graphView.addChild( this.sinPath );
         graphView.addChild( this.cosPath );
         graphView.addChild( this.tanPath );
-        graphView.addChild( indicatorLine );
+        graphView.addChild( this.indicatorLine );
         //this.sinPath.addChild( sinIndicator );
         //this.cosPath.addChild( cosIndicator );
         //this.tanPath.addChild( tanIndicator );
@@ -167,54 +167,76 @@ define( function( require ) {
 
 
         // When dragging, move the sample element
-        redDotOnSin.addInputListener( new SimpleDragHandler(
-                {
-                    // When dragging across it in a mobile device, pick it up
-                    allowTouchSnag: true,
-
-                    start: function (e){
-                        console.log( 'mouse down' );
-                        var mouseDownPosition = e.pointer.point;
-                        console.log( mouseDownPosition );
-                    },
-
-                    drag: function(e){
-                        //console.log('drag event follows: ');
-                        var v1 =  indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = -v1.x/wavelength;        //model angle is opposite of xy coords angle
-                        //console.log( 'angle is ' + angle );
-                        //model.angle = angle;
-                        model.setAngle( angle );
-                    }
-                } ) );
+        //redDotOnSin.addInputListener( new SimpleDragHandler(
+        //        {
+        //            // When dragging across it in a mobile device, pick it up
+        //            allowTouchSnag: true,
+        //
+        //            start: function (e){
+        //                console.log( 'mouse down' );
+        //                var mouseDownPosition = e.pointer.point;
+        //                console.log( mouseDownPosition );
+        //            },
+        //
+        //            drag: function(e){
+        //                //console.log('drag event follows: ');
+        //                var v1 =  this.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
+        //                var angle = -v1.x/wavelength;        //model angle is opposite of xy coords angle
+        //                //console.log( 'angle is ' + angle );
+        //                //model.angle = angle;
+        //                model.setAngle( angle );
+        //            }
+        //        } ) );
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
-            var cos = Math.cos( angle );
-            var sin = Math.sin( angle );
-            var tan = Math.tan( angle );
+            //var cos = Math.cos( angle );
+            //var sin = Math.sin( angle );
+            //var tan = Math.tan( angle );
             var xPos = angle/(2*Math.PI)*wavelength;
-            indicatorLine.x = xPos;
-            if( graphView.trigFunction == 'cos'){
-                indicatorLine.setPoint2( 0, -sin*amplitude );
-                redDotHandle.y = -sin*amplitude;
-            }else if ( graphView.trigFunction == 'sin' ){
-
-            }else{
-                
-            }
+            graphView.indicatorLine.x = xPos;
+            graphView.setIndicatorLine();
+            //if( graphView.trigFunction == 'cos'){
+            //    indicatorLine.setPoint2( 0, -cos*amplitude );
+            //    redDotHandle.y = -cos*amplitude;
+            //}else if ( graphView.trigFunction == 'sin' ){
+            //    indicatorLine.setPoint2( 0, -sin*amplitude );
+            //    redDotHandle.y = -sin*amplitude;
+            //}else{
+            //    indicatorLine.setPoint2( 0, -tan*amplitude );
+            //    redDotHandle.y = -tan*amplitude;
+            //}
             //sinIndicator.x = xPos;
             //cosIndicator.x = xPos;
             //tanIndicator.x = xPos;
-            sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
-            cosIndicator.setPoint2( 0, -cos*amplitude );
-            tanIndicator.setPoint2( 0, -tan*amplitude );
-            redDotOnSin.y = -sin*amplitude;
-            redDotOnCos.y = -cos*amplitude;
-            redDotOnTan.y = -tan*amplitude;
+            //sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
+            //cosIndicator.setPoint2( 0, -cos*amplitude );
+            //tanIndicator.setPoint2( 0, -tan*amplitude );
+            //redDotOnSin.y = -sin*amplitude;
+            //redDotOnCos.y = -cos*amplitude;
+            //redDotOnTan.y = -tan*amplitude;
         } );
 
     }
 
-    return inherit( Node, GraphView );
+    return inherit( Node, GraphView, {
+        setIndicatorLine: function(){
+            var amplitude = 70;
+            var angle = this.model.getAngleInRadians();
+            var cos = Math.cos( angle );
+            var sin = Math.sin( angle );
+            var tan = Math.tan( angle );
+            if( this.trigFunction == 'cos'){
+                this.indicatorLine.setPoint2( 0, -cos*amplitude );
+                this.redDotHandle.y = -cos*amplitude;
+            }else if ( this.trigFunction == 'sin' ){
+                this.indicatorLine.setPoint2( 0, -sin*amplitude );
+                this.redDotHandle.y = -sin*amplitude;
+            }else{
+                this.indicatorLine.setPoint2( 0, -tan*amplitude );
+                this.redDotHandle.y = -tan*amplitude;
+            }
+        }
+    }
+        );
 } );

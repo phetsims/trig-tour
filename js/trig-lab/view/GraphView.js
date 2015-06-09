@@ -30,7 +30,7 @@ define( function( require ) {
     var tanTheta = 'tan' + theta ;
     var pi ='\u03c0';
     var radiansPiLabels = [ '-3'+pi, '-2'+pi, -'1'+pi, '', '1'+pi, '2'+pi, '3'+pi ];
-    var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', p+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
+    var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', pi+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
     var degreesLabels;
 
 

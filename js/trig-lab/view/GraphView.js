@@ -28,6 +28,10 @@ define( function( require ) {
     var cosTheta = 'cos' + theta ;
     var sinTheta = 'sin' + theta ;
     var tanTheta = 'tan' + theta ;
+    var pi ='\u03c0';
+    var radiansPiLabels = [ '-3'+pi, '-2'+pi, -'1'+pi, '', '1'+pi, '2'+pi, '3'+pi ];
+    var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', p+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
+    var degreesLabels;
 
 
     function GraphView( model  ) {
@@ -64,6 +68,9 @@ define( function( require ) {
             yTic.y = i*amplitude;
             yAxis.addChild( yTic );
         }
+
+        //Draw x-axis tic mark labels
+
 
 
 

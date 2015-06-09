@@ -63,6 +63,7 @@ define( function ( require ) {
         console.log('this.layoutBounds = '+this.layoutBounds );
 
         viewProperties.graphProperty.link( function( graph ) {
+            graphView.trigFunction = graph;
             graphView.cosPath.visible = ( graph === 'cos' );
             graphView.sinPath.visible = ( graph === 'sin' );
             graphView.tanPath.visible = ( graph === 'tan' );

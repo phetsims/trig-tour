@@ -6,9 +6,14 @@ define( function( require ) {
     'use strict';
 
     // modules
+    var AquaRadioButton = require( 'SUN/AquaRadioButton' );
+    var HBox = require( 'SCENERY/nodes/HBox' );
+    var HSeparator = require( 'SUN/HSeparator' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Node = require( 'SCENERY/nodes/Node' );
+    var Panel = require( 'SUN/Panel' );
     var Text = require( 'SCENERY/nodes/Text' );
+    var VBox = require( 'SCENERY/nodes/VBox' );
 
     //strings
     var xyEqualsStr = '(x,y) = ';
@@ -16,6 +21,10 @@ define( function( require ) {
     var sinEqualsStr = 'sin = ';
     var cosEqualsStr = 'cos = ';
     var tanEqualsStr = 'tan = ';
+    var degreesStr = 'degrees';
+    var radiansStr = 'radians';
+    //var degStr = 'deg';
+    //var radStr = 'rad';
     //var degreesStr = 'degrees';
     //var radiansStr = 'radians';
 
@@ -24,10 +33,11 @@ define( function( require ) {
      * @param {TrigLabModel} model is the main model of the sim
      * @constructor
      */
-    function ReadOutView( model  ) {
+    function ReadOutView( model, properties  ) {
 
         var readOutView = this;
         this.model = model;
+        this.properties = properties;
         this.radiansDisplayed = 'false'; //{boolean} set by ControlPanel
         this.units = 'degrees';  //{string} 'degrees'|'radians' set by ControlPanel
 
@@ -53,19 +63,21 @@ define( function( require ) {
         var sinReadoutText = new Text( sinReadout, fontInfo );
         var cosReadoutText = new Text( cosReadout, fontInfo );
         var tanReadoutText = new Text( tanReadout, fontInfo );
+        var degText = new Text( degreesStr, fontInfo ) ;
+        var radText = new Text( radiansStr, fontInfo );
 
-        //onTopOfStageGraphic.translation = new Vector2( 0, -30 );
-        //var originLocation = new Vector2( 2.5*radius, 0.2*radius );
-        //stageGraphic.translation = originLocation;
-
-        //readOutView.addChild( stageGraphic );
+        // 2 radio buttons for display in degrees or radians
+        var myRadioButtonOptions = { radius: 10, fontSize: 15 } ;
+        var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
+        var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
         //arrange text
-        this.addChild( coordinatesLabel );
-        this.addChild( angleLabel );
-        this.addChild( this.cosLabel );
-        this.addChild( this.sinLabel );
-        this.addChild( this.tanLabel );
+        var trigLabel = this.cosLabel;  //set from Control Panle
+        //this.addChild( coordinatesLabel );
+        //this.addChild( angleLabel );
+        //this.addChild( this.cosLabel );
+        //this.addChild( this.sinLabel );
+        //this.addChild( this.tanLabel );
         coordinatesLabel.addChild( coordinatesReadoutText );
         angleLabel.addChild( this.angleReadoutText );
         this.cosLabel.addChild( cosReadoutText ) ;
@@ -78,11 +90,32 @@ define( function( require ) {
         angleLabel.top = 30;
         this.angleReadoutText.left =  angleLabel.right ;
         this.cosLabel.top = this.sinLabel.top = this.tanLabel.top = 2*30;
-        cosReadoutText.left =   this.cosLabel.right ;
-        sinReadoutText.left =   this.sinLabel.right ;
-        tanReadoutText.left =   this.tanLabel.right ;
+        cosReadoutText.left =  this.cosLabel.right ;
+        sinReadoutText.left =  this.sinLabel.right ;
+        tanReadoutText.left =  this.tanLabel.right ;
+
+        // Adjust touch areas
+        var spacing = 20;
+
+        var content = new VBox( {
+            children: [
+                coordinatesLabel,
+                angleLabel,
+                trigLabel,
+                new HSeparator( 100 ), //maxControlWidth ),
+                degreesRadioButton,
+                radiansRadioButton,
+            ],
+            align: 'left',
+            spacing: spacing
+        } );
 
 
+        Panel.call( this, content );
+
+        readOutView.mutate({xMargin: 10, yMargin: 10, lineWidth: 2}) ;
+        readOutView.xMargin = 30;
+        readOutView.lineWidth = 2;
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {    //angle is in radians
@@ -103,7 +136,9 @@ define( function( require ) {
 
     }
 
-    return inherit( Node, ReadOutView, {
+
+
+    return inherit( Panel, ReadOutView, {
         setUnits: function( units ){
         this.units = units;
         if( units === 'radians'){

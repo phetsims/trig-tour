@@ -34,11 +34,11 @@ define( function ( require ) {
             bottom: this.layoutBounds.maxY - 10
         } );
         this.addChild( resetAllButton );
-        var unitCircleView = new UnitCircleView( trigLabModel );
-        var readOutView = new ReadOutView( trigLabModel );
-        var graphView = new GraphView( trigLabModel );
+
         var viewProperties = new ViewProperties();
-        //console.log('viewProperties.graph is '+viewProperties.graph);
+        var unitCircleView = new UnitCircleView( trigLabModel );
+        var readOutView = new ReadOutView( trigLabModel, viewProperties );
+        var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.8*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
         this.addChild( readOutView );
@@ -46,11 +46,11 @@ define( function ( require ) {
         this.addChild( controlPanel );
 
         //Layout children Views
-        unitCircleView.left = readOutView.right;
+        unitCircleView.centerX = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
         readOutView.left = this.layoutBounds.left + 20 ;
         readOutView.top = 30;
-        graphView.x = this.layoutBounds.centerX - 20;
+        graphView.centerX = this.layoutBounds.centerX;
         graphView.bottom = this.layoutBounds.bottom;
         controlPanel.right = this.layoutBounds.right - 40;
         controlPanel.top = this.layoutBounds.top + 40;
@@ -70,6 +70,7 @@ define( function ( require ) {
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
+            graphView.setIndicatorLine();
             readOutView.sinLabel.visible = ( graph === 'sin' );
             readOutView.cosLabel.visible = ( graph === 'cos' );
             readOutView.tanLabel.visible = ( graph === 'tan' );

@@ -15,6 +15,7 @@ define( function( require ) {
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
     var Shape = require( 'KITE/Shape' );
+    var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
     //var Vector2 = require( 'DOT/Vector2' );
     /**
@@ -33,28 +34,34 @@ define( function( require ) {
     var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', pi+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
     var degreesLabels;
 
+    //constants
+    var COS_COLOR = '#009';
+    var SIN_COLOR = '#090';
+    var TAN_COLOR = '#900';
 
-    function GraphView( model  ) {
+
+    function GraphView( model, height, width  ) {      //height and width of this view
 
         var graphView = this;
         this.model = model;
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
+        console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
 
         // Call the super constructor
         Node.call( graphView, { } );
 
-        var stageW = 1054; //width of main stage in pixels
-        var wavelength = stageW/5;  //wavelength of sinusoidal curve in pixels
-        var amplitude = 70;  //amplitude of sinusiodal curve in pixels
+        //var stageW = 1054; //width of main stage in pixels
+        var wavelength = width/4;  //wavelength of sinusoidal curve in pixels
+        this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
         //this.cosVisible = true;
         //this.sinVisible = false;
         //this.tanVisible = false;
 
         //draw x-, y-axes
-        var xAxisLength = 0.9*stageW;
-        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 2 });  //tailX, tailY, tipX, tipY, options
-        var yAxis = new ArrowNode( 0, 1.2*amplitude, 0, -1.3*amplitude, { tailWidth: 2 } );
+        var xAxisLength = width; //0.9*stageW;
+        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1 });  //tailX, tailY, tipX, tipY, options
+        var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1 } );
         graphView.addChild( xAxis );
         graphView.addChild( yAxis );
         //draw tic marks on x-, y-axes
@@ -66,7 +73,7 @@ define( function( require ) {
         }
         for( i = -1; i <=1; i+=2 ){
             var yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: '#000'} );
-            yTic.y = i*amplitude;
+            yTic.y = i*this.amplitude;
             yAxis.addChild( yTic );
         }
 
@@ -107,15 +114,15 @@ define( function( require ) {
         var xOrigin = 0;
         var yOrigin = 0;
         var xPos = xOrigin - nbrOfPoints*dx/2 ;
-        sinShape.moveTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
-        cosShape.moveTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
-        tanShape.moveTo( xPos, yOrigin - amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
+        sinShape.moveTo( xPos, yOrigin - this.amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
+        cosShape.moveTo( xPos, yOrigin - this.amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
+        tanShape.moveTo( xPos, yOrigin - this.amplitude*Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) );
 
         //draw sin and cos curves
         for ( i = 0; i < nbrOfPoints; i++ ){
             xPos += dx;
-            sinShape.lineTo( xPos, yOrigin - amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
-            cosShape.lineTo( xPos, yOrigin - amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
+            sinShape.lineTo( xPos, yOrigin - this.amplitude*Math.sin( 2*Math.PI*(xPos - xOrigin)/wavelength ));
+            cosShape.lineTo( xPos, yOrigin - this.amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
         }
 
         xPos = xOrigin - nbrOfPoints*dx/2;
@@ -125,10 +132,10 @@ define( function( require ) {
         for ( i = 0; i < nbrOfPoints; i++ ) {
             tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
             if ( (tanValue < 2) && (tanValue > -1.5) ) {
-                tanShape.lineTo( xPos, yOrigin - amplitude * tanValue );
+                tanShape.lineTo( xPos, yOrigin - this.amplitude * tanValue );
             }
             else {
-                tanShape.moveTo( xPos, yOrigin - amplitude * tanValue );
+                tanShape.moveTo( xPos, yOrigin - this.amplitude * tanValue );
             }
             xPos += dx;
         }
@@ -139,7 +146,7 @@ define( function( require ) {
         this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
         //sinIndicator is a vertical line on sine curve showing current value of angle and sin(angle)
         //red dot on top of indicator line echoes red dot on unit circle
-        this.indicatorLine = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0f0', lineWidth: 6 } );
         this.redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
         this.indicatorLine.addChild( this.redDotHandle );
         //var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
@@ -167,26 +174,26 @@ define( function( require ) {
 
 
         // When dragging, move the sample element
-        //redDotOnSin.addInputListener( new SimpleDragHandler(
-        //        {
-        //            // When dragging across it in a mobile device, pick it up
-        //            allowTouchSnag: true,
-        //
-        //            start: function (e){
-        //                console.log( 'mouse down' );
-        //                var mouseDownPosition = e.pointer.point;
-        //                console.log( mouseDownPosition );
-        //            },
-        //
-        //            drag: function(e){
-        //                //console.log('drag event follows: ');
-        //                var v1 =  this.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-        //                var angle = -v1.x/wavelength;        //model angle is opposite of xy coords angle
-        //                //console.log( 'angle is ' + angle );
-        //                //model.angle = angle;
-        //                model.setAngle( angle );
-        //            }
-        //        } ) );
+        this.redDotHandle.addInputListener( new SimpleDragHandler(
+                {
+                    // When dragging across it in a mobile device, pick it up
+                    allowTouchSnag: true,
+
+                    start: function ( e ) {
+                        console.log( 'mouse down' );
+                        var mouseDownPosition = e.pointer.point;
+                        console.log( 'GraphView mouseDownPos = '  + mouseDownPosition );
+                    },
+
+                    drag: function ( e ) {
+                        //console.log('drag event follows: ');
+                        var v1 = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
+                        var angle = 2*Math.PI*v1.x / wavelength;
+                        //console.log( 'angle is ' + angle );
+                        //model.angle = angle;
+                        model.setAngle( angle );
+                    }
+                } ) );
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
@@ -221,20 +228,23 @@ define( function( require ) {
 
     return inherit( Node, GraphView, {
         setIndicatorLine: function(){
-            var amplitude = 70;
+            //var amplitude = 70;
             var angle = this.model.getAngleInRadians();
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
             var tan = Math.tan( angle );
             if( this.trigFunction == 'cos'){
-                this.indicatorLine.setPoint2( 0, -cos*amplitude );
-                this.redDotHandle.y = -cos*amplitude;
+                this.indicatorLine.setPoint2( 0, -cos*this.amplitude );
+                this.indicatorLine.stroke = COS_COLOR;
+                this.redDotHandle.y = -cos*this.amplitude;
             }else if ( this.trigFunction == 'sin' ){
-                this.indicatorLine.setPoint2( 0, -sin*amplitude );
-                this.redDotHandle.y = -sin*amplitude;
+                this.indicatorLine.setPoint2( 0, -sin*this.amplitude );
+                this.indicatorLine.stroke = SIN_COLOR;
+                this.redDotHandle.y = -sin*this.amplitude;
             }else{
-                this.indicatorLine.setPoint2( 0, -tan*amplitude );
-                this.redDotHandle.y = -tan*amplitude;
+                this.indicatorLine.setPoint2( 0, -tan*this.amplitude );
+                this.indicatorLine.stroke = TAN_COLOR;
+                this.redDotHandle.y = -tan*this.amplitude;
             }
         }
     }

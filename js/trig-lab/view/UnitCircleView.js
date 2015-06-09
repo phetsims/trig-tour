@@ -44,8 +44,7 @@ define( function( require ) {
 
         //Draw Unit Circle
         var radius = 150; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:'#555' +
-                                                         '', lineWidth: 2 } );    //provides parent node and origin for rotorGraphic
+        var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
         unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
@@ -61,8 +60,8 @@ define( function( require ) {
         circleGraphic.addChild( this.specialAnglesNode );
 
         //Draw x-, y-axes with x and y labels
-        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
-        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 2 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
+        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
+        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         circleGraphic.addChild( yAxis );
         circleGraphic.addChild( xAxis );
         //Draw and position x-, y-axis labels
@@ -117,7 +116,7 @@ define( function( require ) {
         var hLine = new Line( 0, 0, radius, 0, {lineWidth: 6, stroke: '#00f'} );
         circleGraphic.addChild( hLine );
 
-        //Draw rotor arm
+        //Draw rotor arm with grabbable red dot at ennd
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;

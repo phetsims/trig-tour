@@ -20,8 +20,8 @@ define( function( require ) {
   var cosStr = 'cos';
   var sinStr = 'sin';
   var tanStr = 'tan';
-  var degreesStr = 'degrees';
-  var radiansStr = 'radians';
+  //var degreesStr = 'degrees';
+  //var radiansStr = 'radians';
   var degStr = 'deg';
   var radStr = 'rad';
   var labelsStr = 'Labels';
@@ -35,8 +35,8 @@ define( function( require ) {
   var tanText = new Text( tanStr, fontInfo );
   //var degreesText = new Text( degreesStr, fontInfo );
   //var radiansText = new Text( radiansStr, fontInfo );
-  var degText = new Text( degStr, fontInfo ) ;
-  var radText = new Text( radStr, fontInfo );
+  //var degText = new Text( degStr, fontInfo ) ;
+  //var radText = new Text( radStr, fontInfo );
   var labelsText =  new Text( labelsStr, fontInfo );
   var gridText = new Text( gridStr, fontInfo );
   var specialAnglesText = new Text( specialAnglesStr, fontInfo );
@@ -70,9 +70,9 @@ define( function( require ) {
     var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText, myRadioButtonOptions );
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText, myRadioButtonOptions );
 
-    // 2 radio buttons for display in degrees or radians
-    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
-    var radiansRadioButton = new AquaRadioButton(  properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
+    //// 2 radio buttons for display in degrees or radians
+    //var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
+    //var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty );
@@ -90,12 +90,12 @@ define( function( require ) {
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( 100 ), //maxControlWidth ),
-        new HBox( {
-        children: [
-          degreesRadioButton,
-          radiansRadioButton,
-          ]}),
+        //new HSeparator( 100 ), //maxControlWidth ),
+        //new HBox( {
+        //children: [
+        //  degreesRadioButton,
+        //  radiansRadioButton,
+        //  ]}),
         new HSeparator( 100 ), //maxControlWidth ),
         labelsCheckBox,
         gridCheckBox,

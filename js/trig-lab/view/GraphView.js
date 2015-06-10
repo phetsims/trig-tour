@@ -16,6 +16,7 @@ define( function( require ) {
     var Path = require( 'SCENERY/nodes/Path' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+    var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
     //var Vector2 = require( 'DOT/Vector2' );
     /**
@@ -35,9 +36,9 @@ define( function( require ) {
     var degreesLabels;
 
     //constants
-    var COS_COLOR = '#009';
-    var SIN_COLOR = '#090';
-    var TAN_COLOR = '#900';
+    var COS_COLOR = '#00c';
+    var SIN_COLOR = '#0c0';
+    var TAN_COLOR = '#d00';
 
 
     function GraphView( model, height, width  ) {      //height and width of this view
@@ -45,7 +46,14 @@ define( function( require ) {
         var graphView = this;
         this.model = model;
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
-        console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
+        //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
+        //test
+        //var testText = new SubSupText( '100<sup>super</sup>', { font: font, fill: 'black' });
+        //testText.y  = -50;
+        //testText.x  = 50;
+        //graphView.addChild( testText );
+
+        //console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView, { } );
@@ -62,8 +70,10 @@ define( function( require ) {
         var xAxisLength = width; //0.9*stageW;
         var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1 });  //tailX, tailY, tipX, tipY, options
         var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1 } );
-        graphView.addChild( xAxis );
-        graphView.addChild( yAxis );
+        this.axesNode = new Node();   //axes bounds are used in layout
+        this.axesNode.children = [ xAxis, yAxis ];
+        graphView.addChild( this.axesNode );
+
         //draw tic marks on x-, y-axes
         var ticLength = 5;
         for( var i = -nbrOfWavelengths; i < nbrOfWavelengths; i++ ){
@@ -77,30 +87,20 @@ define( function( require ) {
             yAxis.addChild( yTic );
         }
 
-        //Draw x-axis tic mark labels
-
-
-
-
-        //var axesShape = new Shape();
-        //axesShape.moveTo( -0.4*stageW, 0 ).lineTo( +0.4*stageW, 0 );
-        //axesShape.moveTo( 0, -0.15*stageH ).lineTo( 0, 0.15*stageH );
-        //var axesPath = new Path( axesShape, { stroke: '#000', lineWidth: 2} );
-        //graphView.addChild( axesPath );
-
         //Axes labels
         var fontInfo = { font: '20px sans-serif' };
         var thetaLabel = new Text( theta, fontInfo );
-        xAxis.addChild( thetaLabel );
-        thetaLabel.right = xAxis.right;
-        thetaLabel.top = xAxis.bottom;
+        //xAxis.addChild( thetaLabel );
+        graphView.addChild( thetaLabel );
+        thetaLabel.left = this.axesNode.right + 10; //= xAxis.right;
+        thetaLabel.centerY = xAxis.centerY;
         this.cosThetaLabel = new Text( cosTheta, fontInfo );
         this.sinThetaLabel = new Text( sinTheta, fontInfo );
         this.tanThetaLabel = new Text( tanTheta, fontInfo );
-        yAxis.addChild( this.cosThetaLabel );
-        yAxis.addChild( this.sinThetaLabel );
-        yAxis.addChild( this.tanThetaLabel );
-        this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right  = yAxis.left - 5;
+        graphView.addChild( this.cosThetaLabel );
+        graphView.addChild( this.sinThetaLabel );
+        graphView.addChild( this.tanThetaLabel );
+        this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right  = yAxis.left - 10;
         this.cosThetaLabel.top = this.sinThetaLabel.top = this.tanThetaLabel.top =  yAxis.top;
 
         //Draw sinusoidal curves
@@ -131,7 +131,7 @@ define( function( require ) {
         //draw tangent curve cut off at upper and lower limits
         for ( i = 0; i < nbrOfPoints; i++ ) {
             tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
-            if ( (tanValue < 2) && (tanValue > -1.5) ) {
+            if ( (tanValue < 2) && (tanValue > -2) ) {
                 tanShape.lineTo( xPos, yOrigin - this.amplitude * tanValue );
             }
             else {
@@ -144,29 +144,18 @@ define( function( require ) {
         this.sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );
         this.cosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );
         this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
-        //sinIndicator is a vertical line on sine curve showing current value of angle and sin(angle)
-        //red dot on top of indicator line echoes red dot on unit circle
+
+        //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
+        //a red dot on top of the indicator line echoes red dot on unit circle
         this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0f0', lineWidth: 6 } );
         this.redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
         this.indicatorLine.addChild( this.redDotHandle );
-        //var sinIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#0f0', lineWidth: 6 } );
-        //var cosIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#00f', lineWidth: 6 } );
-        //var tanIndicator = new Line( 0, 0, 0, amplitude, { stroke: '#f00', lineWidth: 6 } ) ;
-        //var redDotOnSin = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
-        //var redDotOnCos = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
-        //var redDotOnTan = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
-        //sinIndicator.addChild( redDotOnSin );
-        //cosIndicator.addChild( redDotOnCos );
-        //tanIndicator.addChild( redDotOnTan );
 
         graphView.addChild( this.sinPath );
         graphView.addChild( this.cosPath );
         graphView.addChild( this.tanPath );
         graphView.addChild( this.indicatorLine );
-        //this.sinPath.addChild( sinIndicator );
-        //this.cosPath.addChild( cosIndicator );
-        //this.tanPath.addChild( tanIndicator );
-        //graphView.addChild( axesPath );
+
 
 
 

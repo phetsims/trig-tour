@@ -23,11 +23,16 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
 
   /**
-   * Constructor for RotorNode which renders rotor as a scenery node.
-   * @param {TrigLabModel} model is the main model of the sim
+   * Constructor for FractionNode which takes two sting inputs, A and B, and creates built-up fraction A/B:
+   *    A
+   *    -
+   *    B
+   * @param {string} numerator
+   * @param {string} denominator
+   * @param {object} options
    * @constructor
    */
-  function FractionNode( numerator, denominator, options  ) {
+  function FractionNode( numerator, denominator, options  ) {       //inputs can be strings or not
 
     var fractionNode = this;
 
@@ -51,10 +56,10 @@ define( function( require ) {
     var length = 1.2*numeratorText.width;
     var midHeight = 7;
     var bar = new Line( -length/2, -midHeight, length/2, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
-    //fractionNode.children = [ numeratorText, bar, denominatorText ];
-    fractionNode.addChild( numeratorText );
-    fractionNode.addChild( bar );
-    fractionNode.addChild( denominatorText );
+    fractionNode.children = [ numeratorText, bar, denominatorText ];
+    //fractionNode.addChild( numeratorText );
+    //fractionNode.addChild( bar );
+    //fractionNode.addChild( denominatorText );
 
     //layout
     numeratorText.centerX = denominatorText.centerX = bar.centerX = 0;

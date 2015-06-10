@@ -46,17 +46,18 @@ define( function ( require ) {
         this.addChild( controlPanel );
 
         //Layout children Views
-        unitCircleView.centerX = this.layoutBounds.centerX;
+        unitCircleView.x = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
         readOutView.left = this.layoutBounds.left + 30 ;
         readOutView.top = 30;
-        graphView.centerX = this.layoutBounds.centerX;
-        graphView.bottom = this.layoutBounds.bottom + 25;
+        graphView.x = this.layoutBounds.centerX;
+        graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
         controlPanel.right = this.layoutBounds.right - 30;
         controlPanel.top = this.layoutBounds.top + 30;
         console.log( 'layoutBounds = '+this.layoutBounds );
+
         //Test Code follows
-        trigLabModel.setAngleInDegrees( 0 );
+        //trigLabModel.setAngleInDegrees( 0 );
         //console.log( 'trigLabModel.angle is ' + trigLabModel.angle );
         //console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
         //console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );

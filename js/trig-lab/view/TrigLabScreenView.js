@@ -60,7 +60,7 @@ define( function ( require ) {
         //console.log( 'trigLabModel.angle is ' + trigLabModel.angle );
         //console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
         //console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );
-        console.log('this.layoutBounds = '+this.layoutBounds );
+        //console.log('this.layoutBounds = '+this.layoutBounds );
 
         viewProperties.graphProperty.link( function( graph ) {
             graphView.trigFunction = graph;

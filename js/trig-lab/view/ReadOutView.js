@@ -19,6 +19,7 @@ define( function( require ) {
 
     //strings
     var xyEqualsStr = '(x,y) = ';
+    var equalStr = '=';
     var angleEqualsStr = 'angle = ';
     var sinEqualsStr = 'sin = ';
     var cosEqualsStr = 'cos = ';
@@ -62,10 +63,12 @@ define( function( require ) {
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
-
-        var tanFraction = new FractionNode( xStr, yStr );
+        var tanFraction = new FractionNode( yStr, xStr );
+        var equalsText = new Text( '  ' + equalStr + ' ', fontInfo );
+        tanFraction.addChild( equalsText );
+        tanFraction.right = equalsText.left;
         this.tanLabel.addChild( tanFraction );
-        tanFraction.left = tanLabel.right;
+        tanFraction.left = this.tanLabel.right;
 
         var sinReadoutText = new Text( sinReadout, fontInfo );
         var cosReadoutText = new Text( cosReadout, fontInfo );
@@ -167,7 +170,7 @@ define( function( require ) {
         } ,
         setAngleReadoutPrecision: function( nbrDecimalPlaces ){
             this.nbrDecimalPlaces = nbrDecimalPlaces;
-            console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
+            //console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
         }
     } );
 } );

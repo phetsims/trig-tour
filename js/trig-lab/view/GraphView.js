@@ -14,6 +14,7 @@ define( function( require ) {
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
+    var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
@@ -39,6 +40,7 @@ define( function( require ) {
     var COS_COLOR = '#00c';
     var SIN_COLOR = '#0c0';
     var TAN_COLOR = '#d00';
+    var DISPLAY_FONT = new PhetFont( 20 );
 
 
     function GraphView( model, height, width  ) {      //height and width of this view
@@ -48,15 +50,23 @@ define( function( require ) {
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
         //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
         //test
-        //var testText = new SubSupText( '100<sup>super</sup>', { font: font, fill: 'black' });
-        //testText.y  = -50;
-        //testText.x  = 50;
+        var testText = new SubSupText( '100<sup>5</sup>', { font: DISPLAY_FONT, fill: 'black' });
+        testText.y  = -50;
+        testText.x  = 50;
+        debugger;
         //graphView.addChild( testText );
 
-        //console.log( 'superscript test: ' + testText.getText() );
+        //
+        // console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView, { } );
+
+        //test
+        var testText = new SubSupText( '100<sup>5</sup>', { font: DISPLAY_FONT, fill: 'black' });
+        testText.y  = -50;
+        testText.x  = 50;
+        graphView.addChild( testText );
 
         //var stageW = 1054; //width of main stage in pixels
         var wavelength = width/4;  //wavelength of sinusoidal curve in pixels

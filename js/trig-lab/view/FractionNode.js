@@ -49,7 +49,7 @@ define( function( require ) {
     }
 
     var length = 1.2*numeratorText.width;
-    var midHeight = 8;
+    var midHeight = 7;
     var bar = new Line( -length/2, -midHeight, length/2, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
     //fractionNode.children = [ numeratorText, bar, denominatorText ];
     fractionNode.addChild( numeratorText );

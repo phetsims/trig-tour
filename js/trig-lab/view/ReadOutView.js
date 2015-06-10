@@ -63,10 +63,20 @@ define( function( require ) {
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
+        var cosFraction = new FractionNode( xStr, 1 );
+        var sinFraction = new FractionNode( yStr, 1 ) ;
         var tanFraction = new FractionNode( yStr, xStr );
         var equalsText = new Text( '  ' + equalStr + ' ', fontInfo );
+        sinFraction.addChild( equalsText );
+        cosFraction.addChild( equalsText );
         tanFraction.addChild( equalsText );
+        sinFraction.right = equalsText.left;
+        cosFraction.right = equalsText.left;
         tanFraction.right = equalsText.left;
+        this.sinLabel.addChild( sinFraction );
+        sinFraction.left = this.sinLabel.right;
+        this.cosLabel.addChild( cosFraction );
+        cosFraction.left = this.cosLabel.right;
         this.tanLabel.addChild( tanFraction );
         tanFraction.left = this.tanLabel.right;
 

@@ -48,12 +48,12 @@ define( function ( require ) {
         //Layout children Views
         unitCircleView.centerX = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
-        readOutView.left = this.layoutBounds.left + 20 ;
+        readOutView.left = this.layoutBounds.left + 30 ;
         readOutView.top = 30;
         graphView.centerX = this.layoutBounds.centerX;
-        graphView.bottom = this.layoutBounds.bottom;
-        controlPanel.right = this.layoutBounds.right - 40;
-        controlPanel.top = this.layoutBounds.top + 40;
+        graphView.bottom = this.layoutBounds.bottom + 25;
+        controlPanel.right = this.layoutBounds.right - 30;
+        controlPanel.top = this.layoutBounds.top + 30;
         console.log( 'layoutBounds = '+this.layoutBounds );
         //Test Code follows
         trigLabModel.setAngleInDegrees( 0 );

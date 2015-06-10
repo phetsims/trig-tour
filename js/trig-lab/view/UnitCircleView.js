@@ -43,7 +43,7 @@ define( function( require ) {
         Node.call( unitCircleView );
 
         //Draw Unit Circle
-        var radius = 150; //radius of unit circle in pixels
+        var radius = 160; //radius of unit circle in pixels
         var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
         unitCircleView.addChild( circleGraphic );
 

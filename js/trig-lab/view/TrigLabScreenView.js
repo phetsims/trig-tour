@@ -24,6 +24,8 @@ define( function ( require ) {
     function TrigLabScreenView( trigLabModel ) {
 
         ScreenView.call( this );
+        var trigLabScreenView = this;
+        this.labelsVisible = false;  //set by Control Panel
 
         // Create and add the Reset All Button in the bottom right, which resets the model
         var resetAllButton = new ResetAllButton( {
@@ -56,13 +58,6 @@ define( function ( require ) {
         controlPanel.top = this.layoutBounds.top + 30;
         console.log( 'layoutBounds = '+this.layoutBounds );
 
-        //Test Code follows
-        //trigLabModel.setAngleInDegrees( 0 );
-        //console.log( 'trigLabModel.angle is ' + trigLabModel.angle );
-        //console.log( 'angle in degrees is ' + trigLabModel.getAngleInDegrees() );
-        //console.log( ' cos of ' + trigLabModel.getAngleInDegrees() + ' is ' + trigLabModel.cos() );
-        //console.log('this.layoutBounds = '+this.layoutBounds );
-
         viewProperties.graphProperty.link( function( graph ) {
             graphView.trigFunction = graph;
             graphView.cosPath.visible = ( graph === 'cos' );
@@ -72,16 +67,19 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
-            //readOutView.sinLabel.visible = ( graph === 'sin' );
-            //readOutView.cosLabel.visible = ( graph === 'cos' );
-            //readOutView.tanLabel.visible = ( graph === 'tan' );
             readOutView.setTrigLabel( graph );
         } );
 
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
-            unitCircleView.labelsVisible = isVisible;
-            unitCircleView.setLabelVisibility();
-            //unitCircleView.positionLabels( isVisible );
+            trigLabScreenView.labelsVisible = isVisible;
+            unitCircleView.setLabelVisibility( isVisible );
+            if( isVisible ){
+                graphView.tickMarkLabelsInRadians.visible = readOutView.radiansDisplayed;
+                graphView.tickMarkLabelsInDegrees.visible = !readOutView.radiansDisplayed;
+            }else{
+                graphView.tickMarkLabelsInRadians.visible = false;
+                graphView.tickMarkLabelsInDegrees.visible = false;
+            }
         });
 
         viewProperties.gridVisibleProperty.link( function( isVisible ){
@@ -91,6 +89,11 @@ define( function ( require ) {
         viewProperties.angleUnitsProperty.link ( function( units ){
             readOutView.radiansDisplayed = ( units === 'radians');
             readOutView.setUnits( units );
+            if( trigLabScreenView.labelsVisible ){
+                graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
+                graphView.tickMarkLabelsInDegrees.visible = !( units === 'radians');
+            }
+
             //readOutView.setUnits( units );
         });
 

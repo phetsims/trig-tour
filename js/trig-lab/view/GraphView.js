@@ -10,6 +10,7 @@ define( function( require ) {
     // modules
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Circle = require( 'SCENERY/nodes/Circle' );
+    var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
@@ -32,15 +33,16 @@ define( function( require ) {
     var sinTheta = 'sin' + theta ;
     var tanTheta = 'tan' + theta ;
     var pi ='\u03c0';
-    var radiansPiLabels = [ '-3'+pi, '-2'+pi, -'1'+pi, '', '1'+pi, '2'+pi, '3'+pi ];
-    var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', pi+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
-    var degreesLabels;
+    //var radiansPiLabels = [ '-3'+pi, '-2'+pi, -'1'+pi, '', '1'+pi, '2'+pi, '3'+pi ];
+    //var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', pi+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
+    //var degreesLabels;
 
     //constants
     var COS_COLOR = '#00c';
     var SIN_COLOR = '#0c0';
     var TAN_COLOR = '#d00';
     var DISPLAY_FONT = new PhetFont( 20 );
+    var DISPLAY_FONT_SMALL = new PhetFont( 18 );
 
 
     function GraphView( model, height, width  ) {      //height and width of this view
@@ -48,33 +50,18 @@ define( function( require ) {
         var graphView = this;
         this.model = model;
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
+        this.labelsVisible = 'false';  //set by Control Panel
         //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
-        //test
-        var testText = new SubSupText( '100<sup>5</sup>', { font: DISPLAY_FONT, fill: 'black' });
-        testText.y  = -50;
-        testText.x  = 50;
-        debugger;
-        //graphView.addChild( testText );
 
-        //
         // console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView, { } );
 
-        //test
-        var testText = new SubSupText( '100<sup>5</sup>', { font: DISPLAY_FONT, fill: 'black' });
-        testText.y  = -50;
-        testText.x  = 50;
-        graphView.addChild( testText );
 
-        //var stageW = 1054; //width of main stage in pixels
         var wavelength = width/4;  //wavelength of sinusoidal curve in pixels
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
-        //this.cosVisible = true;
-        //this.sinVisible = false;
-        //this.tanVisible = false;
 
         //draw x-, y-axes
         var xAxisLength = width; //0.9*stageW;
@@ -97,8 +84,42 @@ define( function( require ) {
             yAxis.addChild( yTic );
         }
 
+        //draw tic mark labels in degrees
+        this.tickMarkLabelsInDegrees = new Node();
+        for( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ){
+            var nbrDegrees = 180*j.toFixed(0);
+            //console.log('j = '+j+'   nbrDegrees = '+nbrDegrees );
+            nbrDegrees = nbrDegrees.toString();
+            var label = new SubSupText( nbrDegrees+'<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
+            label.centerX = j*wavelength/2;
+            label.top = xAxis.bottom;
+            if( j != 0 ){
+                this.tickMarkLabelsInDegrees.addChild( label ) ;
+            }
+        }
+        graphView.addChild( this.tickMarkLabelsInDegrees );
+
+
+        //Tick mark labels in radians
+        this.tickMarkLabelsInRadians = new Node();
+        var labelStr = '' ;
+        var labelStrings = [ '-3' + pi,  '-2' + pi, '-' + pi, pi, '2' + pi, '3' + pi ];
+        var xPositions = [ -3, -2, -1, 1, 2, 3 ];
+        for ( i = 0; i < 6; i++ ){
+            labelStr = labelStrings[i];
+            var label = new Text( labelStr, { font: DISPLAY_FONT_SMALL } );
+            label.centerX = xPositions[i]*wavelength/2;
+            label.top = xAxis.bottom;
+            this.tickMarkLabelsInRadians.addChild( label );
+        }
+
+
+        graphView.addChild( this.tickMarkLabelsInRadians );
+        this.tickMarkLabelsInDegrees.visible = false;   //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+        this.tickMarkLabelsInRadians.visible = false;
+
         //Axes labels
-        var fontInfo = { font: '20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT };
         var thetaLabel = new Text( theta, fontInfo );
         //xAxis.addChild( thetaLabel );
         graphView.addChild( thetaLabel );
@@ -117,8 +138,6 @@ define( function( require ) {
         var cosShape = new Shape();
         var sinShape = new Shape();
         var tanShape = new Shape();
-
-
         var dx = wavelength/60;
         var nbrOfPoints = (nbrOfWavelengths)*wavelength/dx;
         var xOrigin = 0;
@@ -166,12 +185,6 @@ define( function( require ) {
         graphView.addChild( this.tanPath );
         graphView.addChild( this.indicatorLine );
 
-
-
-
-
-
-
         // When dragging, move the sample element
         this.redDotHandle.addInputListener( new SimpleDragHandler(
                 {
@@ -193,6 +206,11 @@ define( function( require ) {
                         model.setAngle( angle );
                     }
                 } ) );
+
+        this.setLabelVisibility = function( tOrF ){
+            this.labelsVisible = tOrF;
+            console.log( 'graph labels visibility is ' + this.labelsVisible );
+        };
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {

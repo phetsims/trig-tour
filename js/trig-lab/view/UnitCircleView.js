@@ -23,7 +23,7 @@ define( function( require ) {
     var yStr = 'y';
     var oneStr = '1';
     var plusOneStr = '+1';
-    var minusOneStr = '-1'
+    var minusOneStr = '-1';
     var thetaStr = '\u03b8' ; // \u03b8 = unicode for theta
 
     /**
@@ -37,7 +37,7 @@ define( function( require ) {
         var unitCircleView = this;
         this.model = model;
         var trigLabModel = model;
-        this.labelsVisible = 'false';  //set by Control Panel
+        //this.labelsVisible = 'false';  //set by Control Panel
 
         // Call the super constructor
         Node.call( unitCircleView );
@@ -92,7 +92,7 @@ define( function( require ) {
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var plusOneYText = new Text( plusOneStr, fontInfo );
         var minusOneYText = new Text( minusOneStr, fontInfo );
-        var oneLabels = [plusOneXText, minusOneXText, plusOneYText, minusOneYText];
+        var oneLabels = [ plusOneXText, minusOneXText, plusOneYText, minusOneYText ];
         this.grid.children = oneLabels;
 
         //position one labels
@@ -106,8 +106,6 @@ define( function( require ) {
         minusOneYText.right = -5;
         //circleGraphic.addChild( this.grid );
         this.grid.visible = false;
-
-
 
         //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
@@ -228,7 +226,7 @@ define( function( require ) {
             }
         };   //end drawAngleArc
 
-        //position x, y, and one labels on xyR triangle
+        //position x, y, and one labels on the xyOne triangle
         var labelCanvas = new Node();
         unitCircleView.addChild( labelCanvas );
         var oneText = new Text( oneStr, fontInfo );
@@ -238,18 +236,17 @@ define( function( require ) {
         var labelsArr = [ oneText, xText, yText, thetaText ] ;
         labelCanvas.children = labelsArr;
 
-        this.setLabelVisibility = function(){
+        this.setLabelVisibility = function( isVisible ){
             positionLabels();
-            for( i = 0; i < labelsArr.length; i++ ){
-                labelsArr[i].visible = unitCircleView.labelsVisible;
-            }
+            labelCanvas.visible = isVisible;
         };
 
+        //position the x, y, and 1 labels on the xyOne triangle of the unit circle
         var positionLabels = function( ){
             var smallAngle = trigLabModel.getSmallAngleInRadians();
             var totalAngle = trigLabModel.getAngleInRadians();
             var pi = Math.PI;
-            //set visibility of labels
+            //set visibility of the labels
             if( Math.abs( totalAngle ) < 20*pi/180 ){
                 thetaText.visible = false;
             }else{
@@ -299,9 +296,7 @@ define( function( require ) {
             yPos = -0.37*radius*Math.sin( totalAngle/2 );// - 0.5*thetaText.height;
             thetaText.centerX = xPos;
             thetaText.centerY = yPos;
-            //position x
-            //position y
-            //position 1
+
         };//end positionLabels()
 
 
@@ -316,7 +311,8 @@ define( function( require ) {
             vLine.setPoint2( 0, -radius*sin  );
             hLine.setPoint2( radius*cos, 0 );
             drawAngleArc();
-            if( unitCircleView.labelsVisible ){ positionLabels(); }
+            positionLabels();
+            //if( unitCircleView.labelsVisible ){ positionLabels(); }
         } );
 
     }

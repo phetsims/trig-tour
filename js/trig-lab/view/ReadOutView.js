@@ -26,7 +26,7 @@ define( function( require ) {
     var tanEqualsStr = 'tan = ';
     var degreesStr = 'degrees';
     var radiansStr = 'radians';
-    var infinityStr = '\u221E';   //'infinity';
+    var infinityStr = 'infinity'; //'\u221E';   //
     var xStr = 'x';
     var yStr = 'y';
 
@@ -37,7 +37,7 @@ define( function( require ) {
      * @param {TrigLabModel} model is the main model of the sim
      * @constructor
      */
-    function ReadOutView( model, properties  ) {
+    function ReadOutView( model, properties ) {
 
         var readOutView = this;
         this.model = model;
@@ -63,9 +63,9 @@ define( function( require ) {
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
-        var cosFraction = new FractionNode( xStr, 1 );
-        var sinFraction = new FractionNode( yStr, 1 ) ;
-        var tanFraction = new FractionNode( yStr, xStr );
+        var cosFraction = new FractionNode( xStr, 1, fontInfo ) ;
+        var sinFraction = new FractionNode( yStr, 1, fontInfo ) ;
+        var tanFraction = new FractionNode( yStr, xStr, fontInfo );
         var equalsText = new Text( '  ' + equalStr + ' ', fontInfo );
         sinFraction.addChild( equalsText );
         cosFraction.addChild( equalsText );
@@ -123,7 +123,7 @@ define( function( require ) {
                 readOutView.trigLabel,
                 new HSeparator( 100 ), //maxControlWidth ),
                 degreesRadioButton,
-                radiansRadioButton,
+                radiansRadioButton
             ],
             align: 'left',
             spacing: spacing
@@ -152,10 +152,12 @@ define( function( require ) {
             }
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
-            if( model.tan() < 1000 ){
+            if( model.tan() < 1000 && model.tan() > -1000 ){
                 tanReadoutText.text = tanText;
-            }else{
+            }else if( model.tan() > 1000 ){
                 tanReadoutText.text = infinityStr;
+            }else if( model.tan() < -1000 ){
+                tanReadoutText.text = '-' + infinityStr;
             }
         } );
     }

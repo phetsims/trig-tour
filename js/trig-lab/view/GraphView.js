@@ -197,31 +197,9 @@ define( function( require ) {
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
-            //var cos = Math.cos( angle );
-            //var sin = Math.sin( angle );
-            //var tan = Math.tan( angle );
             var xPos = angle/(2*Math.PI)*wavelength;
             graphView.indicatorLine.x = xPos;
             graphView.setIndicatorLine();
-            //if( graphView.trigFunction == 'cos'){
-            //    indicatorLine.setPoint2( 0, -cos*amplitude );
-            //    redDotHandle.y = -cos*amplitude;
-            //}else if ( graphView.trigFunction == 'sin' ){
-            //    indicatorLine.setPoint2( 0, -sin*amplitude );
-            //    redDotHandle.y = -sin*amplitude;
-            //}else{
-            //    indicatorLine.setPoint2( 0, -tan*amplitude );
-            //    redDotHandle.y = -tan*amplitude;
-            //}
-            //sinIndicator.x = xPos;
-            //cosIndicator.x = xPos;
-            //tanIndicator.x = xPos;
-            //sinIndicator.setPoint2( 0, -sin*amplitude );  //in model, +y is up; in screenCoords, +y is down, hence the minus sign
-            //cosIndicator.setPoint2( 0, -cos*amplitude );
-            //tanIndicator.setPoint2( 0, -tan*amplitude );
-            //redDotOnSin.y = -sin*amplitude;
-            //redDotOnCos.y = -cos*amplitude;
-            //redDotOnTan.y = -tan*amplitude;
         } );
 
     }
@@ -241,11 +219,11 @@ define( function( require ) {
                 this.indicatorLine.setPoint2( 0, -sin*this.amplitude );
                 this.indicatorLine.stroke = SIN_COLOR;
                 this.redDotHandle.y = -sin*this.amplitude;
-            }else{
+            }else if ( this.trigFunction == 'tan' ){
                 this.indicatorLine.setPoint2( 0, -tan*this.amplitude );
                 this.indicatorLine.stroke = TAN_COLOR;
                 this.redDotHandle.y = -tan*this.amplitude;
-            }
+            }else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
         }
     }
         );

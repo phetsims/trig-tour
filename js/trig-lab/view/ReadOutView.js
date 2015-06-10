@@ -7,6 +7,7 @@ define( function( require ) {
 
     // modules
     var AquaRadioButton = require( 'SUN/AquaRadioButton' );
+    var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
     var HBox = require( 'SCENERY/nodes/HBox' );
     var HSeparator = require( 'SUN/HSeparator' );
     var inherit = require( 'PHET_CORE/inherit' );
@@ -24,8 +25,11 @@ define( function( require ) {
     var tanEqualsStr = 'tan = ';
     var degreesStr = 'degrees';
     var radiansStr = 'radians';
+    var infinityStr = '\u221E';   //'infinity';
+    var xStr = 'x';
+    var yStr = 'y';
 
-     //constants
+    //constants
     var DISPLAY_FONT = new PhetFont( 20 );
     /**
      * Constructor for ReadOutView which displays live values of angle, sin, cos, and tan
@@ -50,8 +54,6 @@ define( function( require ) {
         var tanReadout = model.tan().toFixed( 3 );
 
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
-        //var radius = 200; //radius of unit circle in pixels
-        //var stageGraphic = new Node();  //provides parent and coord origin children
         var fontInfo = { font: DISPLAY_FONT }; //{ font: '20px sans-serif' };
         var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
         var coordinatesReadoutText = new Text( '', fontInfo );
@@ -60,6 +62,11 @@ define( function( require ) {
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
+
+        var tanFraction = new FractionNode( xStr, yStr );
+        this.tanLabel.addChild( tanFraction );
+        tanFraction.left = tanLabel.right;
+
         var sinReadoutText = new Text( sinReadout, fontInfo );
         var cosReadoutText = new Text( cosReadout, fontInfo );
         var tanReadoutText = new Text( tanReadout, fontInfo );
@@ -132,9 +139,12 @@ define( function( require ) {
             }
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
-            tanReadoutText.text = tanText;
+            if( model.tan() < 1000 ){
+                tanReadoutText.text = tanText;
+            }else{
+                tanReadoutText.text = infinityStr;
+            }
         } );
-
     }
 
 

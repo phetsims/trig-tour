@@ -29,7 +29,7 @@ define( function( require ) {
   var radiansStr = 'radians';
   var infinityStr = '\u221E';   //'infinity'; //
   var pi ='\u03c0';
-  var xStr = '-x';
+  var xStr = 'x';
   var yStr = 'y';
 
   //constants
@@ -118,7 +118,7 @@ define( function( require ) {
     tanReadoutText.left =  this.tanLabel.right ;
 
     // Adjust touch areas
-    var spacing = 20;
+    var spacing = 10;
 
     this.content = new VBox( {
       children: [
@@ -153,10 +153,14 @@ define( function( require ) {
       coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
       if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
         readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
-      }else if( !readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
+      }else if( !readoutNode.radiansDisplayed ){
         readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       }else if( readoutNode.radiansDisplayed && readoutNode.specialAnglesOnly ) {
         //readoutNode.setSpecialAngleReadout();
+
+        readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
+      }else{
+        readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       }
       sinReadoutText.text = sinText;
       cosReadoutText.text = cosText;

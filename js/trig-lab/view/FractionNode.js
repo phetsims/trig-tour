@@ -57,7 +57,7 @@ define( function( require ) {
       denominatorNegative = true;
     }
 
-    
+
     denominatorText = new Text( denominator, options );
 
     if((numeratorNegative && !denominatorNegative) || ( !numeratorNegative && denominatorNegative )){

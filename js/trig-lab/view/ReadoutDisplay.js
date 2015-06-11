@@ -41,13 +41,13 @@ define( function( require ) {
       buttonXMargin: 8, // horizontal space between button and left|right edge of box
       buttonYMargin: 8,
       titleNode: new Text( 'Readouts', { font: DISPLAY_FONT } ),
-      titleAlignX: 'center',
-      contentAlign: 'left',
+      titleAlignX: 'left',
+      //contentAlign: 'left',
       fill: 'white',
-      showTitleWhenExpanded: false,
-      contentXMargin: 8,
-      contentYMargin: 25,
-      contentYSpacing: 30,
+      showTitleWhenExpanded: true,
+      contentXMargin: 20,
+      contentYMargin: 15,
+      contentYSpacing: 8,
       expandedProperty: this.expanded
     } );
 

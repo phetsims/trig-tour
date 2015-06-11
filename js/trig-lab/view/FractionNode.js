@@ -56,6 +56,7 @@ define( function( require ) {
       denominator = denominator.slice( 1 );
       denominatorNegative = true;
     }
+
     
     denominatorText = new Text( denominator, options );
 

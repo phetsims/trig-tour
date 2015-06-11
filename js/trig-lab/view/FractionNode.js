@@ -16,7 +16,6 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
 
-
   /**
    * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:
    *    A
@@ -43,17 +42,21 @@ define( function( require ) {
     var minusSignNeeded = false;      //true if sign of over-all fraction is negative
 
     if( typeof numerator != 'string' ){ numerator = numerator.toString(); }
+
     if( numerator.charAt( 0 ) == '-' ){  //remove minus sign, if found
         numerator = numerator.slice( 1 );
         numeratorNegative = true;
     }
+
     numeratorText = new Text( numerator, options );
 
     if( typeof denominator != 'string' ){ denominator = denominator.toString(); }
+
     if( denominator.charAt( 0 ) == '-' ){  //remove minus sign, if found
       denominator = denominator.slice( 1 );
       denominatorNegative = true;
     }
+    
     denominatorText = new Text( denominator, options );
 
     if((numeratorNegative && !denominatorNegative) || ( !numeratorNegative && denominatorNegative )){
@@ -74,7 +77,6 @@ define( function( require ) {
     }else{
       fractionNode.children = [ numeratorText, bar, denominatorText ];
     }
-
 
     //layout
     numeratorText.centerX = denominatorText.centerX = bar.centerX = 0;

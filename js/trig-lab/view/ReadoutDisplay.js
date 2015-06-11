@@ -30,12 +30,16 @@ define( function( require ) {
     this.properties = properties;
 
 
-    var contentNode = new ReadoutNode( model, properties );
+    this.readoutNode = new ReadoutNode( model, properties );
 
     this.expanded = new Property( true );
 
     // Call the super constructor
-    AccordionBox.call( this, contentNode, {
+    AccordionBox.call( this, this.readoutNode, {
+      lineWidth: 2,
+      cornerRadius: 10,
+      buttonXMargin: 8, // horizontal space between button and left|right edge of box
+      buttonYMargin: 8,
       titleNode: new Text( 'Readouts', { font: DISPLAY_FONT } ),
       titleAlignX: 'center',
       contentAlign: 'left',

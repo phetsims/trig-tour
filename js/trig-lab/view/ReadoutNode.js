@@ -150,7 +150,7 @@ define( function( require ) {
       if( readoutNode.radiansDisplayed ){
         readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
       }else{
-        readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readOutView.units;
+        readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       }
       sinReadoutText.text = sinText;
       cosReadoutText.text = cosText;

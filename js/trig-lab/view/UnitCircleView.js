@@ -149,7 +149,7 @@ define( function( require ) {
                     start: function (e){
                         console.log( 'mouse down' );
                         mouseDownPosition = e.pointer.point;
-                        console.log( mouseDownPosition );
+                        //console.log( mouseDownPosition );
                     },
 
                     drag: function(e){

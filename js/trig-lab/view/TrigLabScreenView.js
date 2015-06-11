@@ -14,7 +14,7 @@ define( function ( require ) {
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
-    var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
+    //var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
     var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
 
@@ -41,12 +41,11 @@ define( function ( require ) {
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
         var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
-        var readOutView = new ReadOutView( trigLabModel, viewProperties );
+        //var readOutView = new ReadOutView( trigLabModel, viewProperties );
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.8*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
-        this.addChild( readoutDisplay );
-        this.addChild( readOutView );
+        //this.addChild( readOutView );
         this.addChild( readoutDisplay );
         this.addChild( graphView );
         this.addChild( controlPanel );
@@ -54,8 +53,10 @@ define( function ( require ) {
         //Layout children Views
         unitCircleView.x = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
-        readOutView.left = this.layoutBounds.left + 30 ;
-        readOutView.top = 30;
+        //readOutView.left = this.layoutBounds.left + 30 ;
+        //readOutView.top = 30;
+        readoutDisplay.left = this.layoutBounds.left + 30 ;
+        readoutDisplay.top = 30;
         graphView.x = this.layoutBounds.centerX;
         graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
         controlPanel.right = this.layoutBounds.right - 30;
@@ -71,15 +72,18 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
-            readOutView.setTrigLabel( graph );
+            //readOutView.setTrigLabel( graph );
+            readoutDisplay.readoutNode.setTrigLabel( graph );
         } );
 
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
             trigLabScreenView.labelsVisible = isVisible;
             unitCircleView.setLabelVisibility( isVisible );
             if( isVisible ){
-                graphView.tickMarkLabelsInRadians.visible = readOutView.radiansDisplayed;
-                graphView.tickMarkLabelsInDegrees.visible = !readOutView.radiansDisplayed;
+                //graphView.tickMarkLabelsInRadians.visible = readOutView.radiansDisplayed;
+                //graphView.tickMarkLabelsInDegrees.visible = !readOutView.radiansDisplayed;
+                graphView.tickMarkLabelsInRadians.visible = readoutDisplay.readoutNode.radiansDisplayed;
+                graphView.tickMarkLabelsInDegrees.visible = !readoutDisplay.readoutNode.radiansDisplayed;
             }else{
                 graphView.tickMarkLabelsInRadians.visible = false;
                 graphView.tickMarkLabelsInDegrees.visible = false;
@@ -91,8 +95,10 @@ define( function ( require ) {
         });
 
         viewProperties.angleUnitsProperty.link ( function( units ){
-            readOutView.radiansDisplayed = ( units === 'radians');
-            readOutView.setUnits( units );
+            //readOutView.radiansDisplayed = ( units === 'radians');
+            //readOutView.setUnits( units );
+            readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
+            readoutDisplay.readoutNode.setUnits( units );
             if( trigLabScreenView.labelsVisible ){
                 graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
                 graphView.tickMarkLabelsInDegrees.visible = !( units === 'radians');
@@ -107,9 +113,11 @@ define( function ( require ) {
             if( tOrF ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
-                readOutView.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
+                //readOutView.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
             }else{
-                readOutView.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
+                //readOutView.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
         });
 

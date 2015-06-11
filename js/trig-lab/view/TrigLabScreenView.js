@@ -109,6 +109,7 @@ define( function ( require ) {
 
         viewProperties.specialAnglesVisibleProperty.link( function( tOrF ){
             unitCircleView.specialAnglesNode.visible = tOrF;
+            readoutDisplay.readoutNode.specialAnglesOnly = tOrF;
             trigLabModel.specialAnglesMode = tOrF;
             if( tOrF ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();

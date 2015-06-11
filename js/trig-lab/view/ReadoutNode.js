@@ -1,5 +1,6 @@
 /**
  * Live readout of angle, and values of sin, cos, tan.
+ * This
  * Created by Dubson on 6/10/2015.
  */
 define( function( require ) {
@@ -26,14 +27,16 @@ define( function( require ) {
   var tanEqualsStr = 'tan = ';
   var degreesStr = 'degrees';
   var radiansStr = 'radians';
-  var infinityStr = 'infinity'; //'\u221E';   //
-  var xStr = 'x';
+  var infinityStr = '\u221E';   //'infinity'; //
+  var pi ='\u03c0';
+  var xStr = '-x';
   var yStr = 'y';
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
+   * This is a node which is the content of AccordionBox ReadoutDisplay
    * @param {TrigLabModel} model is the main model of the sim
    * @constructor
    */
@@ -44,6 +47,7 @@ define( function( require ) {
     this.properties = properties;
     this.nbrDecimalPlaces = 1;  //number of decimal places for display of angle, controlled by Control Panel
     this.radiansDisplayed = 'false'; //{boolean} set by ControlPanel
+    this.specialAnglesOnly = 'false'; //{boolean} set by ControlPanel
     this.units = 'degrees';  //{string} 'degrees'|'radians' set by ControlPanel
 
     // Call the super constructor
@@ -147,10 +151,12 @@ define( function( require ) {
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
       coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
-      if( readoutNode.radiansDisplayed ){
+      if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
         readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
-      }else{
+      }else if( !readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
         readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
+      }else if( readoutNode.radiansDisplayed && readoutNode.specialAnglesOnly ) {
+        //readoutNode.setSpecialAngleReadout();
       }
       sinReadoutText.text = sinText;
       cosReadoutText.text = cosText;
@@ -185,6 +191,27 @@ define( function( require ) {
     setAngleReadoutPrecision: function( nbrDecimalPlaces ){
       this.nbrDecimalPlaces = nbrDecimalPlaces;
       //console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
-    }
+    },
+    setSpecialAngleReadout: function(){
+      console.log('ReadoutNode.setSpecialAngle() called.');
+      var angleInDegs = this.model.getAngleInDegrees();
+      var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
+      var fractions = [
+        new Text( '0' ),
+        new FractionNode( pi, 6 ),
+        new FractionNode( pi, 4),
+        new FractionNode( pi, 3 ),
+        new FractionNode( pi, 2 ),
+        new FractionNode( 2 + pi, 3 ),
+        new FractionNode( 3 + pi, 4 ),
+        new FractionNode( 5 + pi, 6 ),
+        new Text( pi )
+      ];//end anglesInRadsFractions
+      for( var i = 0; i < fractions.length; i++ ){
+        if ( angles[i] == angleInDegs ){
+          this.angleReadoutText = fractions[ i ];
+        }
+      }
+    }//end setSpecialAngle
   } );
 } );

@@ -290,8 +290,6 @@ define( function( require ) {
             yText.centerX = xPos;
             yText.centerY = yPos;
             //show and position theta-label on angle arc if arc is greater than 20 degs
-
-
             xPos = 0.37*radius*Math.cos( totalAngle/2 );// - 0.5*thetaText.width;
             yPos = -0.37*radius*Math.sin( totalAngle/2 );// - 0.5*thetaText.height;
             thetaText.centerX = xPos;

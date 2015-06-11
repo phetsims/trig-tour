@@ -151,17 +151,18 @@ define( function( require ) {
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
       coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
+      //readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
         readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
       }else if( !readoutNode.radiansDisplayed ){
         readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       }else if( readoutNode.radiansDisplayed && readoutNode.specialAnglesOnly ) {
-        //readoutNode.setSpecialAngleReadout();
+        readoutNode.setSpecialAngleReadout();
 
-        readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
-      }else{
-        readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
-      }
+        //readoutNode.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
+      }  //else{
+      //  readoutNode.angleReadoutText.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
+      //}
       sinReadoutText.text = sinText;
       cosReadoutText.text = cosText;
       if( model.tan() < 1000 && model.tan() > -1000 ){
@@ -213,7 +214,7 @@ define( function( require ) {
       ];//end anglesInRadsFractions
       for( var i = 0; i < fractions.length; i++ ){
         if ( angles[i] == angleInDegs ){
-          this.angleReadoutText = fractions[ i ];
+          //this.angleReadoutText = fractions[ i ];
         }
       }
     }//end setSpecialAngle

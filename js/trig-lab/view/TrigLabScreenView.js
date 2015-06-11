@@ -61,7 +61,7 @@ define( function ( require ) {
         graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
         controlPanel.right = this.layoutBounds.right - 30;
         controlPanel.top = this.layoutBounds.top + 30;
-        console.log( 'layoutBounds = '+this.layoutBounds );
+        //console.log( 'layoutBounds = '+this.layoutBounds );
 
         viewProperties.graphProperty.link( function( graph ) {
             graphView.trigFunction = graph;

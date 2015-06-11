@@ -52,6 +52,12 @@ define( function( require ) {
       var numeratorNegative = false;    //true if numerator is negative
       var denominatorNegative = false;
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
+      var fontInfo = { font: DISPLAY_FONT };
+
+      if( this.denominator == null ){
+        this.fractionNode = new Text( numerator.toString(), fontInfo );
+        //have to break out somehow
+      }
 
       if( typeof this.numerator != 'string' ){ this.numerator = this.numerator.toString(); }
       if( typeof this.denominator != 'string' ){ this.denominator = this.denominator.toString(); }
@@ -65,7 +71,7 @@ define( function( require ) {
         denominatorNegative = true;
       }
 
-      var fontInfo = { font: DISPLAY_FONT };
+
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
@@ -97,6 +103,6 @@ define( function( require ) {
         minusSign.centerX = 0;
         minusSign.right = bar.left - 3;
       }
-    }
-  }); //end return
+    }//end createFraction()
+  }); //end return inherit..
 } );

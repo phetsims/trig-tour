@@ -106,9 +106,9 @@ define( function( require ) {
     this.tanLabel.top = 0;
     coordinatesLabel.addChild( coordinatesReadoutText );
     this.angleReadoutNode = new FractionNode( 1, 2 );
-    //angleLabel.addChild( this.angleReadoutText );    //angle display is either Text
+    angleLabel.addChild( this.angleReadoutText );    //angle display is either Text
     angleLabel.addChild( this.angleReadoutNode );    //or angle display is FractionNode
-    this.angleReadoutNode = new FractionNode( 3, 4 );
+    //this.angleReadoutNode = new FractionNode( 3, 4 );
     this.cosLabel.addChild( cosReadoutText ) ;
     this.sinLabel.addChild( sinReadoutText ) ;
     this.tanLabel.addChild( tanReadoutText ) ;

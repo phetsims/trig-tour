@@ -13,6 +13,7 @@ define( function ( require ) {
     var ScreenView = require( 'JOIST/ScreenView' );
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
+    var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
     var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
     var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
@@ -39,11 +40,14 @@ define( function ( require ) {
 
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
+        var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
         var readOutView = new ReadOutView( trigLabModel, viewProperties );
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.8*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
+        this.addChild( readoutDisplay );
         this.addChild( readOutView );
+        this.addChild( readoutDisplay );
         this.addChild( graphView );
         this.addChild( controlPanel );
 

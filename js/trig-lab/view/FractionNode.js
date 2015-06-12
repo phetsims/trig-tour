@@ -35,17 +35,18 @@ define( function( require ) {
     Node.call( this.fractionNode, { } );
     this.numerator = numerator;
     this.denominator = denominator;
-    this.createFraction();
+    this.setFraction( );
 
   }//end of constructor
 
   return inherit( Node, FractionNode, {
-    setValues: function( valuesObject ){
-      this.numerator = valuesObject.numerator;
-      this.denominator = valuesObject.denominator;
-      this.createFraction();
+    setValues: function( valuesArray ){
+      this.numerator = valuesArray[ 0 ];
+      this.denominator = valuesArray[ 1 ];
+      //console.log( 'FractionNode.setValues called. numerator = ' + this.numerator + '   denominator = ' + this.denominator );
+      this.setFraction();
     },
-    createFraction: function( ){
+    setFraction: function( ){
       var numeratorText;
       var denominatorText;
       var minusSign;       //short horizontal line for minus sign, only displayed if needed
@@ -54,9 +55,10 @@ define( function( require ) {
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
       var fontInfo = { font: DISPLAY_FONT };
 
-      if( this.denominator == null ){
-        this.fractionNode = new Text( numerator.toString(), fontInfo );
-        //have to break out somehow
+      if( this.denominator == undefined || this.denominator == '' ){
+        if( typeof this.numerator != 'string' ){ this.numerator = this.numerator.toString(); }
+        this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
+        return; //have to break out somehow
       }
 
       if( typeof this.numerator != 'string' ){ this.numerator = this.numerator.toString(); }
@@ -71,7 +73,6 @@ define( function( require ) {
         denominatorNegative = true;
       }
 
-
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
@@ -82,11 +83,11 @@ define( function( require ) {
       //Draw minus sign to go in front of fraction.  Only displayed if needed.
       var length = 8;
       var midHeight = 7;
-      minusSign = new Line( -length/2, -midHeight, length/2, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
+      minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
 
       //Draw horizontal line separating numerator and denominator
       length = 1.2*numeratorText.width;
-      var bar = new Line( -length/2, -midHeight, length/2, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
+      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
 
       if( minusSignNeeded ){
         this.fractionNode.children = [ minusSign, numeratorText, bar, denominatorText ];
@@ -95,12 +96,12 @@ define( function( require ) {
       }
 
       //layout
-      numeratorText.centerX = denominatorText.centerX = bar.centerX = 0;
+      bar.left = 0;
+      numeratorText.centerX = denominatorText.centerX = bar.centerX;
       var offset = 2;
       numeratorText.bottom = bar.top - offset;
       denominatorText.top = bar.bottom + offset;
       if( minusSignNeeded ){
-        minusSign.centerX = 0;
         minusSign.right = bar.left - 3;
       }
     }//end createFraction()

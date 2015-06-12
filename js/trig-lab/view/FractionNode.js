@@ -27,42 +27,64 @@ define( function( require ) {
    * @param {object} options
    * @constructor
    */
+
   function FractionNode( numerator, denominator, options ) {       //inputs can be strings or not
+
+    options = _.extend( {
+      preterm: '',           //{string} any preterm string such as 'pi +'
+      //negative: false,       //if true, display fraction with minus sign in front
+    }, options );             // Make sure options is defined.
 
     this.fractionNode = this;
 
     // Call the super constructor
-    Node.call( this.fractionNode, { } );
+    Node.call( this.fractionNode );
     this.numerator = numerator;
     this.denominator = denominator;
+    this.preterm = options.preterm;
+    //this.negative = options.negative;  //{boolean} true if fraction is negative
     this.setFraction( );
+
+    this.mutate( options );
 
   }//end of constructor
 
   return inherit( Node, FractionNode, {
-    setValues: function( valuesArray ){
-      this.numerator = valuesArray[ 0 ];
-      this.denominator = valuesArray[ 1 ];
-      //console.log( 'FractionNode.setValues called. numerator = ' + this.numerator + '   denominator = ' + this.denominator );
+    // fraction is negative if negativeStr = 'negative' and/or if fraction value is negative
+    setValues: function( numerator, denominator , options ){
+      if( options !== undefined ){
+        //this.negative = options.negative || this.negative;
+        this.preterm = options.preterm || this.preterm;
+      }
+      this.numerator = numerator ;
+      this.denominator = denominator ;
       this.setFraction();
     },
     setFraction: function( ){
       var numeratorText;
       var denominatorText;
-      var minusSign;       //short horizontal line for minus sign, only displayed if needed
+      var minusSign;       //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative
       var denominatorNegative = false;
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
       var fontInfo = { font: DISPLAY_FONT };
 
-      if( this.denominator == undefined || this.denominator == '' ){
-        if( typeof this.numerator != 'string' ){ this.numerator = this.numerator.toString(); }
-        this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
-        return; //have to break out somehow
-      }
+      //Check that arguments are strings
+      if( typeof this.numerator !== 'string' ){ this.numerator = this.numerator.toString(); }
+      if( typeof this.denominator !== 'string' ){ this.denominator = this.denominator.toString(); }
+      if( typeof this.preterm !== 'string' && this.preterm !== undefined ){ this.preTerm = this.preTerm.toString(); }
 
-      if( typeof this.numerator != 'string' ){ this.numerator = this.numerator.toString(); }
-      if( typeof this.denominator != 'string' ){ this.denominator = this.denominator.toString(); }
+      //if no denominator argument is passed in, then display the numerator as a non-fraction number
+      if ( this.denominator === undefined || this.denominator === '' ) {
+        //make current children invisible so new number is unobscured
+        for ( var i = 0; i < this.children.length; i++ ) {
+          this.children[i].visible = false;
+        }
+        //if ( this.negative ) { this.numerator = '-' + this.numerator }
+        this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
+        return; //have to break out
+      } //end if
+
 
       if( this.numerator.charAt( 0 ) == '-' ){  //remove minus sign, if found
         this.numerator = this.numerator.slice( 1 );
@@ -76,7 +98,7 @@ define( function( require ) {
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
-      if((numeratorNegative && !denominatorNegative) || ( !numeratorNegative && denominatorNegative )){
+      if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
       }
 
@@ -102,7 +124,9 @@ define( function( require ) {
       numeratorText.bottom = bar.top - offset;
       denominatorText.top = bar.bottom + offset;
       if( minusSignNeeded ){
-        minusSign.right = bar.left - 3;
+        minusSign.left = 0;
+        bar.left = minusSign.right + offset;
+        numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
     }//end createFraction()
   }); //end return inherit..

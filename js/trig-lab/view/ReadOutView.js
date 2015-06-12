@@ -174,8 +174,8 @@ define( function( require ) {
             }
             //console.log(' ReadOutView called. units = ' + units );
         },
-        setTrigLabel: function ( graph ) {
-            //console.log( 'setTrigLabel called.  graph = ' + graph );
+        setTrigRowVisibility: function ( graph ) {
+            //console.log( 'setTrigRowVisibility called.  graph = ' + graph );
             this.trigLabel.children[0].visible = ( graph == 'sin' );
             this.trigLabel.children[1].visible = ( graph == 'cos' );
             this.trigLabel.children[2].visible = ( graph == 'tan' );

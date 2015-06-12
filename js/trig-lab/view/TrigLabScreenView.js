@@ -14,7 +14,6 @@ define( function ( require ) {
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
-    //var ReadOutView = require( 'TRIG_LAB/trig-lab/view/ReadOutView' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
     var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
 
@@ -41,7 +40,6 @@ define( function ( require ) {
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
         var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
-        //var readOutView = new ReadOutView( trigLabModel, viewProperties );
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.8*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
@@ -72,16 +70,13 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
-            //readOutView.setTrigLabel( graph );
-            readoutDisplay.readoutNode.setTrigLabel( graph );
+            readoutDisplay.readoutNode.setTrigRowVisibility( graph );
         } );
 
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
             trigLabScreenView.labelsVisible = isVisible;
             unitCircleView.setLabelVisibility( isVisible );
             if( isVisible ){
-                //graphView.tickMarkLabelsInRadians.visible = readOutView.radiansDisplayed;
-                //graphView.tickMarkLabelsInDegrees.visible = !readOutView.radiansDisplayed;
                 graphView.tickMarkLabelsInRadians.visible = readoutDisplay.readoutNode.radiansDisplayed;
                 graphView.tickMarkLabelsInDegrees.visible = !readoutDisplay.readoutNode.radiansDisplayed;
             }else{
@@ -95,8 +90,6 @@ define( function ( require ) {
         });
 
         viewProperties.angleUnitsProperty.link ( function( units ){
-            //readOutView.radiansDisplayed = ( units === 'radians');
-            //readOutView.setUnits( units );
             readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
             readoutDisplay.readoutNode.setUnits( units );
             if( trigLabScreenView.labelsVisible ){
@@ -114,10 +107,8 @@ define( function ( require ) {
             if( tOrF ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
-                //readOutView.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
             }else{
-                //readOutView.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
         });

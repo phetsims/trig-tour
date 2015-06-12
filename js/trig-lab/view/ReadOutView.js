@@ -59,7 +59,7 @@ define( function( require ) {
         var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
         var coordinatesReadoutText = new Text( '', fontInfo );
         var angleLabel = new Text( angleEqualsStr, fontInfo );
-        this.angleReadoutText = new Text( angleReadout, fontInfo );
+        this.angleReadout = new Text( angleReadout, fontInfo );
         this.sinLabel = new Text( sinEqualsStr, fontInfo );
         this.cosLabel = new Text( cosEqualsStr, fontInfo );
         this.tanLabel = new Text( tanEqualsStr, fontInfo );
@@ -98,7 +98,7 @@ define( function( require ) {
         this.cosLabel.top = 0;
         this.tanLabel.top = 0;
         coordinatesLabel.addChild( coordinatesReadoutText );
-        angleLabel.addChild( this.angleReadoutText );
+        angleLabel.addChild( this.angleReadout );
         this.cosLabel.addChild( cosReadoutText ) ;
         this.sinLabel.addChild( sinReadoutText ) ;
         this.tanLabel.addChild( tanReadoutText ) ;
@@ -107,7 +107,7 @@ define( function( require ) {
         coordinatesLabel.top = 0;  //shouldn't this be unnecesary? But needed otherwise coordsLable too high
         coordinatesReadoutText.left = coordinatesLabel.right;
         angleLabel.top = 30;
-        this.angleReadoutText.left =  angleLabel.right ;
+        this.angleReadout.left =  angleLabel.right ;
         this.cosLabel.top = this.sinLabel.top = this.tanLabel.top = 2*30;
         cosReadoutText.left =  this.cosLabel.right ;
         sinReadoutText.left =  this.sinLabel.right ;
@@ -146,9 +146,9 @@ define( function( require ) {
             var tanText =  model.tan().toFixed( 3 );
             coordinatesReadoutText.text = '( '+ cosText + ', ' + sinText + ' )';
             if( readOutView.radiansDisplayed ){
-                readOutView.angleReadoutText.text = angle.toFixed( 3 ) + ' ' + readOutView.units;
+                readOutView.angleReadout.text = angle.toFixed( 3 ) + ' ' + readOutView.units;
             }else{
-                readOutView.angleReadoutText.text = angleInDegrees.toFixed( readOutView.nbrDecimalPlaces ) + ' ' + readOutView.units;
+                readOutView.angleReadout.text = angleInDegrees.toFixed( readOutView.nbrDecimalPlaces ) + ' ' + readOutView.units;
             }
             sinReadoutText.text = sinText;
             cosReadoutText.text = cosText;
@@ -167,10 +167,10 @@ define( function( require ) {
         setUnits: function ( units ) {
             this.units = units;
             if ( units === 'radians' ) {
-                this.angleReadoutText.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
+                this.angleReadout.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
             }
             else {
-                this.angleReadoutText.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
+                this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
             }
             //console.log(' ReadOutView called. units = ' + units );
         },

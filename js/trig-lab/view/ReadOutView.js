@@ -50,9 +50,9 @@ define( function( require ) {
         Node.call( readOutView, { } );
 
         var angleReadout = model.angle.toFixed( 1 );      //read from model
-        var sinReadout = model.sin().toFixed( 3 );
-        var cosReadout = model.cos().toFixed( 3 );
-        var tanReadout = model.tan().toFixed( 3 );
+        var sinReadoutText = model.sin().toFixed( 3 );
+        var cosReadoutText = model.cos().toFixed( 3 );
+        var tanReadoutText = model.tan().toFixed( 3 );
 
         //console.log( 'ReadOutView initialized.  angleReadout is ' + angleReadout );
         var fontInfo = { font: DISPLAY_FONT }; //{ font: '20px sans-serif' };
@@ -80,9 +80,9 @@ define( function( require ) {
         this.tanLabel.addChild( tanFraction );
         tanFraction.left = this.tanLabel.right;
 
-        var sinReadoutText = new Text( sinReadout, fontInfo );
-        var cosReadoutText = new Text( cosReadout, fontInfo );
-        var tanReadoutText = new Text( tanReadout, fontInfo );
+        var sinReadoutText = new Text( sinReadoutText, fontInfo );
+        var cosReadoutText = new Text( cosReadoutText, fontInfo );
+        var tanReadoutText = new Text( tanReadoutText, fontInfo );
         var degText = new Text( degreesStr, fontInfo ) ;
         var radText = new Text( radiansStr, fontInfo );
 

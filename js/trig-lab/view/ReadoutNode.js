@@ -93,23 +93,29 @@ define( function( require ) {
     var cosFraction = new FractionNode( xStr, 1, fontInfo ) ;
     var sinFraction = new FractionNode( yStr, 1, fontInfo ) ;
     var tanFraction = new FractionNode( yStr, xStr, fontInfo );
-    //var equalsText = new Text( '    ' + equalStr + '', fontInfo );
-    var sinReadout = new Text( sinValue, fontInfo );
-    var cosReadout = new Text( cosValue, fontInfo );
-    var tanReadout = new Text( tanValue, fontInfo );
+    //trig readout is either decimal number (Text) or built-up fraction (FractionNode)
+    var sinReadoutText = new Text( sinValue, fontInfo );
+    var cosReadoutText = new Text( cosValue, fontInfo );
+    var tanReadoutText = new Text( tanValue, fontInfo );
+    var sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
+    var cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
+    var tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
-    this.sinRow = new Node( {children: [ sinLabel, sinFraction, sinReadout ]});
-    this.cosRow = new Node( {children: [ cosLabel, cosFraction, cosReadout ]});
-    this.tanRow = new Node( {children: [ tanLabel, tanFraction, tanReadout ]});
+    this.sinRow = new Node( {children: [ sinLabel, sinFraction, sinReadoutText, sinReadoutFraction ]});
+    this.cosRow = new Node( {children: [ cosLabel, cosFraction, cosReadoutText, cosReadoutFraction ]});
+    this.tanRow = new Node( {children: [ tanLabel, tanFraction, tanReadoutText, tanReadoutFraction ]});
+    sinReadoutFraction.visible = false;
+    cosReadoutFraction.visible = false;
+    tanReadoutFraction.visible = false;
     //trig row layout
     sinFraction.left = sinLabel.right;
     cosFraction.left = cosLabel.right;
     tanFraction.left = tanLabel.right;
     var space = 4;
-    cosReadout.left =  cosFraction.right + space ;
-    sinReadout.left =  sinFraction.right + space ;
-    tanReadout.left =  tanFraction.right + space ;
+    cosReadoutText.left =  cosFraction.right + space ;
+    sinReadoutText.left =  sinFraction.right + space ;
+    tanReadoutText.left =  tanFraction.right + space ;
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
 
@@ -180,6 +186,25 @@ define( function( require ) {
       [ -1, 2 ],
       [ 0, '' ],
     ];
+    this.tanFractions = [
+      [ 0, '' ],
+      [ sqRt + 3, 3 ],
+      [ 1, '' ],
+      [ sqRt + 3, '' ],
+      [ infinityStr, '' ],
+      [ '-' + sqRt + 3, '' ],
+      [ -1, '' ],
+      [ '-' + sqRt + 3, 3 ],
+      [ 0, '' ],
+      [ sqRt + 3, 3 ],
+      [ 1, '' ],
+      [ sqRt + 3, '' ],
+      [ '-' + infinityStr, '' ],
+      [ '-' + sqRt + 3, '' ],
+      [ -1, '' ],
+      [ '-' + sqRt + 3, 3 ],
+      [ 0, '' ],
+    ];
 
 
     //Test Code
@@ -211,7 +236,16 @@ define( function( require ) {
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
-      coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
+      if( readoutNode.specialAnglesOnly ){
+        coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
+        sinReadoutText.text = ' = ' + sinText;
+        cosReadoutText.text = ' = ' + cosText;
+      }else{
+        coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
+        sinReadoutText.text = ' = ' + sinText;
+        cosReadoutText.text = ' = ' + cosText;
+      }
+
 
       if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
         readoutNode.angleReadout.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;  //display radians to 3 dec. places
@@ -227,14 +261,13 @@ define( function( require ) {
         readoutNode.angleReadoutFraction.visible = false;
         readoutNode.angleReadout.visible = true;
       }
-      sinReadout.text = ' = ' + sinText;
-      cosReadout.text = ' = ' + cosText;
+
       if( model.tan() < 1000 && model.tan() > -1000 ){
-        tanReadout.text = ' = ' + tanText;
+        tanReadoutText.text = ' = ' + tanText;
       }else if( model.tan() > 1000 ){
-        tanReadout.text = ' = ' + infinityStr;
+        tanReadoutText.text = ' = ' + infinityStr;
       }else if( model.tan() < -1000 ){
-        tanReadout.text = ' = ' + '-' + infinityStr;
+        tanReadoutText.text = ' = ' + '-' + infinityStr;
       }
     } ); //end model.angleProperty.link
   }//end constructor

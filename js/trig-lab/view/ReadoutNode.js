@@ -20,7 +20,7 @@ define( function( require ) {
 
   //strings
   var xyEqualsStr = '(x,y) = ';
-  //var equalStr = '=';
+  var equalStr = '=';
   var angleEqualsStr = 'angle = ';
   var sinEqualsStr = 'sin = ';
   var cosEqualsStr = 'cos = ';
@@ -95,31 +95,38 @@ define( function( require ) {
     var tanFraction = new FractionNode( yStr, xStr, fontInfo );
 
     //trig readout is either decimal number (Text) or built-up fraction (FractionNode)
-    var sinReadoutText = new Text( sinValue, fontInfo );
-    var cosReadoutText = new Text( cosValue, fontInfo );
-    var tanReadoutText = new Text( tanValue, fontInfo );
-    var sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
-    var cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
-    var tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
+    this.sinReadoutText = new Text( sinValue, fontInfo );
+    this.cosReadoutText = new Text( cosValue, fontInfo );
+    this.tanReadoutText = new Text( tanValue, fontInfo );
+    this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
+    this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
+    this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
+    var equalText1 = new Text( equalStr, fontInfo );
+    var equalText2 = new Text( equalStr, fontInfo );
+    var equalText3 = new Text( equalStr, fontInfo );
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
-    this.sinRow = new Node( {children: [ sinLabel, sinFraction, sinReadoutText, sinReadoutFraction ]});
-    this.cosRow = new Node( {children: [ cosLabel, cosFraction, cosReadoutText, cosReadoutFraction ]});
-    this.tanRow = new Node( {children: [ tanLabel, tanFraction, tanReadoutText, tanReadoutFraction ]});
-    sinReadoutFraction.visible = false;
-    cosReadoutFraction.visible = false;
-    tanReadoutFraction.visible = false;
+    this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinReadoutFraction ]});
+    this.cosRow = new Node( {children: [ cosLabel, cosFraction, equalText2, this.cosReadoutText, this.cosReadoutFraction ]});
+    this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
+    this.sinReadoutFraction.visible = false;
+    this.cosReadoutFraction.visible = false;
+    this.tanReadoutFraction.visible = false;
     //trig row layout
     sinFraction.left = sinLabel.right;
     cosFraction.left = cosLabel.right;
     tanFraction.left = tanLabel.right;
-    var space = 4;
-    cosReadoutText.left =  cosFraction.right + space ;
-    sinReadoutText.left =  sinFraction.right + space ;
-    tanReadoutText.left =  tanFraction.right + space ;
-    sinReadoutFraction.left = sinFraction.right + 2*space ;
-    cosReadoutFraction.left = cosFraction.right + 2*space ;
-    tanReadoutFraction.left = tanFraction.right + 2*space ;
+    var space = 8;
+    equalText1.left = sinFraction.right + space;
+    equalText2.left = cosFraction.right + space;
+    equalText3.left = tanFraction.right + space;
+    this.sinReadoutText.left =  equalText1.right + space ;
+    this.cosReadoutText.left =  equalText2.right + space ;
+    this.tanReadoutText.left =  equalText3.right + space ;
+    this.sinReadoutFraction.left = equalText1.right + space ;
+    this.cosReadoutFraction.left = equalText2.right + space ;
+    this.tanReadoutFraction.left = equalText3.right + space ;
+
 
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
@@ -134,7 +141,7 @@ define( function( require ) {
     this.angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
     //Corresponding special angles in radians
     this.angleFractions = [
-      [ '0', '' ],
+      [ 0, '' ],
       [ pi, 6 ],
       [ pi, 4 ],
       [ pi, 3 ],
@@ -160,11 +167,11 @@ define( function( require ) {
       [ 1, 2 ],
       [ 0, '' ],
       [ -1, 2 ],
-      [ -sqRt + 2, 2 ],
-      [ -sqRt + 3, 2 ],
-      [ -1, 0 ],
-      [ -sqRt + 3, 2 ],
-      [ -sqRt + 2, 2 ],
+      [ '-' + sqRt + 2, 2 ],
+      [ '-' + sqRt + 3, 2 ],
+      [ -1, '' ],
+      [ '-' + sqRt + 3, 2 ],
+      [ '-' + sqRt + 2, 2 ],
       [ 0, '' ],
       [ 1, 2 ],
       [ sqRt + 2, 2 ],
@@ -183,20 +190,20 @@ define( function( require ) {
       [ 1, 2 ],
       [ 0, '' ],
       [ -1, 2 ],
-      [ -sqRt + 2, 2 ],
-      [ -sqRt + 3, 2 ],
+      [ '-' + sqRt + 2, 2 ],
+      [ '-' + sqRt + 3, 2 ],
       [ -1, '' ],
-      [ -sqRt + 3, 2 ],
-      [ -sqRt + 2, 2 ],
+      [ '-' + sqRt + 3, 2 ],
+      [ '-' + sqRt + 2, 2 ],
       [ -1, 2 ],
-      [ 0, '' ],
+      [ 0, '' ]
     ];
     this.tanFractions = [
       [ 0, '' ],
       [ sqRt + 3, 3 ],
       [ 1, '' ],
       [ sqRt + 3, '' ],
-      [ infinityStr, '' ],
+      [ 'infinity', '' ],
       [ '-' + sqRt + 3, '' ],
       [ -1, '' ],
       [ '-' + sqRt + 3, 3 ],
@@ -204,11 +211,11 @@ define( function( require ) {
       [ sqRt + 3, 3 ],
       [ 1, '' ],
       [ sqRt + 3, '' ],
-      [ '-' + infinityStr, '' ],
+      [ '-infinity', '' ],
       [ '-' + sqRt + 3, '' ],
       [ -1, '' ],
       [ '-' + sqRt + 3, 3 ],
-      [ 0, '' ],
+      [ 0, '' ]
     ];
 
 
@@ -238,23 +245,17 @@ define( function( require ) {
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {    //angle is in radians
       var angleInDegrees = angle*180/Math.PI;
+
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
-      sinReadoutFraction.visible = readoutNode.specialAnglesOnly;
-      cosReadoutFraction.visible = readoutNode.specialAnglesOnly;
-      tanReadoutFraction.visible = readoutNode.specialAnglesOnly;
-      sinReadoutText.visible = !readoutNode.specialAnglesOnly;
-      cosReadoutText.visible = !readoutNode.specialAnglesOnly;
-      tanReadoutText.visible = !readoutNode.specialAnglesOnly;
+      coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
       if( readoutNode.specialAnglesOnly ){
-        coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
-        sinReadoutText.text = ' = ' + sinText;
-        cosReadoutText.text = ' = ' + cosText;
+        readoutNode.setSpecialAngleTrigReadout();
       }else{
-        coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
-        sinReadoutText.text = ' = ' + sinText;
-        cosReadoutText.text = ' = ' + cosText;
+        readoutNode.sinReadoutText.text = sinText;
+        readoutNode.cosReadoutText.text = cosText;
+        readoutNode.tanReadoutText.text = tanText;
       }
 
 
@@ -274,11 +275,11 @@ define( function( require ) {
       }
 
       if( model.tan() < 1000 && model.tan() > -1000 ){
-        tanReadoutText.text = ' = ' + tanText;
+        readoutNode.tanReadoutText.text = tanText;
       }else if( model.tan() > 1000 ){
-        tanReadoutText.text = ' = ' + infinityStr;
+        readoutNode.tanReadoutText.text = infinityStr;
       }else if( model.tan() < -1000 ){
-        tanReadoutText.text = ' = ' + '-' + infinityStr;
+        readoutNode.tanReadoutText.text = '-' + infinityStr;
       }
     } ); //end model.angleProperty.link
   }//end constructor
@@ -315,6 +316,18 @@ define( function( require ) {
           this.angleReadoutFraction.setValues( '-'+this.angleFractions[i][0], this.angleFractions[i][1] );
         }
       }
-    }//end setSpecialAngle
+    }, //end setSpecialAngleReadout()
+    setSpecialAngleTrigReadout: function(){
+      var smallAngleInDegrees = Math.round( this.model.getSmallAngle0To360() );
+      for ( var i = 0; i < this.angles.length; i++ ){
+        if( this.angles[i] === smallAngleInDegrees ){
+          //console.log( 'angle changed, angle is ' + smallAngleInDegrees );
+          this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );
+          this.cosReadoutFraction.setValues( this.cosFractions[i][0], this.cosFractions[i][1] );
+          this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
+          //this.coordinatesReadout.text = '( '+ this.cosReadoutFraction + ', ' + this.sinReadoutFraction + ' )';
+        }
+      }//end for
+    }//end setSpecialAngleTrigReadout()
   } );
 } );

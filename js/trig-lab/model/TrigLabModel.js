@@ -45,6 +45,18 @@ define( function( require ) {
     getSmallAngleInRadians: function(){
         return this.smallAngle;
     },
+    //small angle in degrees is -180 to +180
+    getSmallAngleInDegrees: function(){
+      return this.smallAngle*180/Math.PI;
+    },
+    //small angle (0 to 360) in degrees is 0 to +360
+    getSmallAngle0To360: function(){
+      if( this.smallAngle > 0 ){
+        return this.smallAngle*180/Math.PI;
+      }else{
+        return 360 + this.smallAngle*180/Math.PI;
+      }
+    },
     setAngleInDegrees: function( angleInDegrees ){
         this.angle = angleInDegrees*Math.PI/180;
     },

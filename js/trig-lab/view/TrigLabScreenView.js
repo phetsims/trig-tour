@@ -100,11 +100,19 @@ define( function ( require ) {
             //readOutView.setUnits( units );
         });
 
-        viewProperties.specialAnglesVisibleProperty.link( function( tOrF ){
-            unitCircleView.specialAnglesNode.visible = tOrF;
-            readoutDisplay.readoutNode.specialAnglesOnly = tOrF;
-            trigLabModel.specialAnglesMode = tOrF;
-            if( tOrF ){
+        viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ){
+            unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
+            trigLabModel.specialAnglesMode = specialAnglesVisible;
+            //select correct readouts for visibility
+            readoutDisplay.readoutNode.sinReadoutFraction.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.cosReadoutFraction.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
+            readoutDisplay.readoutNode.cosReadoutText.visible = !specialAnglesVisible;
+            readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
+
+            if( specialAnglesVisible ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc

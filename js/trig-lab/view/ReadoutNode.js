@@ -29,6 +29,7 @@ define( function( require ) {
   var radiansStr = 'radians';
   var infinityStr = '\u221E';   //'infinity'; //
   var pi ='\u03c0';
+  var sqRt = '\u221A';
   var xStr = 'x';
   var yStr = 'y';
 
@@ -121,7 +122,7 @@ define( function( require ) {
     //Special angles in degrees
     this.angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
     //Corresponding special angles in radians
-    this.fractions = [
+    this.angleFractions = [
       [ '0', '' ],
       [ pi, 6 ],
       [ pi, 4 ],
@@ -140,6 +141,46 @@ define( function( require ) {
       [ 11 + pi, 6 ],
       [ 2 + pi, '' ]
     ];//end anglesInRadsFractions
+
+    this.cosFractions = [
+      [ 1, '' ],
+      [ sqRt + 3, 2 ],
+      [ sqRt + 2, 2 ],
+      [ 1, 2 ],
+      [ 0, '' ],
+      [ -1, 2 ],
+      [ -sqRt + 2, 2 ],
+      [ -sqRt + 3, 2 ],
+      [ -1, 0 ],
+      [ -sqRt + 3, 2 ],
+      [ -sqRt + 2, 2 ],
+      [ 0, '' ],
+      [ 1, 2 ],
+      [ sqRt + 2, 2 ],
+      [ 1, 2 ],
+      [ sqRt + 3, 2 ],
+      [ 1, '' ]
+    ];
+    this.sinFractions = [
+      [ 0, '' ],
+      [ 1, 2 ],
+      [ sqRt + 2, 2 ],
+      [ sqRt + 3, 2 ],
+      [ 1, '' ],
+      [ sqRt + 3, 2 ],
+      [ sqRt + 2, 2 ],
+      [ 1, 2 ],
+      [ 0, '' ],
+      [ -1, 2 ],
+      [ -sqRt + 2, 2 ],
+      [ -sqRt + 3, 2 ],
+      [ -1, '' ],
+      [ -sqRt + 3, 2 ],
+      [ -sqRt + 2, 2 ],
+      [ -1, 2 ],
+      [ 0, '' ],
+    ];
+
 
     //Test Code
     //this.angleReadoutFraction = new FractionNode( 11, 3 );
@@ -223,11 +264,11 @@ define( function( require ) {
     setSpecialAngleReadout: function(){
       var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need interger value of angle, internal arimetic can give nearly integer
       //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
-      for( var i = 0; i < this.fractions.length; i++ ){
+      for( var i = 0; i < this.angleFractions.length; i++ ){
         if ( this.angles[i] == angleInDegs ){
-          this.angleReadoutFraction.setValues( this.fractions[i][0], this.fractions[i][1] );
+          this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );
         } else if ( this.angles[i] == -1*angleInDegs ){
-          this.angleReadoutFraction.setValues( '-'+this.fractions[i][0], this.fractions[i][1] );
+          this.angleReadoutFraction.setValues( '-'+this.angleFractions[i][0], this.angleFractions[i][1] );
         }
       }
     }//end setSpecialAngle

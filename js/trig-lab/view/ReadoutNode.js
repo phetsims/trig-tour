@@ -93,6 +93,7 @@ define( function( require ) {
     var cosFraction = new FractionNode( xStr, 1, fontInfo ) ;
     var sinFraction = new FractionNode( yStr, 1, fontInfo ) ;
     var tanFraction = new FractionNode( yStr, xStr, fontInfo );
+
     //trig readout is either decimal number (Text) or built-up fraction (FractionNode)
     var sinReadoutText = new Text( sinValue, fontInfo );
     var cosReadoutText = new Text( cosValue, fontInfo );
@@ -116,6 +117,10 @@ define( function( require ) {
     cosReadoutText.left =  cosFraction.right + space ;
     sinReadoutText.left =  sinFraction.right + space ;
     tanReadoutText.left =  tanFraction.right + space ;
+    sinReadoutFraction.left = sinFraction.right + 2*space ;
+    cosReadoutFraction.left = cosFraction.right + 2*space ;
+    tanReadoutFraction.left = tanFraction.right + 2*space ;
+
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
 
@@ -236,6 +241,12 @@ define( function( require ) {
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
+      sinReadoutFraction.visible = readoutNode.specialAnglesOnly;
+      cosReadoutFraction.visible = readoutNode.specialAnglesOnly;
+      tanReadoutFraction.visible = readoutNode.specialAnglesOnly;
+      sinReadoutText.visible = !readoutNode.specialAnglesOnly;
+      cosReadoutText.visible = !readoutNode.specialAnglesOnly;
+      tanReadoutText.visible = !readoutNode.specialAnglesOnly;
       if( readoutNode.specialAnglesOnly ){
         coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
         sinReadoutText.text = ' = ' + sinText;

@@ -47,12 +47,12 @@ define( function( require ) {
     this.model = model;
     this.properties = properties;
     this.nbrDecimalPlaces = 1;      //number of decimal places for display of angle, = 0 for special angles
-    this.radiansDisplayed = false; //{boolean} set by ControlPanel
+    this.radiansDisplayed = false;  //{boolean} set by ControlPanel
     this.specialAnglesOnly = false; //{boolean} set by ControlPanel
-    this.units = 'degrees';         //{string} 'degrees'|'radians' set by ControlPanel
+    this.units = 'degrees';         //{string} 'degrees'|'radians' set by Readout panel
 
     // Call the super constructor
-    Node.call( readoutNode, { } );
+    Node.call( readoutNode );
     var row1 = new Node();  //coordinates readout: (x, y) = ( cos, sin )
     var row2 = new Node( { fill: '##770000'} );  //angle = angle value in degrees or radians
     //row 3 is this.trigRow3 declared below, trig function = trig value, trig function = 'sin'|'cos'|'tan'
@@ -84,7 +84,7 @@ define( function( require ) {
     this.angleReadoutFraction.left =  angleLabel.right ;
 
 
-    //Row 3: trig function = trig fraction = trig value
+    //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
     var sinLabel = new Text( sinEqualsStr, fontInfo );
     var cosLabel = new Text( cosEqualsStr, fontInfo );
@@ -117,15 +117,17 @@ define( function( require ) {
     var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
     var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
-    //arrays needed for display of special angles in radians
+    //arrays needed for display of special angles
+    //Special angles in degrees
     this.angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
+    //Corresponding special angles in radians
     this.fractions = [
       [ '0', '' ],
       [ pi, 6 ],
       [ pi, 4 ],
       [ pi, 3 ],
       [ pi, 2 ],
-      [ 2 + pi, 3 ],
+      [ 2 + pi, 3 ],   //Remember it's all string concatenation, so 2 + pi = 2pi
       [ 3 + pi, 4 ],
       [ 5 + pi, 6 ],
       [ pi, '' ],
@@ -152,7 +154,7 @@ define( function( require ) {
         row1,
         row2,
         readoutNode.trigRow3,
-        new HSeparator( 100 ), //maxControlWidth ),
+        new HSeparator( 100 ),
         degreesRadioButton,
         radiansRadioButton
       ],
@@ -171,7 +173,7 @@ define( function( require ) {
       coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
 
       if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
-        readoutNode.angleReadout.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
+        readoutNode.angleReadout.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;  //display radians to 3 dec. places
       }else if( !readoutNode.radiansDisplayed ){
         readoutNode.angleReadout.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
       }

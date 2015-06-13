@@ -57,13 +57,11 @@ define( function( require ) {
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
             this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
         }
-        //circleGraphic.addChild( this.specialAnglesNode );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
-        //circleGraphic.addChild( yAxis );
-        //circleGraphic.addChild( xAxis );
+
         //Draw and position x-, y-axis labels
         var fontInfo = { font: '20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
@@ -78,14 +76,14 @@ define( function( require ) {
         yText.top = -1.2*radius - 2;
 
 
-        //Draw Grid, simple square grid, x = +/-1, y = +/-1;
+        //Draw Grid, simple square grid, with labels x = +/-1, y = +/-1;
         var r = radius;
         var gridShape = new Shape();
         gridShape.moveTo( -r, -r );
         gridShape.lineTo( r, -r ).lineTo( r, r ).lineTo( -r, r ).lineTo( -r, -r );
         gridShape.moveTo( -r, -r/2 ).lineTo( r, -r/2 ).moveTo( -r, r/2 ).lineTo( r, r/2 );
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
-        this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#888' });
+        this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
         //+1, -1 labels on grid axes
         fontInfo = { font: '18px sans-serif' };
         var plusOneXText = new Text( plusOneStr, fontInfo );
@@ -104,16 +102,13 @@ define( function( require ) {
         plusOneYText.left = 5;
         minusOneYText.top = this.grid.bottom;
         minusOneYText.right = -5;
-        //circleGraphic.addChild( this.grid );
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
         var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
-        //circleGraphic.addChild( vLine );
 
         //draw horizontal (cosine) line on rotor triangle
         var hLine = new Line( 0, 0, radius, 0, {lineWidth: 6, stroke: '#00f'} );
-        //circleGraphic.addChild( hLine );
 
         //Draw rotor arm with grabbable red dot at ennd
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
@@ -121,11 +116,9 @@ define( function( require ) {
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
-        //circleGraphic.addChild( rotorGraphic );
 
         //lay on the children!
         circleGraphic.children = [ this.grid, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
-        //var mouseDownPosition = new Vector2( 0, 0 );   //just for testing
 
         ////draw horizontal (cosine) arrow
         //var hArrowShape = new Shape();
@@ -140,7 +133,6 @@ define( function( require ) {
 
 
         var mouseDownPosition = new Vector2( 0, 0 );
-        // When dragging, move the sample element
         rotorGraphic.addInputListener( new SimpleDragHandler(
                 {
                     // When dragging across it in a mobile device, pick it up
@@ -149,7 +141,6 @@ define( function( require ) {
                     start: function (e){
                         console.log( 'mouse down' );
                         mouseDownPosition = e.pointer.point;
-                        //console.log( mouseDownPosition );
                     },
 
                     drag: function(e){
@@ -226,7 +217,7 @@ define( function( require ) {
             }
         };   //end drawAngleArc
 
-        //position x, y, and one labels on the xyOne triangle
+        //position x, y, and '1' labels on the xyR triangle
         var labelCanvas = new Node();
         unitCircleView.addChild( labelCanvas );
         var oneText = new Text( oneStr, fontInfo );
@@ -241,7 +232,7 @@ define( function( require ) {
             labelCanvas.visible = isVisible;
         };
 
-        //position the x, y, and 1 labels on the xyOne triangle of the unit circle
+        //position the x, y, and '1' labels on the xyR triangle of the unit circle
         var positionLabels = function( ){
             var smallAngle = trigLabModel.getSmallAngleInRadians();
             var totalAngle = trigLabModel.getAngleInRadians();
@@ -294,7 +285,6 @@ define( function( require ) {
             yPos = -0.37*radius*Math.sin( totalAngle/2 );// - 0.5*thetaText.height;
             thetaText.centerX = xPos;
             thetaText.centerY = yPos;
-
         };//end positionLabels()
 
 
@@ -310,10 +300,8 @@ define( function( require ) {
             hLine.setPoint2( radius*cos, 0 );
             drawAngleArc();
             positionLabels();
-            //if( unitCircleView.labelsVisible ){ positionLabels(); }
         } );
-
-    }
+    }//end constructor
 
     return inherit( Node, UnitCircleView );
 } );

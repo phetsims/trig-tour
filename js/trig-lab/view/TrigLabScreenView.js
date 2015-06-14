@@ -96,22 +96,37 @@ define( function ( require ) {
                 graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
                 graphView.tickMarkLabelsInDegrees.visible = !( units === 'radians');
             }
-
+            if( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly  ) {
+                readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
+                readoutDisplay.readoutNode.angleReadout.visible = false;
+            }else{
+                readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
+                readoutDisplay.readoutNode.angleReadout.visible = true;
+            }
+            readoutDisplay.readoutNode.setAngleReadout();
             //readOutView.setUnits( units );
-        });
+        });//end viewProperties.angleUnitsProperty.link
 
         viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ){
             unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
             trigLabModel.specialAnglesMode = specialAnglesVisible;
-            //select correct readouts for visibility
+            //select correct trig readouts
             readoutDisplay.readoutNode.sinReadoutFraction.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.cosReadoutFraction.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.cosReadoutText.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
-
+            //select correct angle readout
+            if( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ){
+                readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
+                readoutDisplay.readoutNode.angleReadout.visible = false;
+            }else{
+                readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
+                readoutDisplay.readoutNode.angleReadout.visible = true;
+            }
+            //set precision of angle readout in degrees: special angles mode angle = 45 degrees, otherwise 45.0 degrees
             if( specialAnglesVisible ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
@@ -119,7 +134,8 @@ define( function ( require ) {
             }else{
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
-        });
+            readoutDisplay.readoutNode.setAngleReadout();
+        });//viewProperties.specialAnglesVisibleProperty.link
 
     }
 

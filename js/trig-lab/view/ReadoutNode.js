@@ -94,7 +94,7 @@ define( function( require ) {
     var sinFraction = new FractionNode( yStr, 1, fontInfo ) ;
     var tanFraction = new FractionNode( yStr, xStr, fontInfo );
 
-    //trig readout is either decimal number (Text) or built-up fraction (FractionNode)
+    //trig readout is either decimal number (type Text) or built-up fraction (type FractionNode)
     this.sinReadoutText = new Text( sinValue, fontInfo );
     this.cosReadoutText = new Text( cosValue, fontInfo );
     this.tanReadoutText = new Text( tanValue, fontInfo );
@@ -250,29 +250,9 @@ define( function( require ) {
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
       coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
-      if( readoutNode.specialAnglesOnly ){
-        readoutNode.setSpecialAngleTrigReadout();
-      }else{
-        readoutNode.sinReadoutText.text = sinText;
-        readoutNode.cosReadoutText.text = cosText;
-        readoutNode.tanReadoutText.text = tanText;
-      }
+      readoutNode.setAngleReadout();
+      readoutNode.setTrigReadout();
 
-
-      if( readoutNode.radiansDisplayed && !readoutNode.specialAnglesOnly ){
-        readoutNode.angleReadout.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;  //display radians to 3 dec. places
-      }else if( !readoutNode.radiansDisplayed ){
-        readoutNode.angleReadout.text = angleInDegrees.toFixed( readoutNode.nbrDecimalPlaces ) + ' ' + readoutNode.units;
-      }
-      if( readoutNode.radiansDisplayed && readoutNode.specialAnglesOnly  ) {
-        readoutNode.angleReadoutFraction.visible = true;
-        readoutNode.angleReadout.visible = false;
-        readoutNode.setSpecialAngleReadout();
-        //readoutNode.angleReadout.text = angle.toFixed( 3 ) + ' ' + readoutNode.units;
-      }else{
-        readoutNode.angleReadoutFraction.visible = false;
-        readoutNode.angleReadout.visible = true;
-      }
 
       if( model.tan() < 1000 && model.tan() > -1000 ){
         readoutNode.tanReadoutText.text = tanText;
@@ -306,17 +286,43 @@ define( function( require ) {
       this.nbrDecimalPlaces = nbrDecimalPlaces;
       //console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
     },
+    setAngleReadout: function(){
+      //var angleInDegrees = this.model.getAngleInDegrees();
+      if( !this.radiansDisplayed ){
+        this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + this.units;
+      }
+      if( this.radiansDisplayed && !this.specialAnglesOnly ){
+        this.angleReadout.text = this.model.angle.toFixed( 3 ) + ' ' + this.units;
+      }
+      if( this.radiansDisplayed && this.specialAnglesOnly ){
+        this.setSpecialAngleReadout();
+      }
+    },
     setSpecialAngleReadout: function(){
-      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need interger value of angle, internal arimetic can give nearly integer
+      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic can give not quite integer
       //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
+      var nbrFullTurns = this.model.nbrFullTurns.toString();
+      console.log('nbrFullTurns = ' + nbrFullTurns );
       for( var i = 0; i < this.angleFractions.length; i++ ){
         if ( this.angles[i] == angleInDegs ){
           this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );
         } else if ( this.angles[i] == -1*angleInDegs ){
-          this.angleReadoutFraction.setValues( '-'+this.angleFractions[i][0], this.angleFractions[i][1] );
+          this.angleReadoutFraction.setValues( '-' + this.angleFractions[i][0], this.angleFractions[i][1] );
         }
       }
     }, //end setSpecialAngleReadout()
+    setTrigReadout: function(){
+      var sinText = this.model.sin().toFixed( 3 ) ;
+      var cosText = this.model.cos().toFixed( 3 );
+      var tanText = this.model.tan().toFixed( 3 );
+      if( this.specialAnglesOnly ){
+        this.setSpecialAngleTrigReadout();
+      }else{
+        this.sinReadoutText.text = sinText;
+        this.cosReadoutText.text = cosText;
+        this.tanReadoutText.text = tanText;
+      }
+    },
     setSpecialAngleTrigReadout: function(){
       var smallAngleInDegrees = Math.round( this.model.getSmallAngle0To360() );
       for ( var i = 0; i < this.angles.length; i++ ){

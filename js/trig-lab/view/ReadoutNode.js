@@ -76,13 +76,15 @@ define( function( require ) {
     //Row 2: angle = value in degs or rads
     var angleLabel = new Text( angleEqualsStr, fontInfo );
     this.angleReadout = new Text( angleValue, fontInfo );
+    this.nbrFullTurnsText = new Text( '', fontInfo );  //for example, text '4pi + '
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //used to display angle as FractionNode in Special angles mode
     this.angleReadout.visible = true;
     this.angleReadoutFraction.visible = false;
-    row2.children = [ angleLabel, this.angleReadout, this.angleReadoutFraction ];
+    row2.children = [ angleLabel, this.angleReadout, this.nbrFullTurnsText, this.angleReadoutFraction ];
     //layout
     this.angleReadout.left =  angleLabel.right ;
-    this.angleReadoutFraction.left =  angleLabel.right ;
+    this.nbrFullTurnsText.left = angleLabel.right;
+    this.angleReadoutFraction.left =  this.nbrFullTurnsText.right ;
 
 
     //Row 3: trig function label = trig fraction = trig value
@@ -299,10 +301,18 @@ define( function( require ) {
       }
     },
     setSpecialAngleReadout: function(){
-      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic can give not quite integer
+      var angleInDegs = Math.round( this.model.getAngleInDegrees()%( 360 ) );  //need integer value of angle, internal arithmetic can give not quite integer
       //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
       var nbrFullTurns = this.model.nbrFullTurns.toString();
-      console.log('nbrFullTurns = ' + nbrFullTurns );
+      //console.log('nbrFullTurns = ' + nbrFullTurns );
+      var piRadsCount = this.model.getFullTurnCount()*2;
+      if( piRadsCount !== 0 ){
+        var fullTurnStr = piRadsCount + pi + ' + ';
+      }else{
+        fullTurnStr = '';
+      }
+      this.nbrFullTurnsText.text = fullTurnStr;
+      this.angleReadoutFraction.left =  this.nbrFullTurnsText.right;
       for( var i = 0; i < this.angleFractions.length; i++ ){
         if ( this.angles[i] == angleInDegs ){
           this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );

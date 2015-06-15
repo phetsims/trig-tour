@@ -195,10 +195,16 @@ define( function( require ) {
                     drag: function ( e ) {
                         //console.log('drag event follows: ');
                         var v1 = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = 2*Math.PI*v1.x / wavelength;
-                        //console.log( 'angle is ' + angle );
-                        //model.angle = angle;
-                        model.setAngle( angle );
+                        var angle = (2*Math.PI*v1.x / wavelength);
+                        //console.log( 'graphView drag. angle is ' + angle );
+                        if( !model.specialAnglesMode ){
+                            model.setFullAngleInRadians( angle );
+                        }else{
+                            model.setFullAngleInRadians( angle );
+                            //console.log( 'drag smallAngle is ' + model.getSmallAngleInRadians() )
+                            model.setSpecialAngle( model.getSmallAngleInRadians() );
+                        }
+                        //model.setAngle( angle );
                     }
                 } ) );
 

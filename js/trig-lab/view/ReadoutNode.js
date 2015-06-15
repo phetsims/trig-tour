@@ -247,14 +247,13 @@ define( function( require ) {
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {    //angle is in radians
       var angleInDegrees = angle*180/Math.PI;
-
+      //console.log( 'angle changed. angle = ' + angleInDegrees );
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       var tanText =  model.tan().toFixed( 3 );
       coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
-
 
       if( model.tan() < 1000 && model.tan() > -1000 ){
         readoutNode.tanReadoutText.text = tanText;
@@ -306,11 +305,13 @@ define( function( require ) {
         angleInDegs = angleInDegs%360;
       }
       //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
-      //var nbrFullTurns = this.model.nbrFullTurns.toString();
       //console.log('nbrFullTurns = ' + nbrFullTurns );
-      var piRadsCount = this.model.getHalfTurnCount();
+      var fullTurnCount = this.model.getFullTurnCount();
+      var piRadsCount = 2*fullTurnCount;
+      var fullTurnStr = '';
+      //console.log('setSpecialAngleReadout called. piRadsCount = ' + piRadsCount );
       if( piRadsCount !== 0 ){
-        var fullTurnStr = piRadsCount + pi + ' + ';
+        fullTurnStr = piRadsCount + pi + ' + ';
       }else{
         fullTurnStr = '';
       }
@@ -323,11 +324,13 @@ define( function( require ) {
           this.angleReadoutFraction.setValues( '-' + this.angleFractions[i][0], this.angleFractions[i][1] );
         }
       }
-      //Must handle smallAngle = 0 or pi (angle mod 2pi = 0 or pi ) as special cases
+      //Must handle smallAngle = 0 or pi as special cases
       if( Math.round( this.model.getSmallAngleInDegrees() ) === 0 || Math.round( this.model.getSmallAngle0To360() ) === 180 ){
         var nbrPiRads = this.model.getHalfTurnCount();
         //console.log( 'angle is 0 or 180. nbrPiRads = ' + nbrPiRads );
+        //console.log( 'angle is 0 or 180. angle = ' + this.model.angle );
         var angleStr = nbrPiRads + pi;
+       // console.log( 'angle is 0 or 180. angleStr = ' + angleStr );
         if( nbrPiRads == 0 ){
           angleStr = '0';
         }else if( nbrPiRads == 1 ){

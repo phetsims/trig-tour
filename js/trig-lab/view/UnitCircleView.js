@@ -13,6 +13,7 @@ define( function( require ) {
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
+    var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
@@ -25,6 +26,10 @@ define( function( require ) {
     var plusOneStr = '+1';
     var minusOneStr = '-1';
     var thetaStr = '\u03b8' ; // \u03b8 = unicode for theta
+
+    //constants
+    var DISPLAY_FONT = new PhetFont( 20 );
+    var DISPLAY_FONT_SMALL = new PhetFont( 18 );
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -45,7 +50,7 @@ define( function( require ) {
         //Draw Unit Circle
         var radius = 160; //radius of unit circle in pixels
         var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
-        unitCircleView.addChild( circleGraphic );
+        //unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
         //special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
@@ -63,7 +68,7 @@ define( function( require ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
 
         //Draw and position x-, y-axis labels
-        var fontInfo = { font: '20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT }//'20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );
@@ -83,7 +88,7 @@ define( function( require ) {
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
         //+1, -1 labels on grid axes
-        fontInfo = { font: '18px sans-serif' };
+        fontInfo = { font: DISPLAY_FONT_SMALL }; //'18px sans-serif' };
         var plusOneXText = new Text( plusOneStr, fontInfo );
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var plusOneYText = new Text( plusOneStr, fontInfo );
@@ -103,12 +108,12 @@ define( function( require ) {
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
-        var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 3, stroke: '#090'} );
+        var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 6, stroke: '#090'} );
 
         //draw horizontal (cosine) line on rotor triangle
-        var hLine = new Line( 0, 0, radius, 0, {lineWidth: 6, stroke: '#00f'} );
+        var hLine = new Line( 0, 0, radius, 0, {lineWidth: 8, stroke: '#00b'} );
 
-        //Draw rotor arm with grabbable red dot at ennd
+        //Draw rotor arm with grabbable red dot at end
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
@@ -116,7 +121,7 @@ define( function( require ) {
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
 
         //lay on the children!
-        circleGraphic.children = [ this.grid, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
+        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
 
         ////draw horizontal (cosine) arrow
         //var hArrowShape = new Shape();
@@ -218,6 +223,7 @@ define( function( require ) {
         //position x, y, and '1' labels on the xyR triangle
         var labelCanvas = new Node();
         unitCircleView.addChild( labelCanvas );
+        fontInfo = { font: DISPLAY_FONT };
         var oneText = new Text( oneStr, fontInfo );
         xText = new Text( xStr, fontInfo );            //xText, yText already defined above
         yText = new Text( yStr, fontInfo );

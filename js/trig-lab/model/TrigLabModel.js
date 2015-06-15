@@ -95,8 +95,8 @@ define( function( require ) {
       //console.log( 'setFullAngleInRadians called. smallAngle = ' + this.smallAngle );
     } ,
     setAngle: function ( smallAngle ){    //smallAngle in rads
-      console.log('model.setAngle() called. smallAngle = ' + smallAngle );
-      console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
+      //console.log('model.setAngle() called. smallAngle = ' + smallAngle );
+      //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
       this.smallAngle = smallAngle;
       var critAngle = 149*Math.PI/180;
       if( ( this.smallAngle < 0 )  && this.previousAngle > critAngle ){

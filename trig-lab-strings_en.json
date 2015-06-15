@@ -1,5 +1,8 @@
 {
   "trig-lab.name": {
     "value": "Trig Lab"
+  },
+  "specialAngles": {
+    "value": "Special angles"
   }
 }

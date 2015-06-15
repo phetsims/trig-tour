@@ -23,7 +23,7 @@ define( function( require ) {
   //var radStr = 'rad';
   var labelsStr = 'Labels';
   var gridStr = 'Grid';
-  var specialAnglesStr = 'Special angles';
+  var specialAnglesStr = require( 'string!TRIG_LAB/specialAngles' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );

@@ -301,11 +301,14 @@ define( function( require ) {
       }
     },
     setSpecialAngleReadout: function(){
-      var angleInDegs = Math.round( this.model.getAngleInDegrees()%( 360 ) );  //need integer value of angle, internal arithmetic can give not quite integer
+      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic can give not quite integer
+      if( Math.abs( angleInDegs ) > 360 ){
+        angleInDegs = angleInDegs%360;
+      }
       //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
-      var nbrFullTurns = this.model.nbrFullTurns.toString();
+      //var nbrFullTurns = this.model.nbrFullTurns.toString();
       //console.log('nbrFullTurns = ' + nbrFullTurns );
-      var piRadsCount = this.model.getFullTurnCount()*2;
+      var piRadsCount = this.model.getHalfTurnCount();
       if( piRadsCount !== 0 ){
         var fullTurnStr = piRadsCount + pi + ' + ';
       }else{
@@ -319,6 +322,21 @@ define( function( require ) {
         } else if ( this.angles[i] == -1*angleInDegs ){
           this.angleReadoutFraction.setValues( '-' + this.angleFractions[i][0], this.angleFractions[i][1] );
         }
+      }
+      //Must handle smallAngle = 0 or pi (angle mod 2pi = 0 or pi ) as special cases
+      if( Math.round( this.model.getSmallAngleInDegrees() ) === 0 || Math.round( this.model.getSmallAngle0To360() ) === 180 ){
+        var nbrPiRads = this.model.getHalfTurnCount();
+        //console.log( 'angle is 0 or 180. nbrPiRads = ' + nbrPiRads );
+        var angleStr = nbrPiRads + pi;
+        if( nbrPiRads == 0 ){
+          angleStr = '0';
+        }else if( nbrPiRads == 1 ){
+          angleStr = pi
+        }else if( nbrPiRads == -1 ){
+          angleStr = '-' + pi;
+        }
+        this.nbrFullTurnsText.text = angleStr;
+        this.angleReadoutFraction.setValues( '', '' );
       }
     }, //end setSpecialAngleReadout()
     setTrigReadout: function(){

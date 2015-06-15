@@ -97,9 +97,11 @@ define( function ( require ) {
                 graphView.tickMarkLabelsInDegrees.visible = !( units === 'radians');
             }
             if( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly  ) {
+                readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
                 readoutDisplay.readoutNode.angleReadout.visible = false;
             }else{
+                readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
                 readoutDisplay.readoutNode.angleReadout.visible = true;
             }
@@ -120,9 +122,11 @@ define( function ( require ) {
             readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
             //select correct angle readout
             if( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ){
+                readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
                 readoutDisplay.readoutNode.angleReadout.visible = false;
             }else{
+                readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
                 readoutDisplay.readoutNode.angleReadout.visible = true;
             }
@@ -135,6 +139,8 @@ define( function ( require ) {
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
             readoutDisplay.readoutNode.setAngleReadout();
+            readoutDisplay.readoutNode.setTrigReadout();
+
         });//viewProperties.specialAnglesVisibleProperty.link
 
     }

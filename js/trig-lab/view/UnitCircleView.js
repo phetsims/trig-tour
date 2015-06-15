@@ -68,10 +68,8 @@ define( function( require ) {
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );
         yAxis.addChild( yText );
-        //xText.translation = new Vector2( 1.2*radius - 5 - xText.width, xText.height );
-        //yText.translation = new Vector2( -yText.width - 10, -1.2*radius - 10 + yText.height );
-        xText.right = 1.2*radius - 5;
-        xText.top = 5;
+        xText.left = 1.2*radius + 5;
+        xText.centerY = yAxis.centerY;
         yText.right = -12;
         yText.top = -1.2*radius - 2;
 
@@ -95,9 +93,9 @@ define( function( require ) {
 
         //position one labels
         plusOneXText.left = this.grid.right + 5;
-        plusOneXText.bottom = -5;
+        plusOneXText.top = 7;
         minusOneXText.right = this.grid.left - 5;
-        minusOneXText.top = 0;
+        minusOneXText.top = 7;
         plusOneYText.bottom = this.grid.top;
         plusOneYText.left = 5;
         minusOneYText.top = this.grid.bottom;

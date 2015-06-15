@@ -24,6 +24,7 @@ define( function( require ) {
     this.previousAngle = 0;  //@private, needed to compute angle from smallAngle
     this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle incremented at 180 deg; needed to compute angle from smallAngle
     this.fullTurnCount = 0;  //@private, nbr of full turns around unit circle, incremented at theta = 0 deg
+    this.halfTurnCount = 0;   //@private, nbr of half turns around unit circle, incremented at small angle = 0 or 180
     this.specialAnglesMode = false;  //{boolean} true if special angles (0, 30,45, 60, 90...) only
   }
 
@@ -61,6 +62,9 @@ define( function( require ) {
     getFullTurnCount: function(){
       return this.fullTurnCount;
     },
+    getHalfTurnCount: function(){
+      return this.halfTurnCount;
+    },
     setAngleInDegrees: function( angleInDegrees ){
         this.angle = angleInDegrees*Math.PI/180;
     },
@@ -78,10 +82,17 @@ define( function( require ) {
         //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
       }
       this.angle = this.nbrFullTurns*2*Math.PI + this.smallAngle;
-      if( (this.smallAngle >= 0 && this.previousAngle < 0 )||( this.smallAngle <= 0 && this.previousAngle > 0 )){
+      var sAngle = this.smallAngle;
+      if( ( sAngle >= 0 && sAngle < 0.4 && this.previousAngle < 0 )||( sAngle <= 0 && sAngle > -0.4 && this.previousAngle > 0 )){
         var remainderAngle = this.angle%( 2*Math.PI );
         this.fullTurnCount = Math.round( ( this.angle - remainderAngle )/(2*Math.PI ));
+        this.halfTurnCount = Math.round( ( this.angle - remainderAngle )/(Math.PI ));
         console.log( 'this.fullTurnCount = ' + this.fullTurnCount );
+      }
+      if( ( sAngle >= 0 && this.previousAngle < 0 ) || ( sAngle <= 0 && this.previousAngle > 0 ) || ( Math.round(this.getSmallAngleInDegrees()) === 180 )){
+        var remainderAngle = this.angle%( Math.PI );
+        this.halfTurnCount = Math.round( ( this.angle - remainderAngle )/(Math.PI ));
+        console.log( 'this.halfTurnCount = ' + this.halfTurnCount );
       }
       this.previousAngle = smallAngle;
     },
@@ -101,6 +112,7 @@ define( function( require ) {
         }
       }//end for
       this.setAngle( nearestSpecialAngleInRads );
+      //console.log( 'angle/pi = ' + this.angle/Math.PI + '   smallAngle/pi = ' + this.smallAngle/Math.PI )
     }//end setSpecialAngle()
     
     

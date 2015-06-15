@@ -10,9 +10,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
+  //var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
+  //var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -31,7 +31,7 @@ define( function( require ) {
   function FractionNode( numerator, denominator, options ) {       //inputs can be strings or not
 
     options = _.extend( {
-      preterm: '',           //{string} any preterm string such as 'pi +'
+      preterm: ''           //{string} any preterm string such as 'pi +'
       //negative: false,       //if true, display fraction with minus sign in front
     }, options );             // Make sure options is defined.
 
@@ -86,11 +86,11 @@ define( function( require ) {
       } //end if
 
 
-      if( this.numerator.charAt( 0 ) == '-' ){  //remove minus sign, if found
+      if( this.numerator.charAt( 0 ) === '-' ){  //remove minus sign, if found
         this.numerator = this.numerator.slice( 1 );
         numeratorNegative = true;
       }
-      if( this.denominator.charAt( 0 ) == '-' ){  //remove minus sign, if found
+      if( this.denominator.charAt( 0 ) === '-' ){  //remove minus sign, if found
         this.denominator = this.denominator.slice( 1 );
         denominatorNegative = true;
       }

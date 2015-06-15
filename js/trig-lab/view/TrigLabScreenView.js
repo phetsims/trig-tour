@@ -94,7 +94,7 @@ define( function ( require ) {
             readoutDisplay.readoutNode.setUnits( units );
             if( trigLabScreenView.labelsVisible ){
                 graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
-                graphView.tickMarkLabelsInDegrees.visible = !( units === 'radians');
+                graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
             }
             if( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly  ) {
                 readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;

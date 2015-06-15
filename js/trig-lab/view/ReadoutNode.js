@@ -9,7 +9,7 @@ define( function( require ) {
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
+  //var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -39,6 +39,7 @@ define( function( require ) {
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
    * @param {TrigLabModel} model is the main model of the sim
+   * @param {Object} options
    * @constructor
    */
   function ReadoutNode( model, properties ) {
@@ -246,7 +247,7 @@ define( function( require ) {
 
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {    //angle is in radians
-      var angleInDegrees = angle*180/Math.PI;
+      //var angleInDegrees = angle*180/Math.PI;
       //console.log( 'angle changed. angle = ' + angleInDegrees );
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
@@ -279,9 +280,9 @@ define( function( require ) {
     },
     setTrigRowVisibility: function ( graph ) {
       //console.log( 'setTrigRowVisibility called.  graph = ' + graph );
-      this.trigRow3.children[0].visible = ( graph == 'sin' );
-      this.trigRow3.children[1].visible = ( graph == 'cos' );
-      this.trigRow3.children[2].visible = ( graph == 'tan' );
+      this.trigRow3.children[0].visible = ( graph === 'sin' );
+      this.trigRow3.children[1].visible = ( graph === 'cos' );
+      this.trigRow3.children[2].visible = ( graph === 'tan' );
     } ,
     setAngleReadoutPrecision: function( nbrDecimalPlaces ){
       this.nbrDecimalPlaces = nbrDecimalPlaces;
@@ -318,9 +319,9 @@ define( function( require ) {
       this.nbrFullTurnsText.text = fullTurnStr;
       this.angleReadoutFraction.left =  this.nbrFullTurnsText.right;
       for( var i = 0; i < this.angleFractions.length; i++ ){
-        if ( this.angles[i] == angleInDegs ){
+        if ( this.angles[i] === angleInDegs ){
           this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );
-        } else if ( this.angles[i] == -1*angleInDegs ){
+        } else if ( this.angles[i] === -1*angleInDegs ){
           this.angleReadoutFraction.setValues( '-' + this.angleFractions[i][0], this.angleFractions[i][1] );
         }
       }
@@ -331,11 +332,11 @@ define( function( require ) {
         //console.log( 'angle is 0 or 180. angle = ' + this.model.angle );
         var angleStr = nbrPiRads + pi;
        // console.log( 'angle is 0 or 180. angleStr = ' + angleStr );
-        if( nbrPiRads == 0 ){
+        if( nbrPiRads === 0 ){
           angleStr = '0';
-        }else if( nbrPiRads == 1 ){
-          angleStr = pi
-        }else if( nbrPiRads == -1 ){
+        }else if( nbrPiRads === 1 ){
+          angleStr = pi;
+        }else if( nbrPiRads === -1 ){
           angleStr = '-' + pi;
         }
         this.nbrFullTurnsText.text = angleStr;

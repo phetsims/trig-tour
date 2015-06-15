@@ -10,7 +10,7 @@ define( function( require ) {
     // modules
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Circle = require( 'SCENERY/nodes/Circle' );
-    var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
+    //var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
@@ -81,14 +81,15 @@ define( function( require ) {
 
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();
+        var label;
         for( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ){
             var nbrDegrees = 180*j.toFixed(0);
             //console.log('j = '+j+'   nbrDegrees = '+nbrDegrees );
             nbrDegrees = nbrDegrees.toString();
-            var label = new SubSupText( nbrDegrees+'<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
+            label = new SubSupText( nbrDegrees+'<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
             label.centerX = j*wavelength/2;
             label.top = xAxis.bottom;
-            if( j != 0 ){
+            if( j !== 0 ){
                 this.tickMarkLabelsInDegrees.addChild( label ) ;
             }
         }
@@ -102,7 +103,7 @@ define( function( require ) {
         var xPositions = [ -3, -2, -1, 1, 2, 3 ];
         for ( i = 0; i < 6; i++ ){
             labelStr = labelStrings[i];
-            var label = new Text( labelStr, { font: DISPLAY_FONT_SMALL } );
+            label = new Text( labelStr, { font: DISPLAY_FONT_SMALL } );
             label.centerX = xPositions[i]*wavelength/2;
             label.top = xAxis.bottom;
             this.tickMarkLabelsInRadians.addChild( label );
@@ -229,15 +230,15 @@ define( function( require ) {
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
             var tan = Math.tan( angle );
-            if( this.trigFunction == 'cos'){
+            if( this.trigFunction === 'cos'){
                 this.indicatorLine.setPoint2( 0, -cos*this.amplitude );
                 this.indicatorLine.stroke = COS_COLOR;
                 this.redDotHandle.y = -cos*this.amplitude;
-            }else if ( this.trigFunction == 'sin' ){
+            }else if ( this.trigFunction === 'sin' ){
                 this.indicatorLine.setPoint2( 0, -sin*this.amplitude );
                 this.indicatorLine.stroke = SIN_COLOR;
                 this.redDotHandle.y = -sin*this.amplitude;
-            }else if ( this.trigFunction == 'tan' ){
+            }else if ( this.trigFunction === 'tan' ){
                 this.indicatorLine.setPoint2( 0, -tan*this.amplitude );
                 this.indicatorLine.stroke = TAN_COLOR;
                 this.redDotHandle.y = -tan*this.amplitude;

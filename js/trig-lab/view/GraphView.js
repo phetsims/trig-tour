@@ -33,9 +33,6 @@ define( function( require ) {
     var sinTheta = 'sin' + theta ;
     var tanTheta = 'tan' + theta ;
     var pi ='\u03c0';
-    //var radiansPiLabels = [ '-3'+pi, '-2'+pi, -'1'+pi, '', '1'+pi, '2'+pi, '3'+pi ];
-    //var radiansHalfPiLabels = [ '-5'+pi+'/2', '-3'+pi+'/2', '-'+pi+'/2', '', pi+'/2', '3'+pi+'/2', '5'+pi+'/2' ];
-    //var degreesLabels;
 
     //constants
     var COS_COLOR = '#00c';
@@ -52,19 +49,17 @@ define( function( require ) {
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
         this.labelsVisible = 'false';  //set by Control Panel
         //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
-
         // console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView, { } );
 
-
-        var wavelength = width/4;  //wavelength of sinusoidal curve in pixels
+        var wavelength = (width - 2*25)/4;  //wavelength of sinusoidal curve in pixels
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
 
         //draw x-, y-axes
-        var xAxisLength = width; //0.9*stageW;
+        var xAxisLength = width;
         var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1 });  //tailX, tailY, tipX, tipY, options
         var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1 } );
         this.axesNode = new Node();   //axes bounds are used in layout
@@ -73,7 +68,7 @@ define( function( require ) {
 
         //draw tic marks on x-, y-axes
         var ticLength = 5;
-        for( var i = -nbrOfWavelengths; i < nbrOfWavelengths; i++ ){
+        for( var i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ){
             var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: '#000'});
             xTic.x = i*wavelength/2;
             xAxis.addChild( xTic );

@@ -40,7 +40,7 @@ define( function ( require ) {
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
         var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
-        var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.8*this.layoutBounds.width );
+        var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.9*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
         //this.addChild( readOutView );

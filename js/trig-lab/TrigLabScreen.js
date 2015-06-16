@@ -28,7 +28,7 @@ define( function( require ) {
     Screen.call( this, trigLabSimString, icon,
       function() { return new TrigLabModel(); },
       function( model ) { return new TrigLabScreenView( model ); },
-      { backgroundColor: 'white' }
+      { backgroundColor: 'white' }    //beige '#FFDEAD'
     );
   }
 

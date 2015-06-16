@@ -22,9 +22,9 @@ define( function( require ) {
       leadDesign: 'Amanda McGarry and Michael Dubson',
       softwareDevelopment: 'Michael Dubson',
       team: 'Michael Dubson, Amanda McGarry',
-      qualityAssurance: '',
-      graphicArts: '',
-      thanks: ''
+      //qualityAssurance: '',
+      //graphicArts: '',
+      //thanks: ''
     }
   };
 

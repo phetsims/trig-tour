@@ -38,6 +38,7 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   //var LINE_COLOR = Util.LINE_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
+  var PANEL_COLOR = Util.PANEL_COLOR;
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
@@ -137,7 +138,7 @@ define( function( require ) {
 
 
     // 2 radio buttons for display in degrees or radians
-    var myRadioButtonOptions = { radius: 10, fontSize: 15 } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: PANEL_COLOR } ;
     var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
     var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 

@@ -13,9 +13,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ReadoutNode = require( 'TRIG_LAB/trig-lab/view/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
+  var PANEL_COLOR = Util.PANEL_COLOR;
 
 
   /**
@@ -43,7 +45,7 @@ define( function( require ) {
       titleNode: new Text( 'Readouts', { font: DISPLAY_FONT } ),
       titleAlignX: 'left',
       //contentAlign: 'left',
-      fill: 'white',
+      fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
       contentXMargin: 20,
       contentYMargin: 15,

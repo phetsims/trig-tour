@@ -6,6 +6,7 @@ define( function( require ) {
     'use strict';
 
     // modules
+    var ArrowLine = require( 'TRIG_LAB/trig-lab/view/ArrowLine' );
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
@@ -33,6 +34,10 @@ define( function( require ) {
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var LINE_COLOR = Util.LINE_COLOR;
     var TEXT_COLOR = Util.TEXT_COLOR;
+    var COS_COLOR = Util.COS_COLOR;
+    var SIN_COLOR = Util.SIN_COLOR;
+    var TAN_COLOR = Util.TAN_COLOR;
+    var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -62,7 +67,7 @@ define( function( require ) {
         for (var i = 0; i < anglesArray.length; i++ ){
             xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
-            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
+            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:BACKGROUND_COLOR, lineWidth: 1, x: xPos, y: yPos }));
         }
 
         //Draw x-, y-axes with x and y labels
@@ -110,12 +115,14 @@ define( function( require ) {
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
-        var vLine = new Line( 0, 0, 0, -radius, {lineWidth: 6, stroke: '#090'} );
+        var vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
+        var vArrowLine = new ArrowLine( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
 
         //draw horizontal (cosine) line on rotor triangle
-        var hLine = new Line( 0, 0, radius, 0, {lineWidth: 8, stroke: '#00b'} );
+        var hLine = new Line( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
+        var hArrowLine = new ArrowLine( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
 
-        //Draw rotor arm with grabbable red dot at end
+        //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
@@ -125,18 +132,7 @@ define( function( require ) {
 
         //lay on the children!
         unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
-
-        ////draw horizontal (cosine) arrow
-        //var hArrowShape = new Shape();
-        //var w1 = 6;
-        //var w2 = 8;
-        //var hL = 25;
-        //hArrowShape.moveTo( 0, w1/2 ).lineTo( 0, -w1/2 ).lineTo( radius- hL, -w1/2 ).lineTo( radius - hL, -w2 );
-        //hArrowShape.lineTo( radius, 0 ).lineTo( radius - hL, w2 ).lineTo( radius - hL, w1/2 ).lineTo( 0, w1/2 );
-        //var hArrow = new Path( hArrowShape, { fill: '#009'} );
-        //circleGraphic.addChild( hArrow );
-
-
+        unitCircleView.addChild( vArrowLine );
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -186,7 +182,6 @@ define( function( require ) {
             r = 0.3*radius;
             arcShape.moveTo( r, 0 );
             var totalAngle = model.getAngleInRadians();
-
             var dAng = 0.1;  //delta-angle in radians
             if( Math.abs(totalAngle) < 0.5 ){
                 dAng = 0.02;
@@ -206,7 +201,6 @@ define( function( require ) {
                 }
             }
 
-            //console.log( 'drawAngleArc called. Angle = '+ model.getAngleInDegrees() );
             angleArcPath.setShape( arcShape );
             if( Math.abs( totalAngle ) < 20*Math.PI/180 ){
                 angleArcArrowHead.visible = false;
@@ -304,6 +298,7 @@ define( function( require ) {
             //hArrow.setScaleMagnitude( cos, 1 ) ;
             vLine.x = radius*cos;
             vLine.setPoint2( 0, -radius*sin  );
+            vArrowLine.setPoint2( 0, -radius*sin );
             hLine.setPoint2( radius*cos, 0 );
             drawAngleArc();
             positionLabels();

@@ -34,9 +34,9 @@ define( function( require ) {
     var pi = require( 'string!TRIG_LAB/pi' );
 
     //constants
-    var COS_COLOR = '#00b';
-    var SIN_COLOR = '#0b0';
-    var TAN_COLOR = '#b00';
+    var COS_COLOR = Util.COS_COLOR;
+    var SIN_COLOR = Util.SIN_COLOR;
+    var TAN_COLOR = Util.TAN_COLOR;
     var LINE_COLOR = Util.LINE_COLOR;
     var TEXT_COLOR = Util.TEXT_COLOR;
     //var DISPLAY_FONT = new PhetFont( 20 );
@@ -184,7 +184,7 @@ define( function( require ) {
 
         //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
-        this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0B0', lineWidth: 6 } );
         var hitBound = 30;
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
         this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
@@ -198,13 +198,12 @@ define( function( require ) {
         // When dragging, move the sample element
         this.redDotHandle.addInputListener( new SimpleDragHandler(
                 {
-                    // When dragging across it in a mobile device, pick it up
                     allowTouchSnag: true,
 
                     start: function ( e ) {
                         console.log( 'mouse down' );
                         var mouseDownPosition = e.pointer.point;
-                        console.log( 'GraphView mouseDownPos = '  + mouseDownPosition );
+                        //console.log( 'GraphView mouseDownPos = '  + mouseDownPosition );
                     },
 
                     drag: function ( e ) {
@@ -216,7 +215,6 @@ define( function( require ) {
                             model.setFullAngleInRadians( angle );
                         }else{
                             model.setFullAngleInRadians( angle );
-                            //console.log( 'drag smallAngle is ' + model.getSmallAngleInRadians() )
                             model.setSpecialAngle( model.getSmallAngleInRadians() );
                         }
                         //model.setAngle( angle );
@@ -225,7 +223,7 @@ define( function( require ) {
 
         this.setLabelVisibility = function( tOrF ){
             this.labelsVisible = tOrF;
-            console.log( 'graph labels visibility is ' + this.labelsVisible );
+            //console.log( 'graph labels visibility is ' + this.labelsVisible );
         };
 
         // Register for synchronization with model.

@@ -1,6 +1,5 @@
 /**
  * Live readout of angle, and values of sin, cos, tan.
- * This
  * Created by Dubson on 6/10/2015.
  */
 define( function( require ) {
@@ -16,6 +15,7 @@ define( function( require ) {
   //var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
@@ -25,7 +25,6 @@ define( function( require ) {
   var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + equalStr;
   var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + equalStr;
   var tanEqualsStr = require( 'string!TRIG_LAB/tan') + equalStr;
-
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
   //var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
@@ -37,15 +36,16 @@ define( function( require ) {
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
+  //var LINE_COLOR = Util.LINE_COLOR;
+  var TEXT_COLOR = Util.TEXT_COLOR;
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
    * @param {TrigLabModel} model is the main model of the sim
-   * @param {Object} options
+   * @param {Object} properties
    * @constructor
    */
   function ReadoutNode( model, properties ) {
-
 
     var readoutNode = this;
     this.model = model;
@@ -67,7 +67,7 @@ define( function( require ) {
     var tanValue = model.tan().toFixed( 3 );
 
     //console.log( 'ReadOutView initialized.  angleValue is ' + angleValue );
-    var fontInfo = { font: DISPLAY_FONT }; //{ font: '20px sans-serif' };
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ font: '20px sans-serif' };
 
     //Row 1: (x, y) = ( cos, sin )
     var coordinatesLabel = new Text( xyEqualsStr, fontInfo );

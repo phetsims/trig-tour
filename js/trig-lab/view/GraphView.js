@@ -21,6 +21,7 @@ define( function( require ) {
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
+    var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
     //var Vector2 = require( 'DOT/Vector2' );
 
 
@@ -36,6 +37,8 @@ define( function( require ) {
     var COS_COLOR = '#00b';
     var SIN_COLOR = '#0b0';
     var TAN_COLOR = '#b00';
+    var LINE_COLOR = Util.LINE_COLOR;
+    var TEXT_COLOR = Util.TEXT_COLOR;
     //var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
@@ -57,7 +60,8 @@ define( function( require ) {
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
         this.labelsVisible = 'false';  //set by Control Panel
         //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
-        // console.log( 'superscript test: ' + testText.getText() );
+        //console.log( 'line color is ' + LINE_COLOR );
+        //console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView );
@@ -68,8 +72,8 @@ define( function( require ) {
 
         //draw x-, y-axes
         var xAxisLength = width;
-        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1 });  //tailX, tailY, tipX, tipY, options
-        var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1 } );
+        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1, fill: LINE_COLOR });  //tailX, tailY, tipX, tipY, options
+        var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1, fill: LINE_COLOR } );
         this.axesNode = new Node();   //axes bounds are used in layout
         this.axesNode.children = [ xAxis, yAxis ];
         graphView.addChild( this.axesNode );
@@ -77,12 +81,12 @@ define( function( require ) {
         //draw tic marks on x-, y-axes
         var ticLength = 5;
         for( var i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ){
-            var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: '#000'});
+            var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, fill: LINE_COLOR});
             xTic.x = i*wavelength/2;
             xAxis.addChild( xTic );
         }
         for( i = -1; i <=1; i+=2 ){
-            var yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: '#000'} );
+            var yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, fill: LINE_COLOR} );
             yTic.y = i*this.amplitude;
             yAxis.addChild( yTic );
         }
@@ -111,7 +115,7 @@ define( function( require ) {
         var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
         for ( i = 0; i < xPositions.length; i++ ){
             labelStr = labelStrings[i];
-            label = new Text( labelStr, { font: DISPLAY_FONT_SMALL_ITALIC } );
+            label = new Text( labelStr, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
             label.centerX = xPositions[i]*wavelength/2;
             label.top = xAxis.bottom;
             this.tickMarkLabelsInRadians.addChild( label );
@@ -123,7 +127,7 @@ define( function( require ) {
         this.tickMarkLabelsInRadians.visible = false;
 
         //Axes labels
-        var fontInfo = { font: DISPLAY_FONT_ITALIC };
+        var fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaLabel = new Text( theta, fontInfo );
         //xAxis.addChild( thetaLabel );
         graphView.addChild( thetaLabel );
@@ -182,7 +186,7 @@ define( function( require ) {
         //a red dot on top of the indicator line echoes red dot on unit circle
         this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0f0', lineWidth: 6 } );
         var hitBound = 30;
-        this.redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
         this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 

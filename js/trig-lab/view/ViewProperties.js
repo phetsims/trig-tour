@@ -14,10 +14,6 @@ define( function( require ) {
      * @constructor
      */
     function ViewProperties() {
-
-        // to make development easier
-        //var checked = HookesLawQueryParameters.DEV ? true : false;
-
         PropertySet.call( this, {
             graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
             angleUnits: 'degrees', //{string} which angle units, 'degrees'|'radians'

@@ -22,12 +22,14 @@ define( function( require ) {
   var labelsStr = require( 'string!TRIG_LAB/labels' );
   var gridStr = require( 'string!TRIG_LAB/grid' );
   var specialAnglesStr = require( 'string!TRIG_LAB/specialAngles' );
+  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
+  var TEXT_COLOR = Util.TEXT_COLOR;
 
   // Text nodes
-  var fontInfo = { font: DISPLAY_FONT }; //{ fontSize: 20 };
+  var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ fontSize: 20 };
   var cosText = new Text( cosStr, fontInfo );
   var sinText = new Text( sinStr, fontInfo );
   var tanText = new Text( tanStr, fontInfo );
@@ -37,8 +39,8 @@ define( function( require ) {
 
 
   /**
-   * Constructor for RotorNode which renders rotor as a scenery node.
-   * @param {TrigLabModel} model is the main model of the sim
+   * Constructor for the control panel
+   * @param {Object} view properties
    * @constructor
    */
   function ControlPanel( properties  ) {

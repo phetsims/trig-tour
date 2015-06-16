@@ -17,6 +17,7 @@ define( function( require ) {
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
+    var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
@@ -30,6 +31,8 @@ define( function( require ) {
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
+    var LINE_COLOR = Util.LINE_COLOR;
+    var TEXT_COLOR = Util.TEXT_COLOR;
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -42,14 +45,13 @@ define( function( require ) {
         var unitCircleView = this;
         this.model = model;
         var trigLabModel = model;
-        //this.labelsVisible = 'false';  //set by Control Panel
 
         // Call the super constructor
         Node.call( unitCircleView );
 
         //Draw Unit Circle
         var radius = 160; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:'#000', lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
+        var circleGraphic = new Circle( radius, { stroke:LINE_COLOR, lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
         //unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
@@ -60,7 +62,7 @@ define( function( require ) {
         for (var i = 0; i < anglesArray.length; i++ ){
             xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
-            this.specialAnglesNode.addChild( new Circle( 5, { stroke:'#000', fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
+            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:'#fff', lineWidth: 1, x: xPos, y: yPos }));
         }
 
         //Draw x-, y-axes with x and y labels
@@ -68,7 +70,7 @@ define( function( require ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
 
         //Draw and position x-, y-axis labels
-        var fontInfo = { font: DISPLAY_FONT };//'20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };//'20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );
@@ -88,7 +90,7 @@ define( function( require ) {
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
         //+1, -1 labels on grid axes
-        fontInfo = { font: DISPLAY_FONT_SMALL }; //'18px sans-serif' };
+        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR }; //'18px sans-serif' };
         var plusOneXText = new Text( plusOneStr, fontInfo );
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var plusOneYText = new Text( plusOneStr, fontInfo );
@@ -116,7 +118,7 @@ define( function( require ) {
         //Draw rotor arm with grabbable red dot at end
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
-        rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
+        rotorGraphic.addChild( new Circle( 7, { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
@@ -164,7 +166,7 @@ define( function( require ) {
         //draw angle arc on unit circle
         r = 0.3*radius;   //arc radius = 0.3 of rotor radius
         var arcShape = new Shape();
-        var angleArcPath = new Path( arcShape, { stroke: '#000', lineWidth: 2} );
+        var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
         //following code is to speed up drawing
         var emptyBounds = new Bounds2( 0, 0, 0, 0 );
         angleArcPath.computeShapeBounds = function(){
@@ -176,7 +178,7 @@ define( function( require ) {
         var hW = 7;     //arrow head width
         var hL = 12;    //arrow head length
         arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, hL ).lineTo( hW/2, hL ).close();
-        var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: '#000'});
+        var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: LINE_COLOR});
         angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
@@ -224,7 +226,7 @@ define( function( require ) {
         //position x, y, and '1' labels on the xyR triangle
         var labelCanvas = new Node();
         unitCircleView.addChild( labelCanvas );
-        fontInfo = { font: DISPLAY_FONT };
+        fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
         var oneText = new Text( oneStr, fontInfo );
         xText = new Text( xStr, fontInfo );            //xText, yText already defined above
         yText = new Text( yStr, fontInfo );

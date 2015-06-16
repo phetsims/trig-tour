@@ -28,14 +28,12 @@ define( function( require ) {
 
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
-  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
+  //var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
   var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var sqRt = require( 'string!TRIG_LAB/squareRoot' );
   var xStr = 'x';
   var yStr = 'y';
-
-  //require( 'string!TRIG_LAB/pi' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );

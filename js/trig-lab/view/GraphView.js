@@ -36,7 +36,7 @@ define( function( require ) {
     var COS_COLOR = '#00b';
     var SIN_COLOR = '#0b0';
     var TAN_COLOR = '#b00';
-    var DISPLAY_FONT = new PhetFont( 20 );
+    //var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
     var DISPLAY_FONT_SMALL_ITALIC = new PhetFont({ size: 18, family: 'Arial', style: 'italic' } );

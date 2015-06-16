@@ -16,6 +16,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   var DISPLAY_FONT = new PhetFont( 20 );
+
   /**
    * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:
    *    A
@@ -76,7 +77,7 @@ define( function( require ) {
 
       //if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {
-        //make current children invisible so new number is unobscured
+        //make current children invisible so numerator is not obscured
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[i].visible = false;
         }

@@ -9,6 +9,7 @@ define( function( require ) {
 
     // modules
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+    var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
     //var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
     var inherit = require( 'PHET_CORE/inherit' );
@@ -21,26 +22,33 @@ define( function( require ) {
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
     //var Vector2 = require( 'DOT/Vector2' );
-    /**
-     * Constructor for RotorNode which renders rotor as a scenery node.
-     * @param {TrigLabModel} model is the main model of the sim
-     * @constructor
-     */
+
+
 
     //strings
-    var theta = '\u03b8' ; // \u03b8 = unicode for theta
-    var cosTheta = 'cos' + theta ;
-    var sinTheta = 'sin' + theta ;
-    var tanTheta = 'tan' + theta ;
-    var pi ='\u03c0';
+    var theta = require( 'string!TRIG_LAB/theta' );
+    var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
+    var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
+    var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
+    var pi = require( 'string!TRIG_LAB/pi' );
 
     //constants
-    var COS_COLOR = '#00c';
-    var SIN_COLOR = '#0c0';
-    var TAN_COLOR = '#d00';
+    var COS_COLOR = '#00b';
+    var SIN_COLOR = '#0b0';
+    var TAN_COLOR = '#b00';
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
+    var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
+    var DISPLAY_FONT_SMALL_ITALIC = new PhetFont({ size: 18, family: 'Arial', style: 'italic' } );
 
+    /**
+     * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
+     * has a draggable handle for changing the angle
+     * @param {TrigLabModel} main model of the sim
+     * @param {Number} height of this view node in pixels
+     * @param {Number} width of this view node in pixels
+     * @constructor
+     */
 
     function GraphView( model, height, width  ) {      //height and width of this view
 
@@ -52,7 +60,7 @@ define( function( require ) {
         // console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
-        Node.call( graphView, { } );
+        Node.call( graphView );
 
         var wavelength = (width - 2*25)/4;  //wavelength of sinusoidal curve in pixels
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
@@ -96,14 +104,14 @@ define( function( require ) {
         graphView.addChild( this.tickMarkLabelsInDegrees );
 
 
-        //Tick mark labels in radians
+        //Tic mark labels in radians
         this.tickMarkLabelsInRadians = new Node();
         var labelStr = '' ;
-        var labelStrings = [ '-3' + pi,  '-2' + pi, '-' + pi, pi, '2' + pi, '3' + pi ];
-        var xPositions = [ -3, -2, -1, 1, 2, 3 ];
-        for ( i = 0; i < 6; i++ ){
+        var labelStrings = [ '-4' + pi, '-3' + pi,  '-2' + pi, '-' + pi, pi, '2' + pi, '3' + pi, '4' + pi ];
+        var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
+        for ( i = 0; i < xPositions.length; i++ ){
             labelStr = labelStrings[i];
-            label = new Text( labelStr, { font: DISPLAY_FONT_SMALL } );
+            label = new Text( labelStr, { font: DISPLAY_FONT_SMALL_ITALIC } );
             label.centerX = xPositions[i]*wavelength/2;
             label.top = xAxis.bottom;
             this.tickMarkLabelsInRadians.addChild( label );
@@ -115,7 +123,7 @@ define( function( require ) {
         this.tickMarkLabelsInRadians.visible = false;
 
         //Axes labels
-        var fontInfo = { font: DISPLAY_FONT };
+        var fontInfo = { font: DISPLAY_FONT_ITALIC };
         var thetaLabel = new Text( theta, fontInfo );
         //xAxis.addChild( thetaLabel );
         graphView.addChild( thetaLabel );
@@ -173,7 +181,9 @@ define( function( require ) {
         //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
         this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0f0', lineWidth: 6 } );
+        var hitBound = 30;
         this.redDotHandle = new Circle( 7, { stroke: '#000', fill: "red", cursor: 'pointer' } ) ;
+        this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 
         graphView.addChild( this.sinPath );
@@ -225,7 +235,6 @@ define( function( require ) {
 
     return inherit( Node, GraphView, {
         setIndicatorLine: function(){
-            //var amplitude = 70;
             var angle = this.model.getAngleInRadians();
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );

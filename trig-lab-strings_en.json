@@ -2,7 +2,53 @@
   "trig-lab.name": {
     "value": "Trig Lab"
   },
+  "angleEquals": {
+    "value": "angle = "
+  },
+  "cos": {
+    "value": "cos"
+  },
+  "degrees": {
+    "value": "degrees"
+  },
+  "equals": {
+    "value": " = "
+  },
+  "grid": {
+    "value": "Grid"
+  },
+  "infinityWord": {
+    "value": "infinity"
+  },
+  "infinitySymbol": {
+    "value": "\u221E"
+  },
+  "labels": {
+    "value": "Labels"
+  },
+  "pi": {
+    "value": "\u03c0"
+  },
+  "radians": {
+    "value": "radians"
+  },
+  "sin": {
+    "value": "sin"
+  },
   "specialAngles": {
     "value": "Special angles"
+  },
+  "squareRoot": {
+    "value": "\u221A"
+  },
+  "tan": {
+    "value": "tan"
+  },
+  "theta": {
+    "value": "\u03b8"
+  },
+  "xyEquals": {
+    "value": "(x,y) = "
   }
 }
+

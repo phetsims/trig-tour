@@ -16,13 +16,11 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
-  var cosStr = 'cos';
-  var sinStr = 'sin';
-  var tanStr = 'tan';
-  //var degStr = 'deg';
-  //var radStr = 'rad';
-  var labelsStr = 'Labels';
-  var gridStr = 'Grid';
+  var cosStr = require( 'string!TRIG_LAB/cos' );
+  var sinStr = require( 'string!TRIG_LAB/sin' );
+  var tanStr = require( 'string!TRIG_LAB/tan' );
+  var labelsStr = require( 'string!TRIG_LAB/labels' );
+  var gridStr = require( 'string!TRIG_LAB/grid' );
   var specialAnglesStr = require( 'string!TRIG_LAB/specialAngles' );
 
   // constants

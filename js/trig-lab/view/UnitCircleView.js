@@ -25,7 +25,7 @@ define( function( require ) {
     var oneStr = '1';
     var plusOneStr = '+1';
     var minusOneStr = '-1';
-    var thetaStr = '\u03b8' ; // \u03b8 = unicode for theta
+    var thetaStr = require( 'string!TRIG_LAB/theta' ); // \u03b8 = unicode for theta
 
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
@@ -119,6 +119,7 @@ define( function( require ) {
         rotorGraphic.addChild( new Circle( 7, { stroke: '#000', fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
+        rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
         //lay on the children!
         unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];

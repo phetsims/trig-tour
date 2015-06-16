@@ -19,19 +19,23 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
-  var xyEqualsStr = '(x,y) = ';
-  var equalStr = '=';
-  var angleEqualsStr = 'angle = ';
-  var sinEqualsStr = 'sin = ';
-  var cosEqualsStr = 'cos = ';
-  var tanEqualsStr = 'tan = ';
-  var degreesStr = 'degrees';
-  var radiansStr = 'radians';
-  var infinityStr = '\u221E';   //'infinity'; //
-  var pi ='\u03c0';
-  var sqRt = '\u221A';
+  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' );
+  var equalStr = require( 'string!TRIG_LAB/equals' );
+  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' );
+  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + equalStr;
+  var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + equalStr;
+  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + equalStr;
+
+  var degreesStr = require( 'string!TRIG_LAB/degrees' );
+  var radiansStr = require( 'string!TRIG_LAB/radians' );
+  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
+  var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
+  var pi = require( 'string!TRIG_LAB/pi' );
+  var sqRt = require( 'string!TRIG_LAB/squareRoot' );
   var xStr = 'x';
   var yStr = 'y';
+
+  //require( 'string!TRIG_LAB/pi' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -119,7 +123,7 @@ define( function( require ) {
     sinFraction.left = sinLabel.right;
     cosFraction.left = cosLabel.right;
     tanFraction.left = tanLabel.right;
-    var space = 8;
+    var space = 4;
     equalText1.left = sinFraction.right + space;
     equalText2.left = cosFraction.right + space;
     equalText3.left = tanFraction.right + space;
@@ -206,7 +210,7 @@ define( function( require ) {
       [ sqRt + 3, 3 ],
       [ 1, '' ],
       [ sqRt + 3, '' ],
-      [ 'infinity', '' ],
+      [ infinityWordStr, '' ],
       [ '-' + sqRt + 3, '' ],
       [ -1, '' ],
       [ '-' + sqRt + 3, 3 ],
@@ -214,7 +218,7 @@ define( function( require ) {
       [ sqRt + 3, 3 ],
       [ 1, '' ],
       [ sqRt + 3, '' ],
-      [ '-infinity', '' ],
+      [ '-' + infinityWordStr, '' ],
       [ '-' + sqRt + 3, '' ],
       [ -1, '' ],
       [ '-' + sqRt + 3, 3 ],
@@ -251,18 +255,10 @@ define( function( require ) {
       //console.log( 'angle changed. angle = ' + angleInDegrees );
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
-      var tanText =  model.tan().toFixed( 3 );
+      //var tanText =  model.tan().toFixed( 3 );
       coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
-
-      if( model.tan() < 1000 && model.tan() > -1000 ){
-        readoutNode.tanReadoutText.text = tanText;
-      }else if( model.tan() > 1000 ){
-        readoutNode.tanReadoutText.text = infinityStr;
-      }else if( model.tan() < -1000 ){
-        readoutNode.tanReadoutText.text = '-' + infinityStr;
-      }
     } ); //end model.angleProperty.link
   }//end constructor
 
@@ -353,6 +349,14 @@ define( function( require ) {
         this.sinReadoutText.text = sinText;
         this.cosReadoutText.text = cosText;
         this.tanReadoutText.text = tanText;
+      }
+      var tanValue = this.model.tan();
+      if( tanValue < 1000 && tanValue > -1000 ){
+        this.tanReadoutText.text = tanText;
+      }else if( tanValue > 1000 ){
+        this.tanReadoutText.text = infinityWordStr;
+      }else if( tanValue < -1000 ){
+        this.tanReadoutText.text = '-' + infinityWordStr;
       }
     },
     setSpecialAngleTrigReadout: function(){

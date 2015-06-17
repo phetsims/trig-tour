@@ -90,7 +90,6 @@ define( function( require ) {
     this.nbrFullTurnsText.left = angleLabel.right;
     this.angleReadoutFraction.left =  this.nbrFullTurnsText.right ;
 
-
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
     var sinLabel = new Text( sinEqualsStr, fontInfo );
@@ -133,9 +132,7 @@ define( function( require ) {
     this.cosReadoutFraction.left = equalText2.right + space ;
     this.tanReadoutFraction.left = equalText3.right + space ;
 
-
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
-
 
     // 2 radio buttons for display in degrees or radians
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: PANEL_COLOR } ;
@@ -188,19 +185,19 @@ define( function( require ) {
     this.sinFractions = [
       [ 0, '' ],
       [ 1, 2 ],
-      [ sqRt + 2, 2 ],
-      [ sqRt + 3, 2 ],
+      [ 'q' + 2, 2 ],
+      [ 'q' + 3, 2 ],
       [ 1, '' ],
-      [ sqRt + 3, 2 ],
-      [ sqRt + 2, 2 ],
+      [ 'q' + 3, 2 ],
+      [ 'q' + 2, 2 ],
       [ 1, 2 ],
       [ 0, '' ],
       [ -1, 2 ],
-      [ '-' + sqRt + 2, 2 ],
-      [ '-' + sqRt + 3, 2 ],
+      [ '-q' + 2, 2 ],
+      [ '-q' + 3, 2 ],
       [ -1, '' ],
-      [ '-' + sqRt + 3, 2 ],
-      [ '-' + sqRt + 2, 2 ],
+      [ '-q' + 3, 2 ],
+      [ '-q' + 2, 2 ],
       [ -1, 2 ],
       [ 0, '' ]
     ];

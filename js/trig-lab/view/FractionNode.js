@@ -10,9 +10,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var Path = require( 'SCENERY/nodes/Path' );
+  var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var Shape = require( 'KITE/Shape' );
+  var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -32,8 +32,7 @@ define( function( require ) {
   function FractionNode( numerator, denominator, options ) {       //inputs can be strings or not
 
     options = _.extend( {
-      preterm: ''           //{string} any preterm string such as 'pi +'
-      //negative: false,       //if true, display fraction with minus sign in front
+      //squareRootSignNeeded: false       //if true, display numerator with square root sign
     }, options );             // Make sure options is defined.
 
     this.fractionNode = this;
@@ -42,7 +41,7 @@ define( function( require ) {
     Node.call( this.fractionNode );
     this.numerator = numerator;
     this.denominator = denominator;
-    this.preterm = options.preterm;
+
     //this.negative = options.negative;  //{boolean} true if fraction is negative
     this.setFraction( );
 
@@ -52,11 +51,11 @@ define( function( require ) {
 
   return inherit( Node, FractionNode, {
     // fraction is negative if negativeStr = 'negative' and/or if fraction value is negative
-    setValues: function( numerator, denominator , options ){
-      if( options !== undefined ){
-        //this.negative = options.negative || this.negative;
-        this.preterm = options.preterm || this.preterm;
-      }
+    setValues: function( numerator, denominator ){
+      //if( options !== undefined ){
+      //  //this.negative = options.negative || this.negative;
+      //  //this.preterm = options.preterm || this.preterm;
+      //}
       this.numerator = numerator ;
       this.denominator = denominator ;
       this.setFraction();
@@ -68,12 +67,13 @@ define( function( require ) {
       var numeratorNegative = false;    //true if numerator is negative
       var denominatorNegative = false;
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
+      var squareRootSignNeeded = false;
       var fontInfo = { font: DISPLAY_FONT };
 
       //Check that arguments are strings
       if( typeof this.numerator !== 'string' ){ this.numerator = this.numerator.toString(); }
       if( typeof this.denominator !== 'string' ){ this.denominator = this.denominator.toString(); }
-      if( typeof this.preterm !== 'string' && this.preterm !== undefined ){ this.preTerm = this.preTerm.toString(); }
+      //if( typeof this.preterm !== 'string' && this.preterm !== undefined ){ this.preTerm = this.preTerm.toString(); }
 
       //if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {
@@ -95,6 +95,10 @@ define( function( require ) {
         this.denominator = this.denominator.slice( 1 );
         denominatorNegative = true;
       }
+      if( this.numerator.charAt( 0 ) === 'q' ){ //remove squareRoot tag, if found
+        this.numerator = this.numerator.slice( 1 );
+        squareRootSignNeeded = true;
+      }
 
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
@@ -106,19 +110,48 @@ define( function( require ) {
       //Draw minus sign to go in front of fraction.  Only displayed if needed.
       var length = 8;
       var midHeight = 7;
-      minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
+      if( minusSignNeeded ){
+          minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
+      }else{
+          minusSign = new Line( 0, 0, 0, 0 );   //just a placeholder is no minus sign
+      }
+
 
       //Draw horizontal line separating numerator and denominator
       length = 1.2*numeratorText.width;
       var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
 
-      if( minusSignNeeded ){
-        this.fractionNode.children = [ minusSign, numeratorText, bar, denominatorText ];
-      }else{
-        this.fractionNode.children = [ numeratorText, bar, denominatorText ];
+      //draw square root symbol
+      var sqRtShape = new Shape();
+      var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
+      if( squareRootSignNeeded ){
+        console.log( 'square root symbol constructed');
+        var W = 1.2*numeratorText.width;
+        var h = 0.8*numeratorText.height;
+        var w = h/4;
+        sqRtShape.moveTo( -5*w/3, h/2 ).lineTo( -w, h).lineTo( 0, 0 ).lineTo( W, 0 );
+        sqRtPath.setShape( sqRtShape );
       }
 
+      //if( minusSignNeeded && !squareRootSignNeeded){
+      //  this.fractionNode.children = [ minusSign, numeratorText, bar, denominatorText ];
+      //}else if( squareRootSignNeeded && !minusSignNeeded ){
+      //  this.fractionNode.children = [ sqRtPath, numeratorText, bar, denominatorText ];
+      //} else if( minusSignNeeded && squareRootSignNeeded ) {
+      //  this.fractionNode.children = [ minusSign, sqRtPath, numeratorText, bar, denominatorText ];
+      //} else{
+      //  this.fractionNode.children = [ numeratorText, bar, denominatorText ];
+      //}
+      //this.fractionNode.children = [ minusSign, sqRtPath, numeratorText, bar, denominatorText ];
+      this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
       //layout
+      //var offset = 2;
+      //minusSign.left = 0;
+      //sqRtPath.left = minusSign.right;
+      //bar.left = minusSign.right + offset;
+      //numeratorText.centerX = denominatorText.centerX = bar.centerX;
+      //sqRtPath.y = numeratorText.top;
+
       bar.left = 0;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;
       var offset = 2;
@@ -129,6 +162,12 @@ define( function( require ) {
         bar.left = minusSign.right + offset;
         numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
+      //if( squareRootSignNeeded && !minusSignNeeded ) {
+      //  sqRtPath.left = 0;
+      //  bar.left = offset;
+      //  sqRtPath.top = numeratorText.top;
+      //  //numeratorText.centerX = denominatorText.centerX = bar.centerX;
+      //}
     }//end createFraction()
   }); //end return inherit..
 } );

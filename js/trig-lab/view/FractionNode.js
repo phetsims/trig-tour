@@ -123,34 +123,21 @@ define( function( require ) {
 
       //draw square root symbol
       var sqRtShape = new Shape();
-      var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
+      //var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
       if( squareRootSignNeeded ){
         console.log( 'square root symbol constructed');
         var W = 1.2*numeratorText.width;
         var h = 0.8*numeratorText.height;
         var w = h/4;
-        sqRtShape.moveTo( -5*w/3, h/2 ).lineTo( -w, h).lineTo( 0, 0 ).lineTo( W, 0 );
-        sqRtPath.setShape( sqRtShape );
+        sqRtShape.moveTo( -3*w/2, -h/2 ).lineTo( -w, 0 ).lineTo( 0, -h ).lineTo( W, -h );
+        //sqRtShape.moveTo( -5*w/3, h/2 ).lineTo( -w, h).lineTo( 0, 0 ).lineTo( W, 0 );
+        //sqRtPath.setShape( sqRtShape );
       }
+      var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
 
-      //if( minusSignNeeded && !squareRootSignNeeded){
-      //  this.fractionNode.children = [ minusSign, numeratorText, bar, denominatorText ];
-      //}else if( squareRootSignNeeded && !minusSignNeeded ){
-      //  this.fractionNode.children = [ sqRtPath, numeratorText, bar, denominatorText ];
-      //} else if( minusSignNeeded && squareRootSignNeeded ) {
-      //  this.fractionNode.children = [ minusSign, sqRtPath, numeratorText, bar, denominatorText ];
-      //} else{
-      //  this.fractionNode.children = [ numeratorText, bar, denominatorText ];
-      //}
-      //this.fractionNode.children = [ minusSign, sqRtPath, numeratorText, bar, denominatorText ];
+
       this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
-      //layout
-      //var offset = 2;
-      //minusSign.left = 0;
-      //sqRtPath.left = minusSign.right;
-      //bar.left = minusSign.right + offset;
-      //numeratorText.centerX = denominatorText.centerX = bar.centerX;
-      //sqRtPath.y = numeratorText.top;
+
 
       bar.left = 0;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;
@@ -162,12 +149,14 @@ define( function( require ) {
         bar.left = minusSign.right + offset;
         numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
-      //if( squareRootSignNeeded && !minusSignNeeded ) {
-      //  sqRtPath.left = 0;
-      //  bar.left = offset;
-      //  sqRtPath.top = numeratorText.top;
-      //  //numeratorText.centerX = denominatorText.centerX = bar.centerX;
-      //}
+      if( squareRootSignNeeded ){
+        sqRtPath.top = numeratorText.top;
+        sqRtPath.centerX = numeratorText.centerX - 3;
+        console.log( 'sqRtPath = ' + sqRtPath );
+        console.log( 'sqRtPath.top = ' + sqRtPath.top );
+        console.log( 'sqRtPath.x = ' + sqRtPath.x );
+      }
+
     }//end createFraction()
   }); //end return inherit..
 } );

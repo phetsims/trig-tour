@@ -39,8 +39,8 @@ define( function( require ) {
         Node.call( arrowLine );
 
         var arrowHeadShape = new Shape();
-        var hW = 20;     //arrow head width
-        this.hL = 30;    //arrow head length
+        var hW = 15;     //arrow head width
+        this.hL = 25;    //arrow head length
 
         if( this.vertical ){
             this.line = new Line( 0, 0, 0, 0, options );
@@ -56,8 +56,10 @@ define( function( require ) {
         }else{
             this.arrowHead.x = maxLength;
         }
+        this.canvas = new Node();
         this.line.addChild( this.arrowHead );
-        arrowLine.addChild( this.line );
+        this.canvas.addChild( this.line );
+        arrowLine.addChild( this.canvas );
     }//end constructor
 
     return inherit( Node, ArrowLine, {
@@ -71,30 +73,39 @@ define( function( require ) {
             if( displacement !== 0 ){
                 sign = Math.round( displacement / Math.abs( displacement ) ); //+1 if pointing up/right, -1 if pointing down/left
             }
+            console.log( 'sign = ' + sign + '   maxLength = ' + this.maxLength );
             this.arrowHead.rotation = (sign - 1)*Math.PI/2;
-            this.scale( 1, 1 );
+            //this.scale( 1, 1 );
             var length = Math.abs( displacement );
-            var critFraction = 0.4;
+            var critFraction = 0.2;
             var scaleFactor = 1;
             if( this.vertical ){
-                if( length > 0.4*this.maxLength ){
+                if( length > critFraction*this.maxLength ){
+                    this.arrowHead.visible = true;
                     this.line.setPoint2( 0, -displacement + sign*this.hL );
                     this.arrowHead.y = -displacement;
                 }else{  //if too small for arrowHead to fit
-                    this.line.setPoint2( 0, sign*critFraction*this.maxLength + sign*this.hL );
-                    this.arrowHead.y = sign*critFraction*this.maxLength;
-                    scaleFactor = length/( critFraction*this.maxLength );
-                    this.scale( 1, scaleFactor );
+                    this.arrowHead.visible = false;
+                    this.line.setPoint2( 0, -displacement );
+                    //this.line.setPoint2( 0, -sign*critFraction*this.maxLength + sign*this.hL );
+                    //this.arrowHead.y = -sign*critFraction*this.maxLength;
+                    //scaleFactor = length/( critFraction*this.maxLength );
+                    ////debugger;
+                    //this.canvas.setScaleMagnitude( 1, scaleFactor );
                 }
             }else{  //if horizontal
                 if( Math.abs( displacement ) > critFraction*this.maxLength ){
+                    this.arrowHead.visible = true;
                     this.line.setPoint2( displacement - sign*this.hL, 0 );
                     this.arrowHead.x = displacement;
                 }else{  //if too small for arrowHead to fit
-                    this.line.setPoint2( sign*critFraction*this.maxLength - sign*this.hL, 0  );
-                    this.arrowHead.x = sign*critFraction*this.maxLength;
-                    scaleFactor = length/( critFraction*this.maxLength );
-                    this.scale( scaleFactor, 1 );
+                    //scaleFactor = length/( critFraction*this.maxLength );
+                    //this.arrowHead.setScaleMagnitude( scaleFactor, 1 );
+                    //this.line.setPoint2( displacement - sign*this.arrowHead.width, 0  );
+                    //this.arrowHead.x = displacement;
+                    this.arrowHead.visible = false;
+                    this.line.setPoint2( displacement, 0 );
+                    //debugger;
                 }
 
             }

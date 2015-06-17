@@ -18,6 +18,6 @@ define( function( require ) {
         PANEL_COLOR:'#FFD9B3',
         SIN_COLOR: '#0C0',
         COS_COLOR: '#00C',
-        TAN_COLOR: '#D00'
+        TAN_COLOR: '#F00'
     };
 } );

@@ -38,19 +38,19 @@ define( function( require ) {
         // Call the super constructor
         Node.call( arrowLine );
 
-        var arrowHeadShape = new Shape();
+        this.arrowHeadShape = new Shape();
         var hW = 15;     //arrow head width
         this.hL = 25;    //arrow head length
 
         if( this.vertical ){
             this.line = new Line( 0, 0, 0, 0, options );
-            arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, this.hL ).lineTo( hW/2, this.hL ).close();
+            this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, this.hL ).lineTo( hW/2, this.hL ).close();
         }else{
             this.line = new Line( 0, 0, 0, 0, options );
-            arrowHeadShape.moveTo( 0, 0 ).lineTo( -this.hL, hW/2 ).lineTo( -this.hL, -hW/2 ).close();
+            this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -this.hL, hW/2 ).lineTo( -this.hL, -hW/2 ).close();
         }
 
-        this.arrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: this.line.stroke });
+        this.arrowHead = new Path( this.arrowHeadShape, { lineWidth: 1, fill: this.line.stroke });
         if( this.vertical ){
             this.arrowHead.y = maxLength;  //assumes y2 < y1, i.e. arrow is pointing up
         }else{
@@ -77,7 +77,7 @@ define( function( require ) {
             this.arrowHead.setRotation( (sign - 1)*Math.PI/2 );
             //this.arrowHead.rotate( (sign - 1)*Math.PI/2 );
             var length = Math.abs( displacement );
-            var critFraction = 0.3;
+            var critFraction = 0.2;
             var scaleFactor = 1;
             if( this.vertical ){
                 if( length > critFraction*this.maxLength ){
@@ -96,21 +96,23 @@ define( function( require ) {
             }else{  //if horizontal
                 if( Math.abs( displacement ) > critFraction*this.maxLength ){
                     this.arrowHead.visible = true;
+                    this.arrowHead.setScaleMagnitude( 1, 1 );
                     this.line.setPoint2( displacement - sign*this.hL, 0 );
                     this.arrowHead.x = displacement;
                 }else{  //if too small for arrowHead to fit
-                    //scaleFactor = length/( critFraction*this.maxLength );
-                    //console.log( 'H scaleFactor = ' + scaleFactor );
+                    scaleFactor = Math.max( 0.25, length/( critFraction*this.maxLength ));
+                    console.log( 'H scaleFactor = ' + scaleFactor );
                     //this.arrowHead.rotation = 0;
-                    //this.arrowHead.x = displacement;
-                    //this.arrowHead.rotation = (sign - 1)*Math.PI/2;
+                    this.arrowHead.x = displacement;
                     //this.arrowHead.setScaleMagnitude( scaleFactor, 1 );
+                    //console.log( 'H arrow width = ' + this.arrowHead.width );
+                    //console.log( 'ratio = ' + this.arrowHead.width/scaleFactor );
                     //this.arrowHead.rotation = (sign - 1)*Math.PI/2;
                     //console.log( 'head length = ' + this.arrowHead.width );
                     //this.line.setPoint2( displacement - sign*this.arrowHead.width, 0  );
 
                     this.arrowHead.visible = false;
-                    this.line.setPoint2( displacement, 0 );
+                    this.line.setPoint2( displacement, 0 ); // - sign*this.arrowHead.width, 0 );
                     //debugger;
                 }
 
@@ -118,11 +120,11 @@ define( function( require ) {
         },//end setEndPoint()
         drawArrowHead: function( hL ){
             if( this.vertical ){
-                arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, this.hL ).lineTo( hW/2, this.hL ).close();
+                this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, hL ).lineTo( hW/2, hL ).close();
             }else{
-                this.line = new Line( 0, 0, 0, 0, options );
-                arrowHeadShape.moveTo( 0, 0 ).lineTo( -this.hL, hW/2 ).lineTo( -this.hL, -hW/2 ).close();
+                this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hL, hW/2 ).lineTo( -hL, -hW/2 ).close();
             }
+            this.arrowHead.setShape( this.arrowHeadShape );
         }
     } ); //end return inherit
 } );

@@ -24,16 +24,17 @@ define( function( require ) {
 
     /**
      * Constructor for ArrowLine which renders rotor as a scenery node.
-     * @param {Number} x1, y1 is start point of arrow
-     * @param {Number} y1, y1 is start point of arrow
-     * @param {Number} x2, y1 is start point of arrow
-     * @param {Number} y2, y1 is start point of arrow
+     * @param {Number} maxLength of arrow in pixels
+     * @param {String} orientation = 'v' or 'h' for vertical or horizontal
      * @param {Object} options passed to Line
      * @constructor
      */
-    function ArrowLine( x1, y1, x2, y2,  options  ) {
+    function ArrowLine( maxLength, orientation,  options  ) {
 
         var arrowLine = this;
+        this.maxLength = maxLength;
+        this.vertical = ( orientation === 'v' );
+        this.options = options;
         // Call the super constructor
         Node.call( arrowLine );
 
@@ -41,46 +42,61 @@ define( function( require ) {
         var hW = 20;     //arrow head width
         this.hL = 30;    //arrow head length
 
-        this.vertical = ( y2 !== y1 );  //true if arrowLine is vertical
         if( this.vertical ){
-            y2 += this.hL;
-        }else{
-            x2 -= this.hL;
-        }
-        this.myLine = new Line( x1, x2, y1, y2, options );
-        if( this.vertical ){     //if arrow is vertical
-            // arrow head initially pointing tip up, origin of arrow head at tip
+            this.line = new Line( 0, 0, 0, 0, options );
             arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, this.hL ).lineTo( hW/2, this.hL ).close();
         }else{
-            // arrow head initially pointing tip right, origin of arrow head at tip
+            this.line = new Line( 0, 0, 0, 0, options );
             arrowHeadShape.moveTo( 0, 0 ).lineTo( -this.hL, hW/2 ).lineTo( -this.hL, -hW/2 ).close();
         }
-        this.arrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: this.myLine.stroke });
+
+        this.arrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: this.line.stroke });
         if( this.vertical ){
-            this.arrowHead.y = y2 - this.hL;  //assumes y2 < y1, i.e. arrow is pointing up
+            this.arrowHead.y = maxLength;  //assumes y2 < y1, i.e. arrow is pointing up
         }else{
-            this.arrowHead.x = x2 + this.hL;
+            this.arrowHead.x = maxLength;
         }
-
-        arrowLine.addChild( this.arrowHead );
-        arrowLine.addChild( this.myLine );
-
-
-
+        this.line.addChild( this.arrowHead );
+        arrowLine.addChild( this.line );
     }//end constructor
 
     return inherit( Node, ArrowLine, {
         setColor: function( color ){
-            this.myLine.stroke = color;
+            this.line.stroke = color;
             this.arrowHead.fill = color;
         },
-        setPoint2: function( x2, y2 ){
-
+        setEndPoint: function( displacement ){
+            console.log( 'vertical = ' + this.vertical + '   displacement = ' + displacement );
+            var sign = 0;  //+1, -1, or zero depending on sign of displacement
+            if( displacement !== 0 ){
+                sign = Math.round( displacement / Math.abs( displacement ) ); //+1 if pointing up/right, -1 if pointing down/left
+            }
+            this.arrowHead.rotation = (sign - 1)*Math.PI/2;
+            this.scale( 1, 1 );
+            var length = Math.abs( displacement );
+            var critFraction = 0.4;
+            var scaleFactor = 1;
             if( this.vertical ){
-                this.myLine.setPoint2( x2, y2 + this.hL );
-               this.arrowHead.y = y2 - this.hL;
-            }else{
-                this.arrowHead.x = x2 + this.hL ;
+                if( length > 0.4*this.maxLength ){
+                    this.line.setPoint2( 0, -displacement + sign*this.hL );
+                    this.arrowHead.y = -displacement;
+                }else{  //if too small for arrowHead to fit
+                    this.line.setPoint2( 0, sign*critFraction*this.maxLength + sign*this.hL );
+                    this.arrowHead.y = sign*critFraction*this.maxLength;
+                    scaleFactor = length/( critFraction*this.maxLength );
+                    this.scale( 1, scaleFactor );
+                }
+            }else{  //if horizontal
+                if( Math.abs( displacement ) > critFraction*this.maxLength ){
+                    this.line.setPoint2( displacement - sign*this.hL, 0 );
+                    this.arrowHead.x = displacement;
+                }else{  //if too small for arrowHead to fit
+                    this.line.setPoint2( sign*critFraction*this.maxLength - sign*this.hL, 0  );
+                    this.arrowHead.x = sign*critFraction*this.maxLength;
+                    scaleFactor = length/( critFraction*this.maxLength );
+                    this.scale( scaleFactor, 1 );
+                }
+
             }
         }
     } ); //end return inherit

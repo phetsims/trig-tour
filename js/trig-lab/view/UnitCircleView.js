@@ -115,12 +115,12 @@ define( function( require ) {
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
-        var vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
-        var vArrowLine = new ArrowLine( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
+        //var vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
+        var vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
         //draw horizontal (cosine) line on rotor triangle
-        var hLine = new Line( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
-        var hArrowLine = new ArrowLine( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
+        //var hLine = new Line( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
+        var hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
 
         //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
@@ -131,8 +131,7 @@ define( function( require ) {
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
         //lay on the children!
-        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hLine, vLine, this.specialAnglesNode, rotorGraphic ];
-        unitCircleView.addChild( vArrowLine );
+        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hArrowLine, vArrowLine, this.specialAnglesNode, rotorGraphic ];
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -295,11 +294,9 @@ define( function( require ) {
             rotorGraphic.rotation = -angle;  //model angle is negative of xy coords angle
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
-            //hArrow.setScaleMagnitude( cos, 1 ) ;
-            vLine.x = radius*cos;
-            vLine.setPoint2( 0, -radius*sin  );
-            vArrowLine.setPoint2( 0, -radius*sin );
-            hLine.setPoint2( radius*cos, 0 );
+            vArrowLine.x = radius*cos;
+            vArrowLine.setEndPoint( radius*sin );
+            hArrowLine.setEndPoint( radius*cos );
             drawAngleArc();
             positionLabels();
         } );

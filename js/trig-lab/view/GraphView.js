@@ -186,7 +186,7 @@ define( function( require ) {
         //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
         //this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0B0', lineWidth: 6 } );
-        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0B0', lineWidth: 6 }  );
+        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 6 }  );
         var hitBound = 30;
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
         this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
@@ -246,17 +246,20 @@ define( function( require ) {
             if( this.trigFunction === 'cos'){
                 //this.indicatorLine.setPoint2( 0, -cos*this.amplitude );
                 this.indicatorLine.setEndPoint( cos*this.amplitude );
-                this.indicatorLine.stroke = COS_COLOR;
+                //this.indicatorLine.stroke = COS_COLOR;
+                this.indicatorLine.setColor( COS_COLOR );
                 this.redDotHandle.y = -cos*this.amplitude;
             }else if ( this.trigFunction === 'sin' ){
                 //this.indicatorLine.setPoint2( 0, -sin*this.amplitude );
                 this.indicatorLine.setEndPoint( sin*this.amplitude );
-                this.indicatorLine.stroke = SIN_COLOR;
+                //this.indicatorLine.stroke = SIN_COLOR;
+                this.indicatorLine.setColor( SIN_COLOR );
                 this.redDotHandle.y = -sin*this.amplitude;
             }else if ( this.trigFunction === 'tan' ){
                 //this.indicatorLine.setPoint2( 0, -tan*this.amplitude );
                 this.indicatorLine.setEndPoint( tan*this.amplitude );
-                this.indicatorLine.stroke = TAN_COLOR;
+                //this.indicatorLine.stroke = TAN_COLOR;
+                this.indicatorLine.setColor( TAN_COLOR );
                 this.redDotHandle.y = -tan*this.amplitude;
             }else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
         }

@@ -16,8 +16,8 @@ define( function( require ) {
         TEXT_COLOR: '#000',
         LINE_COLOR: '#000',
         PANEL_COLOR:'#FFD9B3',
-        SIN_COLOR: '#0B0',
-        COS_COLOR: '#00B',
-        TAN_COLOR: '#B00'
+        SIN_COLOR: '#0C0',
+        COS_COLOR: '#00C',
+        TAN_COLOR: '#D00'
     };
 } );

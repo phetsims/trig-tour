@@ -68,16 +68,16 @@ define( function( require ) {
             this.arrowHead.fill = color;
         },
         setEndPoint: function( displacement ){
-            console.log( 'vertical = ' + this.vertical + '   displacement = ' + displacement );
+            //console.log( 'vertical = ' + this.vertical + '   displacement = ' + displacement );
             var sign = 0;  //+1, -1, or zero depending on sign of displacement
             if( displacement !== 0 ){
                 sign = Math.round( displacement / Math.abs( displacement ) ); //+1 if pointing up/right, -1 if pointing down/left
             }
-            console.log( 'sign = ' + sign + '   maxLength = ' + this.maxLength );
-            this.arrowHead.rotation = (sign - 1)*Math.PI/2;
-            //this.scale( 1, 1 );
+            //console.log( 'sign = ' + sign + '   maxLength = ' + this.maxLength );
+            this.arrowHead.setRotation( (sign - 1)*Math.PI/2 );
+            //this.arrowHead.rotate( (sign - 1)*Math.PI/2 );
             var length = Math.abs( displacement );
-            var critFraction = 0.2;
+            var critFraction = 0.3;
             var scaleFactor = 1;
             if( this.vertical ){
                 if( length > critFraction*this.maxLength ){
@@ -100,14 +100,28 @@ define( function( require ) {
                     this.arrowHead.x = displacement;
                 }else{  //if too small for arrowHead to fit
                     //scaleFactor = length/( critFraction*this.maxLength );
-                    //this.arrowHead.setScaleMagnitude( scaleFactor, 1 );
-                    //this.line.setPoint2( displacement - sign*this.arrowHead.width, 0  );
+                    //console.log( 'H scaleFactor = ' + scaleFactor );
+                    //this.arrowHead.rotation = 0;
                     //this.arrowHead.x = displacement;
+                    //this.arrowHead.rotation = (sign - 1)*Math.PI/2;
+                    //this.arrowHead.setScaleMagnitude( scaleFactor, 1 );
+                    //this.arrowHead.rotation = (sign - 1)*Math.PI/2;
+                    //console.log( 'head length = ' + this.arrowHead.width );
+                    //this.line.setPoint2( displacement - sign*this.arrowHead.width, 0  );
+
                     this.arrowHead.visible = false;
                     this.line.setPoint2( displacement, 0 );
                     //debugger;
                 }
 
+            }
+        },//end setEndPoint()
+        drawArrowHead: function( hL ){
+            if( this.vertical ){
+                arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW/2, this.hL ).lineTo( hW/2, this.hL ).close();
+            }else{
+                this.line = new Line( 0, 0, 0, 0, options );
+                arrowHeadShape.moveTo( 0, 0 ).lineTo( -this.hL, hW/2 ).lineTo( -this.hL, -hW/2 ).close();
             }
         }
     } ); //end return inherit

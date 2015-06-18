@@ -75,7 +75,7 @@ define( function( require ) {
         var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
 
         //Draw and position x-, y-axis labels
-        var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };//'20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //'20px sans-serif' };
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );

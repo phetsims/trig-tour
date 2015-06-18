@@ -69,16 +69,17 @@ define( function( require ) {
 
     //console.log( 'ReadOutView initialized.  angleValue is ' + angleValue );
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ font: '20px sans-serif' };
+    var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
     //Row 1: (x, y) = ( cos, sin )
-    var coordinatesLabel = new Text( xyEqualsStr, fontInfo );
+    var coordinatesLabel = new Text( xyEqualsStr, fontBoldInfo );
     var coordinatesReadout = new Text( '', fontInfo );     //text provided by model synchronization below: model.angleProperty.link
     row1.children = [ coordinatesLabel, coordinatesReadout ];
     //layout
     coordinatesReadout.left = coordinatesLabel.right;
 
     //Row 2: angle = value in degs or rads
-    var angleLabel = new Text( angleEqualsStr, fontInfo );
+    var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
     this.angleReadout = new Text( angleValue, fontInfo );
     this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );
     //this.nbrFullTurnsText = new Text( '', fontInfo );  //for example, text '4pi + '
@@ -95,12 +96,12 @@ define( function( require ) {
 
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
-    var sinLabel = new Text( sinEqualsStr, fontInfo );
-    var cosLabel = new Text( cosEqualsStr, fontInfo );
-    var tanLabel = new Text( tanEqualsStr, fontInfo );
-    var cosFraction = new FractionNode( xStr, 1, fontInfo ) ;
-    var sinFraction = new FractionNode( yStr, 1, fontInfo ) ;
-    var tanFraction = new FractionNode( yStr, xStr, fontInfo );
+    var sinLabel = new Text( sinEqualsStr, fontBoldInfo );
+    var cosLabel = new Text( cosEqualsStr, fontBoldInfo );
+    var tanLabel = new Text( tanEqualsStr, fontBoldInfo );
+    var cosFraction = new FractionNode( xStr, 1, fontBoldInfo ) ;
+    var sinFraction = new FractionNode( yStr, 1, fontBoldInfo ) ;
+    var tanFraction = new FractionNode( yStr, xStr, fontBoldInfo );
 
     //trig readout is either decimal number (type Text) or built-up fraction (type FractionNode)
     this.sinReadoutText = new Text( sinValue, fontInfo );
@@ -109,9 +110,9 @@ define( function( require ) {
     this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
     this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
     this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
-    var equalText1 = new Text( equalStr, fontInfo );
-    var equalText2 = new Text( equalStr, fontInfo );
-    var equalText3 = new Text( equalStr, fontInfo );
+    var equalText1 = new Text( equalStr, fontBoldInfo );
+    var equalText2 = new Text( equalStr, fontBoldInfo );
+    var equalText3 = new Text( equalStr, fontBoldInfo );
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
     this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinReadoutFraction ]});

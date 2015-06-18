@@ -34,6 +34,7 @@ define( function( require ) {
     options = _.extend( {
       //squareRootSignNeeded: false       //if true, display numerator with square root sign
     }, options );             // Make sure options is defined.
+    this.options = options;
 
     this.fractionNode = this;
 
@@ -69,7 +70,7 @@ define( function( require ) {
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
       var squareRootSignNeeded = false;  //true if square root symbol is needed over the numerator
       var noDenominator = false;  //true if only the numerator is displayed as a non-fraction number
-      var fontInfo = { font: DISPLAY_FONT };
+      var fontInfo = this.options; //{ font: DISPLAY_FONT };
 
       //Check that arguments are strings
       if( typeof this.numerator !== 'string' ){ this.numerator = this.numerator.toString(); }

@@ -163,6 +163,7 @@ define( function( require ) {
       [ 2 + pi, '' ]
     ];//end anglesInRadsFractions
 
+    //'q' is the flag which informs FractionNode that a square root symbol is required in the numerator
     this.cosFractions = [
       [ 1, '' ],
       [ 'q' + 3, 2 ],
@@ -293,6 +294,7 @@ define( function( require ) {
       }
     },
     setSpecialAngleReadout: function(){
+      this.angleReadoutFraction.visible = true;
       var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic can give not quite integer
       if( Math.abs( angleInDegs ) > 360 ){
         angleInDegs = angleInDegs%360;
@@ -333,7 +335,8 @@ define( function( require ) {
         }
         this.nbrFullTurnsText.text = angleStr;
         //this.angleReadoutFraction.visible = false;
-        this.angleReadoutFraction.setValues( '', '' );
+        this.angleReadoutFraction.setValues( 'A', 'B' );
+        this.angleReadoutFraction.visible = false;
       }
     }, //end setSpecialAngleReadout()
     setTrigReadout: function(){

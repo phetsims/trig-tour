@@ -67,7 +67,8 @@ define( function( require ) {
       var numeratorNegative = false;    //true if numerator is negative
       var denominatorNegative = false;
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
-      var squareRootSignNeeded = false;
+      var squareRootSignNeeded = false;  //true if square root symbol is needed over the numerator
+      var noDenominator = false;  //true if only the numerator is displayed as a non-fraction number
       var fontInfo = { font: DISPLAY_FONT };
 
       //Check that arguments are strings
@@ -75,18 +76,8 @@ define( function( require ) {
       if( typeof this.denominator !== 'string' ){ this.denominator = this.denominator.toString(); }
       //if( typeof this.preterm !== 'string' && this.preterm !== undefined ){ this.preTerm = this.preTerm.toString(); }
 
-      //if no denominator argument is passed in, then display the numerator as a non-fraction number
-      if ( this.denominator === undefined || this.denominator === '' ) {
-        //make current children invisible so numerator is not obscured
-        for ( var i = 0; i < this.children.length; i++ ) {
-          this.children[i].visible = false;
-        }
-        //if ( this.negative ) { this.numerator = '-' + this.numerator }
-        this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
-        return; //have to break out
-      } //end if
 
-
+      //Process leading minus sign and square root tag
       if( this.numerator.charAt( 0 ) === '-' ){  //remove minus sign, if found
         this.numerator = this.numerator.slice( 1 );
         numeratorNegative = true;
@@ -103,6 +94,8 @@ define( function( require ) {
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
+
+
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
       }
@@ -118,14 +111,18 @@ define( function( require ) {
 
 
       //Draw horizontal line separating numerator and denominator
-      length = 1.2*numeratorText.width;
+      if( squareRootSignNeeded ){
+        length = 1.8*numeratorText.width;
+      }else{
+        length = 1.2*numeratorText.width;
+      }
       var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
 
       //draw square root symbol
       var sqRtShape = new Shape();
       //var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
       if( squareRootSignNeeded ){
-        console.log( 'square root symbol constructed');
+        //console.log( 'square root symbol constructed');
         var W = 1.2*numeratorText.width;
         var h = 0.8*numeratorText.height;
         var w = h/4;
@@ -136,26 +133,46 @@ define( function( require ) {
       var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
 
 
-      this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
 
+      //if no denominator argument is passed in, then display the numerator as a non-fraction number
+      if ( this.denominator === undefined || this.denominator === '' ) {
+        //make current children invisible so numerator is not obscured
+        noDenominator = true;
+        console.log( 'no denominator ');
+        for ( var i = 0; i < this.children.length; i++ ) {
+          this.children[i].visible = false;
+        }
+        //if ( this.negative ) { this.numerator = '-' + this.numerator }
+        this.fractionNode.children = [ minusSign, sqRtPath, numeratorText ];
+        //this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
+        return; //have to break out
+      } //end if
+
+      this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
 
       bar.left = 0;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;
       var offset = 2;
       numeratorText.bottom = bar.top - offset;
       denominatorText.top = bar.bottom + offset;
+      offset = 4;
       if( minusSignNeeded ){
         minusSign.left = 0;
         bar.left = minusSign.right + offset;
         numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
+      if( noDenominator ){
+        console.log( ' noDenominator, spacing set ' );
+        numeratorText.left = minusSign.right + offset;
+      }
       if( squareRootSignNeeded ){
         sqRtPath.top = numeratorText.top;
         sqRtPath.centerX = numeratorText.centerX - 3;
-        console.log( 'sqRtPath = ' + sqRtPath );
-        console.log( 'sqRtPath.top = ' + sqRtPath.top );
-        console.log( 'sqRtPath.x = ' + sqRtPath.x );
+        //console.log( 'sqRtPath = ' + sqRtPath );
+        //console.log( 'sqRtPath.top = ' + sqRtPath.top );
+        //console.log( 'sqRtPath.x = ' + sqRtPath.x );
       }
+
 
     }//end createFraction()
   }); //end return inherit..

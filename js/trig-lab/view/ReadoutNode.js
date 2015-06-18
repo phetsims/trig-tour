@@ -334,7 +334,7 @@ define( function( require ) {
           angleStr = '-' + pi;
         }
         this.nbrFullTurnsText.text = angleStr;
-        //this.angleReadoutFraction.visible = false;
+        //dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );
         this.angleReadoutFraction.visible = false;
       }

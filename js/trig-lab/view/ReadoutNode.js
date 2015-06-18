@@ -228,7 +228,7 @@ define( function( require ) {
     //this.angleReadout.visible = false;
 
     // Adjust touch areas
-    var spacing = 5;
+    var spacing = 10;
 
     var contentVBox = new VBox( {
       children: [
@@ -332,6 +332,7 @@ define( function( require ) {
           angleStr = '-' + pi;
         }
         this.nbrFullTurnsText.text = angleStr;
+        //this.angleReadoutFraction.visible = false;
         this.angleReadoutFraction.setValues( '', '' );
       }
     }, //end setSpecialAngleReadout()

@@ -145,10 +145,23 @@ define( function( require ) {
         //if ( this.negative ) { this.numerator = '-' + this.numerator }
         this.fractionNode.children = [ minusSign, sqRtPath, numeratorText ];
         //this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
+        if( minusSignNeeded ){
+          minusSign.left = 0;
+          numeratorText.left = minusSign.right + 4;
+        }
+        if( squareRootSignNeeded && minusSignNeeded ){
+          numeratorText.left = minusSign.right + 12;
+          sqRtPath.centerX = numeratorText.centerX - 3;
+        }
+
         return; //have to break out
       } //end if
 
-      this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
+      if( !noDenominator ){
+        this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
+      }
+
+      //this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
 
       bar.left = 0;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;

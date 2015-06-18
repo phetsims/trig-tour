@@ -40,9 +40,9 @@ define( function( require ) {
     AccordionBox.call( this, this.readoutNode, {
       lineWidth: 2,
       cornerRadius: 10,
-      buttonXMargin: 8, // horizontal space between button and left|right edge of box
-      buttonYMargin: 8,
-      titleNode: new Text( 'Readouts', { font: DISPLAY_FONT } ),
+      buttonXMargin: 12, // horizontal space between button and left|right edge of box
+      buttonYMargin: 12,
+      titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleAlignX: 'left',
       //contentAlign: 'left',
       fill: PANEL_COLOR,

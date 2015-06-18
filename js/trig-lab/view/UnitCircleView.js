@@ -159,7 +159,7 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        r = 0.3*radius;   //arc radius = 0.3 of rotor radius
+        r = 0.2*radius;   //arc radius = 0.3 of rotor radius
         var arcShape = new Shape();
         var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
         //following code is to speed up drawing
@@ -178,7 +178,7 @@ define( function( require ) {
         circleGraphic.addChild( angleArcPath );
         var drawAngleArc = function(){
             var arcShape = new Shape();  //This seems wasteful. But there is now Shape.clear() function
-            r = 0.3*radius;
+            r = 0.2*radius;
             arcShape.moveTo( r, 0 );
             var totalAngle = model.getAngleInRadians();
             var dAng = 0.1;  //delta-angle in radians
@@ -189,13 +189,13 @@ define( function( require ) {
             if( totalAngle >0 ){
                 for( ang = 0; ang <= totalAngle; ang += dAng ){
                     //console.log( 'angle is '+ang );
-                    r -= dAng;
+                    r += dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) ) ;
                 }
             }else{
                 for( ang = 0; ang >= totalAngle; ang -= dAng ){
                     //console.log( 'angle is '+ang );
-                    r -= dAng;
+                    r += dAng;
                     arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) );
                 }
             }

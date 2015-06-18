@@ -22,15 +22,17 @@ define( function( require ) {
   var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added after equal sign for pleasant layout
   var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
   var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
-  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + equalStr;
-  var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + equalStr;
-  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + equalStr;
+  var theta = require( 'string!TRIG_LAB/theta' );
+  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
+  var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
+  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
   //var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
   var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var sqRt = require( 'string!TRIG_LAB/squareRoot' );
+
   var xStr = 'x';
   var yStr = 'y';
 
@@ -250,7 +252,7 @@ define( function( require ) {
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       //var tanText =  model.tan().toFixed( 3 );
-      coordinatesReadout.text = '( '+ cosText + ', ' + sinText + ' )';
+      coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
     } ); //end model.angleProperty.link

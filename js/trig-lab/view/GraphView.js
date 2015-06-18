@@ -75,22 +75,25 @@ define( function( require ) {
         var xAxisLength = width;
         var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1, fill: LINE_COLOR });  //tailX, tailY, tipX, tipY, options
         var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1, fill: LINE_COLOR } );
-        this.axesNode = new Node();   //axes bounds are used in layout
-        this.axesNode.children = [ xAxis, yAxis ];
-        graphView.addChild( this.axesNode );
 
         //draw tic marks on x-, y-axes
         var ticLength = 5;
+        var xTic;
+        var yTic;
         for( var i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ){
-            var xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, fill: LINE_COLOR});
+            xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR});
             xTic.x = i*wavelength/2;
             xAxis.addChild( xTic );
         }
         for( i = -1; i <=1; i+=2 ){
-            var yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, fill: LINE_COLOR} );
+            yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR} );
             yTic.y = i*this.amplitude;
             yAxis.addChild( yTic );
         }
+
+        this.axesNode = new Node();   //axes bounds of this are used in layout
+        this.axesNode.children = [ xAxis, yAxis ];
+        graphView.addChild( this.axesNode );
 
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();

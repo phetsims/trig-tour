@@ -94,8 +94,6 @@ define( function( require ) {
       numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
-
-
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
       }
@@ -132,8 +130,6 @@ define( function( require ) {
       }
       var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
 
-
-
       //if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {
         //make current children invisible so numerator is not obscured
@@ -152,6 +148,10 @@ define( function( require ) {
         if( squareRootSignNeeded && minusSignNeeded ){
           numeratorText.left = minusSign.right + 12;
           sqRtPath.centerX = numeratorText.centerX - 3;
+        }
+        if( squareRootSignNeeded && !minusSignNeeded ){
+          sqRtPath.left = 0;
+          numeratorText.centerX = sqRtPath.centerX + 3;
         }
 
         return; //have to break out
@@ -175,7 +175,6 @@ define( function( require ) {
         numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
       if( noDenominator ){
-        console.log( ' noDenominator, spacing set ' );
         numeratorText.left = minusSign.right + offset;
       }
       if( squareRootSignNeeded ){

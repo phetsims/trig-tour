@@ -19,9 +19,9 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
-  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' );
-  var equalStr = require( 'string!TRIG_LAB/equals' );
-  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' );
+  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added after equal sign for pleasant layout
+  var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
+  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
   var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + equalStr;
   var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + equalStr;
   var tanEqualsStr = require( 'string!TRIG_LAB/tan') + equalStr;
@@ -80,15 +80,18 @@ define( function( require ) {
     //Row 2: angle = value in degs or rads
     var angleLabel = new Text( angleEqualsStr, fontInfo );
     this.angleReadout = new Text( angleValue, fontInfo );
-    this.nbrFullTurnsText = new Text( '', fontInfo );  //for example, text '4pi + '
+    this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );
+    //this.nbrFullTurnsText = new Text( '', fontInfo );  //for example, text '4pi + '
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //used to display angle as FractionNode in Special angles mode
     this.angleReadout.visible = true;
     this.angleReadoutFraction.visible = false;
-    row2.children = [ angleLabel, this.angleReadout, this.nbrFullTurnsText, this.angleReadoutFraction ];
+    row2.children = [ angleLabel, this.angleReadout, this.nbrFullTurnsNode, this.angleReadoutFraction ];
     //layout
     this.angleReadout.left =  angleLabel.right ;
-    this.nbrFullTurnsText.left = angleLabel.right;
-    this.angleReadoutFraction.left =  this.nbrFullTurnsText.right ;
+    this.nbrFullTurnsNode.left = angleLabel.right;
+    this.angleReadoutFraction.left =  this.nbrFullTurnsNode.right ;
+    //this.nbrFullTurnsText.left = angleLabel.right;
+    //this.angleReadoutFraction.left =  this.nbrFullTurnsText.right ;
 
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
@@ -223,11 +226,6 @@ define( function( require ) {
     ];
 
 
-    //Test Code
-    //this.angleReadoutFraction = new FractionNode( 11, 3 );
-    //this.angleReadoutFraction.visible = true;
-    //this.angleReadout.visible = false;
-
     // Adjust touch areas
     var spacing = 10;
 
@@ -248,8 +246,6 @@ define( function( require ) {
 
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {    //angle is in radians
-      //var angleInDegrees = angle*180/Math.PI;
-      //console.log( 'angle changed. angle = ' + angleInDegrees );
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       //var tanText =  model.tan().toFixed( 3 );
@@ -269,20 +265,16 @@ define( function( require ) {
       else {
         this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
       }
-      //console.log(' ReadOutView called. units = ' + units );
     },
     setTrigRowVisibility: function ( graph ) {
-      //console.log( 'setTrigRowVisibility called.  graph = ' + graph );
       this.trigRow3.children[0].visible = ( graph === 'sin' );
       this.trigRow3.children[1].visible = ( graph === 'cos' );
       this.trigRow3.children[2].visible = ( graph === 'tan' );
     } ,
     setAngleReadoutPrecision: function( nbrDecimalPlaces ){
       this.nbrDecimalPlaces = nbrDecimalPlaces;
-      //console.log( 'setAngleReadoutPrecision called. precision is ' + this.nbrDecimalPlaces );
     },
     setAngleReadout: function(){
-      //var angleInDegrees = this.model.getAngleInDegrees();
       if( !this.radiansDisplayed ){
         this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + this.units;
       }
@@ -306,12 +298,16 @@ define( function( require ) {
       var fullTurnStr = '';
       //console.log('setSpecialAngleReadout called. piRadsCount = ' + piRadsCount );
       if( piRadsCount !== 0 ){
-        fullTurnStr = piRadsCount + pi + ' + ';
-      }else{
+        if( fullTurnCount > 0 ){
+          fullTurnStr = piRadsCount + pi + ' + ';
+        }else{
+          fullTurnStr = piRadsCount + pi + ' ';
+        }
+      }else{  //if zero turns
         fullTurnStr = '';
       }
-      this.nbrFullTurnsText.text = fullTurnStr;
-      this.angleReadoutFraction.left =  this.nbrFullTurnsText.right;
+      this.nbrFullTurnsNode.setValues( fullTurnStr, '' );
+      this.angleReadoutFraction.left =  this.nbrFullTurnsNode.right; //this.nbrFullTurnsText.right;
       for( var i = 0; i < this.angleFractions.length; i++ ){
         if ( this.angles[i] === angleInDegs ){
           this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );
@@ -322,8 +318,6 @@ define( function( require ) {
       //Must handle smallAngle = 0 or pi as special cases
       if( Math.round( this.model.getSmallAngleInDegrees() ) === 0 || Math.round( this.model.getSmallAngle0To360() ) === 180 ){
         var nbrPiRads = this.model.getHalfTurnCount();
-        //console.log( 'angle is 0 or 180. nbrPiRads = ' + nbrPiRads );
-        //console.log( 'angle is 0 or 180. angle = ' + this.model.angle );
         var angleStr = nbrPiRads + pi;
        // console.log( 'angle is 0 or 180. angleStr = ' + angleStr );
         if( nbrPiRads === 0 ){
@@ -333,7 +327,8 @@ define( function( require ) {
         }else if( nbrPiRads === -1 ){
           angleStr = '-' + pi;
         }
-        this.nbrFullTurnsText.text = angleStr;
+        this.nbrFullTurnsNode.setValues( angleStr, '' );
+        //this.nbrFullTurnsText.text = angleStr;
         //dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );
         this.angleReadoutFraction.visible = false;

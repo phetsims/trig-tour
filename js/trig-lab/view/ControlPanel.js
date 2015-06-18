@@ -69,7 +69,7 @@ define( function( require ) {
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( 100 ), //maxControlWidth ),
+        new HSeparator( 150 ), //maxControlWidth ),
         labelsCheckBox,
         gridCheckBox,
         specialAnglesCheckBox

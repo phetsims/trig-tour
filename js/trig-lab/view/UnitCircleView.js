@@ -115,12 +115,13 @@ define( function( require ) {
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
-        //var vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
-        var vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
+        this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
+        this.vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
         //draw horizontal (cosine) line on rotor triangle
-        //var hLine = new Line( 0, 0, radius, 0, { lineWidth: 8, stroke: COS_COLOR } );
-        var hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
+        this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 6, stroke: COS_COLOR } );
+        this.hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
+
 
         //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
@@ -131,7 +132,7 @@ define( function( require ) {
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
         //lay on the children!
-        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, hArrowLine, vArrowLine, this.specialAnglesNode, rotorGraphic ];
+        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine,  this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -159,7 +160,7 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        r = 0.2*radius;   //arc radius = 0.3 of rotor radius
+        var arcRadius = 0.2*radius;   //arc radius = 0.3 of rotor radius
         var arcShape = new Shape();
         var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
         //following code is to speed up drawing
@@ -168,7 +169,7 @@ define( function( require ) {
              return emptyBounds;
         } ;
 
-        //draw AngleArcArrowHead
+        //draw Angle Arc Arrow Head
         var arrowHeadShape = new Shape();
         var hW = 7;     //arrow head width
         var hL = 12;    //arrow head length
@@ -176,10 +177,12 @@ define( function( require ) {
         var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: LINE_COLOR});
         angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
+
+        //draw arc and
         var drawAngleArc = function(){
-            var arcShape = new Shape();  //This seems wasteful. But there is now Shape.clear() function
-            r = 0.2*radius;
-            arcShape.moveTo( r, 0 );
+            var arcShape = new Shape();  //This seems wasteful. But there is no Shape.clear() function
+            arcRadius = 0.2*radius;
+            arcShape.moveTo( arcRadius, 0 );
             var totalAngle = model.getAngleInRadians();
             var dAng = 0.1;  //delta-angle in radians
             if( Math.abs(totalAngle) < 0.5 ){
@@ -189,30 +192,32 @@ define( function( require ) {
             if( totalAngle >0 ){
                 for( ang = 0; ang <= totalAngle; ang += dAng ){
                     //console.log( 'angle is '+ang );
-                    r += dAng;
-                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) ) ;
+                    arcRadius += dAng;
+                    arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) ) ;
                 }
             }else{
                 for( ang = 0; ang >= totalAngle; ang -= dAng ){
                     //console.log( 'angle is '+ang );
-                    r += dAng;
-                    arcShape.lineTo( r*Math.cos( ang ), -r*Math.sin( ang ) );
+                    arcRadius += dAng;
+                    arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) );
                 }
             }
 
             angleArcPath.setShape( arcShape );
-            if( Math.abs( totalAngle ) < 20*Math.PI/180 ){
+
+            //show arc arrow head only if angle is > 45 degs
+            if( Math.abs( totalAngle ) < 45*Math.PI/180 ){
                 angleArcArrowHead.visible = false;
             }else{
                 angleArcArrowHead.visible = true;
             }
-            angleArcArrowHead.x = r*Math.cos( totalAngle );
-            angleArcArrowHead.y = -r*Math.sin( totalAngle );
+            angleArcArrowHead.x = arcRadius*Math.cos( totalAngle );
+            angleArcArrowHead.y = -arcRadius*Math.sin( totalAngle );
             //angleArcArrowHead.rotation = 0;
             if( totalAngle < 0 ){
-                angleArcArrowHead.rotation = Math.PI - totalAngle - (6/r); //model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6/arcRadius ); //model.smallAngle*180/Math.PI;
             }else{
-                angleArcArrowHead.rotation = -totalAngle + (6/r); //-model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = -totalAngle + ( 6/arcRadius ); //-model.smallAngle*180/Math.PI;
             }
         };   //end drawAngleArc
 
@@ -232,13 +237,13 @@ define( function( require ) {
             labelCanvas.visible = isVisible;
         };
 
-        //position the x, y, and '1' labels on the xyR triangle of the unit circle
+        //position the x, y,  '1', and theta labels on the xyR triangle of the unit circle
         var positionLabels = function( ){
             var smallAngle = trigLabModel.getSmallAngleInRadians();
             var totalAngle = trigLabModel.getAngleInRadians();
             var pi = Math.PI;
             //set visibility of the labels
-            if( Math.abs( totalAngle ) < 20*pi/180 ){
+            if( Math.abs( totalAngle ) < 40*pi/180 ){
                 thetaText.visible = false;
             }else{
                 thetaText.visible = true;
@@ -265,24 +270,27 @@ define( function( require ) {
             var yInPix = radius*Math.sin( smallAngle + sign*angleOffset );
             oneText.centerX = 0.6*xInPix;// - 0.5*oneText.width;
             oneText.centerY = - 0.6*yInPix;// -0.5*oneText.height;
+
             //position x-label
             var xPos = 0.5*radius*Math.cos( smallAngle );// - 0.5*xText.width;
             var yPos = 0.6*xText.height;
             if( smallAngle < 0 ){ yPos = -0.6*xText.height; }
             xText.centerX = xPos;
             xText.centerY = yPos;
+
             //position y-label
             sign = 1;
             if( ( smallAngle > pi/2 && smallAngle < pi ) ||( smallAngle > -pi && smallAngle < -pi/2 )){
                 sign = -1;
             }
-            xPos = radius*Math.cos(smallAngle)+ sign*xText.width; //- 0.5*xText.width
-            yPos = -0.5*radius*Math.sin( smallAngle );// - 0.5*yText.height;
+            xPos = radius*Math.cos(smallAngle)+ sign*xText.width;
+            yPos = -0.5*radius*Math.sin( smallAngle );
             yText.centerX = xPos;
             yText.centerY = yPos;
+
             //show and position theta-label on angle arc if arc is greater than 20 degs
-            xPos = 0.37*radius*Math.cos( totalAngle/2 );// - 0.5*thetaText.width;
-            yPos = -0.37*radius*Math.sin( totalAngle/2 );// - 0.5*thetaText.height;
+            xPos = ( arcRadius + 10 )*Math.cos( totalAngle/2 );
+            yPos = -( arcRadius + 10 )*Math.sin( totalAngle/2 );
             thetaText.centerX = xPos;
             thetaText.centerY = yPos;
         };//end positionLabels()
@@ -294,9 +302,12 @@ define( function( require ) {
             rotorGraphic.rotation = -angle;  //model angle is negative of xy coords angle
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
-            vArrowLine.x = radius*cos;
-            vArrowLine.setEndPoint( radius*sin );
-            hArrowLine.setEndPoint( radius*cos );
+            unitCircleView.vLine.x = radius*cos;
+            unitCircleView.vLine.setPoint2( 0, -radius*sin );
+            unitCircleView.hLine.setPoint2( radius*cos, 0 )
+            unitCircleView.vArrowLine.x = radius*cos;
+            unitCircleView.vArrowLine.setEndPoint( radius*sin );
+            unitCircleView.hArrowLine.setEndPoint( radius*cos );
             drawAngleArc();
             positionLabels();
         } );

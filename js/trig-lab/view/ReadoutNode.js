@@ -28,8 +28,8 @@ define( function( require ) {
   var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
-  //var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
-  var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
+  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
+  //var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var sqRt = require( 'string!TRIG_LAB/squareRoot' );
 
@@ -38,6 +38,7 @@ define( function( require ) {
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
+  var DISPLAY_FONT_LARGE = new PhetFont( 50 );
   //var LINE_COLOR = Util.LINE_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
@@ -213,7 +214,7 @@ define( function( require ) {
       [ 'q' + 3, 3 ],
       [ 1, '' ],
       [ 'q' + 3, '' ],
-      [ infinityWordStr, '' ],
+      [ infinitySymbolStr, '' ],
       [ '-q' + 3, '' ],
       [ -1, '' ],
       [ '-q' + 3, 3 ],
@@ -221,7 +222,7 @@ define( function( require ) {
       [ 'q' + 3, 3 ],
       [ 1, '' ],
       [ 'q' + 3, '' ],
-      [ '-' + infinityWordStr, '' ],
+      [ '-' + infinitySymbolStr, '' ],
       [ '-q' + 3, '' ],
       [ -1, '' ],
       [ '-q' + 3, 3 ],
@@ -237,7 +238,7 @@ define( function( require ) {
         row1,
         row2,
         readoutNode.trigRow3,
-        new HSeparator( 100 ),
+        new HSeparator( 180 ),
         degreesRadioButton,
         radiansRadioButton
       ],
@@ -350,11 +351,14 @@ define( function( require ) {
       }
       var tanValue = this.model.tan();
       if( tanValue < 1000 && tanValue > -1000 ){
+        //this.tanReadoutText.font = DISPLAY_FONT;
         this.tanReadoutText.text = tanText;
       }else if( tanValue > 1000 ){
-        this.tanReadoutText.text = infinityWordStr;
+        //this.tanReadoutText.font = DISPLAY_FONT_LARGE;
+        this.tanReadoutText.text = infinitySymbolStr;
       }else if( tanValue < -1000 ){
-        this.tanReadoutText.text = '-' + infinityWordStr;
+        //this.tanReadoutText.font = DISPLAY_FONT_LARGE;
+        this.tanReadoutText.text = '-' + infinitySymbolStr;
       }
     },
     setSpecialAngleTrigReadout: function(){

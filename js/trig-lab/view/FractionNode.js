@@ -135,7 +135,7 @@ define( function( require ) {
       if ( this.denominator === undefined || this.denominator === '' ) {
         //make current children invisible so numerator is not obscured
         noDenominator = true;
-        console.log( 'no denominator ');
+        //console.log( 'no denominator ');
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[i].visible = false;
         }

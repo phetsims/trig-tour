@@ -8,7 +8,7 @@ define( function( require ) {
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
-  //var HBox = require( 'SCENERY/nodes/HBox' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -38,7 +38,7 @@ define( function( require ) {
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
-  var DISPLAY_FONT_LARGE = new PhetFont( 50 );
+  var DISPLAY_FONT_LARGE = new PhetFont( 30 );
   //var LINE_COLOR = Util.LINE_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
@@ -72,14 +72,37 @@ define( function( require ) {
 
     //console.log( 'ReadOutView initialized.  angleValue is ' + angleValue );
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ font: '20px sans-serif' };
+    var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
     //Row 1: (x, y) = ( cos, sin )
     var coordinatesLabel = new Text( xyEqualsStr, fontBoldInfo );
-    var coordinatesReadout = new Text( '', fontInfo );     //text provided by model synchronization below: model.angleProperty.link
-    row1.children = [ coordinatesLabel, coordinatesReadout ];
-    //layout
-    coordinatesReadout.left = coordinatesLabel.right;
+    this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //dummy arguments to set bounds
+    this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
+    this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  //won't need this till later
+    this.coordinatesReadout = new Text( '', fontInfo );     //text provided by model synchronization below: model.angleProperty.link
+    var leftParensText = new Text( '( ', largeFontInfo );
+    var commaText = new Text( ' ,  ', fontInfo );
+    var rightParensText = new Text( ' )', largeFontInfo );
+    var cosFractionHolder1 = new Node();       //parent holder for cosReadoutFraction; there is a cosFractionHolder2 defined below;
+    var sinFractionHolder1 = new Node();
+    cosFractionHolder1.addChild( this.cosReadoutFraction );
+    sinFractionHolder1.addChild( this.sinReadoutFraction );
+    this.coordinatesHBox = new HBox( {
+      children: [
+        leftParensText,
+        cosFractionHolder1,
+        commaText,
+        sinFractionHolder1,
+        rightParensText
+      ],
+      align: 'left',
+      spacing: 0
+      });
+    row1.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
+    this.coordinatesReadout.left = coordinatesLabel.right;
+    this.coordinatesHBox.left = coordinatesLabel.right;
+
 
     //Row 2: angle = value in degs or rads
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
@@ -110,19 +133,36 @@ define( function( require ) {
     this.sinReadoutText = new Text( sinValue, fontInfo );
     this.cosReadoutText = new Text( cosValue, fontInfo );
     this.tanReadoutText = new Text( tanValue, fontInfo );
-    this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
-    this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
-    this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
+    //this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
+    //this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
+    //this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
+    this.cosFractionHolder2 = new Node();
+    this.sinFractionHolder2 = new Node();
+    this.cosFractionHolder2.addChild( this.cosReadoutFraction );
+    this.sinFractionHolder2.addChild( this.sinReadoutFraction );
+
+    //Now that cos and sinReadoutFractions are defined, can complete layout row 1
+    //this.cosFractionHolder1.addChild( this.cosReadoutFraction );
+    //this.sinFractionHolder1.addChild( this.sinReadoutFraction );
+
+    //this.cosReadoutFraction.left = 0;
+    //this.sinReadoutFraction.left = 0;
+    //leftParensText.left = 0;
+    //this.cosFractionHolder1.left = leftParensText.right;
+    //commaText.left = this.cosFractionHolder1.right;
+    //this.sinFractionHolder1.left = commaText.right;
+    //rightParensText.left = this.sinFractionHolder1.right;
+
     var equalText1 = new Text( equalStr, fontBoldInfo );
     var equalText2 = new Text( equalStr, fontBoldInfo );
     var equalText3 = new Text( equalStr, fontBoldInfo );
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
-    this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinReadoutFraction ]});
-    this.cosRow = new Node( {children: [ cosLabel, cosFraction, equalText2, this.cosReadoutText, this.cosReadoutFraction ]});
+    this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinFractionHolder2 ]});
+    this.cosRow = new Node( {children: [ cosLabel, cosFraction, equalText2, this.cosReadoutText, this.cosFractionHolder2 ]});
     this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
-    this.sinReadoutFraction.visible = false;
-    this.cosReadoutFraction.visible = false;
+    //this.sinReadoutFraction.visible = false;
+    //this.cosReadoutFraction.visible = false;
     this.tanReadoutFraction.visible = false;
     //trig row layout
     sinFraction.left = sinLabel.right;
@@ -135,8 +175,10 @@ define( function( require ) {
     this.sinReadoutText.left =  equalText1.right + space ;
     this.cosReadoutText.left =  equalText2.right + space ;
     this.tanReadoutText.left =  equalText3.right + space ;
-    this.sinReadoutFraction.left = equalText1.right + space ;
-    this.cosReadoutFraction.left = equalText2.right + space ;
+    //this.sinReadoutFraction.left = equalText1.right + space ;
+    //this.cosReadoutFraction.left = equalText2.right + space ;
+    this.sinFractionHolder2.left = equalText1.right + space ;
+    this.cosFractionHolder2.left = equalText2.right + space ;
     this.tanReadoutFraction.left = equalText3.right + space ;
 
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
@@ -243,7 +285,8 @@ define( function( require ) {
         radiansRadioButton
       ],
       align: 'left',
-      spacing: spacing
+      spacing: spacing,
+      resize: false
     } );
 
     readoutNode.addChild( contentVBox );
@@ -253,7 +296,7 @@ define( function( require ) {
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
       //var tanText =  model.tan().toFixed( 3 );
-      coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
+      readoutNode.coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
     } ); //end model.angleProperty.link
@@ -369,7 +412,7 @@ define( function( require ) {
           this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );
           this.cosReadoutFraction.setValues( this.cosFractions[i][0], this.cosFractions[i][1] );
           this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
-          //this.coordinatesReadout.text = '( '+ this.cosReadoutFraction + ', ' + this.sinReadoutFraction + ' )';
+
         }
       }//end for
     }//end setSpecialAngleTrigReadout()

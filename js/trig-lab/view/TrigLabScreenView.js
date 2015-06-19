@@ -121,8 +121,12 @@ define( function ( require ) {
             readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
             trigLabModel.specialAnglesMode = specialAnglesVisible;
             //select correct trig readouts
-            readoutDisplay.readoutNode.sinReadoutFraction.visible = specialAnglesVisible;
-            readoutDisplay.readoutNode.cosReadoutFraction.visible = specialAnglesVisible;
+            //readoutDisplay.readoutNode.sinReadoutFraction.visible = specialAnglesVisible;
+            //readoutDisplay.readoutNode.cosReadoutFraction.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
+            readoutDisplay.readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
+            readoutDisplay.readoutNode.cosFractionHolder2.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.cosReadoutText.visible = !specialAnglesVisible;

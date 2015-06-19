@@ -41,7 +41,7 @@ define( function( require ) {
 
   /**
    * Constructor for the control panel
-   * @param {Object} view properties
+   * @param {Object} properties
    * @constructor
    */
   function ControlPanel( properties  ) {
@@ -56,7 +56,7 @@ define( function( require ) {
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
-    var checkBoxOptions = { checkBoxColorBackground: PANEL_COLOR }
+    var checkBoxOptions = { checkBoxColorBackground: PANEL_COLOR };
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
     var specialAnglesCheckBox = new CheckBox( specialAnglesText, properties.specialAnglesVisibleProperty, checkBoxOptions );

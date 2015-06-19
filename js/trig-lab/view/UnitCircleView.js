@@ -36,7 +36,7 @@ define( function( require ) {
     var TEXT_COLOR = Util.TEXT_COLOR;
     var COS_COLOR = Util.COS_COLOR;
     var SIN_COLOR = Util.SIN_COLOR;
-    var TAN_COLOR = Util.TAN_COLOR;
+    //var TAN_COLOR = Util.TAN_COLOR;
     var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
     /**
@@ -304,7 +304,7 @@ define( function( require ) {
             var sin = Math.sin( angle );
             unitCircleView.vLine.x = radius*cos;
             unitCircleView.vLine.setPoint2( 0, -radius*sin );
-            unitCircleView.hLine.setPoint2( radius*cos, 0 )
+            unitCircleView.hLine.setPoint2( radius*cos, 0 );
             unitCircleView.vArrowLine.x = radius*cos;
             unitCircleView.vArrowLine.setEndPoint( radius*sin );
             unitCircleView.hArrowLine.setEndPoint( radius*cos );

@@ -11,11 +11,11 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  var DISPLAY_FONT = new PhetFont( 20 );
+  //var DISPLAY_FONT = new PhetFont( 20 );
 
   /**
    * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:

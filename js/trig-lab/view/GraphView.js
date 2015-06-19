@@ -189,7 +189,7 @@ define( function( require ) {
         //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
         //this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0B0', lineWidth: 6 } );
-        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 6 }  );
+        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 5, criticalFactor: 2, arrowHeadLength: 20 }  );
         var hitBound = 30;
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
         this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
@@ -207,7 +207,7 @@ define( function( require ) {
 
                     start: function ( e ) {
                         console.log( 'mouse down' );
-                        var mouseDownPosition = e.pointer.point;
+                        //var mouseDownPosition = e.pointer.point;
                         //console.log( 'GraphView mouseDownPos = '  + mouseDownPosition );
                     },
 

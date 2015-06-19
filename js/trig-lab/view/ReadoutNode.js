@@ -31,7 +31,7 @@ define( function( require ) {
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
   //var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
-  var sqRt = require( 'string!TRIG_LAB/squareRoot' );
+  //var sqRt = require( 'string!TRIG_LAB/squareRoot' );
 
   var xStr = 'x';
   var yStr = 'y';
@@ -39,6 +39,7 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
+  var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
   //var LINE_COLOR = Util.LINE_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
@@ -394,14 +395,16 @@ define( function( require ) {
       }
       var tanValue = this.model.tan();
       if( tanValue < 1000 && tanValue > -1000 ){
-        //this.tanReadoutText.font = DISPLAY_FONT;
+        this.tanReadoutText.font = DISPLAY_FONT;
         this.tanReadoutText.text = tanText;
       }else if( tanValue > 1000 ){
-        //this.tanReadoutText.font = DISPLAY_FONT_LARGE;
+        this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
         this.tanReadoutText.text = infinitySymbolStr;
       }else if( tanValue < -1000 ){
-        //this.tanReadoutText.font = DISPLAY_FONT_LARGE;
-        this.tanReadoutText.text = '-' + infinitySymbolStr;
+        //this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
+        this.tanReadoutText.fontSize = 100;
+        this.tanReadoutText.fill = 'red';
+        this.tanReadoutText.text = 'my test!';//'-' + infinitySymbolStr;
       }
     },
     setSpecialAngleTrigReadout: function(){

@@ -64,7 +64,7 @@ define( function ( require ) {
         viewProperties.graphProperty.link( function( graph ) {
             unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
             unitCircleView.hLine.visible = ( graph === 'sin' );
-            unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph == 'tan' );
+            unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
             unitCircleView.vLine.visible = ( graph === 'cos' );
 
             graphView.trigFunction = graph;

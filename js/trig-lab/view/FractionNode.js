@@ -59,13 +59,16 @@ define( function( require ) {
       //}
       this.numerator = numerator ;
       this.denominator = denominator ;
+      this.numeratorText;
+      this.denominatorText;
       this.setFraction();
     },
-    setFont: function( font ){
-
+    setNumeratorFont: function( font ){
+      console.log( 'setNumeratorFont called ');
+      this.numeratorText.font = font;
     },
     setFraction: function( ){
-      var numeratorText;
+      this.numeratorText;
       var denominatorText;
       var minusSign;       //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative
@@ -95,7 +98,7 @@ define( function( require ) {
         squareRootSignNeeded = true;
       }
 
-      numeratorText = new Text( this.numerator, fontInfo );
+      this.numeratorText = new Text( this.numerator, fontInfo );
       denominatorText = new Text( this.denominator, fontInfo );
 
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
@@ -114,9 +117,9 @@ define( function( require ) {
 
       //Draw horizontal line separating numerator and denominator
       if( squareRootSignNeeded ){
-        length = 1.8*numeratorText.width;
+        length = 1.8*this.numeratorText.width;
       }else{
-        length = 1.2*numeratorText.width;
+        length = 1.2*this.numeratorText.width;
       }
       var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
 
@@ -125,8 +128,8 @@ define( function( require ) {
       //var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
       if( squareRootSignNeeded ){
         //console.log( 'square root symbol constructed');
-        var W = 1.2*numeratorText.width;
-        var h = 0.8*numeratorText.height;
+        var W = 1.2*this.numeratorText.width;
+        var h = 0.8*this.numeratorText.height;
         var w = h/4;
         sqRtShape.moveTo( -3*w/2, -h/2 ).lineTo( -w, 0 ).lineTo( 0, -h ).lineTo( W, -h );
         //sqRtShape.moveTo( -5*w/3, h/2 ).lineTo( -w, h).lineTo( 0, 0 ).lineTo( W, 0 );
@@ -143,47 +146,47 @@ define( function( require ) {
           this.children[i].visible = false;
         }
         //if ( this.negative ) { this.numerator = '-' + this.numerator }
-        this.fractionNode.children = [ minusSign, sqRtPath, numeratorText ];
+        this.fractionNode.children = [ minusSign, sqRtPath, this.numeratorText ];
         //this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
         if( minusSignNeeded ){
           minusSign.left = 0;
-          numeratorText.left = minusSign.right + 4;
+          this.numeratorText.left = minusSign.right + 4;
         }
         if( squareRootSignNeeded && minusSignNeeded ){
-          numeratorText.left = minusSign.right + 12;
-          sqRtPath.centerX = numeratorText.centerX - 3;
+          this.numeratorText.left = minusSign.right + 12;
+          sqRtPath.centerX = this.numeratorText.centerX - 3;
         }
         if( squareRootSignNeeded && !minusSignNeeded ){
           sqRtPath.left = 0;
-          numeratorText.centerX = sqRtPath.centerX + 3;
+          this.numeratorText.centerX = sqRtPath.centerX + 3;
         }
 
         return; //have to break out
       } //end if
 
       if( !noDenominator ){
-        this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
+        this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
       }
 
-      //this.fractionNode.children = [ sqRtPath, minusSign, numeratorText, bar, denominatorText ];
+      //this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
 
       bar.left = 0;
-      numeratorText.centerX = denominatorText.centerX = bar.centerX;
+      this.numeratorText.centerX = denominatorText.centerX = bar.centerX;
       var offset = 2;
-      numeratorText.bottom = bar.top - offset;
+      this.numeratorText.bottom = bar.top - offset;
       denominatorText.top = bar.bottom + offset;
       offset = 4;
       if( minusSignNeeded ){
         minusSign.left = 0;
         bar.left = minusSign.right + offset;
-        numeratorText.centerX = denominatorText.centerX = bar.centerX;
+        this.numeratorText.centerX = denominatorText.centerX = bar.centerX;
       }
       if( noDenominator ){
-        numeratorText.left = minusSign.right + offset;
+        this.numeratorText.left = minusSign.right + offset;
       }
       if( squareRootSignNeeded ){
-        sqRtPath.top = numeratorText.top;
-        sqRtPath.centerX = numeratorText.centerX - 3;
+        sqRtPath.top = this.numeratorText.top;
+        sqRtPath.centerX = this.numeratorText.centerX - 3;
         //console.log( 'sqRtPath = ' + sqRtPath );
         //console.log( 'sqRtPath.top = ' + sqRtPath.top );
         //console.log( 'sqRtPath.x = ' + sqRtPath.x );

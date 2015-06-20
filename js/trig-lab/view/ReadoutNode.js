@@ -417,9 +417,9 @@ define( function( require ) {
 
           //Need large font for infinity symbol
           if( this.angles[i] === 90 || this.angles[i] === 270 ){
-            //this.tanReadoutFraction.numerator.font = DISPLAY_FONT_VERY_LARGE;
+            this.tanReadoutFraction.setNumeratorFont( DISPLAY_FONT_VERY_LARGE );
           }else{
-            this.tanReadoutFraction.numerator.font = DISPLAY_FONT;
+            this.tanReadoutFraction.setNumeratorFont( DISPLAY_FONT ); ;
           }
           this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
         }

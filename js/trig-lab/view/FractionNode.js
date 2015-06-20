@@ -11,11 +11,12 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  //var DISPLAY_FONT = new PhetFont( 20 );
+  //string
+  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );  //needed for setting large font for infinity symbol
 
   /**
    * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:
@@ -23,19 +24,17 @@ define( function( require ) {
    *    -
    *    B
    *    If either A or B (but not both) is negative, a minus sign is displayed at the same level as the divider bar
+   *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
+   *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
    * @param {string} numerator
    * @param {string} denominator
    * @param {object} options
    * @constructor
    */
 
-  function FractionNode( numerator, denominator, options ) {       //inputs can be strings or not
+  function FractionNode( numerator, denominator, options ) {       //numerator and denominator can be Numbers or Strings
 
-    options = _.extend( {
-      //squareRootSignNeeded: false       //if true, display numerator with square root sign
-    }, options );             // Make sure options is defined.
     this.options = options;
-
     this.fractionNode = this;
 
     // Call the super constructor
@@ -43,42 +42,35 @@ define( function( require ) {
 
     this.numerator = numerator;
     this.denominator = denominator;
-    //var fontInfo = options; //{ font: DISPLAY_FONT };
-    //this.numeratorText = new Text( this.numerator, fontInfo );
-    //this.denominatorText = new Text( this.denominator, fontInfo );
+    this.settingFontLarge = false;  //when infinity symbol is displayed, need to use large font
 
-
-    this.setFraction( );
+    this.setFraction( );   //create the fraction
 
     this.mutate( options );
 
   }//end of constructor
 
   return inherit( Node, FractionNode, {
-    // fraction is negative if negativeStr = 'negative' and/or if fraction value is negative
     setValues: function( numerator, denominator ){
       this.numerator = numerator ;
       this.denominator = denominator ;
       this.setFraction();
     },
-    setNumeratorFont: function( font ){
-      //console.log( 'setNumeratorFont called ');
-      this.numeratorText.font = font;
+    //need to temporarily set large font for infinity symbol
+    setNumeratorFontLarge: function( ){
+      this.settingFontLarge = true;
     },
     setFraction: function( ){
-      var minusSign;       //short horizontal line for minus sign, in front of divisor bar
+      var minusSign;                    //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative
-      var denominatorNegative = false;
+      var denominatorNegative = false;  //true if denominator is negative
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
-      var squareRootSignNeeded = false;  //true if square root symbol is needed over the numerator
-      var noDenominator = false;  //true if only the numerator is displayed as a non-fraction number
-
+      var squareRootSignNeeded = false; //true if square root symbol is needed over the numerator
+      var noDenominator = false;        //true if only the numerator is displayed as a non-fraction number
 
       //Check that arguments are strings
       if( typeof this.numerator !== 'string' ){ this.numerator = this.numerator.toString(); }
       if( typeof this.denominator !== 'string' ){ this.denominator = this.denominator.toString(); }
-      //if( typeof this.preterm !== 'string' && this.preterm !== undefined ){ this.preTerm = this.preTerm.toString(); }
-
 
       //Process leading minus sign and square root tag
       if( this.numerator.charAt( 0 ) === '-' ){  //remove minus sign, if found
@@ -95,10 +87,15 @@ define( function( require ) {
       }
 
       var fontInfo = this.options; //{ font: DISPLAY_FONT };
+
       this.numeratorText = new Text( this.numerator, fontInfo );
       this.denominatorText = new Text( this.denominator, fontInfo );
-      //this.numeratorText.text = this.numerator;
-      //this.denominatorText.text = this.denominator;
+
+      //hack to handle large font for infinity symbol
+      if( this.settingFontLarge ){
+        this.numeratorText.font = new PhetFont( 35 );
+        this.settingFontLarge = false;
+      }
 
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
@@ -158,6 +155,10 @@ define( function( require ) {
         if( squareRootSignNeeded && !minusSignNeeded ){
           sqRtPath.left = 0;
           this.numeratorText.centerX = sqRtPath.centerX + 3;
+        }
+        //hack to handle alignment of large font infinity symbol
+        if( this.numeratorText.text === infinitySymbolStr ){
+          this.numeratorText.centerY = -6;
         }
 
         return; //have to break out

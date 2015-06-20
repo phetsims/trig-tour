@@ -23,7 +23,6 @@ define( function( require ) {
   //next two strings used in definitions of succeeding strings, so not in alpha order
   var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
   var theta = require( 'string!TRIG_LAB/theta' );
-
   var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
   var cosStr = require( 'string!TRIG_LAB/cos' );
   var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
@@ -45,6 +44,7 @@ define( function( require ) {
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
   var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
   //var LINE_COLOR = Util.LINE_COLOR;
+  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
   /**
@@ -192,7 +192,7 @@ define( function( require ) {
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
     // 2 radio buttons for display in degrees or radians
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: PANEL_COLOR } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
     var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
     var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 

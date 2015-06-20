@@ -28,6 +28,7 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
+  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
   // Text nodes
   var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ fontSize: 20 };
@@ -50,13 +51,13 @@ define( function( require ) {
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph = 'cos'|'sin'|'tan'
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: PANEL_COLOR } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
     var cosRadioButton = new AquaRadioButton( properties.graphProperty, cosStr, cosText, myRadioButtonOptions );
     var sinRadioButton = new AquaRadioButton( properties.graphProperty, sinStr, sinText, myRadioButtonOptions );
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, tanStr, tanText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
-    var checkBoxOptions = { checkBoxColorBackground: PANEL_COLOR };
+    var checkBoxOptions = { checkBoxColorBackground: BACKGROUND_COLOR };
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
     var specialAnglesCheckBox = new CheckBox( specialAnglesText, properties.specialAnglesVisibleProperty, checkBoxOptions );

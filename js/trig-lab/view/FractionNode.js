@@ -40,10 +40,14 @@ define( function( require ) {
 
     // Call the super constructor
     Node.call( this.fractionNode );
+
     this.numerator = numerator;
     this.denominator = denominator;
+    //var fontInfo = options; //{ font: DISPLAY_FONT };
+    //this.numeratorText = new Text( this.numerator, fontInfo );
+    //this.denominatorText = new Text( this.denominator, fontInfo );
 
-    //this.negative = options.negative;  //{boolean} true if fraction is negative
+
     this.setFraction( );
 
     this.mutate( options );
@@ -53,30 +57,22 @@ define( function( require ) {
   return inherit( Node, FractionNode, {
     // fraction is negative if negativeStr = 'negative' and/or if fraction value is negative
     setValues: function( numerator, denominator ){
-      //if( options !== undefined ){
-      //  //this.negative = options.negative || this.negative;
-      //  //this.preterm = options.preterm || this.preterm;
-      //}
       this.numerator = numerator ;
       this.denominator = denominator ;
-      this.numeratorText;
-      this.denominatorText;
       this.setFraction();
     },
     setNumeratorFont: function( font ){
-      console.log( 'setNumeratorFont called ');
+      //console.log( 'setNumeratorFont called ');
       this.numeratorText.font = font;
     },
     setFraction: function( ){
-      this.numeratorText;
-      var denominatorText;
       var minusSign;       //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative
       var denominatorNegative = false;
       var minusSignNeeded = false;      //true if sign of over-all fraction is negative
       var squareRootSignNeeded = false;  //true if square root symbol is needed over the numerator
       var noDenominator = false;  //true if only the numerator is displayed as a non-fraction number
-      var fontInfo = this.options; //{ font: DISPLAY_FONT };
+
 
       //Check that arguments are strings
       if( typeof this.numerator !== 'string' ){ this.numerator = this.numerator.toString(); }
@@ -98,14 +94,17 @@ define( function( require ) {
         squareRootSignNeeded = true;
       }
 
+      var fontInfo = this.options; //{ font: DISPLAY_FONT };
       this.numeratorText = new Text( this.numerator, fontInfo );
-      denominatorText = new Text( this.denominator, fontInfo );
+      this.denominatorText = new Text( this.denominator, fontInfo );
+      //this.numeratorText.text = this.numerator;
+      //this.denominatorText.text = this.denominator;
 
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
       }
 
-      //Draw minus sign to go in front of fraction.  Only displayed if needed.
+      //Draw minus sign to go in front of fraction, if needed.
       var length = 8;
       var midHeight = 7;
       if( minusSignNeeded ){
@@ -165,21 +164,21 @@ define( function( require ) {
       } //end if
 
       if( !noDenominator ){
-        this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
+        this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
       }
 
       //this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
 
       bar.left = 0;
-      this.numeratorText.centerX = denominatorText.centerX = bar.centerX;
+      this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;
       var offset = 2;
       this.numeratorText.bottom = bar.top - offset;
-      denominatorText.top = bar.bottom + offset;
+      this.denominatorText.top = bar.bottom + offset;
       offset = 4;
       if( minusSignNeeded ){
         minusSign.left = 0;
         bar.left = minusSign.right + offset;
-        this.numeratorText.centerX = denominatorText.centerX = bar.centerX;
+        this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;
       }
       if( noDenominator ){
         this.numeratorText.left = minusSign.right + offset;
@@ -191,8 +190,6 @@ define( function( require ) {
         //console.log( 'sqRtPath.top = ' + sqRtPath.top );
         //console.log( 'sqRtPath.x = ' + sqRtPath.x );
       }
-
-
     }//end createFraction()
   }); //end return inherit..
 } );

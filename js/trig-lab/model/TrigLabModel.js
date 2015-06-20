@@ -17,15 +17,15 @@ define( function( require ) {
    */
   function TrigLabModel() {
 
-    PropertySet.call( this, {   
+    PropertySet.call( this, {
       angle: 0               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
     } );
     this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi
     this.previousAngle = 0;  //@private, needed to compute angle from smallAngle
     this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle incremented at 180 deg; needed to compute angle from smallAngle
     this.fullTurnCount = 0;  //@private, nbr of full turns around unit circle, incremented at theta = 0 deg
-    this.halfTurnCount = 0;   //@private, nbr of half turns around unit circle, incremented at small angle = 0 or 180
-    this.specialAnglesMode = false;  //{boolean} true if special angles (0, 30,45, 60, 90...) only
+    this.halfTurnCount = 0;  //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
+    this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30,45, 60, 90...)
   }
 
   return inherit( PropertySet, TrigLabModel, {
@@ -81,18 +81,10 @@ define( function( require ) {
         }
 
       }
-      //if( remainderAngle >= -Math.PI && angleInRads < 0 ){
-      //  this.nbrFullTurns = this.fullTurnCount;
-      //}else{
-      //  this.nbrFullTurns = this.fullTurnCount - 1;
-      //}
       this.smallAngle = angleInRads - this.nbrFullTurns*2*Math.PI;
       remainderAngle = angleInRads%( Math.PI );
       this.halfTurnCount = Math.round( ( angleInRads - remainderAngle )/(Math.PI ));
       this.angle = angleInRads;
-      //console.log( 'setFullAngleInRadians called. nbrFullTurns = ' + this.nbrFullTurns );
-      //console.log( 'setFullAngleInRadians called. smallAngle = ' + remainderAngle );
-      //console.log( 'setFullAngleInRadians called. smallAngle = ' + this.smallAngle );
     } ,
     setAngle: function ( smallAngle ){    //smallAngle in rads
       //console.log('model.setAngle() called. smallAngle = ' + smallAngle );
@@ -136,7 +128,5 @@ define( function( require ) {
       //this.setFullAngleInRadians( nearestSpecialFullAngleInRads );
       //console.log( 'angle/pi = ' + this.angle/Math.PI + '   smallAngle/pi = ' + this.smallAngle/Math.PI )
     }//end setSpecialAngle()
-    
-    
   } );
 } );

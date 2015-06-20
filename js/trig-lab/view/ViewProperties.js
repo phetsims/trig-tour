@@ -14,6 +14,8 @@ define( function( require ) {
      * @constructor
      */
     function ViewProperties() {
+        this.viewProperties = this;
+
         PropertySet.call( this, {
             graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
             angleUnits: 'degrees', //{string} which angle units, 'degrees'|'radians'
@@ -23,5 +25,13 @@ define( function( require ) {
         } );
     }
 
-    return inherit( PropertySet, ViewProperties );
+    return inherit( PropertySet, ViewProperties, {
+        reset: function() {
+            this.viewProperties.graph = 'cos';
+            this.viewProperties.angleUnits = 'degrees';
+            this.viewProperties.labelsVisible = false;
+            this.viewProperties.gridVisible = false;
+            this.viewProperties.specialAnglesVisible = false;
+        }
+    } );
 } );

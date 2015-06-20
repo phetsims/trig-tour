@@ -27,15 +27,7 @@ define( function ( require ) {
         var trigLabScreenView = this;
         this.labelsVisible = false;  //set by Control Panel
 
-        // Create and add the Reset All Button in the bottom right, which resets the model
-        var resetAllButton = new ResetAllButton( {
-            listener: function () {
-                trigLabModel.reset();
-            },
-            right: this.layoutBounds.maxX - 10,
-            bottom: this.layoutBounds.maxY - 10
-        } );
-        this.addChild( resetAllButton );
+
 
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
@@ -43,7 +35,6 @@ define( function ( require ) {
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.9*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
         this.addChild( unitCircleView );
-        //this.addChild( readOutView );
         this.addChild( readoutDisplay );
         this.addChild( graphView );
         this.addChild( controlPanel );
@@ -51,8 +42,6 @@ define( function ( require ) {
         //Layout children Views
         unitCircleView.x = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
-        //readOutView.left = this.layoutBounds.left + 30 ;
-        //readOutView.top = 30;
         readoutDisplay.left = this.layoutBounds.left + 30 ;
         readoutDisplay.top = 30;
         graphView.x = this.layoutBounds.centerX;
@@ -75,6 +64,7 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
+
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );
         } );
 
@@ -155,6 +145,18 @@ define( function ( require ) {
             readoutDisplay.readoutNode.setTrigReadout();
 
         });//viewProperties.specialAnglesVisibleProperty.link
+
+        // Create and add the Reset All Button in the bottom right, which resets the model
+        var resetAllButton = new ResetAllButton( {
+            listener: function () {
+                //trigLabModel.reset();
+                viewProperties.reset();
+                trigLabModel.setFullAngleInRadians( 0 );
+            },
+            right: this.layoutBounds.maxX - 10,
+            bottom: this.layoutBounds.maxY - 10
+        } );
+        this.addChild( resetAllButton );
 
     }
 

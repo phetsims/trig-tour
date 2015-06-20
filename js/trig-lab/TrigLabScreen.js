@@ -25,15 +25,15 @@ define( function( require ) {
    */
   function TrigLabScreen() {
 
-    //If this is a single-screen sim, then no icon is necessary.
-    //If there are multiple screens, then the icon must be provided here.
+    //If this is a single-screen sim, no icon is necessary.
+
     var icon = null;
     console.log( 'background color is ' + BACKGROUND_COLOR );
 
     Screen.call( this, trigLabSimString, icon,
       function() { return new TrigLabModel(); },
       function( model ) { return new TrigLabScreenView( model ); },
-      { backgroundColor: BACKGROUND_COLOR }    //beige '#FFDEAD'
+      { backgroundColor: BACKGROUND_COLOR }
     );
   }
 

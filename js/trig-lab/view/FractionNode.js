@@ -61,6 +61,9 @@ define( function( require ) {
       this.denominator = denominator ;
       this.setFraction();
     },
+    setFont: function( font ){
+
+    },
     setFraction: function( ){
       var numeratorText;
       var denominatorText;

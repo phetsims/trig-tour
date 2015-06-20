@@ -393,19 +393,19 @@ define( function( require ) {
         this.cosReadoutText.text = cosText;
         this.tanReadoutText.text = tanText;
       }
-      var tanValue = this.model.tan();
-      if( tanValue < 1000 && tanValue > -1000 ){
-        this.tanReadoutText.font = DISPLAY_FONT;
-        this.tanReadoutText.text = tanText;
-      }else if( tanValue > 1000 ){
-        this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
-        this.tanReadoutText.text = infinitySymbolStr;
-      }else if( tanValue < -1000 ){
-        //this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
-        this.tanReadoutText.fontSize = 100;
-        this.tanReadoutText.fill = 'red';
-        this.tanReadoutText.text = 'my test!';//'-' + infinitySymbolStr;
-      }
+      //var tanValue = this.model.tan();
+      //if( tanValue < 1000 && tanValue > -1000 ){
+      //  this.tanReadoutText.font = DISPLAY_FONT;
+      //  this.tanReadoutText.text = tanText;
+      //}else if( tanValue > 1000 ){
+      //  this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
+      //  this.tanReadoutText.text = infinitySymbolStr;
+      //}else if( tanValue < -1000 ){
+      //  //this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
+      //  this.tanReadoutText.fontSize = 100;
+      //  this.tanReadoutText.fill = 'red';
+      //  this.tanReadoutText.text = 'my test!';//'-' + infinitySymbolStr;
+      //}
     },
     setSpecialAngleTrigReadout: function(){
       var smallAngleInDegrees = Math.round( this.model.getSmallAngle0To360() );
@@ -414,8 +414,14 @@ define( function( require ) {
           //console.log( 'angle changed, angle is ' + smallAngleInDegrees );
           this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );
           this.cosReadoutFraction.setValues( this.cosFractions[i][0], this.cosFractions[i][1] );
-          this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
 
+          //Need large font for infinity symbol
+          if( this.angles[i] === 90 || this.angles[i] === 270 ){
+            //this.tanReadoutFraction.numerator.font = DISPLAY_FONT_VERY_LARGE;
+          }else{
+            this.tanReadoutFraction.numerator.font = DISPLAY_FONT;
+          }
+          this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
         }
       }//end for
     }//end setSpecialAngleTrigReadout()

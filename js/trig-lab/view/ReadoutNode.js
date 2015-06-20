@@ -10,6 +10,7 @@ define( function( require ) {
   var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
+  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   //var Panel = require( 'SUN/Panel' );
@@ -19,19 +20,22 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
-  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added after equal sign for pleasant layout
+  //next two strings used in definitions of succeeding strings, so not in alpha order
   var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
-  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
   var theta = require( 'string!TRIG_LAB/theta' );
-  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
+
+  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
+  var cosStr = require( 'string!TRIG_LAB/cos' );
   var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
-  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
-  var radiansStr = require( 'string!TRIG_LAB/radians' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
-  //var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
-  //var sqRt = require( 'string!TRIG_LAB/squareRoot' );
+  var radiansStr = require( 'string!TRIG_LAB/radians' );
+  var sinStr = require( 'string!TRIG_LAB/sin' );
+  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
+  var tanStr = require( 'string!TRIG_LAB/tan');
+  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
+  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added after equal sign for pleasant layout
 
   var xStr = 'x';
   var yStr = 'y';
@@ -123,9 +127,12 @@ define( function( require ) {
 
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
-    var sinLabel = new Text( sinEqualsStr, fontBoldInfo );
-    var cosLabel = new Text( cosEqualsStr, fontBoldInfo );
-    var tanLabel = new Text( tanEqualsStr, fontBoldInfo );
+    //var sinLabel = new Text( sinEqualsStr, fontBoldInfo );
+    //var cosLabel = new Text( cosEqualsStr, fontBoldInfo );
+    //var tanLabel = new Text( tanEqualsStr, fontBoldInfo );
+    var sinLabel = new HTMLText ( sinStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
+    var cosLabel = new HTMLText ( cosStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
+    var tanLabel = new HTMLText ( tanStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
     var cosFraction = new FractionNode( xStr, 1, fontBoldInfo ) ;
     var sinFraction = new FractionNode( yStr, 1, fontBoldInfo ) ;
     var tanFraction = new FractionNode( yStr, xStr, fontBoldInfo );

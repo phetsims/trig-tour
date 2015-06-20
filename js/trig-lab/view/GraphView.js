@@ -13,6 +13,7 @@ define( function( require ) {
     var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
     //var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
+    var HTMLText = require( 'SCENERY/nodes/HTMLText' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
@@ -29,6 +30,9 @@ define( function( require ) {
 
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );
+    var cosStr = require( 'string!TRIG_LAB/cos' );
+    var sinStr = require( 'string!TRIG_LAB/sin' );
+    var tanStr = require( 'string!TRIG_LAB/tan' );
     var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
     var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
     var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
@@ -40,7 +44,7 @@ define( function( require ) {
     var TAN_COLOR = Util.TAN_COLOR;
     var LINE_COLOR = Util.LINE_COLOR;
     var TEXT_COLOR = Util.TEXT_COLOR;
-    //var DISPLAY_FONT = new PhetFont( 20 );
+    var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
     var DISPLAY_FONT_SMALL_ITALIC = new PhetFont({ size: 18, family: 'Arial', style: 'italic' } );
@@ -137,9 +141,12 @@ define( function( require ) {
         graphView.addChild( thetaLabel );
         thetaLabel.left = this.axesNode.right + 10; //= xAxis.right;
         thetaLabel.centerY = xAxis.centerY;
-        this.cosThetaLabel = new Text( cosTheta, fontInfo );
-        this.sinThetaLabel = new Text( sinTheta, fontInfo );
-        this.tanThetaLabel = new Text( tanTheta, fontInfo );
+        this.cosThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
+        this.sinThetaLabel = new HTMLText( sinStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
+        this.tanThetaLabel = new HTMLText( tanStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
+        //this.cosThetaLabel = new Text( cosTheta, fontInfo );
+        //this.sinThetaLabel = new Text( sinTheta, fontInfo );
+        //this.tanThetaLabel = new Text( tanTheta, fontInfo );
         graphView.addChild( this.cosThetaLabel );
         graphView.addChild( this.sinThetaLabel );
         graphView.addChild( this.tanThetaLabel );

@@ -146,11 +146,12 @@ define( function( require ) {
 
                     drag: function(e){
                         var v1 =  rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = -v1.angle();  //model angle is negative of xy screen coordinates angle
+                        var smallAngle = -v1.angle();  //model angle is negative of xy screen coordinates angle
+                        //console.log( 'unit circle dragged. small angle is ' + smallAngle );
                         if( !model.specialAnglesMode ){
-                            model.setAngle( angle );
+                            model.setAngle( smallAngle );
                         }else{
-                            model.setSpecialAngle( angle );
+                            model.setSpecialAngle( smallAngle );
                         }
                     }
                 } ) );

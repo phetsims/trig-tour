@@ -68,16 +68,19 @@ define( function( require ) {
     setAngleInDegrees: function( angleInDegrees ){
         this.angle = angleInDegrees*Math.PI/180;
     },
-    setFullAngleInRadians: function( angleInRads ){
+    setFullAngleInRadians: function( angleInRads ){  //argument is total angle, not small angle
       var remainderAngle = angleInRads%( 2*Math.PI );
       this.fullTurnCount = Math.round( ( angleInRads - remainderAngle )/(2*Math.PI ));
       if( Math.abs( remainderAngle ) <= Math.PI ){
         this.nbrFullTurns = this.fullTurnCount;
+        console.log( 'setFullAngleInRadians called. nbrFullTurns set to '  + this.nbrFullTurns );
       }else{
         if( angleInRads > 0 ){
           this.nbrFullTurns = this.fullTurnCount + 1;
+          console.log( 'setFullAngleInRadians called. nbrFullTurns increased to '  + this.nbrFullTurns );
         }else{
           this.nbrFullTurns = this.fullTurnCount - 1;
+          console.log( 'setFullAngleInRadians called. nbrFullTurns decreased to '  + this.nbrFullTurns );
         }
 
       }
@@ -88,6 +91,26 @@ define( function( require ) {
       //console.log( 'model.angle = ' + this.angle*360/(2*Math.PI));
       //console.log( 'model.smallAngle = ' + this.getSmallAngleInDegrees());
     } ,
+    //setSmallAngleButNotFullAngle: function( angleInRads ){
+    //  var remainderAngle = angleInRads%( 2*Math.PI );
+    //  this.fullTurnCount = Math.round( ( angleInRads - remainderAngle )/(2*Math.PI ));
+    //  if( Math.abs( remainderAngle ) <= Math.PI ){
+    //    this.nbrFullTurns = this.fullTurnCount;
+    //    console.log( 'setFullAngleInRadians called. nbrFullTurns set to '  + this.nbrFullTurns );
+    //  }else{
+    //    if( angleInRads > 0 ){
+    //      this.nbrFullTurns = this.fullTurnCount + 1;
+    //      console.log( 'setFullAngleInRadians called. nbrFullTurns increased to '  + this.nbrFullTurns );
+    //    }else{
+    //      this.nbrFullTurns = this.fullTurnCount - 1;
+    //      console.log( 'setFullAngleInRadians called. nbrFullTurns decreased to '  + this.nbrFullTurns );
+    //    }
+    //  
+    //  }
+    //  this.smallAngle = angleInRads - this.getFullTurnCount()*2*Math.PI;
+    //  remainderAngle = angleInRads%( Math.PI );
+    //  this.halfTurnCount = Math.round( ( angleInRads - remainderAngle )/(Math.PI ));
+    //},
     setAngle: function ( smallAngle ){    //smallAngle in rads
       //console.log('model.setAngle() called. smallAngle = ' + smallAngle );
       //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
@@ -101,11 +124,13 @@ define( function( require ) {
       //}else
       if( ( this.smallAngle < 0 ) && (this.previousAngle > critAngle) ){
         this.nbrFullTurns += 1;
-        //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
+        console.log( 'setAngle called. nbrFullTurns increased to ' + this.nbrFullTurns );
       }else if ( this.smallAngle > 0 && this.previousAngle < -critAngle ) {
         this.nbrFullTurns -= 1;
+        console.log( 'setAngle called. nbrFullTurns decreased to ' + this.nbrFullTurns );
         //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
       }
+
 
       var angleTarget = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
       var remainderAngle = angleTarget%( 2*Math.PI );
@@ -119,6 +144,9 @@ define( function( require ) {
     //takes any small angle in rads and sets current angle to nearest special angle in rads
     setSpecialAngle: function ( smallAngle ){   //smallAngle in rads
       //console.log('TrigLabModel.setSpecialAngle() called. smallAngle = ' + smallAngle );
+      //if( this.getAngleInDegrees() === 180 ){
+      //  debugger;
+      //}
       var smallAngleInDegs = smallAngle*180/Math.PI;
       var nearestSpecialAngleInRads = 0;
       var angles = [ -150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
@@ -134,7 +162,6 @@ define( function( require ) {
         //var nearestSpecialFullAngleInRads = nearestSpecialAngleInRads + this.nbrFullTurns*2*Math.PI;
       }//end for
       this.setAngle( nearestSpecialAngleInRads );
-      //this.setFullAngleInRadians( nearestSpecialFullAngleInRads );
       //console.log( 'angle/pi = ' + this.angle/Math.PI + '   smallAngle/pi = ' + this.smallAngle/Math.PI )
     }//end setSpecialAngle()
   } );

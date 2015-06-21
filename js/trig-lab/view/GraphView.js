@@ -26,8 +26,6 @@ define( function( require ) {
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
     //var Vector2 = require( 'DOT/Vector2' );
 
-
-
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );
     var cosStr = require( 'string!TRIG_LAB/cos' );
@@ -129,7 +127,6 @@ define( function( require ) {
             this.tickMarkLabelsInRadians.addChild( label );
         }
 
-
         graphView.addChild( this.tickMarkLabelsInRadians );
         this.tickMarkLabelsInDegrees.visible = false;   //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
         this.tickMarkLabelsInRadians.visible = false;
@@ -144,9 +141,6 @@ define( function( require ) {
         this.cosThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
         this.sinThetaLabel = new HTMLText( sinStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
         this.tanThetaLabel = new HTMLText( tanStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
-        //this.cosThetaLabel = new Text( cosTheta, fontInfo );
-        //this.sinThetaLabel = new Text( sinTheta, fontInfo );
-        //this.tanThetaLabel = new Text( tanTheta, fontInfo );
         graphView.addChild( this.cosThetaLabel );
         graphView.addChild( this.sinThetaLabel );
         graphView.addChild( this.tanThetaLabel );
@@ -193,9 +187,8 @@ define( function( require ) {
         this.cosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );
         this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
 
-        //indicatorLine is a vertical line on sine curve showing current value of angle and trigFunction(angle)
+        //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
-        //this.indicatorLine = new Line( 0, 0, 0, this.amplitude, { stroke: '#0B0', lineWidth: 6 } );
         this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 5, criticalFactor: 2, arrowHeadLength: 20 }  );
         var hitBound = 30;
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
@@ -222,11 +215,13 @@ define( function( require ) {
                         //console.log('drag event follows: ');
                         var v1 = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
                         var angle = (2*Math.PI*v1.x / wavelength);
-                        //console.log( 'graphView drag. angle is ' + angle );
+                        var angleInDegrees = 360*v1.x/wavelength;
+                        //console.log( 'graphView drag. angle is ' + angleInDegrees );
                         if( !model.specialAnglesMode ){
                             model.setFullAngleInRadians( angle );
                         }else{
                             model.setFullAngleInRadians( angle );
+                            //var smallAngle =
                             model.setSpecialAngle( model.getSmallAngleInRadians() );
                         }
                         //model.setAngle( angle );
@@ -242,6 +237,7 @@ define( function( require ) {
         model.angleProperty.link( function( angle ) {
             var xPos = angle/(2*Math.PI)*wavelength;
             graphView.indicatorLine.x = xPos;
+            //console.log( 'update angle is ' + angle*360/(2*Math.PI));
             graphView.setIndicatorLine();
         } );
 

@@ -152,6 +152,7 @@ define( function ( require ) {
                 //trigLabModel.reset();
                 viewProperties.reset();
                 trigLabModel.setFullAngleInRadians( 0 );
+
             },
             right: this.layoutBounds.maxX - 10,
             bottom: this.layoutBounds.maxY - 10

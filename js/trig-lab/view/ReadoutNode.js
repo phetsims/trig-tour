@@ -23,7 +23,8 @@ define( function( require ) {
   //next two strings used in definitions of succeeding strings, so not in alpha order
   var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
   var theta = require( 'string!TRIG_LAB/theta' );
-  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';
+
+  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
   var cosStr = require( 'string!TRIG_LAB/cos' );
   var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
@@ -34,7 +35,7 @@ define( function( require ) {
   var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
   var tanStr = require( 'string!TRIG_LAB/tan');
   var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
-  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added after equal sign for pleasant layout
+  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
 
   var xStr = 'x';
   var yStr = 'y';
@@ -66,33 +67,36 @@ define( function( require ) {
 
     // Call the super constructor
     Node.call( readoutNode );
-    var row1 = new Node();  //coordinates readout: (x, y) = ( cos, sin )
-    var row2 = new Node( { fill: '##770000'} );  //angle = angle value in degrees or radians
-    //row 3 is this.trigRow3 declared below, trig function = trig value, trig function = 'sin'|'cos'|'tan'
+
+    var row1 = new Node();    //coordinates readout: (x, y) = ( cos, sin )
+    var row2 = new Node();    //angle = angle value in degrees or radians
+    //row 3 is this.trigRow3 declared below, trig function = trig value, where trig function = 'sin'|'cos'|'tan'
 
     var angleValue = model.angle.toFixed( 1 );      //read from model
     var sinValue = model.sin().toFixed( 3 );
     var cosValue = model.cos().toFixed( 3 );
     var tanValue = model.tan().toFixed( 3 );
 
-    //console.log( 'ReadOutView initialized.  angleValue is ' + angleValue );
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ font: '20px sans-serif' };
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
-    //Row 1: (x, y) = ( cos, sin )
+    //Row 1: Coordinates readout (x, y) = ( cos value, sin value )
+    //cos and sin values are either decimal numbers ( this.coordinatesReadout )
+    //or, in Special Angle mode, they are built-up fractions of number of rads ( this.coordinatesHBox )
     var coordinatesLabel = new Text( xyEqualsStr, fontBoldInfo );
     this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //dummy arguments to set bounds
     this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
-    this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  //won't need this till later
+    this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  //don't need this till row 3, trig function readout
     this.coordinatesReadout = new Text( '', fontInfo );     //text provided by model synchronization below: model.angleProperty.link
     var leftParensText = new Text( '( ', largeFontInfo );
     var commaText = new Text( ' ,  ', fontInfo );
     var rightParensText = new Text( ' )', largeFontInfo );
-    var cosFractionHolder1 = new Node();       //parent holder for cosReadoutFraction; there is a cosFractionHolder2 defined below;
-    var sinFractionHolder1 = new Node();
+    var cosFractionHolder1 = new Node();    //parent holder for cosReadoutFraction; cosFractionHolder2 defined below;
+    var sinFractionHolder1 = new Node();    //parent holder for sinReadoutFraction; sinFractionHolder2 defined below;
     cosFractionHolder1.addChild( this.cosReadoutFraction );
     sinFractionHolder1.addChild( this.sinReadoutFraction );
+    //Assumble pieces into ( cos fraction value, sin fraction value )
     this.coordinatesHBox = new HBox( {
       children: [
         leftParensText,
@@ -104,32 +108,29 @@ define( function( require ) {
       align: 'left',
       spacing: 0
       });
+    //coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
     row1.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
     this.coordinatesReadout.left = coordinatesLabel.right;
     this.coordinatesHBox.left = coordinatesLabel.right;
 
-
-    //Row 2: angle = value in degs or rads
+    //Row 2: 'angle = ' value in degrees or radians; value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
-    this.angleReadout = new Text( angleValue, fontInfo );
-    this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );
-    //this.nbrFullTurnsText = new Text( '', fontInfo );  //for example, text '4pi + '
+    this.angleReadoutDecimal = new Text( angleValue, fontInfo );    //angle readout as decimal number
+    this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );  //needed in Special angles mode
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //used to display angle as FractionNode in Special angles mode
-    this.angleReadout.visible = true;
+    this.angleReadoutDecimal.visible = true;
     this.angleReadoutFraction.visible = false;
-    row2.children = [ angleLabel, this.angleReadout, this.nbrFullTurnsNode, this.angleReadoutFraction ];
-    //layout
-    this.angleReadout.left =  angleLabel.right ;
+    //either angleReadoutDecimal visible (decimal number values)
+    //or (nbrFullTurnsNode + angleReadoutFraction) visible in Special angles mode
+    row2.children = [ angleLabel, this.angleReadoutDecimal, this.nbrFullTurnsNode, this.angleReadoutFraction ];
+    //row 2 layout
+    this.angleReadoutDecimal.left =  angleLabel.right ;
     this.nbrFullTurnsNode.left = angleLabel.right;
     this.angleReadoutFraction.left =  this.nbrFullTurnsNode.right ;
-    //this.nbrFullTurnsText.left = angleLabel.right;
-    //this.angleReadoutFraction.left =  this.nbrFullTurnsText.right ;
+
 
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
-    //var sinLabel = new Text( sinEqualsStr, fontBoldInfo );
-    //var cosLabel = new Text( cosEqualsStr, fontBoldInfo );
-    //var tanLabel = new Text( tanEqualsStr, fontBoldInfo );
     var sinLabel = new HTMLText ( sinStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
     var cosLabel = new HTMLText ( cosStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
     var tanLabel = new HTMLText ( tanStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
@@ -141,37 +142,19 @@ define( function( require ) {
     this.sinReadoutText = new Text( sinValue, fontInfo );
     this.cosReadoutText = new Text( cosValue, fontInfo );
     this.tanReadoutText = new Text( tanValue, fontInfo );
-    //this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
-    //this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
-    //this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );
-    this.cosFractionHolder2 = new Node();
+    this.cosFractionHolder2 = new Node();    //cosFractionHolder1 used in row 1 above
     this.sinFractionHolder2 = new Node();
     this.cosFractionHolder2.addChild( this.cosReadoutFraction );
     this.sinFractionHolder2.addChild( this.sinReadoutFraction );
-
-    //Now that cos and sinReadoutFractions are defined, can complete layout row 1
-    //this.cosFractionHolder1.addChild( this.cosReadoutFraction );
-    //this.sinFractionHolder1.addChild( this.sinReadoutFraction );
-
-    //this.cosReadoutFraction.left = 0;
-    //this.sinReadoutFraction.left = 0;
-    //leftParensText.left = 0;
-    //this.cosFractionHolder1.left = leftParensText.right;
-    //commaText.left = this.cosFractionHolder1.right;
-    //this.sinFractionHolder1.left = commaText.right;
-    //rightParensText.left = this.sinFractionHolder1.right;
-
     var equalText1 = new Text( equalStr, fontBoldInfo );
     var equalText2 = new Text( equalStr, fontBoldInfo );
     var equalText3 = new Text( equalStr, fontBoldInfo );
-    var degText = new Text( degreesStr, fontInfo ) ;
-    var radText = new Text( radiansStr, fontInfo );
+    //either ReadoutText or FractionHolder2 visible, FractionHolder2 visible in Special Angles mode
     this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinFractionHolder2 ]});
     this.cosRow = new Node( {children: [ cosLabel, cosFraction, equalText2, this.cosReadoutText, this.cosFractionHolder2 ]});
     this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
-    //this.sinReadoutFraction.visible = false;
-    //this.cosReadoutFraction.visible = false;
     this.tanReadoutFraction.visible = false;
+
     //trig row layout
     sinFraction.left = sinLabel.right;
     cosFraction.left = cosLabel.right;
@@ -183,20 +166,20 @@ define( function( require ) {
     this.sinReadoutText.left =  equalText1.right + space ;
     this.cosReadoutText.left =  equalText2.right + space ;
     this.tanReadoutText.left =  equalText3.right + space ;
-    //this.sinReadoutFraction.left = equalText1.right + space ;
-    //this.cosReadoutFraction.left = equalText2.right + space ;
     this.sinFractionHolder2.left = equalText1.right + space ;
     this.cosFractionHolder2.left = equalText2.right + space ;
     this.tanReadoutFraction.left = equalText3.right + space ;
 
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
-    // 2 radio buttons for display in degrees or radians
+    // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
+    var degText = new Text( degreesStr, fontInfo ) ;
+    var radText = new Text( radiansStr, fontInfo );
     var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
     var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
 
-    //arrays needed for display of special angles
+    //Arrays needed for display of special angles
     //Special angles in degrees
     this.angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
     //Corresponding special angles in radians
@@ -206,7 +189,7 @@ define( function( require ) {
       [ pi, 4 ],
       [ pi, 3 ],
       [ pi, 2 ],
-      [ 2 + pi, 3 ],   //Remember it's all string concatenation, so 2 + pi = 2pi
+      [ 2 + pi, 3 ],   //Remember it's string concatenation, so 2 + pi = 2*pi
       [ 3 + pi, 4 ],
       [ 5 + pi, 6 ],
       [ pi, '' ],
@@ -280,7 +263,7 @@ define( function( require ) {
     ];
 
 
-    // Adjust touch areas
+    // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
     var spacing = 10;
 
     var contentVBox = new VBox( {
@@ -303,7 +286,6 @@ define( function( require ) {
     model.angleProperty.link( function( angle ) {    //angle is in radians
       var sinText = model.sin().toFixed( 3 ) ;
       var cosText =  model.cos().toFixed( 3 );
-      //var tanText =  model.tan().toFixed( 3 );
       readoutNode.coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
@@ -312,15 +294,17 @@ define( function( require ) {
 
 
   return inherit( Node, ReadoutNode, {
+    //set readout units to either degrees or radians
     setUnits: function ( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadout.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
+        this.angleReadoutDecimal.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
       }
       else {
-        this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
+        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
       }
     },
+    //Trig Row is row 3 of the readout panel, displays value of either sin, cos, or tan
     setTrigRowVisibility: function ( graph ) {
       this.trigRow3.children[0].visible = ( graph === 'sin' );
       this.trigRow3.children[1].visible = ( graph === 'cos' );
@@ -329,12 +313,13 @@ define( function( require ) {
     setAngleReadoutPrecision: function( nbrDecimalPlaces ){
       this.nbrDecimalPlaces = nbrDecimalPlaces;
     },
+    //sets format of angle readout (row 2) of readout panel: degrees, radians, or special angles
     setAngleReadout: function(){
       if( !this.radiansDisplayed ){
-        this.angleReadout.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + this.units;
+        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + this.units;
       }
       if( this.radiansDisplayed && !this.specialAnglesOnly ){
-        this.angleReadout.text = this.model.angle.toFixed( 3 ) + ' ' + this.units;
+        this.angleReadoutDecimal.text = this.model.angle.toFixed( 3 ) + ' ' + this.units;
       }
       if( this.radiansDisplayed && this.specialAnglesOnly ){
         this.setSpecialAngleReadout();
@@ -342,20 +327,17 @@ define( function( require ) {
     },
     setSpecialAngleReadout: function(){
       this.angleReadoutFraction.visible = true;
-      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic can give not quite integer
+      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
       if( Math.abs( angleInDegs ) > 360 ){
         angleInDegs = angleInDegs%360;
       }
-      //console.log('ReadoutNode.setSpecialAngle() called. angleDegs = ' + angleInDegs );
-      //console.log('nbrFullTurns = ' + nbrFullTurns );
-      var fullTurnCount = this.model.getFullTurnCount();
-      var piRadsCount = 2*fullTurnCount;
-      var fullTurnStr = '';
-      //console.log('setSpecialAngleReadout called. piRadsCount = ' + piRadsCount );
+      var fullTurnCount = this.model.getFullTurnCount();  //number of full turns around unit circle, incremented at theta = 0
+      var piRadsCount = 2*fullTurnCount;                  //number of half turns around unit circle; half-turn = pi radians
+      var fullTurnStr = '';   //Angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
       if( piRadsCount !== 0 ){
-        if( fullTurnCount > 0 ){
+        if( fullTurnCount > 0 ){  //if angle positive
           fullTurnStr = piRadsCount + pi + ' + ';
-        }else{
+        }else{                    //if angle negative, minus sign is constructed in FractionNode
           fullTurnStr = piRadsCount + pi + ' ';
         }
       }else{  //if zero turns
@@ -364,8 +346,10 @@ define( function( require ) {
       this.nbrFullTurnsNode.setValues( fullTurnStr, '' );
       this.angleReadoutFraction.left =  this.nbrFullTurnsNode.right; //this.nbrFullTurnsText.right;
       for( var i = 0; i < this.angleFractions.length; i++ ){
+        //if angle positive
         if ( this.angles[i] === angleInDegs ){
           this.angleReadoutFraction.setValues( this.angleFractions[i][0], this.angleFractions[i][1] );
+        //if angle negative
         } else if ( this.angles[i] === -1*angleInDegs ){
           this.angleReadoutFraction.setValues( '-' + this.angleFractions[i][0], this.angleFractions[i][1] );
         }
@@ -374,7 +358,6 @@ define( function( require ) {
       if( Math.round( this.model.getSmallAngleInDegrees() ) === 0 || Math.round( this.model.getSmallAngle0To360() ) === 180 ){
         var nbrPiRads = this.model.getHalfTurnCount();
         var angleStr = nbrPiRads + pi;
-       // console.log( 'angle is 0 or 180. angleStr = ' + angleStr );
         if( nbrPiRads === 0 ){
           angleStr = '0';
         }else if( nbrPiRads === 1 ){
@@ -383,7 +366,7 @@ define( function( require ) {
           angleStr = '-' + pi;
         }
         this.nbrFullTurnsNode.setValues( angleStr, '' );
-        //this.nbrFullTurnsText.text = angleStr;
+
         //dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );
         this.angleReadoutFraction.visible = false;
@@ -400,25 +383,11 @@ define( function( require ) {
         this.cosReadoutText.text = cosText;
         this.tanReadoutText.text = tanText;
       }
-      //var tanValue = this.model.tan();
-      //if( tanValue < 1000 && tanValue > -1000 ){
-      //  this.tanReadoutText.font = DISPLAY_FONT;
-      //  this.tanReadoutText.text = tanText;
-      //}else if( tanValue > 1000 ){
-      //  this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
-      //  this.tanReadoutText.text = infinitySymbolStr;
-      //}else if( tanValue < -1000 ){
-      //  //this.tanReadoutText.font = DISPLAY_FONT_VERY_LARGE;
-      //  this.tanReadoutText.fontSize = 100;
-      //  this.tanReadoutText.fill = 'red';
-      //  this.tanReadoutText.text = 'my test!';//'-' + infinitySymbolStr;
-      //}
     },
     setSpecialAngleTrigReadout: function(){
       var smallAngleInDegrees = Math.round( this.model.getSmallAngle0To360() );
       for ( var i = 0; i < this.angles.length; i++ ){
         if( this.angles[i] === smallAngleInDegrees ){
-          //console.log( 'angle changed, angle is ' + smallAngleInDegrees );
           this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );
           this.cosReadoutFraction.setValues( this.cosFractions[i][0], this.cosFractions[i][1] );
 

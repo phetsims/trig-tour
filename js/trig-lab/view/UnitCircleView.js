@@ -57,7 +57,6 @@ define( function( require ) {
         //Draw Unit Circle
         var radius = 160; //radius of unit circle in pixels
         var circleGraphic = new Circle( radius, { stroke:LINE_COLOR, lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
-        //unitCircleView.addChild( circleGraphic );
 
         //Draw 'special angle' locations on unit circle
         //special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
@@ -71,11 +70,11 @@ define( function( require ) {
         }
 
         //Draw x-, y-axes with x and y labels
-        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
-        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) {
+        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) 
+        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) 
 
         //Draw and position x-, y-axis labels
-        var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //'20px sans-serif' };
+        var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; 
         var xText = new Text( xStr, fontInfo );
         var yText = new Text( yStr, fontInfo );
         xAxis.addChild( xText );
@@ -84,8 +83,7 @@ define( function( require ) {
         xText.centerY = yAxis.centerY;
         yText.right = -12;
         yText.top = -1.2*radius - 2;
-
-
+        
         //Draw Grid, simple square grid, with labels x = +/-1, y = +/-1;
         var r = radius;
         var gridShape = new Shape();
@@ -95,7 +93,7 @@ define( function( require ) {
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
         //+1, -1 labels on grid axes
-        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR }; //'18px sans-serif' };
+        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
         var plusOneXText = new Text( plusOneStr, fontInfo );
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var plusOneYText = new Text( plusOneStr, fontInfo );
@@ -103,7 +101,7 @@ define( function( require ) {
         var oneLabels = [ plusOneXText, minusOneXText, plusOneYText, minusOneYText ];
         this.grid.children = oneLabels;
 
-        //position one labels
+        //position 'one' labels
         plusOneXText.left = this.grid.right + 5;
         plusOneXText.top = 7;
         minusOneXText.right = this.grid.left - 5;
@@ -115,6 +113,7 @@ define( function( require ) {
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
+        //displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
         this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
         this.vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
@@ -124,33 +123,30 @@ define( function( require ) {
 
 
         //Draw rotor arm with draggable red dot at end
-        var rotorGraphic = new Node();                  //Rectangle( 0, -rotorWidth/2, radius, rotorWidth, { fill: '#090', cursor: 'pointer' } );
+        var rotorGraphic = new Node();                 
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
-        //lay on the children!
-        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine,  this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
+        //add the children to parent node
+        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine, this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(
                 {
                     // When dragging across it in a mobile device, pick it up
                     allowTouchSnag: true,
-
-                    start: function (e){
-                        console.log( 'mouse down' );
+                    //start function for testing only
+                    start: function (e){ 
+                        //console.log( 'mouse down' );
                         mouseDownPosition = e.pointer.point;
                     },
 
                     drag: function(e){
-                        //console.log('drag event follows: ');
                         var v1 =  rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var angle = -v1.angle();  //model angle is negative of xy coords angle
-                        //console.log( 'angle is ' + angle );
-                        //console.log( 'UnitCircleView line 137, specialAngleMode = '+ model.specialAnglesMode )
+                        var angle = -v1.angle();  //model angle is negative of xy screen coordinates angle
                         if( !model.specialAnglesMode ){
                             model.setAngle( angle );
                         }else{
@@ -160,16 +156,17 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        var arcRadius = 0.2*radius;   //arc radius = 0.3 of rotor radius
+        var arcRadius = 0.2*radius;   //arc radius = 0.2 of rotor radius
         var arcShape = new Shape();
         var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
+        
         //following code is to speed up drawing
         var emptyBounds = new Bounds2( 0, 0, 0, 0 );
         angleArcPath.computeShapeBounds = function(){
              return emptyBounds;
         } ;
 
-        //draw Angle Arc Arrow Head
+        //draw Arrow Head on Angle Arc 
         var arrowHeadShape = new Shape();
         var hW = 7;     //arrow head width
         var hL = 12;    //arrow head length
@@ -178,34 +175,32 @@ define( function( require ) {
         angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
 
-        //draw arc and
+        //draw arc with gradually increasing radius
         var drawAngleArc = function(){
-            var arcShape = new Shape();  //This seems wasteful. But there is no Shape.clear() function
+            var arcShape = new Shape();  //This seems wasteful, but there is no Shape.clear() function
             arcRadius = 0.2*radius;
             arcShape.moveTo( arcRadius, 0 );
             var totalAngle = model.getAngleInRadians();
-            var dAng = 0.1;  //delta-angle in radians
+            var deltaAngle = 0.1;  //delta-angle in radians
             if( Math.abs(totalAngle) < 0.5 ){
-                dAng = 0.02;
+                deltaAngle = 0.02;
             }
             var ang = 0;  //short for angle
             if( totalAngle >0 ){
-                for( ang = 0; ang <= totalAngle; ang += dAng ){
-                    //console.log( 'angle is '+ang );
-                    arcRadius += dAng;
+                for( ang = 0; ang <= totalAngle; ang += deltaAngle ){
+                    arcRadius += deltaAngle;
                     arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) ) ;
                 }
             }else{
-                for( ang = 0; ang >= totalAngle; ang -= dAng ){
-                    //console.log( 'angle is '+ang );
-                    arcRadius += dAng;
+                for( ang = 0; ang >= totalAngle; ang -= deltaAngle ){
+                    arcRadius += deltaAngle;
                     arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) );
                 }
             }
 
             angleArcPath.setShape( arcShape );
 
-            //show arc arrow head only if angle is > 45 degs
+            //show arrow head on angle arc only if angle is > 45 degs
             if( Math.abs( totalAngle ) < 45*Math.PI/180 ){
                 angleArcArrowHead.visible = false;
             }else{
@@ -213,11 +208,11 @@ define( function( require ) {
             }
             angleArcArrowHead.x = arcRadius*Math.cos( totalAngle );
             angleArcArrowHead.y = -arcRadius*Math.sin( totalAngle );
-            //angleArcArrowHead.rotation = 0;
+            //arrow head on angle arc oriented correctly
             if( totalAngle < 0 ){
-                angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6/arcRadius ); //model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6/arcRadius );
             }else{
-                angleArcArrowHead.rotation = -totalAngle + ( 6/arcRadius ); //-model.smallAngle*180/Math.PI;
+                angleArcArrowHead.rotation = -totalAngle + ( 6/arcRadius );
             }
         };   //end drawAngleArc
 
@@ -229,15 +224,14 @@ define( function( require ) {
         xText = new Text( xStr, fontInfo );            //xText, yText already defined above
         yText = new Text( yStr, fontInfo );
         var thetaText = new Text( thetaStr, fontInfo );
-        var labelsArr = [ oneText, xText, yText, thetaText ] ;
-        labelCanvas.children = labelsArr;
+        labelCanvas.children = [ oneText, xText, yText, thetaText ] ;
 
         this.setLabelVisibility = function( isVisible ){
             positionLabels();
             labelCanvas.visible = isVisible;
         };
 
-        //position the x, y,  '1', and theta labels on the xyR triangle of the unit circle
+        //position the x, y, '1', and theta labels on the xyR triangle of the unit circle
         var positionLabels = function( ){
             var smallAngle = trigLabModel.getSmallAngleInRadians();
             var totalAngle = trigLabModel.getAngleInRadians();
@@ -248,7 +242,7 @@ define( function( require ) {
             }else{
                 thetaText.visible = true;
             }
-            var sAngle = Math.abs( smallAngle*180/pi );
+            var sAngle = Math.abs( smallAngle*180/pi );  //small angle in degrees
             if( sAngle < 10 || (180 - sAngle) < 10 ){
                 yText.visible = false;
             } else{
@@ -261,18 +255,18 @@ define( function( require ) {
             }
             //position one-label
             var angleOffset = 9*pi/180;
-            var sign = 1;
+            var sign = 1; //if sign = +1, one-label is to right of radius, if -1 then to the left
 
             if( ( smallAngle > pi/2 && smallAngle < pi ) ||( smallAngle > -pi/2 && smallAngle < 0 )){
                 sign = -1;
             }
             var xInPix = radius*Math.cos( smallAngle + sign*angleOffset );
             var yInPix = radius*Math.sin( smallAngle + sign*angleOffset );
-            oneText.centerX = 0.6*xInPix;// - 0.5*oneText.width;
-            oneText.centerY = - 0.6*yInPix;// -0.5*oneText.height;
+            oneText.centerX = 0.6*xInPix;
+            oneText.centerY = - 0.6*yInPix;
 
             //position x-label
-            var xPos = 0.5*radius*Math.cos( smallAngle );// - 0.5*xText.width;
+            var xPos = 0.5*radius*Math.cos( smallAngle );
             var yPos = 0.6*xText.height;
             if( smallAngle < 0 ){ yPos = -0.6*xText.height; }
             xText.centerX = xPos;
@@ -296,10 +290,9 @@ define( function( require ) {
         };//end positionLabels()
 
 
-
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
-            rotorGraphic.rotation = -angle;  //model angle is negative of xy coords angle
+            rotorGraphic.rotation = -angle;  //model angle is negative of xy screen coords angle
             var cos = Math.cos( angle );
             var sin = Math.sin( angle );
             unitCircleView.vLine.x = radius*cos;

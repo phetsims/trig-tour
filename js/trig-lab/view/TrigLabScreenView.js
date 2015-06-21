@@ -95,12 +95,12 @@ define( function ( require ) {
                 //readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
-                readoutDisplay.readoutNode.angleReadout.visible = false;
+                readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
             }else{
                 //readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
-                readoutDisplay.readoutNode.angleReadout.visible = true;
+                readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
             }
             readoutDisplay.readoutNode.setAngleReadout();
             //readOutView.setUnits( units );
@@ -126,12 +126,12 @@ define( function ( require ) {
                 //readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
-                readoutDisplay.readoutNode.angleReadout.visible = false;
+                readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
             }else{
                 //readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
-                readoutDisplay.readoutNode.angleReadout.visible = true;
+                readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
             }
             //set precision of angle readout in degrees: special angles mode angle = 45 degrees, otherwise 45.0 degrees
             if( specialAnglesVisible ){

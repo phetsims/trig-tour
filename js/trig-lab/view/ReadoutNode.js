@@ -26,15 +26,15 @@ define( function( require ) {
 
   var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
   var cosStr = require( 'string!TRIG_LAB/cos' );
-  var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
+  //var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
   var sinStr = require( 'string!TRIG_LAB/sin' );
-  var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
+  //var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
   var tanStr = require( 'string!TRIG_LAB/tan');
-  var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
+  //var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
   var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
 
   var xStr = 'x';
@@ -43,11 +43,11 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
-  var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
+  //var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
   //var LINE_COLOR = Util.LINE_COLOR;
   var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
   var TEXT_COLOR = Util.TEXT_COLOR;
-  var PANEL_COLOR = Util.PANEL_COLOR;
+  //var PANEL_COLOR = Util.PANEL_COLOR;
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay

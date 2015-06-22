@@ -29,6 +29,7 @@ define( function( require ) {
   var cosStr = require( 'string!TRIG_LAB/cos' );
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
+  var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var radsStr = require( 'string!TRIG_LAB/rads' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
@@ -377,6 +378,11 @@ define( function( require ) {
       var sinText = this.model.sin().toFixed( 3 ) ;
       var cosText = this.model.cos().toFixed( 3 );
       var tanText = this.model.tan().toFixed( 3 );
+      if( this.model.tan() === 10000 ){
+        tanText = infinityWordStr;
+      }else if( this.model.tan() === -10000 ){
+        tanText = '-' + infinityWordStr;
+      }
       if( this.specialAnglesOnly ){
         this.setSpecialAngleTrigReadout();
       }else{

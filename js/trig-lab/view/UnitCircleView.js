@@ -25,7 +25,7 @@ define( function( require ) {
     var xStr = 'x';
     var yStr = 'y';
     var oneStr = '1';
-    var plusOneStr = '+1';
+    //var plusOneStr = '+1';
     var minusOneStr = '-1';
     var thetaStr = require( 'string!TRIG_LAB/theta' ); // \u03b8 = unicode for theta
 
@@ -70,8 +70,8 @@ define( function( require ) {
         }
 
         //Draw x-, y-axes with x and y labels
-        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) 
-        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1 });//function ArrowNode( tailX, tailY, tipX, tipY, options ) 
+        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )
+        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 1, headHeight: 12, headWidth: 8  });//function ArrowNode( tailX, tailY, tipX, tipY, options )
 
         //Draw and position x-, y-axis labels
         var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; 
@@ -94,20 +94,27 @@ define( function( require ) {
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
         //+1, -1 labels on grid axes
         fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-        var plusOneXText = new Text( plusOneStr, fontInfo );
+        //var plusOneXText = new Text( plusOneStr, fontInfo );
+        var oneXText = new Text( oneStr, fontInfo );
         var minusOneXText = new Text( minusOneStr, fontInfo );
-        var plusOneYText = new Text( plusOneStr, fontInfo );
+        //var plusOneYText = new Text( plusOneStr, fontInfo );
+        var oneYText = new Text( oneStr, fontInfo );
         var minusOneYText = new Text( minusOneStr, fontInfo );
-        var oneLabels = [ plusOneXText, minusOneXText, plusOneYText, minusOneYText ];
+        //var oneLabels = [ plusOneXText, minusOneXText, plusOneYText, minusOneYText ];
+        var oneLabels = [ oneXText, minusOneXText, oneYText, minusOneYText ];
         this.grid.children = oneLabels;
 
         //position 'one' labels
-        plusOneXText.left = this.grid.right + 5;
-        plusOneXText.top = 7;
+        //plusOneXText.left = this.grid.right + 5;
+        //plusOneXText.top = 7;
+        oneXText.left = this.grid.right + 5;
+        oneXText.top = 7;
         minusOneXText.right = this.grid.left - 5;
         minusOneXText.top = 7;
-        plusOneYText.bottom = this.grid.top;
-        plusOneYText.left = 5;
+        //plusOneYText.bottom = this.grid.top;
+        //plusOneYText.left = 5;
+        oneYText.bottom = this.grid.top;
+        oneYText.left = 5;
         minusOneYText.top = this.grid.bottom;
         minusOneYText.right = -5;
         this.grid.visible = false;

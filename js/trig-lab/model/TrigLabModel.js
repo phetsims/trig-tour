@@ -36,7 +36,16 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
     tan: function () {
-      return Math.tan( this.angle );
+      var tanValue = Math.tan( this.angle );
+      var returnValue;
+      if( tanValue > 10000 ){
+         returnValue = 10000;
+      }else if( tanValue < -10000 ){
+        returnValue= -10000;
+      }else{
+         returnValue = tanValue;
+      }
+      return returnValue;
     },
     getAngleInRadians: function(){
       return this.angle;

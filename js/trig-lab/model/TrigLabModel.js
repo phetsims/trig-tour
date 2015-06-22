@@ -36,12 +36,13 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
     tan: function () {
+      //Have to cut off value at =/-1000 or else Safari Browser won't display properly
       var tanValue = Math.tan( this.angle );
       var returnValue;
-      if( tanValue > 10000 ){
-         returnValue = 10000;
-      }else if( tanValue < -10000 ){
-        returnValue= -10000;
+      if( tanValue > 1000 ){
+         returnValue = 1000;
+      }else if( tanValue < -1000 ){
+        returnValue= -1000;
       }else{
          returnValue = tanValue;
       }

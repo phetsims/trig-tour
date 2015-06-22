@@ -30,6 +30,9 @@
   "pi": {
     "value": "\u03c0"
   },
+  "plusMinus": {
+    "value": "\u00B1"
+  },
   "rads": {
     "value": "rads"
   },

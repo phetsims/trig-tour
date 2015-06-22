@@ -215,14 +215,24 @@ define( function( require ) {
                         //console.log('drag event follows: ');
                         var v1 = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
                         var fullAngle = (2*Math.PI*v1.x / wavelength);
-                        var angleInDegrees = 360*v1.x/wavelength;
+                        var smallAngleInRadians = fullAngle%(2*Math.PI);
+                        var smallAngleInDegrees = smallAngleInRadians*180/(Math.PI);
+                        if( smallAngleInDegrees > 0 && smallAngleInDegrees > 180 ){
+                            smallAngleInDegrees -= 360;
+                        }
+                        if( smallAngleInDegrees < 0 && smallAngleInDegrees < -180 ){
+                            smallAngleInDegrees += 360;
+                        }
+                        smallAngleInRadians = smallAngleInDegrees*Math.PI/180;
+                        //console.log( 'small angle in degs = ' + smallAngleInDegrees );
+                        //var angleInDegrees = 360*v1.x/wavelength;
                         //console.log( 'graphView drag. angle is ' + angleInDegrees );
 
                         if( !model.specialAnglesMode ){
                             model.setFullAngleInRadians( fullAngle );
                         }else{
-                            model.setFullAngleInRadians( fullAngle );
-                            model.setSpecialAngle( model.getSmallAngleInRadians() );
+                            //model.setFullAngleInRadians( fullAngle );
+                            model.setSpecialAngle( smallAngleInRadians );
                         }
                         //model.setAngle( angle );
                     }

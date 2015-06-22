@@ -73,14 +73,14 @@ define( function( require ) {
       this.fullTurnCount = Math.round( ( angleInRads - remainderAngle )/(2*Math.PI ));
       if( Math.abs( remainderAngle ) <= Math.PI ){
         this.nbrFullTurns = this.fullTurnCount;
-        console.log( 'setFullAngleInRadians called. nbrFullTurns set to '  + this.nbrFullTurns );
+        //console.log( 'setFullAngleInRadians called. nbrFullTurns set to '  + this.nbrFullTurns );
       }else{
         if( angleInRads > 0 ){
           this.nbrFullTurns = this.fullTurnCount + 1;
-          console.log( 'setFullAngleInRadians called. nbrFullTurns increased to '  + this.nbrFullTurns );
+          //console.log( 'setFullAngleInRadians called. nbrFullTurns increased to '  + this.nbrFullTurns );
         }else{
           this.nbrFullTurns = this.fullTurnCount - 1;
-          console.log( 'setFullAngleInRadians called. nbrFullTurns decreased to '  + this.nbrFullTurns );
+          //console.log( 'setFullAngleInRadians called. nbrFullTurns decreased to '  + this.nbrFullTurns );
         }
 
       }
@@ -105,7 +105,7 @@ define( function( require ) {
     //      this.nbrFullTurns = this.fullTurnCount - 1;
     //      console.log( 'setFullAngleInRadians called. nbrFullTurns decreased to '  + this.nbrFullTurns );
     //    }
-    //  
+    //
     //  }
     //  this.smallAngle = angleInRads - this.getFullTurnCount()*2*Math.PI;
     //  remainderAngle = angleInRads%( Math.PI );
@@ -124,10 +124,10 @@ define( function( require ) {
       //}else
       if( ( this.smallAngle < 0 ) && (this.previousAngle > critAngle) ){
         this.nbrFullTurns += 1;
-        console.log( 'setAngle called. nbrFullTurns increased to ' + this.nbrFullTurns );
+        //console.log( 'setAngle called. nbrFullTurns increased to ' + this.nbrFullTurns );
       }else if ( this.smallAngle > 0 && this.previousAngle < -critAngle ) {
         this.nbrFullTurns -= 1;
-        console.log( 'setAngle called. nbrFullTurns decreased to ' + this.nbrFullTurns );
+        //console.log( 'setAngle called. nbrFullTurns decreased to ' + this.nbrFullTurns );
         //console.log( 'nbrFullTurns = ' + this.nbrFullTurns );
       }
 

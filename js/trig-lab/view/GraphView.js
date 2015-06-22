@@ -80,9 +80,9 @@ define( function( require ) {
         var yTics = new Node();
         var xTic;
         var yTic;
-        for( var i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ){
+        for( var i = -2*nbrOfWavelengths; i <= 2*nbrOfWavelengths; i++ ){
             xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR});
-            xTic.x = i*wavelength/2;
+            xTic.x = i*wavelength/4;
             xTics.addChild( xTic );
         }
         for( i = -1; i <=1; i+=2 ){

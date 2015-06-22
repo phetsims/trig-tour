@@ -30,6 +30,9 @@
   "pi": {
     "value": "\u03c0"
   },
+  "rads": {
+    "value": "rads"
+  },
   "radians": {
     "value": "radians"
   },

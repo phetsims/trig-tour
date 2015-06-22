@@ -16,6 +16,7 @@ define( function( require ) {
   //var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -26,15 +27,13 @@ define( function( require ) {
 
   var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
   var cosStr = require( 'string!TRIG_LAB/cos' );
-  //var cosEqualsStr = require( 'string!TRIG_LAB/cos' ) + theta + equalStr;
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
   var pi = require( 'string!TRIG_LAB/pi' );
+  var radsStr = require( 'string!TRIG_LAB/rads' );
   var radiansStr = require( 'string!TRIG_LAB/radians' );
   var sinStr = require( 'string!TRIG_LAB/sin' );
-  //var sinEqualsStr = require( 'string!TRIG_LAB/sin' ) + theta + equalStr;
   var tanStr = require( 'string!TRIG_LAB/tan');
-  //var tanEqualsStr = require( 'string!TRIG_LAB/tan') + theta + equalStr;
   var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
 
   var xStr = 'x';
@@ -64,6 +63,7 @@ define( function( require ) {
     this.radiansDisplayed = false;  //{boolean} set by ControlPanel
     this.specialAnglesOnly = false; //{boolean} set by ControlPanel
     this.units = 'degrees';         //{string} 'degrees'|'radians' set by Readout panel
+    //this.unitsOnValue = 'rads';     //
 
     // Call the super constructor
     Node.call( readoutNode );
@@ -115,7 +115,8 @@ define( function( require ) {
 
     //Row 2: 'angle = ' value in degrees or radians; value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
-    this.angleReadoutDecimal = new Text( angleValue, fontInfo );    //angle readout as decimal number
+    //this.angleReadoutDecimal = new Text( angleValue, fontInfo );    //angle readout as decimal number
+    this.angleReadoutDecimal = new SubSupText( angleValue, fontInfo );    //angle readout as decimal number
     this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );  //needed in Special angles mode
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //used to display angle as FractionNode in Special angles mode
     this.angleReadoutDecimal.visible = true;
@@ -298,10 +299,10 @@ define( function( require ) {
     setUnits: function ( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + units;
+        this.angleReadoutDecimal.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + radsStr;
       }
       else {
-        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + units;
+        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
     },
     //Trig Row is row 3 of the readout panel, displays value of either sin, cos, or tan
@@ -316,10 +317,10 @@ define( function( require ) {
     //sets format of angle readout (row 2) of readout panel: degrees, radians, or special angles
     setAngleReadout: function(){
       if( !this.radiansDisplayed ){
-        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + ' ' + this.units;
+        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
       if( this.radiansDisplayed && !this.specialAnglesOnly ){
-        this.angleReadoutDecimal.text = this.model.angle.toFixed( 3 ) + ' ' + this.units;
+        this.angleReadoutDecimal.text = this.model.angle.toFixed( 3 ) + ' ' + radsStr;
       }
       if( this.radiansDisplayed && this.specialAnglesOnly ){
         this.setSpecialAngleReadout();

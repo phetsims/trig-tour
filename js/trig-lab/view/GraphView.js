@@ -48,7 +48,7 @@ define( function( require ) {
     /**
      * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
      * has a draggable handle for changing the angle
-     * @param {TrigLabModel} main model of the sim
+     * @param {TrigLabModel} model of the sim
      * @param {Number} height of this view node in pixels
      * @param {Number} width of this view node in pixels
      * @constructor
@@ -107,7 +107,6 @@ define( function( require ) {
                 this.tickMarkLabelsInDegrees.addChild( label ) ;
             }
         }
-
 
         //Tic mark labels in radians
         this.tickMarkLabelsInRadians = new Node();
@@ -247,25 +246,28 @@ define( function( require ) {
     }//end constructor
 
     return inherit( Node, GraphView, {
-        setIndicatorLine: function(){
-            var angle = this.model.getAngleInRadians();
-            var cos = Math.cos( angle );
-            var sin = Math.sin( angle );
-            var tan = Math.tan( angle );
-            if( this.trigFunction === 'cos'){
-                this.indicatorLine.setEndPoint( cos*this.amplitude );
-                this.indicatorLine.setColor( COS_COLOR );
-                this.redDotHandle.y = -cos*this.amplitude;
-            }else if ( this.trigFunction === 'sin' ){
-                this.indicatorLine.setEndPoint( sin*this.amplitude );
-                this.indicatorLine.setColor( SIN_COLOR );
-                this.redDotHandle.y = -sin*this.amplitude;
-            }else if ( this.trigFunction === 'tan' ){
-                this.indicatorLine.setEndPoint( tan*this.amplitude );
-                this.indicatorLine.setColor( TAN_COLOR );
-                this.redDotHandle.y = -tan*this.amplitude;
-            }else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
-        }
-    }
-        );
+          setIndicatorLine: function() {
+              var angle = this.model.getAngleInRadians();
+              var cos = Math.cos( angle );
+              var sin = Math.sin( angle );
+              var tan = Math.tan( angle );
+              if ( this.trigFunction === 'cos' ) {
+                  this.indicatorLine.setEndPoint( cos * this.amplitude );
+                  this.indicatorLine.setColor( COS_COLOR );
+                  this.redDotHandle.y = -cos * this.amplitude;
+              }
+              else if ( this.trigFunction === 'sin' ) {
+                  this.indicatorLine.setEndPoint( sin * this.amplitude );
+                  this.indicatorLine.setColor( SIN_COLOR );
+                  this.redDotHandle.y = -sin * this.amplitude;
+              }
+              else if ( this.trigFunction === 'tan' ) {
+                  this.indicatorLine.setEndPoint( tan * this.amplitude );
+                  this.indicatorLine.setColor( TAN_COLOR );
+                  this.redDotHandle.y = -tan * this.amplitude;
+              }
+              else { console.log( 'ERROR in GraphView.setIndicatorLine()' ); }
+          }
+      }
+    );
 } );

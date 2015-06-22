@@ -49,6 +49,7 @@ define( function( require ) {
      * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
      * has a draggable handle for changing the angle
      * @param {TrigLabModel} model of the sim
+     * 
      * @param {Number} height of this view node in pixels
      * @param {Number} width of this view node in pixels
      * @constructor

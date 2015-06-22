@@ -12,7 +12,6 @@ define( function( require ) {
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
-    //var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
     var HTMLText = require( 'SCENERY/nodes/HTMLText' );
     var inherit = require( 'PHET_CORE/inherit' );
     var Line = require( 'SCENERY/nodes/Line' );
@@ -24,16 +23,15 @@ define( function( require ) {
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
-    //var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );
     var cosStr = require( 'string!TRIG_LAB/cos' );
     var sinStr = require( 'string!TRIG_LAB/sin' );
     var tanStr = require( 'string!TRIG_LAB/tan' );
-    var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
-    var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
-    var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
+    //var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
+    //var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
+    //var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
     var pi = require( 'string!TRIG_LAB/pi' );
 
     //constants
@@ -62,9 +60,6 @@ define( function( require ) {
         this.model = model;
         this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
         this.labelsVisible = 'false';  //set by Control Panel
-        //console.log( 'GraphView height = ' + height + '   GraphView.width = ' + width );
-        //console.log( 'line color is ' + LINE_COLOR );
-        //console.log( 'superscript test: ' + testText.getText() );
 
         // Call the super constructor
         Node.call( graphView );
@@ -78,24 +73,25 @@ define( function( require ) {
         var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1, fill: LINE_COLOR });  //tailX, tailY, tipX, tipY, options
         var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1, fill: LINE_COLOR } );
 
-        //draw tic marks on x-, y-axes
+        //draw tic marks for x-, y-axes
         var ticLength = 5;
+        var xTics = new Node();
+        var yTics = new Node();
         var xTic;
         var yTic;
         for( var i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ){
             xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR});
             xTic.x = i*wavelength/2;
-            xAxis.addChild( xTic );
+            xTics.addChild( xTic );
         }
         for( i = -1; i <=1; i+=2 ){
             yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR} );
             yTic.y = i*this.amplitude;
-            yAxis.addChild( yTic );
+            yTics.addChild( yTic );
         }
 
         this.axesNode = new Node();   //axes bounds of this are used in layout
         this.axesNode.children = [ xAxis, yAxis ];
-        graphView.addChild( this.axesNode );
 
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();
@@ -111,7 +107,6 @@ define( function( require ) {
                 this.tickMarkLabelsInDegrees.addChild( label ) ;
             }
         }
-        graphView.addChild( this.tickMarkLabelsInDegrees );
 
 
         //Tic mark labels in radians
@@ -126,24 +121,18 @@ define( function( require ) {
             label.top = xAxis.bottom;
             this.tickMarkLabelsInRadians.addChild( label );
         }
-
-        graphView.addChild( this.tickMarkLabelsInRadians );
-        this.tickMarkLabelsInDegrees.visible = false;   //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+        //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+        this.tickMarkLabelsInDegrees.visible = false;
         this.tickMarkLabelsInRadians.visible = false;
 
         //Axes labels
         var fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaLabel = new Text( theta, fontInfo );
-        //xAxis.addChild( thetaLabel );
-        graphView.addChild( thetaLabel );
         thetaLabel.left = this.axesNode.right + 10; //= xAxis.right;
         thetaLabel.centerY = xAxis.centerY;
         this.cosThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
         this.sinThetaLabel = new HTMLText( sinStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
         this.tanThetaLabel = new HTMLText( tanStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
-        graphView.addChild( this.cosThetaLabel );
-        graphView.addChild( this.sinThetaLabel );
-        graphView.addChild( this.tanThetaLabel );
         this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right  = yAxis.left - 10;
         this.cosThetaLabel.top = this.sinThetaLabel.top = this.tanThetaLabel.top =  yAxis.top;
 
@@ -182,10 +171,9 @@ define( function( require ) {
             xPos += dx;
         }
 
-
-        this.sinPath = new Path( sinShape, { stroke: '#090', lineWidth: 3} );
-        this.cosPath = new Path( cosShape, { stroke: '#00f', lineWidth: 3} );
-        this.tanPath = new Path( tanShape, { stroke: '#f00', lineWidth: 3} );
+        this.sinPath = new Path( sinShape, { stroke: SIN_COLOR, lineWidth: 3} );
+        this.cosPath = new Path( cosShape, { stroke: COS_COLOR, lineWidth: 3} );
+        this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3} );
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
@@ -195,10 +183,22 @@ define( function( require ) {
         this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 
-        graphView.addChild( this.sinPath );
-        graphView.addChild( this.cosPath );
-        graphView.addChild( this.tanPath );
-        graphView.addChild( this.indicatorLine );
+        //Order children views
+        graphView.children = [
+            this.axesNode,
+            thetaLabel,
+            this.cosThetaLabel,
+            this.sinThetaLabel,
+            this.tanThetaLabel,
+            this.sinPath,
+            this.cosPath,
+            this.tanPath,
+            this.tickMarkLabelsInDegrees,
+            this.tickMarkLabelsInRadians,
+            xTics,
+            yTics,
+            this.indicatorLine
+        ];
 
         // When dragging, move the sample element
         this.redDotHandle.addInputListener( new SimpleDragHandler(
@@ -212,9 +212,10 @@ define( function( require ) {
                     },
 
                     drag: function ( e ) {
-                        //console.log('drag event follows: ');
-                        var v1 = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var fullAngle = (2*Math.PI*v1.x / wavelength);
+                        var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
+                        var fullAngle = (2*Math.PI*position.x / wavelength);   //in radians
+
+                        //Need small angle (-pi < angle < pi ) to set special angle
                         var smallAngleInRadians = fullAngle%(2*Math.PI);
                         var smallAngleInDegrees = smallAngleInRadians*180/(Math.PI);
                         if( smallAngleInDegrees > 0 && smallAngleInDegrees > 180 ){
@@ -224,35 +225,26 @@ define( function( require ) {
                             smallAngleInDegrees += 360;
                         }
                         smallAngleInRadians = smallAngleInDegrees*Math.PI/180;
-                        //console.log( 'small angle in degs = ' + smallAngleInDegrees );
-                        //var angleInDegrees = 360*v1.x/wavelength;
-                        //console.log( 'graphView drag. angle is ' + angleInDegrees );
 
                         if( !model.specialAnglesMode ){
                             model.setFullAngleInRadians( fullAngle );
                         }else{
-                            //model.setFullAngleInRadians( fullAngle );
                             model.setSpecialAngle( smallAngleInRadians );
                         }
-                        //model.setAngle( angle );
                     }
                 } ) );
 
         this.setLabelVisibility = function( tOrF ){
             this.labelsVisible = tOrF;
-            //console.log( 'graph labels visibility is ' + this.labelsVisible );
         };
 
         // Register for synchronization with model.
         model.angleProperty.link( function( angle ) {
             var xPos = angle/(2*Math.PI)*wavelength;
             graphView.indicatorLine.x = xPos;
-            //console.log( 'update angle is ' + angle*360/(2*Math.PI));
-            //console.log( 'update small angle is ' + model.getSmallAngleInDegrees());
             graphView.setIndicatorLine();
         } );
-
-    }
+    }//end constructor
 
     return inherit( Node, GraphView, {
         setIndicatorLine: function(){
@@ -261,21 +253,15 @@ define( function( require ) {
             var sin = Math.sin( angle );
             var tan = Math.tan( angle );
             if( this.trigFunction === 'cos'){
-                //this.indicatorLine.setPoint2( 0, -cos*this.amplitude );
                 this.indicatorLine.setEndPoint( cos*this.amplitude );
-                //this.indicatorLine.stroke = COS_COLOR;
                 this.indicatorLine.setColor( COS_COLOR );
                 this.redDotHandle.y = -cos*this.amplitude;
             }else if ( this.trigFunction === 'sin' ){
-                //this.indicatorLine.setPoint2( 0, -sin*this.amplitude );
                 this.indicatorLine.setEndPoint( sin*this.amplitude );
-                //this.indicatorLine.stroke = SIN_COLOR;
                 this.indicatorLine.setColor( SIN_COLOR );
                 this.redDotHandle.y = -sin*this.amplitude;
             }else if ( this.trigFunction === 'tan' ){
-                //this.indicatorLine.setPoint2( 0, -tan*this.amplitude );
                 this.indicatorLine.setEndPoint( tan*this.amplitude );
-                //this.indicatorLine.stroke = TAN_COLOR;
                 this.indicatorLine.setColor( TAN_COLOR );
                 this.redDotHandle.y = -tan*this.amplitude;
             }else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }

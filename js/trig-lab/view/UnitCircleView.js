@@ -201,7 +201,7 @@ define( function( require ) {
 
             angleArcPath.setShape( arcShape );
 
-            //show arrow head on angle arc only if angle is > 45 degs
+            //show arrow head on angle arc if angle is > 45 degs
             if( Math.abs( totalAngle ) < 45*Math.PI/180 ){
                 angleArcArrowHead.visible = false;
             }else{
@@ -256,9 +256,8 @@ define( function( require ) {
             }
             //position one-label
             var angleOffset = 9*pi/180;
-            var sign = 1; //if sign = +1, one-label is to right of radius, if -1 then to the left
-
-            if( ( smallAngle > pi/2 && smallAngle < pi ) ||( smallAngle > -pi/2 && smallAngle < 0 )){
+            var sign = 1; //if sign = +1, one-label is to right of radius, if sign = -1 then to the left
+            if( ( smallAngle > pi/2 && smallAngle <= pi ) ||( smallAngle >= -pi/2 && smallAngle < 0 )){
                 sign = -1;
             }
             var xInPix = radius*Math.cos( smallAngle + sign*angleOffset );

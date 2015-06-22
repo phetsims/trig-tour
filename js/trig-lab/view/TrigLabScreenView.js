@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- *
+ * Master layout of view on stage
  * @author Michael Dubson (PhET)
  */
 define( function ( require ) {
@@ -9,16 +9,16 @@ define( function ( require ) {
 
     // modules
     var ControlPanel = require( 'TRIG_LAB/trig-lab/view/ControlPanel' );
-    var inherit = require( 'PHET_CORE/inherit' );
-    var ScreenView = require( 'JOIST/ScreenView' );
-    var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-    var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
-    var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
+    var inherit = require( 'PHET_CORE/inherit' );
+    var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
+    var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+    var ScreenView = require( 'JOIST/ScreenView' );
+    var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
     var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
 
     /**
-     * @param {TrigLabModel} trigLabModel
+     * @param {TrigLabModel} trigLabModel, model for sim
      * @constructor
      */
     function TrigLabScreenView( trigLabModel ) {
@@ -26,8 +26,6 @@ define( function ( require ) {
         ScreenView.call( this );
         var trigLabScreenView = this;
         this.labelsVisible = false;  //set by Control Panel
-
-
 
         var viewProperties = new ViewProperties();
         var unitCircleView = new UnitCircleView( trigLabModel );
@@ -51,11 +49,12 @@ define( function ( require ) {
         //console.log( 'layoutBounds = '+this.layoutBounds );
 
         viewProperties.graphProperty.link( function( graph ) {
+            //set visibility of horizontal and vertial arrows on xyR triangle on unit circle
             unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
             unitCircleView.hLine.visible = ( graph === 'sin' );
             unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
             unitCircleView.vLine.visible = ( graph === 'cos' );
-
+            //set visibility of curves on graph view
             graphView.trigFunction = graph;
             graphView.cosPath.visible = ( graph === 'cos' );
             graphView.sinPath.visible = ( graph === 'sin' );
@@ -64,7 +63,7 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             graphView.setIndicatorLine();
-
+            //visibility of trig function readout
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );
         } );
 
@@ -92,18 +91,15 @@ define( function ( require ) {
                 graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
             }
             if( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly  ) {
-                //readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
                 readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
             }else{
-                //readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
                 readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
             }
             readoutDisplay.readoutNode.setAngleReadout();
-            //readOutView.setUnits( units );
         });//end viewProperties.angleUnitsProperty.link
 
         viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ){
@@ -111,8 +107,6 @@ define( function ( require ) {
             readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
             trigLabModel.specialAnglesMode = specialAnglesVisible;
             //select correct trig readouts
-            //readoutDisplay.readoutNode.sinReadoutFraction.visible = specialAnglesVisible;
-            //readoutDisplay.readoutNode.cosReadoutFraction.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
@@ -123,33 +117,30 @@ define( function ( require ) {
             readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
             //select correct angle readout
             if( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ){
-                //readoutDisplay.readoutNode.nbrFullTurnsText.visible = true;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
                 readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
             }else{
-                //readoutDisplay.readoutNode.nbrFullTurnsText.visible = false;
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
                 readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
             }
-            //set precision of angle readout in degrees: special angles mode angle = 45 degrees, otherwise 45.0 degrees
+            //set precision of angle readout in degrees:
+            //in special angles mode, zero decimal places (like 45 degrees), otherwise 1 decimal place (like 45.0 degrees)
             if( specialAnglesVisible ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
             }else{
-                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
             }
             readoutDisplay.readoutNode.setAngleReadout();
             readoutDisplay.readoutNode.setTrigReadout();
-
-        });//viewProperties.specialAnglesVisibleProperty.link
+        });//end viewProperties.specialAnglesVisibleProperty.link
 
         // Create and add the Reset All Button in the bottom right, which resets the model
         var resetAllButton = new ResetAllButton( {
             listener: function () {
-                //trigLabModel.reset();
                 viewProperties.reset();
                 trigLabModel.setFullAngleInRadians( 0 );
 
@@ -158,7 +149,6 @@ define( function ( require ) {
             bottom: this.layoutBounds.maxY - 10
         } );
         this.addChild( resetAllButton );
-
     }
 
     return inherit( ScreenView, TrigLabScreenView, {} );

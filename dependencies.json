@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-lab 1.0.0-dev.4 Mon Jun 22 2015 14:34:55 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-lab 1.0.0-dev.5 Mon Jun 22 2015 15:14:08 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "903564a25a0f26acdbd334d3e104039864b405ef",
     "branch": "master"
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "trig-lab": {
-    "sha": "34bd989b66ea15a06cf0c0872d01001a0b345d31",
+    "sha": "cdd4d6039637b4e92029d26f40b0f04f2d185a2a",
     "branch": "master"
   }
 }

@@ -49,7 +49,8 @@ define( function( require ) {
      * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
      * has a draggable handle for changing the angle
      * @param {TrigLabModel} model of the sim
-     * 
+     *
+     *
      * @param {Number} height of this view node in pixels
      * @param {Number} width of this view node in pixels
      * @constructor
@@ -174,6 +175,9 @@ define( function( require ) {
         this.sinPath = new Path( sinShape, { stroke: SIN_COLOR, lineWidth: 3} );
         this.cosPath = new Path( cosShape, { stroke: COS_COLOR, lineWidth: 3} );
         this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3} );
+        this.singularityIndicator = new Line( 0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5] }  );
+        this.singularityIndicator.visible = true;
+        this.tanPath.addChild( this.singularityIndicator );
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
@@ -242,7 +246,13 @@ define( function( require ) {
         model.angleProperty.link( function( angle ) {
             var xPos = angle/(2*Math.PI)*wavelength;
             graphView.indicatorLine.x = xPos;
+            graphView.singularityIndicator.x = xPos;
             graphView.setIndicatorLine();
+        } );
+
+        model.singularityProperty.link( function( singularity ) {
+            graphView.singularityIndicator.visible = singularity;
+            graphView.indicatorLine.visible = !singularity;
         } );
     }//end constructor
 

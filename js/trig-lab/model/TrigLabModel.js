@@ -18,7 +18,8 @@ define( function( require ) {
   function TrigLabModel() {
 
     PropertySet.call( this, {
-      angle: 0               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
+      angle: 0,               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
+      singularity: false      //@private, indicates singularity in tan function at theta = +/- 90 degrees
     } );
     this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi with 180 offset
     this.previousAngle = 0;  //@private, smallAngle in previous step, needed to compute total angle from smallAngle
@@ -36,13 +37,16 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
     tan: function () {
-      //Have to cut off value at =/-1000 or else Safari Browser won't display properly
+      //Cut off value at =/-1000 or else Safari Browser won't display properly
       var tanValue = Math.tan( this.angle );
+      this.singularity = false;
       var returnValue;
       if( tanValue > 1000 ){
          returnValue = 1000;
+        this.singularity = true;
       }else if( tanValue < -1000 ){
         returnValue= -1000;
+        this.singularity = true;
       }else{
          returnValue = tanValue;
       }

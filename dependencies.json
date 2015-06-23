@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-lab 1.0.0-dev.5 Mon Jun 22 2015 15:59:30 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-lab 1.0.0-dev.6 Tue Jun 23 2015 16:19:26 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "903564a25a0f26acdbd334d3e104039864b405ef",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "677db8ed6b452b80b5279a458a779c5ac782b34f",
+    "sha": "27d104ab4918b8942aa7fabefbb38fe4cfd24087",
     "branch": "master"
   },
   "dot": {
@@ -29,7 +29,7 @@
     "branch": "master"
   },
   "phet-core": {
-    "sha": "328c6e2f6df1ee3da1bdd41877d2113cfc1e4a71",
+    "sha": "8e31808c67a23066b43fbbd2080784daa44433c2",
     "branch": "master"
   },
   "phetcommon": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "trig-lab": {
-    "sha": "193be339575c763ea7d21efa5faa12eb29937383",
+    "sha": "3a50e2b2ce94ecadc519c7da2d3ad81c00f80177",
     "branch": "master"
   }
 }

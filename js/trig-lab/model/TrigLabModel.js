@@ -117,6 +117,7 @@ define( function( require ) {
       this.halfTurnCount = Math.round( ( angleTarget - remainderAngle )/(Math.PI ));
 
       this.angle = angleTarget;  //now can trigger angle update
+      //console.log( 'Model.setAngle called. angleInDeg = ' + this.getAngleInDegrees() );
       this.previousAngle = smallAngle;
     },
     //takes small angle in rads and sets current angle to nearest special angle in rads

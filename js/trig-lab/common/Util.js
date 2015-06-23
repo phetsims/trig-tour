@@ -16,7 +16,7 @@ define( function( require ) {
         TEXT_COLOR: '#000',
         LINE_COLOR: '#000',
         PANEL_COLOR: '#eee', //'#FFD9B3',  //
-        SIN_COLOR: '#0A0',
+        SIN_COLOR: '#090',
         COS_COLOR: '#00D',
         TAN_COLOR: '#F00'
     };

@@ -42,8 +42,8 @@ define( function( require ) {
     var hL = this.tLength;    //arrow head length
     triangleShape.moveTo( 0, 0 ).lineTo( 0, hW/2 ).lineTo( hL, 0 ).lineTo( 0, -hW/2 ).close();
     var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: this.color });
-    this.triangleNode.addChild( trianglePath );
-    //this.addChild( trianglePath );  //WHY doesn't this work
+    //this.triangleNode.addChild( trianglePath );
+    this.addChild( trianglePath );  //WHY doesn't this work
 
   }//end constuctor
 

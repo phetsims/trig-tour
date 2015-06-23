@@ -307,6 +307,10 @@ define( function( require ) {
 
     model.singularityProperty.link( function( singularity ) {
       readoutNode.plusMinusInfinityNode.visible = singularity;
+      if( !readoutNode.specialAnglesOnly ){
+        readoutNode.tanReadoutText.visible = !singularity;
+      }
+
       //debugger;
     } );
 
@@ -396,9 +400,9 @@ define( function( require ) {
       var sinText = this.model.sin().toFixed( 3 ) ;
       var cosText = this.model.cos().toFixed( 3 );
       var tanText = this.model.tan().toFixed( 3 );
-      if( this.model.tan() === 1000 || this.model.tan() === -1000 ){      //limits of +/1000 for tan function set in TrigLabModel
-        tanText = plusMinusStr + infinityWordStr;
-      }
+      //if( this.model.tan() === 1000 || this.model.tan() === -1000 ){      //limits of +/1000 for tan function set in TrigLabModel
+      //  tanText = plusMinusStr + infinityWordStr;
+      //}
       if( this.specialAnglesOnly ){
         this.setSpecialAngleTrigReadout();
       }else{

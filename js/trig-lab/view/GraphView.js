@@ -24,6 +24,7 @@ define( function( require ) {
     var Text = require( 'SCENERY/nodes/Text' );
     var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+    var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );
@@ -33,7 +34,7 @@ define( function( require ) {
     //var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
     //var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
     //var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
-    var pi = require( 'string!TRIG_LAB/pi' );
+    var piStr = require( 'string!TRIG_LAB/pi' );
 
     //constants
     var COS_COLOR = Util.COS_COLOR;
@@ -114,7 +115,7 @@ define( function( require ) {
         //Tic mark labels in radians
         this.tickMarkLabelsInRadians = new Node();
         var labelStr = '' ;
-        var labelStrings = [ '-4' + pi, '-3' + pi,  '-2' + pi, '-' + pi, pi, '2' + pi, '3' + pi, '4' + pi ];
+        var labelStrings = [ '-4' + piStr, '-3' + piStr,  '-2' + piStr, '-' + piStr, piStr, '2' + piStr, '3' + piStr, '4' + piStr ];
         var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
         for ( i = 0; i < xPositions.length; i++ ){
             labelStr = labelStrings[i];
@@ -142,8 +143,8 @@ define( function( require ) {
         var cosShape = new Shape();
         var sinShape = new Shape();
         var tanShape = new Shape();
-        var dx = wavelength/60;
-        var nbrOfPoints = (nbrOfWavelengths)*wavelength/dx;
+        var dx = wavelength/100;
+        var nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
         var xOrigin = 0;
         var yOrigin = 0;
         var xPos = xOrigin - nbrOfPoints*dx/2 ;
@@ -161,14 +162,21 @@ define( function( require ) {
         xPos = xOrigin - nbrOfPoints*dx/2;
         var tanValue = Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) ;
 
-        //draw tangent curve cut off at upper and lower limits
+        //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
+        dx = wavelength/600;
+        nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
+        var maxTanValue = 1.7;
+        var minTanValue = -1.4;
+
+        var yPos;
         for ( i = 0; i < nbrOfPoints; i++ ) {
             tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
-            if ( (tanValue < 2) && (tanValue > -2) ) {
-                tanShape.lineTo( xPos, yOrigin - this.amplitude * tanValue );
+            yPos = yOrigin - this.amplitude * tanValue;
+            if ( ( tanValue <= maxTanValue ) && ( tanValue > minTanValue ) ) {
+                tanShape.lineTo( xPos, yPos);
             }
             else {
-                tanShape.moveTo( xPos, yOrigin - this.amplitude * tanValue );
+                tanShape.moveTo( xPos, yPos );
             }
             xPos += dx;
         }
@@ -176,29 +184,101 @@ define( function( require ) {
         this.sinPath = new Path( sinShape, { stroke: SIN_COLOR, lineWidth: 3} );
         this.cosPath = new Path( cosShape, { stroke: COS_COLOR, lineWidth: 3} );
         this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3} );
-        this.singularityIndicator = new Line( 0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5] }  );
-        this.singularityIndicator.visible = true;
-        this.tanPath.addChild( this.singularityIndicator );
+
+
 
         //Add TriangleNode arrow heads at ends of curves
-        //TriangleNode( length, width, color, rotationInDegrees )
-        var leftEnd = -nbrOfWavelengths*wavelength/2; // xOrigin - nbrOfPoints*dx/2 ;
-        var rightEnd = nbrOfWavelengths*wavelength/2; //xOrigin + nbrOfPoints*dx/2 ;
+        //Arguments: TriangleNode( length, width, color, rotationInDegrees )
+        var pi = Math.PI;
+        var leftEnd = -( nbrOfWavelengths + 0.08 )*wavelength / 2;
+        var rightEnd = ( nbrOfWavelengths + 0.08 )*wavelength / 2;
+        var arrowL = 15;     //arrow head length
+        var arrowW = 8;      //arrow head width
 
-        var sinArrowLeft = new TriangleNode( 30, 20, SIN_COLOR, 135 );
-        var sinArrowRight = new TriangleNode( 30, 20, SIN_COLOR, -45 );
+        //Place arrows on sin curve
+        var slopeLeft = ( this.amplitude*2*pi/wavelength )*Math.cos( 2*pi*leftEnd/wavelength ) ;
+        var slopeRight = ( this.amplitude*2*pi/wavelength )*Math.cos( 2*pi*rightEnd/wavelength ) ;
+        var angleLeft = Math.atan( slopeLeft ) * 180 / pi;
+        var angleRight = Math.atan( slopeRight ) * 180 / pi;
+        var sinArrowLeft = new TriangleNode( arrowL, arrowW, SIN_COLOR, -angleLeft + 180  );
+        var sinArrowRight = new TriangleNode( arrowL, arrowW, SIN_COLOR, -angleRight );
         sinArrowLeft.x = leftEnd;
         sinArrowRight.x = rightEnd;
+        sinArrowLeft.y = -this.amplitude*Math.sin( 2*pi*leftEnd/wavelength );
+        sinArrowRight.y = -this.amplitude*Math.sin( 2*pi*rightEnd/wavelength );
         this.sinPath.children = [ sinArrowLeft, sinArrowRight ];
 
-        var cosArrowLeft = new TriangleNode( 12, 8, COS_COLOR, 180 );
-        var cosArrowRight = new TriangleNode( 12, 8, COS_COLOR, 0 );
+        //Place arrow heads on ends of cos curve
+        slopeLeft = ( this.amplitude*2*pi/wavelength )*Math.sin( 2*pi* leftEnd/wavelength);
+        slopeRight = ( this.amplitude*2*pi/wavelength )*Math.sin( 2*pi* rightEnd/wavelength) ;
+        angleLeft = Math.atan( slopeLeft ) * 180 / pi ;
+        angleRight = Math.atan( slopeRight ) * 180 / pi;
+        var cosArrowLeft = new TriangleNode( arrowL, arrowW, COS_COLOR, angleLeft + 180 );
+        var cosArrowRight = new TriangleNode( arrowL, arrowW, COS_COLOR, angleRight );
         cosArrowLeft.x = leftEnd;
         cosArrowRight.x = rightEnd;
-        cosArrowLeft.y = -this.amplitude;
-        cosArrowRight.y = -this.amplitude;
+        cosArrowLeft.y = -this.amplitude*Math.cos( 2*pi*leftEnd/wavelength );
+        cosArrowRight.y = -this.amplitude*Math.cos( 2*pi*rightEnd/wavelength );
         this.cosPath.children = [ cosArrowLeft, cosArrowRight ];
 
+        //Place arrow heads on ends of all tan curve segments. This is pretty tricky
+        var arrowHeads = []; //array of arrow heads
+
+        //x and y coordinates of ends of the 'origin' tan segment, in pixels.  'Origin' segment is the one centered on the origin
+        var xTanMax = Math.atan( maxTanValue )*wavelength/( 2*pi );
+        var yTanMax = -Math.tan( xTanMax*2*pi/wavelength )*this.amplitude;
+        var xTanMin = Math.atan( minTanValue )*wavelength/( 2*pi );
+        var yTanMin = -Math.tan( xTanMin*2*pi/wavelength )*this.amplitude;
+        //console.log( 'xTanMax: ' + xTanMax + '    xTanMin:' + xTanMin );
+        var xPosMax;
+        var xPosMin;
+        var yPosMax;
+        var yPosMin;
+        for ( i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ) {
+            xPosMax = i * wavelength/2 + xTanMax;
+            xPosMin = i * wavelength/2 + xTanMin;
+            yPosMax = -Math.tan( xPosMax*2*pi/wavelength )*this.amplitude;
+            yPosMin = -Math.tan( xPosMin*2*pi/wavelength )*this.amplitude;
+            var v1 = new Vector2( xPosMax, yPosMax );
+            arrowHeads.push( new Vector2( xPosMax, yPosMax )) ;
+            arrowHeads.push( new Vector2( xPosMin, yPosMin )) ;
+        }
+        //The left and right ends are special cases.  Remove and replace the ends
+
+        var yLeftEnd = -Math.tan( leftEnd*2*pi/wavelength )*this.amplitude;
+        var yRightEnd = -Math.tan( rightEnd*2*pi/wavelength )*this.amplitude;
+        //arrowHeads.push( new Vector2( leftEnd, yLeftEnd ) );
+        //arrowHeads.push( new Vector2( rightEnd, yRightEnd ) );
+        arrowHeads.splice( arrowHeads.length - 2, 1, new Vector2( rightEnd, yRightEnd ) );
+        arrowHeads.splice( 1, 1, new Vector2( leftEnd, yLeftEnd ) );
+        //arrowHeads.push( new Circle( 5, { x: leftEnd, y: yLeftEnd, fill: 'green'}) );
+        //arrowHeads.push( new Circle( 5, { x: rightEnd, y: yRightEnd, fill: 'green'}) );
+        var triangleNode;
+        var rotationAngle;
+        for( i = 0; i < arrowHeads.length; i++ ){
+            var xPix = arrowHeads[i].x;
+            var yPix = arrowHeads[i].y;
+            //console.log( 'xC = ' + xC + '   yC = ' + yC );
+            var xTan = xPix*2*pi/wavelength;
+            //Derivative of tan is 1 + tan^2
+            var tanSlope = ( this.amplitude*2*pi/wavelength )*( 1 + Math.tan( xTan )*Math.tan( xTan ) );
+            rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
+            if ( i % 2 == 0 ) {
+                //DO NOTHING
+            } else {
+                rotationAngle += 180;
+            }
+
+            triangleNode = new TriangleNode( arrowL, arrowW, TAN_COLOR, rotationAngle )
+            this.tanPath.addChild( triangleNode );
+            triangleNode.x = xPix;
+            triangleNode.y = yPix + 1;
+        }//end for loop
+
+        //SingularityIndicator is a dashed vertical line showing singularity in tan function at angle = +/- 90 deg
+        this.singularityIndicator = new Line( 0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5] }  );
+        this.singularityIndicator.visible = false;
+        this.tanPath.addChild( this.singularityIndicator );
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
@@ -272,8 +352,10 @@ define( function( require ) {
         } );
 
         model.singularityProperty.link( function( singularity ) {
-            graphView.singularityIndicator.visible = singularity;
-            graphView.indicatorLine.visible = !singularity;
+            if( graphView.trigFunction === 'tan' ){
+                graphView.singularityIndicator.visible = singularity;
+                graphView.indicatorLine.visible = !singularity;
+            }
         } );
 
     }//end constructor
@@ -281,6 +363,7 @@ define( function( require ) {
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
               var angle = this.model.getAngleInRadians();
+              console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
               var cos = Math.cos( angle );
               var sin = Math.sin( angle );
               var tan = Math.tan( angle );

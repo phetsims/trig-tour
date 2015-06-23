@@ -165,8 +165,8 @@ define( function( require ) {
         //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
         dx = wavelength/600;
         nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
-        var maxTanValue = 1.7;
-        var minTanValue = -1.4;
+        var maxTanValue = 1.6;
+        var minTanValue = -1.1;
 
         var yPos;
         for ( i = 0; i < nbrOfPoints; i++ ) {
@@ -363,9 +363,9 @@ define( function( require ) {
           setIndicatorLine: function() {
               var angle = this.model.getAngleInRadians();
               console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
-              var cos = Math.cos( angle );
-              var sin = Math.sin( angle );
-              var tan = Math.tan( angle );
+              var cos = this.model.cos(); //Math.cos( angle );
+              var sin = this.model.sin(); //Math.sin( angle );
+              var tan = this.model.tan(); //Math.tan( angle );
               if ( this.trigFunction === 'cos' ) {
                   this.indicatorLine.setEndPoint( cos * this.amplitude );
                   this.indicatorLine.setColor( COS_COLOR );

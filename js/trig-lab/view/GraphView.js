@@ -24,7 +24,7 @@ define( function( require ) {
     var Text = require( 'SCENERY/nodes/Text' );
     var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
-    //var Vector2 = require( 'DOT/Vector2' );
+    var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );

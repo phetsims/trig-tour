@@ -74,8 +74,10 @@ define( function( require ) {
 
         //draw x-, y-axes
         var xAxisLength = width;
-        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, { tailWidth: 1, fill: LINE_COLOR });  //tailX, tailY, tipX, tipY, options
-        var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude, { tailWidth: 1, fill: LINE_COLOR } );
+        var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, //tailX, tailY, tipX, tipY, options
+                { tailWidth: 1, fill: LINE_COLOR, headHeight: 12, headWidth: 8  });
+        var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude,
+                { tailWidth: 1, fill: LINE_COLOR, headHeight: 12, headWidth: 8  } );
 
         //draw tic marks for x-, y-axes
         var ticLength = 5;
@@ -362,7 +364,7 @@ define( function( require ) {
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
               var angle = this.model.getAngleInRadians();
-              console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
+              //console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
               var cos = this.model.cos(); //Math.cos( angle );
               var sin = this.model.sin(); //Math.sin( angle );
               var tan = this.model.tan(); //Math.tan( angle );

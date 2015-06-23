@@ -84,7 +84,7 @@ define( function( require ) {
             var scaleFactor;
             if( this.vertical ){
                 if( length > this.criticalFactor*this.arrowHeadLength ){   //if arrow long enough
-                    console.log( 'setEndPoint Vertical large called. Displacement is ' + displacement + '  sign is ' + sign );
+                    //console.log( 'setEndPoint Vertical large called. Displacement is ' + displacement + '  sign is ' + sign );
                     this.drawArrowHead( this.hL );
                     this.line.setPoint2( 0, -displacement + sign*this.hL );
                     this.arrowHead.y = -displacement;

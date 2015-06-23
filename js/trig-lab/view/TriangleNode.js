@@ -40,10 +40,12 @@ define( function( require ) {
     var triangleShape = new Shape();
     var hW = this.tWidth;     //arrow head width
     var hL = this.tLength;    //arrow head length
+    //draw horizontal arrow pointing right
     triangleShape.moveTo( 0, 0 ).lineTo( 0, hW/2 ).lineTo( hL, 0 ).lineTo( 0, -hW/2 ).close();
     var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: this.color });
     //this.triangleNode.addChild( trianglePath );
-    this.addChild( trianglePath );  //WHY doesn't this work
+    this.addChild( trianglePath );
+    trianglePath.x = -1;//reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 
   }//end constuctor
 

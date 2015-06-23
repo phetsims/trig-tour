@@ -24,7 +24,7 @@ define( function( require ) {
     var Text = require( 'SCENERY/nodes/Text' );
     var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
-    var Vector2 = require( 'DOT/Vector2' );
+    //var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var theta = require( 'string!TRIG_LAB/theta' );
@@ -226,9 +226,9 @@ define( function( require ) {
 
         //x and y coordinates of ends of the 'origin' tan segment, in pixels.  'Origin' segment is the one centered on the origin
         var xTanMax = Math.atan( maxTanValue )*wavelength/( 2*pi );
-        var yTanMax = -Math.tan( xTanMax*2*pi/wavelength )*this.amplitude;
+        //var yTanMax = -Math.tan( xTanMax*2*pi/wavelength )*this.amplitude;
         var xTanMin = Math.atan( minTanValue )*wavelength/( 2*pi );
-        var yTanMin = -Math.tan( xTanMin*2*pi/wavelength )*this.amplitude;
+        //var yTanMin = -Math.tan( xTanMin*2*pi/wavelength )*this.amplitude;
         //console.log( 'xTanMax: ' + xTanMax + '    xTanMin:' + xTanMin );
         var xPosMax;
         var xPosMin;
@@ -239,7 +239,6 @@ define( function( require ) {
             xPosMin = i * wavelength/2 + xTanMin;
             yPosMax = -Math.tan( xPosMax*2*pi/wavelength )*this.amplitude;
             yPosMin = -Math.tan( xPosMin*2*pi/wavelength )*this.amplitude;
-            var v1 = new Vector2( xPosMax, yPosMax );
             arrowHeads.push( new Vector2( xPosMax, yPosMax )) ;
             arrowHeads.push( new Vector2( xPosMin, yPosMin )) ;
         }
@@ -263,13 +262,13 @@ define( function( require ) {
             //Derivative of tan is 1 + tan^2
             var tanSlope = ( this.amplitude*2*pi/wavelength )*( 1 + Math.tan( xTan )*Math.tan( xTan ) );
             rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
-            if ( i % 2 == 0 ) {
+            if ( i % 2 === 0 ) {
                 //DO NOTHING
             } else {
                 rotationAngle += 180;
             }
 
-            triangleNode = new TriangleNode( arrowL, arrowW, TAN_COLOR, rotationAngle )
+            triangleNode = new TriangleNode( arrowL, arrowW, TAN_COLOR, rotationAngle );
             this.tanPath.addChild( triangleNode );
             triangleNode.x = xPix;
             triangleNode.y = yPix + 1;

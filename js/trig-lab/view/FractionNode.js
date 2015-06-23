@@ -11,12 +11,12 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   //string
-  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );  //needed for setting large font for infinity symbol
+  //var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );  //needed for setting large font for infinity symbol
 
   /**
    * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:

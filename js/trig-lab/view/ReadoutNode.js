@@ -29,7 +29,7 @@ define( function( require ) {
   var cosStr = require( 'string!TRIG_LAB/cos' );
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
-  var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
+  //var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
   var pi = require( 'string!TRIG_LAB/pi' );
   var plusMinusStr =  require( 'string!TRIG_LAB/plusMinus' );
   var radsStr = require( 'string!TRIG_LAB/rads' );

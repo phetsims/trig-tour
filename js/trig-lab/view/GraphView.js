@@ -254,6 +254,7 @@ define( function( require ) {
             graphView.singularityIndicator.visible = singularity;
             graphView.indicatorLine.visible = !singularity;
         } );
+
     }//end constructor
 
     return inherit( Node, GraphView, {

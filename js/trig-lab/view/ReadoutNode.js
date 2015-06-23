@@ -158,6 +158,16 @@ define( function( require ) {
     this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
     this.tanReadoutFraction.visible = false;
 
+    //Special 
+    this.plusMinusInfinityNode = new Node();
+    var fontInfo = ;
+    var plusMinusText = new Text( plusMinusStr, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
+    var infinityText = new Text( infinitySymbolStr, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR });
+    this.plusMinusInfinityNode.childre = [ plusMinusText, infinityText ];
+    plusMinusText.left = 0;
+    infinityText.left = plusMinusText.right;
+    infinityText.centerY = 6;
+
     //trig row layout
     sinFraction.left = sinLabel.right;
     cosFraction.left = cosLabel.right;

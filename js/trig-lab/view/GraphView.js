@@ -180,15 +180,24 @@ define( function( require ) {
         this.singularityIndicator.visible = true;
         this.tanPath.addChild( this.singularityIndicator );
 
-        //add TriangleNode arrow heads at ends of curves
+        //Add TriangleNode arrow heads at ends of curves
         //TriangleNode( length, width, color, rotationInDegrees )
-        var leftEnd = xOrigin - nbrOfPoints*dx/2 ;
-        var rightEnd = xOrigin + nbrOfPoints*dx/2 ;
-        var sinArrowLeft = new TriangleNode( 30, 20, SIN_COLOR, 45 );
-        var sinArrowRight = new TriangleNode( 30, 20, SIN_COLOR, -135 );
+        var leftEnd = -nbrOfWavelengths*wavelength/2; // xOrigin - nbrOfPoints*dx/2 ;
+        var rightEnd = nbrOfWavelengths*wavelength/2; //xOrigin + nbrOfPoints*dx/2 ;
+
+        var sinArrowLeft = new TriangleNode( 30, 20, SIN_COLOR, 135 );
+        var sinArrowRight = new TriangleNode( 30, 20, SIN_COLOR, -45 );
         sinArrowLeft.x = leftEnd;
         sinArrowRight.x = rightEnd;
         this.sinPath.children = [ sinArrowLeft, sinArrowRight ];
+
+        var cosArrowLeft = new TriangleNode( 12, 8, COS_COLOR, 180 );
+        var cosArrowRight = new TriangleNode( 12, 8, COS_COLOR, 0 );
+        cosArrowLeft.x = leftEnd;
+        cosArrowRight.x = rightEnd;
+        cosArrowLeft.y = -this.amplitude;
+        cosArrowRight.y = -this.amplitude;
+        this.cosPath.children = [ cosArrowLeft, cosArrowRight ];
 
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)

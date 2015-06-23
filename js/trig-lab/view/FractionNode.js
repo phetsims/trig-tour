@@ -42,7 +42,6 @@ define( function( require ) {
 
     this.numerator = numerator;
     this.denominator = denominator;
-    this.settingFontLarge = false;  //when infinity symbol is displayed, need to use large font
 
     this.setFraction( );   //create the fraction
 
@@ -56,10 +55,7 @@ define( function( require ) {
       this.denominator = denominator ;
       this.setFraction();
     },
-    //need to temporarily set large font for infinity symbol
-    setNumeratorFontLarge: function( ){
-      this.settingFontLarge = true;
-    },
+
     setFraction: function( ){
       var minusSign;                    //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative
@@ -90,12 +86,6 @@ define( function( require ) {
 
       this.numeratorText = new Text( this.numerator, fontInfo );
       this.denominatorText = new Text( this.denominator, fontInfo );
-
-      //hack to handle large font for infinity symbol
-      if( this.settingFontLarge ){
-        this.numeratorText.font = new PhetFont( 35 );
-        this.settingFontLarge = false;
-      }
 
       if(( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative ) ){
         minusSignNeeded = true;
@@ -141,9 +131,9 @@ define( function( require ) {
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[i].visible = false;
         }
-        //if ( this.negative ) { this.numerator = '-' + this.numerator }
+
         this.fractionNode.children = [ minusSign, sqRtPath, this.numeratorText ];
-        //this.fractionNode.addChild( new Text( this.numerator, fontInfo ) );
+
         if( minusSignNeeded ){
           minusSign.left = 0;
           this.numeratorText.left = minusSign.right + 4;
@@ -155,10 +145,6 @@ define( function( require ) {
         if( squareRootSignNeeded && !minusSignNeeded ){
           sqRtPath.left = 0;
           this.numeratorText.centerX = sqRtPath.centerX + 3;
-        }
-        //hack to handle alignment of large font infinity symbol
-        if( this.numeratorText.text === infinitySymbolStr ){
-          this.numeratorText.centerY = -6;
         }
 
         return; //have to break out

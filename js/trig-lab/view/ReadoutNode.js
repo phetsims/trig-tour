@@ -155,18 +155,18 @@ define( function( require ) {
     //either ReadoutText or FractionHolder2 visible, FractionHolder2 visible in Special Angles mode
     this.sinRow = new Node( {children: [ sinLabel, sinFraction, equalText1, this.sinReadoutText, this.sinFractionHolder2 ]});
     this.cosRow = new Node( {children: [ cosLabel, cosFraction, equalText2, this.cosReadoutText, this.cosFractionHolder2 ]});
-    this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
+    //this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction ]});
     this.tanReadoutFraction.visible = false;
 
-    //Special 
-    this.plusMinusInfinityNode = new Node();
-    var fontInfo = ;
+    //Special symbol node to show +/- infinity value of tan when at singularity
+    this.plusMinusInfinityNode = new Node(); //Text( 'TESTING', { font: DISPLAY_FONT, fill: TEXT_COLOR } ); //
     var plusMinusText = new Text( plusMinusStr, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
     var infinityText = new Text( infinitySymbolStr, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR });
-    this.plusMinusInfinityNode.childre = [ plusMinusText, infinityText ];
+    this.plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
     plusMinusText.left = 0;
     infinityText.left = plusMinusText.right;
-    infinityText.centerY = 6;
+    infinityText.centerY = -5;
+    this.tanRow = new Node( {children: [ tanLabel, tanFraction, equalText3, this.tanReadoutText, this.tanReadoutFraction, this.plusMinusInfinityNode ]});
 
     //trig row layout
     sinFraction.left = sinLabel.right;
@@ -182,6 +182,7 @@ define( function( require ) {
     this.sinFractionHolder2.left = equalText1.right + space ;
     this.cosFractionHolder2.left = equalText2.right + space ;
     this.tanReadoutFraction.left = equalText3.right + space ;
+    this.plusMinusInfinityNode.left = equalText3.right ;
 
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
@@ -260,7 +261,7 @@ define( function( require ) {
       [ 'q' + 3, 3 ],
       [ 1, '' ],
       [ 'q' + 3, '' ],
-      [ plusMinusStr + infinitySymbolStr, '' ],
+      [ ' ', ''], //leave blank for display of plusMinusInfinityNode
       [ '-q' + 3, '' ],
       [ -1, '' ],
       [ '-q' + 3, 3 ],
@@ -268,7 +269,7 @@ define( function( require ) {
       [ 'q' + 3, 3 ],
       [ 1, '' ],
       [ 'q' + 3, '' ],
-      [ plusMinusStr + infinitySymbolStr, '' ],
+      [ ' ', ''], //leave blank for display of plusMinusInfinityNode
       [ '-q' + 3, '' ],
       [ -1, '' ],
       [ '-q' + 3, 3 ],
@@ -303,6 +304,12 @@ define( function( require ) {
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
     } ); //end model.angleProperty.link
+
+    model.singularityProperty.link( function( singularity ) {
+      readoutNode.plusMinusInfinityNode.visible = singularity;
+      //debugger;
+    } );
+
   }//end constructor
 
 

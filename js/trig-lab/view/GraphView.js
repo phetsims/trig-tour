@@ -22,6 +22,7 @@ define( function( require ) {
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
+    var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
     var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
 
     //strings
@@ -178,6 +179,17 @@ define( function( require ) {
         this.singularityIndicator = new Line( 0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5] }  );
         this.singularityIndicator.visible = true;
         this.tanPath.addChild( this.singularityIndicator );
+
+        //add TriangleNode arrow heads at ends of curves
+        //TriangleNode( length, width, color, rotationInDegrees )
+        var leftEnd = xOrigin - nbrOfPoints*dx/2 ;
+        var rightEnd = xOrigin + nbrOfPoints*dx/2 ;
+        var sinArrowLeft = new TriangleNode( 30, 20, SIN_COLOR, 45 );
+        var sinArrowRight = new TriangleNode( 30, 20, SIN_COLOR, -135 );
+        sinArrowLeft.x = leftEnd;
+        sinArrowRight.x = rightEnd;
+        this.sinPath.children = [ sinArrowLeft, sinArrowRight ];
+
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle

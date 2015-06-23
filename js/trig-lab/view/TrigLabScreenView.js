@@ -62,6 +62,13 @@ define( function ( require ) {
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
+            if( trigLabModel.singularity ){
+                if( graph === 'cos' || graph === 'sin'){
+                    graphView.indicatorLine.visible = true;
+                }else{
+                    graphView.indicatorLine.visible = false;
+                }
+            }
             graphView.setIndicatorLine();
             //visibility of trig function readout
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );

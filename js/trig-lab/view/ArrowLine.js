@@ -86,18 +86,18 @@ define( function( require ) {
                 if( length > this.criticalFactor*this.arrowHeadLength ){   //if arrow long enough
                     //console.log( 'setEndPoint Vertical large called. Displacement is ' + displacement + '  sign is ' + sign );
                     this.drawArrowHead( this.hL );
-                    this.line.setPoint2( 0, -displacement + sign*this.hL );
+                    this.line.setPoint2( 0, -displacement + 0.9*sign*this.hL );
                     this.arrowHead.y = -displacement;
                 }else{    //if too small for arrowHead to fit
                     scaleFactor = Math.max( 0.1, length/( this.criticalFactor*this.arrowHeadLength ));
                     this.drawArrowHead( this.hL*scaleFactor );
                     this.arrowHead.y = -displacement;
-                    this.line.setPoint2( 0, -displacement + sign*this.arrowHead.height );
+                    this.line.setPoint2( 0, -displacement + 0.9*sign*this.arrowHead.height );
                 }
             }else{  //if horizontal
                 if( length > this.criticalFactor*this.arrowHeadLength ){    //if arrow long enough
                     this.drawArrowHead( this.hL );
-                    this.line.setPoint2( displacement - sign*this.hL, 0 );
+                    this.line.setPoint2( displacement - 0.9*sign*this.hL, 0 );
                     this.arrowHead.x = displacement;
                 }else{  //if too small for arrowHead to fit
                     scaleFactor = Math.max( 0.1, length/( this.criticalFactor*this.arrowHeadLength ));
@@ -105,7 +105,7 @@ define( function( require ) {
                     //console.log( 'H scaleFactor = ' + scaleFactor );
                     this.arrowHead.x = displacement;
                     //console.log( 'H arrow width = ' + this.arrowHead.width );
-                    this.line.setPoint2( displacement - sign*this.arrowHead.width, 0 );
+                    this.line.setPoint2( displacement - 0.9*sign*this.arrowHead.width, 0 );
                     //debugger;
                 }
 

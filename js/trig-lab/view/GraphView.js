@@ -276,7 +276,7 @@ define( function( require ) {
             triangleNode.y = yPix + 1;
         }//end for loop
 
-        //SingularityIndicator is a dashed vertical line showing singularity in tan function at angle = +/- 90 deg
+        //SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
         this.singularityIndicator = new Line( 0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5] }  );
         this.singularityIndicator.visible = false;
         this.tanPath.addChild( this.singularityIndicator );

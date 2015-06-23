@@ -363,7 +363,7 @@ define( function( require ) {
 
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
-              var angle = this.model.getAngleInRadians();
+              //var angle = this.model.getAngleInRadians();
               //console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
               var cos = this.model.cos(); //Math.cos( angle );
               var sin = this.model.sin(); //Math.sin( angle );

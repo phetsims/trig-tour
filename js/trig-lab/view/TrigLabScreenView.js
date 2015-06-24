@@ -49,6 +49,7 @@ define( function ( require ) {
         //console.log( 'layoutBounds = '+this.layoutBounds );
 
         viewProperties.graphProperty.link( function( graph ) {
+            console.log('graphProperty called. graph = ' + graph);
             //set visibility of horizontal and vertial arrows on xyR triangle on unit circle
             unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
             unitCircleView.hLine.visible = ( graph === 'sin' );
@@ -62,13 +63,14 @@ define( function ( require ) {
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
-            if( trigLabModel.singularity ){
-                if( graph === 'cos' || graph === 'sin'){
-                    graphView.indicatorLine.visible = true;
-                }else{
-                    graphView.indicatorLine.visible = false;
-                }
-            }
+            debugger;
+            //if( trigLabModel.singularity ){
+            //    if( graph === 'cos' || graph === 'sin'){
+            //        graphView.indicatorLine.visible = true;
+            //    }else{
+            //        graphView.indicatorLine.visible = false;
+            //    }
+            //}
             graphView.setIndicatorLine();
             //visibility of trig function readout
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );

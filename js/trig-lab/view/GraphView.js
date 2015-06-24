@@ -364,26 +364,26 @@ define( function( require ) {
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
               //var angle = this.model.getAngleInRadians();
-              //console.log ('GraphView.setIndicator called. angleInDeg = ' + this.model.getAngleInDegrees() );
-              var cos = this.model.cos(); //Math.cos( angle );
-              var sin = this.model.sin(); //Math.sin( angle );
-              var tan = this.model.tan(); //Math.tan( angle );
+              console.log ('GraphView.setIndicator called. trigFunction = ' + this.trigFunction );
+              var cosNow = this.model.cos(); //Math.cos( angle );
+              var sinNow = this.model.sin(); //Math.sin( angle );
+              var tanNow = this.model.tan(); //Math.tan( angle );
               if ( this.trigFunction === 'cos' ) {
-                  this.indicatorLine.setEndPoint( cos * this.amplitude );
+                  this.indicatorLine.setEndPoint( cosNow * this.amplitude );
                   this.indicatorLine.setColor( COS_COLOR );
-                  this.redDotHandle.y = -cos * this.amplitude;
+                  this.redDotHandle.y = -cosNow * this.amplitude;
               }
               else if ( this.trigFunction === 'sin' ) {
-                  this.indicatorLine.setEndPoint( sin * this.amplitude );
+                  this.indicatorLine.setEndPoint( sinNow * this.amplitude );
                   this.indicatorLine.setColor( SIN_COLOR );
-                  this.redDotHandle.y = -sin * this.amplitude;
+                  this.redDotHandle.y = -sinNow * this.amplitude;
               }
               else if ( this.trigFunction === 'tan' ) {
-                  this.indicatorLine.setEndPoint( tan * this.amplitude );
+                  this.indicatorLine.setEndPoint( tanNow * this.amplitude );
                   this.indicatorLine.setColor( TAN_COLOR );
-                  this.redDotHandle.y = -tan * this.amplitude;
+                  this.redDotHandle.y = -tanNow * this.amplitude;
               }
-              else { console.log( 'ERROR in GraphView.setIndicatorLine()' ); }
+              else { console.log( 'ERROR in GraphView.setIndicatorLine()  this.trigFunction = ' + this.trigFunction ); }
           }
       }
     );

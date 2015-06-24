@@ -98,7 +98,8 @@ define( function( require ) {
     var sinFractionHolder1 = new Node();    //parent holder for sinReadoutFraction; sinFractionHolder2 defined below;
     cosFractionHolder1.addChild( this.cosReadoutFraction );
     sinFractionHolder1.addChild( this.sinReadoutFraction );
-    //Assumble pieces into ( cos fraction value, sin fraction value )
+
+    //Assemble pieces into '( cos fraction value, sin fraction value )'
     this.coordinatesHBox = new HBox( {
       children: [
         leftParensText,
@@ -190,8 +191,8 @@ define( function( require ) {
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
-    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, degreesStr, degText, myRadioButtonOptions );
-    var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, radiansStr, radText, myRadioButtonOptions );
+    var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, 'degrees', degText, myRadioButtonOptions );
+    var radiansRadioButton = new AquaRadioButton( properties.angleUnitsProperty, 'radians', radText, myRadioButtonOptions );
 
     //Arrays needed for display of special angles
     //Special angles in degrees

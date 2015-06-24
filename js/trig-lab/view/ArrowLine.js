@@ -71,6 +71,7 @@ define( function( require ) {
             this.line.stroke = color;
             this.arrowHead.fill = color;
         },
+        //|displacement| is length of arrow, displacement is + or -, depending on direction of arrow
         setEndPoint: function( displacement ){
             //console.log( 'vertical = ' + this.vertical + '   displacement = ' + displacement );
             var sign = 0;  //+1, -1, or zero depending on sign of displacement

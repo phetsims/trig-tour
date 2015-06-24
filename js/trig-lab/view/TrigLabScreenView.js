@@ -64,13 +64,15 @@ define( function ( require ) {
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             debugger;
-            //if( trigLabModel.singularity ){
-            //    if( graph === 'cos' || graph === 'sin'){
-            //        graphView.indicatorLine.visible = true;
-            //    }else{
-            //        graphView.indicatorLine.visible = false;
-            //    }
-            //}
+            if( trigLabModel.singularity ){
+                if( graph === 'cos' || graph === 'sin'){
+                    graphView.indicatorLine.visible = true;
+                    graphView.singularityIndicator.visible = false;
+                }else{
+                    graphView.indicatorLine.visible = false;
+                    graphView.singularityIndicator.visible = true;
+                }
+            }
             graphView.setIndicatorLine();
             //visibility of trig function readout
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );

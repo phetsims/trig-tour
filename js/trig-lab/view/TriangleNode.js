@@ -25,7 +25,7 @@ define( function( require ) {
    * @constructor
    */
   function TriangleNode( length, width, color, rotationInDegrees ) {
-    console.log( 'TriangleNode called.' );
+    //console.log( 'TriangleNode called.' );
     this.triangleNode = this;
 
     // Call the super constructor

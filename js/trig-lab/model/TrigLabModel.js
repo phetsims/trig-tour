@@ -93,7 +93,6 @@ define( function( require ) {
         }else{
           this.nbrFullTurns = this.fullTurnCount - 1;
         }
-
       }
       this.smallAngle = angleInRads - this.nbrFullTurns*2*Math.PI;
       remainderAngle = angleInRads%( Math.PI );
@@ -136,6 +135,52 @@ define( function( require ) {
         }
       }//end for
       this.setAngle( nearestSpecialAngleInRads );
-    }//end setSpecialAngle()
+    },//end setSpecialAngle()
+    //takes small angle in rads and sets current angle to nearest special angle in rads
+    getNearestSpecialAngle: function ( smallAngle ){   //smallAngle in rads
+      var smallAngleInDegs = smallAngle*180/Math.PI;
+      var nearestSpecialAngleInRads = 0;
+      var angles = [ -150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
+      var borders = [ -165, -142.5, -127.5, -105, -75, -52.5, -37.5, -15, 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165 ] ;
+      for ( var i = 0; i < angles.length; i++ ){
+        if( smallAngleInDegs >= borders[i] && smallAngleInDegs < borders[i + 1] ){
+          nearestSpecialAngleInRads = angles[i]*Math.PI/180;
+        }
+        //Must deal with 180 deg angle as a special case.
+        if( smallAngleInDegs >= 165 || smallAngleInDegs < -165 ){
+          nearestSpecialAngleInRads = Math.PI;
+        }
+      }//end for
+      return nearestSpecialAngleInRads ;
+    },//end getNearestSpecialAngle()
+    setNearestSpecialAngle: function( fullAngle ) {   //full angle in radians
+      var remainderAngle = fullAngle % ( 2 * Math.PI );
+      var fullTurnsAngle = fullAngle - remainderAngle;
+      var remainderInDegrees = remainderAngle * 180 / Math.PI;
+      //console.log( 'remainderInDegrees = ' + remainderInDegrees );
+      var nearestSpecialAngleInDegrees = 0;
+      var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
+      var borders = [ 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165, 195, 217.5, 232.5, 255, 285, 307.5, 322.5, 345 ];
+      for ( var i = 0; i <= angles.length - 1; i++ ) {
+        if ( remainderInDegrees >= borders[ i ] && remainderInDegrees < borders[ i + 1 ] ) {
+          nearestSpecialAngleInDegrees = angles[ i + 1 ];// * Math.PI / 180;
+        }
+        if ( remainderInDegrees <= -borders[ i ] && remainderInDegrees > -borders[ i + 1 ] ) {
+          nearestSpecialAngleInDegrees = -angles[ i + 1 ];// * Math.PI / 180;
+        }
+      }
+      //Must deal with 0 deg and +/-360 deg angle as special cases.
+      if ( remainderInDegrees < 15 && remainderInDegrees >= -15 ) {
+        nearestSpecialAngleInDegrees = 0;
+      }else if( remainderInDegrees >= 345 ){
+        nearestSpecialAngleInDegrees = 360;
+      }else if( remainderInDegrees < -345 ){
+        nearestSpecialAngleInDegrees = -360;
+      }
+      //return nearestSpecialAngleInDegrees;
+      var nearestSpecialAngleInRadians = nearestSpecialAngleInDegrees*Math.PI/180;
+      var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
+      this.setFullAngleInRadians( nearestFullAngle );
+    }//end returnNearestSpecialAngle
   } );
 } );

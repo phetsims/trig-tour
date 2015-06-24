@@ -319,7 +319,7 @@ define( function( require ) {
 
                     drag: function ( e ) {
                         var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var fullAngle = (2*Math.PI*position.x / wavelength);   //in radians
+                        var fullAngle = ( 2*Math.PI*position.x / wavelength );   //in radians
 
                         //Need small angle (-pi < angle < pi ) to set special angle
                         var smallAngleInRadians = fullAngle%(2*Math.PI);
@@ -335,7 +335,8 @@ define( function( require ) {
                         if( !model.specialAnglesMode ){
                             model.setFullAngleInRadians( fullAngle );
                         }else{
-                            model.setSpecialAngle( smallAngleInRadians );
+                            model.setNearestSpecialAngle( fullAngle );
+                            //console.log( 'full ang = ' + model.getAngleInDegrees() );
                         }
                     }
                 } ) );
@@ -364,10 +365,10 @@ define( function( require ) {
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
               //var angle = this.model.getAngleInRadians();
-              console.log ('GraphView.setIndicator called. trigFunction = ' + this.trigFunction );
-              var cosNow = this.model.cos(); //Math.cos( angle );
-              var sinNow = this.model.sin(); //Math.sin( angle );
-              var tanNow = this.model.tan(); //Math.tan( angle );
+              //console.log ('GraphView.setIndicator called. trigFunction = ' + this.trigFunction );
+              var cosNow = this.model.cos();
+              var sinNow = this.model.sin();
+              var tanNow = this.model.tan();
               if ( this.trigFunction === 'cos' ) {
                   this.indicatorLine.setEndPoint( cosNow * this.amplitude );
                   this.indicatorLine.setColor( COS_COLOR );
@@ -383,7 +384,7 @@ define( function( require ) {
                   this.indicatorLine.setColor( TAN_COLOR );
                   this.redDotHandle.y = -tanNow * this.amplitude;
               }
-              else { console.log( 'ERROR in GraphView.setIndicatorLine()  this.trigFunction = ' + this.trigFunction ); }
+              else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
           }
       }
     );

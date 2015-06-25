@@ -59,7 +59,7 @@ define( function( require ) {
      * @constructor
      */
 
-    function GraphView( model, height, width  ) {      //height and width of this view
+    function GraphView( model, height, width  ) {      //height and width of this view node
 
         var graphView = this;
         this.model = model;
@@ -69,7 +69,8 @@ define( function( require ) {
         // Call the super constructor
         Node.call( graphView );
 
-        var wavelength = (width - 2*25)/4;  //wavelength of sinusoidal curve in pixels
+        var marginWidth = 25;   //distance in pixels between edge of Node and edge of nearest full wavelength
+        var wavelength = (width - 2*marginWidth)/4;  //wavelength of sinusoidal curve in pixels
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
 
@@ -135,7 +136,7 @@ define( function( require ) {
         //Axes labels
         var fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaLabel = new Text( theta, fontInfo );
-        thetaLabel.left = this.axesNode.right + 10; //= xAxis.right;
+        thetaLabel.left = this.axesNode.right + 5; //= xAxis.right;
         thetaLabel.centerY = xAxis.centerY;
         this.cosThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
         this.sinThetaLabel = new HTMLText( sinStr + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });

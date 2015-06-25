@@ -38,7 +38,7 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
     tan: function () {
-      //Cut off value at =/-1000 or else Safari Browser won't display properly
+      //Cut off value at +/-1000 or else Safari Browser won't display properly
       var tanValue = Math.tan( this.angle );
       this.singularity = false;
       var returnValue;
@@ -172,7 +172,7 @@ define( function( require ) {
           nearestSpecialAngleInDegrees = -angles[ i + 1 ];// * Math.PI / 180;
         }
       }
-      //Must deal with 0 deg and +/-360 deg angle as special cases.
+      //Must handle 0 deg and +/-360 deg angle as special cases.
       if ( remainderInDegrees < 15 && remainderInDegrees >= -15 ) {
         nearestSpecialAngleInDegrees = 0;
       }else if( remainderInDegrees >= 345 ){
@@ -180,10 +180,9 @@ define( function( require ) {
       }else if( remainderInDegrees < -345 ){
         nearestSpecialAngleInDegrees = -360;
       }
-      //return nearestSpecialAngleInDegrees;
       var nearestSpecialAngleInRadians = nearestSpecialAngleInDegrees*Math.PI/180;
       var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );
-    }//end returnNearestSpecialAngle
+    }//end setNearestSpecialAngle
   } );
 } );

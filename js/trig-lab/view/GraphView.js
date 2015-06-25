@@ -18,6 +18,7 @@ define( function( require ) {
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
     var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
@@ -73,6 +74,11 @@ define( function( require ) {
         var wavelength = (width - 2*marginWidth)/4;  //wavelength of sinusoidal curve in pixels
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
+
+        //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        var bHeight = 1.2*height;
+        var bWidth = 1.05*width;
+        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, {fill: '#efe'} );
 
         //draw x-, y-axes
         var xAxisLength = width;
@@ -170,7 +176,7 @@ define( function( require ) {
         //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
         dx = wavelength/600;
         nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
-        var maxTanValue = 1.6;
+        var maxTanValue = 1.4;
         var minTanValue = -1.1;
 
         var yPos;
@@ -294,6 +300,7 @@ define( function( require ) {
 
         //Order children views
         graphView.children = [
+            background,
             this.axesNode,
             thetaLabel,
             this.cosThetaLabel,
@@ -352,6 +359,12 @@ define( function( require ) {
         model.angleProperty.link( function( angle ) {
             var xPos = angle/(2*Math.PI)*wavelength;
             graphView.indicatorLine.x = xPos;
+            var tanSize = Math.abs( model.tan() );
+            if( graphView.trigFunction === 'tan' && tanSize > 1.5  ){
+                graphView.indicatorLine.setLineWidth( Math.max( 2, 5 - 0.1*tanSize ) );
+            }else{
+                graphView.indicatorLine.setLineWidth( 5 );
+            }
             graphView.singularityIndicator.x = xPos;
             graphView.setIndicatorLine();
         } );

@@ -15,6 +15,7 @@ define( function( require ) {
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
     var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
@@ -68,6 +69,11 @@ define( function( require ) {
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
             this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:BACKGROUND_COLOR, lineWidth: 1, x: xPos, y: yPos }));
         }
+
+        //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        var bWidth = 2.4*radius;
+        var bHeight = 2.4*radius;
+        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, { fill: '#efe' } );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )
@@ -138,7 +144,7 @@ define( function( require ) {
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
         //add the children to parent node
-        unitCircleView.children = [ this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine, this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
+        unitCircleView.children = [ background, this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine, this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(

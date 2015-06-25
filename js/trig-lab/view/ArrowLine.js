@@ -123,6 +123,9 @@ define( function( require ) {
                 this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hL, hW/2 ).lineTo( -hL, -hW/2 ).close();
             }
             this.arrowHead.setShape( this.arrowHeadShape );
+        },
+        setLineWidth: function( lineWidth ){
+            this.line.lineWidth = lineWidth;
         }
     } ); //end return inherit
 } );

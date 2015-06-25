@@ -153,9 +153,7 @@ define( function( require ) {
       if( !noDenominator ){
         this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
       }
-
       //this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
-
       bar.left = 0;
       this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;
       var offset = 2;

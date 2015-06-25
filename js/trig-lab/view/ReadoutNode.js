@@ -115,6 +115,7 @@ define( function( require ) {
     row1.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
     this.coordinatesReadout.left = coordinatesLabel.right;
     this.coordinatesHBox.left = coordinatesLabel.right;
+    this.coordinatesHBox.centerY = coordinatesLabel.centerY;
 
     //Row 2: 'angle = ' value in degrees or radians; value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
@@ -315,6 +316,7 @@ define( function( require ) {
       //debugger;
     } );
 
+
   }//end constructor
 
 
@@ -401,9 +403,6 @@ define( function( require ) {
       var sinText = this.model.sin().toFixed( 3 ) ;
       var cosText = this.model.cos().toFixed( 3 );
       var tanText = this.model.tan().toFixed( 3 );
-      //if( this.model.tan() === 1000 || this.model.tan() === -1000 ){      //limits of +/1000 for tan function set in TrigLabModel
-      //  tanText = plusMinusStr + infinityWordStr;
-      //}
       if( this.specialAnglesOnly ){
         this.setSpecialAngleTrigReadout();
       }else{
@@ -418,14 +417,11 @@ define( function( require ) {
         if( this.angles[i] === smallAngleInDegrees ){
           this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );
           this.cosReadoutFraction.setValues( this.cosFractions[i][0], this.cosFractions[i][1] );
-
-          //Need large font for infinity symbol
-          if( this.angles[i] === 90 || this.angles[i] === 270 ){
-            //this.tanReadoutFraction.setNumeratorFontLarge( );
-          }
           this.tanReadoutFraction.setValues( this.tanFractions[i][0], this.tanFractions[i][1] );
         }
       }//end for
+      //console.log( 'this.coordinatesHBox.top = ' + this.coordinatesHBox.top );
+      this.coordinatesHBox.centerY = -7;   //hack to prevent coordinatesHBox layout from wandering, don't know why this line needed
     }//end setSpecialAngleTrigReadout()
   } );
 } );

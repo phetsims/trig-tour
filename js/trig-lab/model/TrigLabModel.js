@@ -136,6 +136,7 @@ define( function( require ) {
       }//end for
       this.setAngle( nearestSpecialAngleInRads );
     },//end setSpecialAngle()
+
     //takes small angle in rads and sets current angle to nearest special angle in rads
     getNearestSpecialAngle: function ( smallAngle ){   //smallAngle in rads
       var smallAngleInDegs = smallAngle*180/Math.PI;
@@ -153,6 +154,7 @@ define( function( require ) {
       }//end for
       return nearestSpecialAngleInRads ;
     },//end getNearestSpecialAngle()
+
     setNearestSpecialAngle: function( fullAngle ) {   //full angle in radians
       var remainderAngle = fullAngle % ( 2 * Math.PI );
       var fullTurnsAngle = fullAngle - remainderAngle;

@@ -16,6 +16,7 @@ define( function( require ) {
     //var Vector2 = require( 'DOT/Vector2' );
     var Shape = require( 'KITE/Shape' );
     var Path = require( 'SCENERY/nodes/Path' );
+    var Util = require( 'DOT/Util' );
     //var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
 
     //var SIN_COLOR = Util.SIN_COLOR;
@@ -76,7 +77,7 @@ define( function( require ) {
             //console.log( 'vertical = ' + this.vertical + '   displacement = ' + displacement );
             var sign = 0;  //+1, -1, or zero depending on sign of displacement
             if( displacement !== 0 ){
-                sign = Math.round( displacement / Math.abs( displacement ) ); //+1 if pointing up/right, -1 if pointing down/left
+                sign = Util.roundSymmetric( displacement / Math.abs( displacement ) ); //+1 if pointing up/right, -1 if pointing down/left
             }
             //console.log( 'sign = ' + sign + '   maxLength = ' + this.maxLength );
             this.arrowHead.setRotation( (sign - 1)*Math.PI/2 );

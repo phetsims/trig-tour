@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -84,7 +85,7 @@ define( function( require ) {
     },
     setFullAngleInRadians: function( angleInRads ){   //argument is total angle, not small angle
       var remainderAngle = angleInRads%( 2*Math.PI );
-      this.fullTurnCount = Math.round( ( angleInRads - remainderAngle )/(2*Math.PI ));
+      this.fullTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/(2*Math.PI ));
       if( Math.abs( remainderAngle ) <= Math.PI ){
         this.nbrFullTurns = this.fullTurnCount;
       }else{
@@ -96,7 +97,7 @@ define( function( require ) {
       }
       this.smallAngle = angleInRads - this.nbrFullTurns*2*Math.PI;
       remainderAngle = angleInRads%( Math.PI );
-      this.halfTurnCount = Math.round( ( angleInRads - remainderAngle )/(Math.PI ));
+      this.halfTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/(Math.PI ));
       this.angle = angleInRads;
     } ,
 
@@ -111,9 +112,9 @@ define( function( require ) {
 
       var angleTarget = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
       var remainderAngle = angleTarget%( 2*Math.PI );
-      this.fullTurnCount = Math.round( ( angleTarget - remainderAngle )/(2*Math.PI ));
+      this.fullTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(2*Math.PI ));
       remainderAngle = angleTarget%( Math.PI );
-      this.halfTurnCount = Math.round( ( angleTarget - remainderAngle )/(Math.PI ));
+      this.halfTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(Math.PI ));
 
       this.angle = angleTarget;  //now can trigger angle update
       //console.log( 'Model.setAngle called. angleInDeg = ' + this.getAngleInDegrees() );

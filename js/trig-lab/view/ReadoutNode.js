@@ -17,7 +17,8 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
-  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
@@ -45,10 +46,10 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
   //var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
-  //var LINE_COLOR = Util.LINE_COLOR;
-  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
-  var TEXT_COLOR = Util.TEXT_COLOR;
-  //var PANEL_COLOR = Util.PANEL_COLOR;
+  //var LINE_COLOR = UtilTrig.LINE_COLOR;
+  var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
+  var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+  //var PANEL_COLOR = UtilTrig.PANEL_COLOR;
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
@@ -74,10 +75,10 @@ define( function( require ) {
     var row2 = new Node();    //angle = angle value in degrees or radians
     //row 3 is this.trigRow3 declared below, trig function = trig value, where trig function = 'sin'|'cos'|'tan'
 
-    var angleValue = model.angle.toFixed( 1 );      //read from model
-    var sinValue = model.sin().toFixed( 3 );
-    var cosValue = model.cos().toFixed( 3 );
-    var tanValue = model.tan().toFixed( 3 );
+    var angleValue = Util.toFixed( model.angle,  1 );      //read from model
+    var sinValue = Util.toFixed( model.sin(), 3 );
+    var cosValue = Util.toFixed( model.cos(), 3 );
+    var tanValue = Util.toFixed( model.tan(), 3 );
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
@@ -300,8 +301,8 @@ define( function( require ) {
 
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {    //angle is in radians
-      var sinText = model.sin().toFixed( 3 ) ;
-      var cosText =  model.cos().toFixed( 3 );
+      var sinText = Util.toFixed( model.sin(), 3 ) ;
+      var cosText =  Util.toFixed( model.cos(), 3 );
       readoutNode.coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
@@ -325,10 +326,10 @@ define( function( require ) {
     setUnits: function ( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = this.model.getAngleInRadians().toFixed( 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInRadians(), 3 ) + ' ' + radsStr;
       }
       else {
-        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
     },
     //Trig Row is row 3 of the readout panel, displays value of either sin, cos, or tan
@@ -343,10 +344,10 @@ define( function( require ) {
     //sets format of angle readout (row 2) of readout panel: degrees, radians, or special angles
     setAngleReadout: function(){
       if( !this.radiansDisplayed ){
-        this.angleReadoutDecimal.text = this.model.getAngleInDegrees().toFixed( this.nbrDecimalPlaces ) + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
       if( this.radiansDisplayed && !this.specialAnglesOnly ){
-        this.angleReadoutDecimal.text = this.model.angle.toFixed( 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.angle, 3 ) + ' ' + radsStr;
       }
       if( this.radiansDisplayed && this.specialAnglesOnly ){
         this.setSpecialAngleReadout();
@@ -354,7 +355,7 @@ define( function( require ) {
     },
     setSpecialAngleReadout: function(){
       this.angleReadoutFraction.visible = true;
-      var angleInDegs = Math.round( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
+      var angleInDegs = Util.roundSymmetric( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
       if( Math.abs( angleInDegs ) > 360 ){
         angleInDegs = angleInDegs%360;
       }
@@ -382,7 +383,7 @@ define( function( require ) {
         }
       }
       //Must handle smallAngle = 0 or pi as special cases
-      if( Math.round( this.model.getSmallAngleInDegrees() ) === 0 || Math.round( this.model.getSmallAngle0To360() ) === 180 ){
+      if( Util.roundSymmetric( this.model.getSmallAngleInDegrees() ) === 0 || Util.roundSymmetric( this.model.getSmallAngle0To360() ) === 180 ){
         var nbrPiRads = this.model.getHalfTurnCount();
         var angleStr = nbrPiRads + pi;
         if( nbrPiRads === 0 ){
@@ -400,9 +401,9 @@ define( function( require ) {
       }
     }, //end setSpecialAngleReadout()
     setTrigReadout: function(){
-      var sinText = this.model.sin().toFixed( 3 ) ;
-      var cosText = this.model.cos().toFixed( 3 );
-      var tanText = this.model.tan().toFixed( 3 );
+      var sinText = Util.toFixed( this.model.sin(), 3 );
+      var cosText = Util.toFixed( this.model.cos(), 3 );
+      var tanText = Util.toFixed( this.model.tan(), 3 );
       if( this.specialAnglesOnly ){
         this.setSpecialAngleTrigReadout();
       }else{
@@ -412,7 +413,7 @@ define( function( require ) {
       }
     },
     setSpecialAngleTrigReadout: function(){
-      var smallAngleInDegrees = Math.round( this.model.getSmallAngle0To360() );
+      var smallAngleInDegrees = Util.roundSymmetric( this.model.getSmallAngle0To360() );
       for ( var i = 0; i < this.angles.length; i++ ){
         if( this.angles[i] === smallAngleInDegrees ){
           this.sinReadoutFraction.setValues( this.sinFractions[i][0], this.sinFractions[i][1] );

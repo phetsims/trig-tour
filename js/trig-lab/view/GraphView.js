@@ -23,7 +23,8 @@ define( function( require ) {
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
     var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
-    var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+    var Util = require( 'DOT/Util' );
+    var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
@@ -37,11 +38,11 @@ define( function( require ) {
     var piStr = require( 'string!TRIG_LAB/pi' );
 
     //constants
-    var COS_COLOR = Util.COS_COLOR;
-    var SIN_COLOR = Util.SIN_COLOR;
-    var TAN_COLOR = Util.TAN_COLOR;
-    var LINE_COLOR = Util.LINE_COLOR;
-    var TEXT_COLOR = Util.TEXT_COLOR;
+    var COS_COLOR = UtilTrig.COS_COLOR;
+    var SIN_COLOR = UtilTrig.SIN_COLOR;
+    var TAN_COLOR = UtilTrig.TAN_COLOR;
+    var LINE_COLOR = UtilTrig.LINE_COLOR;
+    var TEXT_COLOR = UtilTrig.TEXT_COLOR;
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
@@ -103,7 +104,8 @@ define( function( require ) {
         this.tickMarkLabelsInDegrees = new Node();
         var label;
         for( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ){
-            var nbrDegrees = 180*j.toFixed(0);
+            //var nbrDegrees = 180*j.toFixed(0);
+            var nbrDegrees = Util.toFixed( 180*j, 0 );
             //console.log('j = '+j+'   nbrDegrees = '+nbrDegrees );
             nbrDegrees = nbrDegrees.toString();
             label = new SubSupText( nbrDegrees+'<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );

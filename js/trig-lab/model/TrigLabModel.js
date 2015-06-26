@@ -40,13 +40,14 @@ define( function( require ) {
     tan: function () {
       //Cut off value at +/-1000 or else Safari Browser won't display properly
       var tanValue = Math.tan( this.angle );
+      var maxValue = 350;
       this.singularity = false;
       var returnValue;
-      if( tanValue > 1000 ){
-         returnValue = 1000;
+      if( tanValue > maxValue ){
+         returnValue = maxValue;
         this.singularity = true;
-      }else if( tanValue < -1000 ){
-        returnValue= -1000;
+      }else if( tanValue < -maxValue ){
+        returnValue= -maxValue;
         this.singularity = true;
       }else{
          returnValue = tanValue;

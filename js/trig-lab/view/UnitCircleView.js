@@ -19,7 +19,7 @@ define( function( require ) {
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
-    var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+    var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
@@ -33,12 +33,13 @@ define( function( require ) {
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
-    var LINE_COLOR = Util.LINE_COLOR;
-    var TEXT_COLOR = Util.TEXT_COLOR;
-    var COS_COLOR = Util.COS_COLOR;
-    var SIN_COLOR = Util.SIN_COLOR;
-    //var TAN_COLOR = Util.TAN_COLOR;
-    var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
+    var LINE_COLOR = UtilTrig.LINE_COLOR;
+    var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+    var COS_COLOR = UtilTrig.COS_COLOR;
+    var SIN_COLOR = UtilTrig.SIN_COLOR;
+    //var TAN_COLOR = UtilTrig.TAN_COLOR;
+    var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
+    var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -73,7 +74,7 @@ define( function( require ) {
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bWidth = 2.4*radius;
         var bHeight = 2.4*radius;
-        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, { fill: '#efe' } );
+        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, { fill: VIEW_BACKGROUND_COLOR } );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 1, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )

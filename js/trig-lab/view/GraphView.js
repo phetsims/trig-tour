@@ -44,6 +44,7 @@ define( function( require ) {
     var TAN_COLOR = UtilTrig.TAN_COLOR;
     var LINE_COLOR = UtilTrig.LINE_COLOR;
     var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+    var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
@@ -78,7 +79,7 @@ define( function( require ) {
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
-        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, {fill: '#efe'} );
+        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, { fill: VIEW_BACKGROUND_COLOR } );
 
         //draw x-, y-axes
         var xAxisLength = width;

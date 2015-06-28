@@ -38,7 +38,7 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
     tan: function () {
-      //Cut off value at +/-1000 or else Safari Browser won't display properly
+      //Cut off value at +/- maxValue or else Safari Browser won't display properly
       var tanValue = Math.tan( this.angle );
       var maxValue = 350;
       this.singularity = false;

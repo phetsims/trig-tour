@@ -207,7 +207,7 @@ define( function( require ) {
         var arrowL = 15;     //arrow head length
         var arrowW = 8;      //arrow head width
 
-        //Place arrows on sin curve
+        //Place arrow heads on left and right ends of sin curve
         var slopeLeft = ( this.amplitude*2*pi/wavelength )*Math.cos( 2*pi*leftEnd/wavelength ) ;
         var slopeRight = ( this.amplitude*2*pi/wavelength )*Math.cos( 2*pi*rightEnd/wavelength ) ;
         var angleLeft = Math.atan( slopeLeft ) * 180 / pi;
@@ -236,11 +236,10 @@ define( function( require ) {
         //Place arrow heads on ends of all tan curve segments. This is pretty tricky
         var arrowHeads = []; //array of arrow heads
 
-        //x and y coordinates of ends of the 'origin' tan segment, in pixels.  'Origin' segment is the one centered on the origin
+        //x and y coordinates of ends of the 'central' tan segment, in pixels.
+        //'Central' segment is the one centered on the origin.
         var xTanMax = Math.atan( maxTanValue )*wavelength/( 2*pi );
-        //var yTanMax = -Math.tan( xTanMax*2*pi/wavelength )*this.amplitude;
         var xTanMin = Math.atan( minTanValue )*wavelength/( 2*pi );
-        //var yTanMin = -Math.tan( xTanMin*2*pi/wavelength )*this.amplitude;
         //console.log( 'xTanMax: ' + xTanMax + '    xTanMin:' + xTanMin );
         var xPosMax;
         var xPosMin;
@@ -254,16 +253,14 @@ define( function( require ) {
             arrowHeads.push( new Vector2( xPosMax, yPosMax )) ;
             arrowHeads.push( new Vector2( xPosMin, yPosMin )) ;
         }
-        //The left and right ends are special cases.  Remove and replace the ends
 
+        //The left and right end arrow heads are special cases.
+        //Remove extraneous left- and right-end arrow heads created in previous for-loop
+        //and replace with correct arrow heads
         var yLeftEnd = -Math.tan( leftEnd*2*pi/wavelength )*this.amplitude;
         var yRightEnd = -Math.tan( rightEnd*2*pi/wavelength )*this.amplitude;
-        //arrowHeads.push( new Vector2( leftEnd, yLeftEnd ) );
-        //arrowHeads.push( new Vector2( rightEnd, yRightEnd ) );
         arrowHeads.splice( arrowHeads.length - 2, 1, new Vector2( rightEnd, yRightEnd ) );
         arrowHeads.splice( 1, 1, new Vector2( leftEnd, yLeftEnd ) );
-        //arrowHeads.push( new Circle( 5, { x: leftEnd, y: yLeftEnd, fill: 'green'}) );
-        //arrowHeads.push( new Circle( 5, { x: rightEnd, y: yRightEnd, fill: 'green'}) );
         var triangleNode;
         var rotationAngle;
         for( i = 0; i < arrowHeads.length; i++ ){
@@ -274,9 +271,7 @@ define( function( require ) {
             //Derivative of tan is 1 + tan^2
             var tanSlope = ( this.amplitude*2*pi/wavelength )*( 1 + Math.tan( xTan )*Math.tan( xTan ) );
             rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
-            if ( i % 2 === 0 ) {
-                //DO NOTHING
-            } else {
+            if ( i % 2 !== 0 ) {
                 rotationAngle += 180;
             }
 

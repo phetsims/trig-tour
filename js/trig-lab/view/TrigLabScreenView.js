@@ -48,9 +48,11 @@ define( function ( require ) {
         controlPanel.top = this.layoutBounds.top + 30;
         //console.log( 'layoutBounds = '+this.layoutBounds );
 
+
+        //Set up call-backs
         viewProperties.graphProperty.link( function( graph ) {
             //console.log('graphProperty called. graph = ' + graph);
-            //set visibility of horizontal and vertial arrows on xyR triangle on unit circle
+            //set visibility of horizontal and vertical arrows on x-y-R triangle on unit circle
             unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
             unitCircleView.hLine.visible = ( graph === 'sin' );
             unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
@@ -116,6 +118,7 @@ define( function ( require ) {
             unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
             trigLabModel.specialAnglesMode = specialAnglesVisible;
+
             //select correct trig readouts
             readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
@@ -125,6 +128,7 @@ define( function ( require ) {
             readoutDisplay.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.cosReadoutText.visible = !specialAnglesVisible;
             readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
+
             //select correct angle readout
             if( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ){
                 readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
@@ -135,14 +139,15 @@ define( function ( require ) {
                 readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
                 readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
             }
+
             //set precision of angle readout in degrees:
-            //in special angles mode, zero decimal places (like 45 degrees), otherwise 1 decimal place (like 45.0 degrees)
+            //in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
             if( specialAnglesVisible ){
                 var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
                 trigLabModel.setSpecialAngle( currentSmallAngle );
-                readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );     //integer display of special angles: 0, 30, 45, etc
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
             }else{
-                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );     //1 decimal place precision for continuous angles
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );  //1 decimal place precision for continuous angles
             }
             readoutDisplay.readoutNode.setAngleReadout();
             readoutDisplay.readoutNode.setTrigReadout();
@@ -153,7 +158,6 @@ define( function ( require ) {
             listener: function () {
                 viewProperties.reset();
                 trigLabModel.setFullAngleInRadians( 0 );
-
             },
             right: this.layoutBounds.maxX - 10,
             bottom: this.layoutBounds.maxY - 10

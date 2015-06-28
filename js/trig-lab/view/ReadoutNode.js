@@ -190,7 +190,7 @@ define( function( require ) {
     this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );  //visibility set from Control Panel
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' } ;
     var degText = new Text( degreesStr, fontInfo ) ;
     var radText = new Text( radiansStr, fontInfo );
     var degreesRadioButton = new AquaRadioButton( properties.angleUnitsProperty, 'degrees', degText, myRadioButtonOptions );

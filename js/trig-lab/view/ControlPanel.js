@@ -51,13 +51,13 @@ define( function( require ) {
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph = 'cos'|'sin'|'tan'
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: BACKGROUND_COLOR } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' } ;
     var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', cosText, myRadioButtonOptions );
     var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', sinText, myRadioButtonOptions );
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', tanText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
-    var checkBoxOptions = { checkBoxColorBackground: BACKGROUND_COLOR };
+    var checkBoxOptions = { checkBoxColorBackground: 'white' };
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
     var specialAnglesCheckBox = new CheckBox( specialAnglesText, properties.specialAnglesVisibleProperty, checkBoxOptions );

@@ -328,15 +328,15 @@ define( function( require ) {
                         var fullAngle = ( 2*Math.PI*position.x / wavelength );   //in radians
 
                         //Need small angle (-pi < angle < pi ) to set special angle
-                        var smallAngleInRadians = fullAngle%(2*Math.PI);
-                        var smallAngleInDegrees = smallAngleInRadians*180/(Math.PI);
-                        if( smallAngleInDegrees > 0 && smallAngleInDegrees > 180 ){
-                            smallAngleInDegrees -= 360;
-                        }
-                        if( smallAngleInDegrees < 0 && smallAngleInDegrees < -180 ){
-                            smallAngleInDegrees += 360;
-                        }
-                        smallAngleInRadians = smallAngleInDegrees*Math.PI/180;
+                        //var smallAngleInRadians = fullAngle%(2*Math.PI);
+                        //var smallAngleInDegrees = smallAngleInRadians*180/(Math.PI);
+                        //if( smallAngleInDegrees > 0 && smallAngleInDegrees > 180 ){
+                        //    smallAngleInDegrees -= 360;
+                        //}
+                        //if( smallAngleInDegrees < 0 && smallAngleInDegrees < -180 ){
+                        //    smallAngleInDegrees += 360;
+                        //}
+                        //smallAngleInRadians = smallAngleInDegrees*Math.PI/180;
 
                         if( !model.specialAnglesMode ){
                             model.setFullAngleInRadians( fullAngle );

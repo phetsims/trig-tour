@@ -27,11 +27,16 @@ define( function( require ) {
 
     return inherit( PropertySet, ViewProperties, {
         reset: function() {
-            this.viewProperties.graph = 'cos';
-            this.viewProperties.angleUnits = 'degrees';
-            this.viewProperties.labelsVisible = false;
-            this.viewProperties.gridVisible = false;
-            this.viewProperties.specialAnglesVisible = false;
+            //this.viewProperties.graph = 'cos';
+            //this.viewProperties.angleUnits = 'degrees';
+            //this.viewProperties.labelsVisible = false;
+            //this.viewProperties.gridVisible = false;
+            //this.viewProperties.specialAnglesVisible = false;
+            this.graph = 'cos';
+            this.angleUnits = 'degrees';
+            this.labelsVisible = false;
+            this.gridVisible = false;
+            this.specialAnglesVisible = false;
         }
     } );
 } );

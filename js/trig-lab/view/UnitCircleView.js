@@ -33,6 +33,7 @@ define( function( require ) {
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
+    var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
     var LINE_COLOR = UtilTrig.LINE_COLOR;
     var TEXT_COLOR = UtilTrig.TEXT_COLOR;
     var COS_COLOR = UtilTrig.COS_COLOR;
@@ -238,6 +239,7 @@ define( function( require ) {
         var oneText = new Text( oneStr, fontInfo );
         xText = new Text( xStr, fontInfo );            //xText, yText already defined above
         yText = new Text( yStr, fontInfo );
+        fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaText = new Text( thetaStr, fontInfo );
         labelCanvas.children = [ oneText, xText, yText, thetaText ] ;
 

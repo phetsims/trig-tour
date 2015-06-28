@@ -1,5 +1,6 @@
 /**
- * Node consisting of a line and a triangle forming an arrow.
+ * Vertical or horizontal arrow node
+ * consists of a line and a triangle
  * Created by Dubson on 6/16/2015.
  */
 
@@ -19,9 +20,6 @@ define( function( require ) {
     var Util = require( 'DOT/Util' );
     //var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
 
-    //var SIN_COLOR = Util.SIN_COLOR;
-    //var COS_COLOR = Util.COS_COLOR;
-    //var TAN_COLOR = Util.TAN_COLOR;
 
 
     /**
@@ -37,8 +35,8 @@ define( function( require ) {
         this.maxLength = maxLength;
         this.vertical = ( orientation === 'v' );
         options = _.extend( {
-            criticalFactor: 2,       //If arrow length longer than criticalRatio times, arrow head starts scaling
-            arrowHeadLength: 25         //arrow head length in pixels
+            criticalFactor: 2,       //If arrow length longer than criticalFactor times arrow head length, starts scaling
+            arrowHeadLength: 25      //arrow head length in pixels
         }, options );
         this.options = options;
 

@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-lab 1.0.0-dev.8 Wed Jun 24 2015 12:47:19 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-lab 1.0.0-dev.9 Mon Jun 29 2015 12:33:25 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "903564a25a0f26acdbd334d3e104039864b405ef",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "a282938be9077a980309b1330b9084e5e6c95e08",
+    "sha": "d6be88a507aa3ec52dfcdfaf22c1c89ed9207168",
     "branch": "master"
   },
   "dot": {
@@ -21,11 +21,11 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "9c8a4e7384235b5dc6ce7edfd4310df15b054e12",
+    "sha": "123108a2bc04e2fcc0e3bdf4b0c8523c46f6ac06",
     "branch": "master"
   },
   "kite": {
-    "sha": "9d2a34ddcb9258544a02afdc65f9632348fd7b73",
+    "sha": "6a46e847321af03e39f8b5df1ef4024ea9d5b591",
     "branch": "master"
   },
   "phet-core": {
@@ -37,23 +37,23 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "61011f28042e8960fd9ed43bf3d3f1e1c38826a1",
+    "sha": "88b015931ec4cf2d44fc3453dad28a24d3bf60f0",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "ea0e0d835c72338dd5c88d52473759125eb95ee1",
+    "sha": "dd76f610320b87bff51e909f4722ea0b9ab53eda",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "1929c9a687c4e2164285c434742136051568a619",
+    "sha": "d6441e3e4d7ab3af844899243c7d5c0f55a12ae2",
     "branch": "master"
   },
   "sun": {
-    "sha": "3d9fe824652fffc958ad8993632c749b0b183582",
+    "sha": "451fbef25be098015dbcab902daefaaa4d1b9c65",
     "branch": "master"
   },
   "trig-lab": {
-    "sha": "5c75508ed637d619c2e5cbdd88d8f3a146df6437",
+    "sha": "e43f9b8cc7ceb031b8d86e322183c15d44d24644",
     "branch": "master"
   }
 }

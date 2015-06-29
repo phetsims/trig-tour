@@ -69,7 +69,7 @@ define( function( require ) {
         for (var i = 0; i < anglesArray.length; i++ ){
             xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
             yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
-            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:BACKGROUND_COLOR, lineWidth: 1, x: xPos, y: yPos }));
+            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:'white', lineWidth: 1, x: xPos, y: yPos }));
         }
 
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
@@ -112,7 +112,7 @@ define( function( require ) {
         var oneLabels = [ oneXText, minusOneXText, oneYText, minusOneYText ];
         this.grid.children = oneLabels;
 
-        //position 'one' labels
+        //position +/-1 labels
         //plusOneXText.left = this.grid.right + 5;
         //plusOneXText.top = 7;
         oneXText.left = this.grid.right + 5;

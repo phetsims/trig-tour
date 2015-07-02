@@ -47,7 +47,7 @@ define( function( require ) {
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
   //var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
   //var LINE_COLOR = UtilTrig.LINE_COLOR;
-  var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
+  //var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
   var TEXT_COLOR = UtilTrig.TEXT_COLOR;
   //var PANEL_COLOR = UtilTrig.PANEL_COLOR;
   /**

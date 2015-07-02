@@ -18,7 +18,7 @@ define( function( require ) {
   var trigLabSimString = require( 'string!TRIG_LAB/trig-lab.name' );
 
   //constants
-  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
+  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
   /**
    * @constructor

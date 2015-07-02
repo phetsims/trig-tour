@@ -40,7 +40,7 @@ define( function( require ) {
     var SIN_COLOR = UtilTrig.SIN_COLOR;
     //var TAN_COLOR = UtilTrig.TAN_COLOR;
     var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
-    var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
+    //var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm

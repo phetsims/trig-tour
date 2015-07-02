@@ -32,9 +32,10 @@ define( function ( require ) {
         var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.92*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
+        this.addChild( graphView );
         this.addChild( unitCircleView );
         this.addChild( readoutDisplay );
-        this.addChild( graphView );
+
         this.addChild( controlPanel );
 
         //Layout children Views

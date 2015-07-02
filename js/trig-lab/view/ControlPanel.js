@@ -28,7 +28,7 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
-  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
+  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
   // Text nodes
   var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ fontSize: 20 };

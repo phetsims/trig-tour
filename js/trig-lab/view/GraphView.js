@@ -84,9 +84,9 @@ define( function( require ) {
         //draw x-, y-axes
         var xAxisLength = width;
         var xAxis = new ArrowNode( -xAxisLength/2, 0, xAxisLength/2, 0, //tailX, tailY, tipX, tipY, options
-                { tailWidth: 1, fill: LINE_COLOR, headHeight: 12, headWidth: 8  });
+                { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8  });
         var yAxis = new ArrowNode( 0, 1.2*this.amplitude, 0, -1.3*this.amplitude,
-                { tailWidth: 1, fill: LINE_COLOR, headHeight: 12, headWidth: 8  } );
+                { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8  } );
 
         //draw tic marks for x-, y-axes
         var ticLength = 5;

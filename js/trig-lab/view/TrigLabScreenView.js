@@ -12,6 +12,7 @@ define( function ( require ) {
     var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
     var inherit = require( 'PHET_CORE/inherit' );
     var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var ScreenView = require( 'JOIST/ScreenView' );
     var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
@@ -32,15 +33,23 @@ define( function ( require ) {
         var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
         var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.92*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
+
+        //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of unitCircle View
+        //want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
+        var width = 2.4*160;
+        var height = 2.4*160;
+        var whiteSheet = new Rectangle( -width/2, -height/2, width, height, { fill: 'white' });
+        this.addChild( whiteSheet );
         this.addChild( graphView );
         this.addChild( unitCircleView );
         this.addChild( readoutDisplay );
-
         this.addChild( controlPanel );
 
         //Layout children Views
         unitCircleView.x = this.layoutBounds.centerX;
         unitCircleView.top = this.layoutBounds.top + 20;
+        whiteSheet.x = unitCircleView.x;
+        whiteSheet.y = unitCircleView.y;
         readoutDisplay.left = this.layoutBounds.left + 30 ;
         readoutDisplay.top = 30;
         graphView.x = this.layoutBounds.centerX;

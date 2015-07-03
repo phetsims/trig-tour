@@ -81,7 +81,8 @@ define( function( require ) {
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
-        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, { fill: VIEW_BACKGROUND_COLOR } );
+        var arcRadius = 8;
+        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR } );
 
         //draw x-, y-axes
         var xAxisLength = width;
@@ -193,8 +194,8 @@ define( function( require ) {
         //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
         dx = wavelength/600;
         nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
-        var maxTanValue = 1.4;
-        var minTanValue = -1.1;
+        var maxTanValue = 1.2;
+        var minTanValue = -1.0;
 
         var yPos;
         for ( i = 0; i < nbrOfPoints; i++ ) {

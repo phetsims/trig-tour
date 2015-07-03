@@ -112,6 +112,13 @@ define( function( require ) {
       }
 
       var angleTarget = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
+      //round to nearest half-degree, must convert to degrees and then back to rads for this
+      var roundedAngleTarget = angleTarget*180/Math.PI;
+      var dDeg = 0.5;
+      var roundFactor = Util.roundSymmetric( 1/dDeg );
+      var roundedAngleTarget = Util.roundSymmetric( roundedAngleTarget*roundFactor )/roundFactor;
+      angleTarget = roundedAngleTarget*Math.PI/180;
+      //console.log( 'testAngle = ' + testAngleTarget );
       var remainderAngle = angleTarget%( 2*Math.PI );
       this.fullTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(2*Math.PI ));
       remainderAngle = angleTarget%( Math.PI );

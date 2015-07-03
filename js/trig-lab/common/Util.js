@@ -12,7 +12,7 @@ define( function( require ) {
     return {
         // layout bounds used throughout the simulation for laying out the screens
         LAYOUT_BOUNDS: new Bounds2( 0, 0, 768, 464 ),
-        BACKGROUND_COLOR: '#FFFF99', //'#FFECB3',  //'#EFE', //
+        BACKGROUND_COLOR: '#99ff66', //'#FFFF99', //'#FFECB3',  //'#EFE', //
         VIEW_BACKGROUND_COLOR: '#FFF', //'#EFE', //'#FFD',//'#FEC',
         TEXT_COLOR: '#000',
         LINE_COLOR: '#000',

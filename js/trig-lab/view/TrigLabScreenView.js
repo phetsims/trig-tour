@@ -38,7 +38,8 @@ define( function ( require ) {
         //want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
         var width = 2.4*160;
         var height = 2.4*160;
-        var whiteSheet = new Rectangle( -width/2, -height/2, width, height, { fill: 'white' });
+        var arcRadius = 8;
+        var whiteSheet = new Rectangle( -width/2, -height/2, width, height, arcRadius, arcRadius, { fill: 'white' });
         this.addChild( whiteSheet );
         this.addChild( graphView );
         this.addChild( unitCircleView );

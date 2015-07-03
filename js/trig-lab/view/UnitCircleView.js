@@ -75,7 +75,8 @@ define( function( require ) {
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bWidth = 2.4*radius;
         var bHeight = 2.4*radius;
-        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7} );
+        var arcRadius = 8;
+        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7} );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )

@@ -92,7 +92,7 @@ define( function( require ) {
         yText.right = -12;
         yText.top = -1.2*radius - 2;
         
-        //Draw Grid, simple square grid, with labels x = +/-1, y = +/-1;
+        //Draw Grid, simple square grid, visibility set by Control Panel;
         var r = radius;
         var gridShape = new Shape();
         gridShape.moveTo( -r, -r );
@@ -100,31 +100,6 @@ define( function( require ) {
         gridShape.moveTo( -r, -r/2 ).lineTo( r, -r/2 ).moveTo( -r, r/2 ).lineTo( r, r/2 );
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
         this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
-        //+1, -1 labels on grid axes
-        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-        //var plusOneXText = new Text( plusOneStr, fontInfo );
-        var oneXText = new Text( oneStr, fontInfo );
-        var minusOneXText = new Text( minusOneStr, fontInfo );
-        //var plusOneYText = new Text( plusOneStr, fontInfo );
-        var oneYText = new Text( oneStr, fontInfo );
-        var minusOneYText = new Text( minusOneStr, fontInfo );
-        //var oneLabels = [ plusOneXText, minusOneXText, plusOneYText, minusOneYText ];
-        var oneLabels = [ oneXText, minusOneXText, oneYText, minusOneYText ];
-        this.grid.children = oneLabels;
-
-        //position +/-1 labels
-        //plusOneXText.left = this.grid.right + 5;
-        //plusOneXText.top = 7;
-        oneXText.left = this.grid.right + 5;
-        oneXText.top = 7;
-        minusOneXText.right = this.grid.left - 5;
-        minusOneXText.top = 7;
-        //plusOneYText.bottom = this.grid.top;
-        //plusOneYText.left = 5;
-        oneYText.bottom = this.grid.top;
-        oneYText.left = 5;
-        minusOneYText.top = this.grid.bottom;
-        minusOneYText.right = -5;
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle
@@ -145,8 +120,50 @@ define( function( require ) {
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
+        //draw x, y, and '1' labels on the xyR triangle
+        var labelCanvas = new Node();
+        fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+        var oneText = new Text( oneStr, fontInfo );
+        xText = new Text( xStr, fontInfo );            //xText, yText already defined above
+        yText = new Text( yStr, fontInfo );
+        fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
+        var thetaText = new Text( thetaStr, fontInfo );
+        //+1, -1 labels on axes
+        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+        var oneXText = new Text( oneStr, fontInfo );
+        var minusOneXText = new Text( minusOneStr, fontInfo );
+        var oneYText = new Text( oneStr, fontInfo );
+        var minusOneYText = new Text( minusOneStr, fontInfo );
+        //var oneLabels = [ oneXText, minusOneXText, oneYText, minusOneYText ];
+        //this.grid.children = oneLabels;
+
+        //position +/-1 labels on xy axes
+        oneXText.left = this.grid.right + 5;
+        oneXText.top = 7;
+        minusOneXText.right = this.grid.left - 5;
+        minusOneXText.top = 7;
+        oneYText.bottom = this.grid.top;
+        oneYText.left = 5;
+        minusOneYText.top = this.grid.bottom;
+        minusOneYText.right = -5;
+
+        labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ] ;
+
         //add the children to parent node
-        unitCircleView.children = [ background, this.grid, circleGraphic, xAxis, yAxis, this.hArrowLine, this.hLine, this.vArrowLine, this.vLine, this.specialAnglesNode, rotorGraphic ];
+        unitCircleView.children = [
+            background,
+            this.grid,
+            circleGraphic,
+            xAxis,
+            yAxis,
+            this.hArrowLine,
+            this.hLine,
+            this.vArrowLine,
+            this.vLine,
+            this.specialAnglesNode,
+            rotorGraphic,
+            labelCanvas
+        ];
 
         var mouseDownPosition = new Vector2( 0, 0 );
         rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -232,17 +249,9 @@ define( function( require ) {
             }
         };   //end drawAngleArc
 
-        //position x, y, and '1' labels on the xyR triangle
-        var labelCanvas = new Node();
-        unitCircleView.addChild( labelCanvas );
-        fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-        var oneText = new Text( oneStr, fontInfo );
-        xText = new Text( xStr, fontInfo );            //xText, yText already defined above
-        yText = new Text( yStr, fontInfo );
-        fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
-        var thetaText = new Text( thetaStr, fontInfo );
-        labelCanvas.children = [ oneText, xText, yText, thetaText ] ;
 
+
+        //visibility of x,y, and '1' labels on xyR triangle
         this.setLabelVisibility = function( isVisible ){
             positionLabels();
             labelCanvas.visible = isVisible;

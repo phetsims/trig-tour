@@ -116,11 +116,12 @@ define( function( require ) {
         var oneLabel = new Text( oneStr, fontInfo );
         var minusOneLabel = new Text( minusOneStr, fontInfo );
         this.onesNode.children = [ oneLabel, minusOneLabel ];
-        oneLabel.right = minusOneLabel.right = yAxis.left;
-        oneLabel.top =  yAxis.top + 15;
-        minusOneLabel.bottom = yAxis.bottom - 15;
-
-
+        var xOffset = 8;
+        oneLabel.left =  xOffset ;
+        minusOneLabel.right = -xOffset;
+        oneLabel.centerY =  -this.amplitude;
+        minusOneLabel.centerY = this.amplitude;
+        //console.log( 'onesNode is ' + this.onesNode );
 
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();
@@ -151,7 +152,7 @@ define( function( require ) {
             this.tickMarkLabelsInRadians.addChild( label );
         }
         //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
-        this.onesNode = false;
+        this.onesNode.visible = false;
         this.tickMarkLabelsInDegrees.visible = false;
         this.tickMarkLabelsInRadians.visible = false;
 

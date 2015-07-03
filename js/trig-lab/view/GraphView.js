@@ -29,6 +29,8 @@ define( function( require ) {
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
+    var oneStr = '1';
+    var minusOneStr = '-1';
     var theta = require( 'string!TRIG_LAB/theta' );
     var cosStr = require( 'string!TRIG_LAB/cos' );
     var sinStr = require( 'string!TRIG_LAB/sin' );
@@ -108,6 +110,18 @@ define( function( require ) {
         this.axesNode = new Node();   //axes bounds of this are used in layout
         this.axesNode.children = [ xAxis, yAxis ];
 
+        //draw 1/-1 labels on y-axis
+        this.onesNode = new Node();
+        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+        var oneLabel = new Text( oneStr, fontInfo );
+        var minusOneLabel = new Text( minusOneStr, fontInfo );
+        this.onesNode.children = [ oneLabel, minusOneLabel ];
+        oneLabel.right = minusOneLabel.right = yAxis.left;
+        oneLabel.top =  yAxis.top + 15;
+        minusOneLabel.bottom = yAxis.bottom - 15;
+
+
+
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();
         var label;
@@ -137,6 +151,7 @@ define( function( require ) {
             this.tickMarkLabelsInRadians.addChild( label );
         }
         //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+        this.onesNode = false;
         this.tickMarkLabelsInDegrees.visible = false;
         this.tickMarkLabelsInRadians.visible = false;
 
@@ -307,6 +322,7 @@ define( function( require ) {
             this.sinPath,
             this.cosPath,
             this.tanPath,
+            this.onesNode,
             this.tickMarkLabelsInDegrees,
             this.tickMarkLabelsInRadians,
             xTics,

@@ -92,6 +92,7 @@ define( function ( require ) {
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
             trigLabScreenView.labelsVisible = isVisible;
             unitCircleView.setLabelVisibility( isVisible );
+            graphView.onesNode.visible = isVisible;
             if( isVisible ){
                 graphView.tickMarkLabelsInRadians.visible = readoutDisplay.readoutNode.radiansDisplayed;
                 graphView.tickMarkLabelsInDegrees.visible = !readoutDisplay.readoutNode.radiansDisplayed;

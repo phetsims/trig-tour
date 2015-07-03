@@ -71,9 +71,9 @@ define( function( require ) {
         sinRadioButton,
         tanRadioButton,
         new HSeparator( 150 ), //maxControlWidth ),
+        specialAnglesCheckBox,
         labelsCheckBox,
-        gridCheckBox,
-        specialAnglesCheckBox
+        gridCheckBox
       ],
       align: 'left',
       spacing: spacing

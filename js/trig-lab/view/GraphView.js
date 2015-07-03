@@ -288,10 +288,12 @@ define( function( require ) {
 
         //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
         //a red dot on top of the indicator line echoes red dot on unit circle
-        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 5, criticalFactor: 2, arrowHeadLength: 20 }  );
         var hitBound = 30;
+        this.indicatorLine = new ArrowLine( this.amplitude, 'v', { stroke: '#0d0', lineWidth: 5, criticalFactor: 2, arrowHeadLength: 20, cursor: 'pointer' }  );
+        this.indicatorLine.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
+        this.indicatorLine.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
-        this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
+        //this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 
         //Order children views
@@ -313,7 +315,7 @@ define( function( require ) {
         ];
 
         // When dragging, move the sample element
-        this.redDotHandle.addInputListener( new SimpleDragHandler(
+        this.indicatorLine.addInputListener( new SimpleDragHandler(
                 {
                     allowTouchSnag: true,
 

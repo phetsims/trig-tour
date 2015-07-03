@@ -13,7 +13,7 @@ define( function( require ) {
     //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     //var Circle = require( 'SCENERY/nodes/Circle' );
     var Line = require( 'SCENERY/nodes/Line' );
-    //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     //var Vector2 = require( 'DOT/Vector2' );
     var Shape = require( 'KITE/Shape' );
     var Path = require( 'SCENERY/nodes/Path' );
@@ -46,6 +46,9 @@ define( function( require ) {
         this.arrowHeadLength = options.arrowHeadLength;
 
         this.line = new Line( 0, 0, 0, 0, options );
+        //overlay invisible rectangle on line, to activate mouse cursor
+        //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        this.mouseMarker = new Rectangle( -10, -50, 20, 100, { fill: 'green', opacity: 0, cursor: 'pointer' });
         this.arrowHeadShape = new Shape();
         this.arrowHead = new Path( this.arrowHeadShape, { lineWidth: 1, fill: this.line.stroke });
 
@@ -61,6 +64,11 @@ define( function( require ) {
         }
         this.canvas = new Node();
         this.line.addChild( this.arrowHead );
+        //need mouse pointer active only for vertical line in graphView
+        if( orientation === 'v'){
+            this.line.addChild( this.mouseMarker );
+        }
+
         this.canvas.addChild( this.line );
         arrowLine.addChild( this.canvas );
     }//end constructor
@@ -87,6 +95,12 @@ define( function( require ) {
                     //console.log( 'setEndPoint Vertical large called. Displacement is ' + displacement + '  sign is ' + sign );
                     this.drawArrowHead( this.hL );
                     this.line.setPoint2( 0, -displacement + 0.9*sign*this.hL );
+                    if( sign > 0 ){
+                        this.mouseMarker.setRect( -10, -length, 20, length );
+                    }else{
+                        this.mouseMarker.setRect( -10, 0, 20, length );
+                    }
+
                     this.arrowHead.y = -displacement;
                 }else{    //if too small for arrowHead to fit
                     scaleFactor = Math.max( 0.1, length/( this.criticalFactor*this.arrowHeadLength ));

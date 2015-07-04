@@ -76,6 +76,8 @@ define( function ( require ) {
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
+            //set title bar on graph view
+            graphView.setTitleBar( graph );
             if( trigLabModel.singularity ){
                 if( graph === 'cos' || graph === 'sin'){
                     graphView.indicatorLine.visible = true;

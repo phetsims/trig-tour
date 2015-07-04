@@ -54,6 +54,9 @@
   "theta": {
     "value": "\u03b8"
   },
+  "vs":{
+    "value": "vs"
+  },
   "xyEquals": {
     "value": "(x,y) = "
   }

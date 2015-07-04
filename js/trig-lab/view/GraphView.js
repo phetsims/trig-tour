@@ -36,6 +36,7 @@ define( function( require ) {
     var cosStr = require( 'string!TRIG_LAB/cos' );
     var sinStr = require( 'string!TRIG_LAB/sin' );
     var tanStr = require( 'string!TRIG_LAB/tan' );
+    var vsStr = require( 'string!TRIG_LAB/vs' );
     //var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
     //var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
     //var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
@@ -80,9 +81,10 @@ define( function( require ) {
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
 
         //accordianBox is empty, just need the button and title
-        var emptyNode = new Text( 'TESTING', { font: DISPLAY_FONT });
-        var graphTitle = new Text( 'cos vs '+ theta, {font: DISPLAY_FONT });
-        var accordionInfoObject = { titleNode: graphTitle, showTitleWhenExpanded: false, stroke: 'white', fill: 'white' };
+
+        var emptyNode = new Text( ' ', { font: DISPLAY_FONT });
+        this.graphTitle = new Text( 'cos vs '+ theta, {font: DISPLAY_FONT });
+        var accordionInfoObject = { titleNode: this.graphTitle, showTitleWhenExpanded: false, titleAlignX: 'left', stroke: 'white', fill: 'white' };
         this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
@@ -92,6 +94,8 @@ define( function( require ) {
         //align accordian box
         this.accordionBox.left = background.left;
         this.accordionBox.top = background.top;
+
+
 
         //draw x-, y-axes
         var xAxisLength = width;
@@ -322,8 +326,11 @@ define( function( require ) {
         //this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 
+        var displayNode = new Node();
+
+
         //Order children views
-        graphView.children = [
+        displayNode.children = [
             background,
             this.accordionBox,
             this.axesNode,
@@ -341,6 +348,16 @@ define( function( require ) {
             yTics,
             this.indicatorLine
         ];
+
+        graphView.children = [
+          displayNode,
+          this.accordionBox
+        ];
+
+        this.accordionBox.expandedProperty.link( function( isVisible ){
+            displayNode.visible = isVisible;
+            //console.log( 'expandedProperty is ' + tOrF );
+        });
 
         // When dragging, move the sample element
         this.indicatorLine.addInputListener( new SimpleDragHandler(
@@ -427,6 +444,20 @@ define( function( require ) {
                   this.redDotHandle.y = -tanNow * this.amplitude;
               }
               else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
+          },
+          setTitleBar: function( trigString ) {
+              if ( trigString === 'cos' ) {
+                  //this.accordionBox.options.titleNode.text = 'cos vs' + theta;
+                  this.graphTitle.text = cosStr + ' ' + vsStr + ' ' + theta;
+              }
+              else if ( trigString === 'sin' ) {
+                  this.graphTitle.text = sinStr + ' ' + vsStr + ' ' + theta;
+                  //this.accordionBox.options.titleNode.text = 'sin vs' + theta;
+              }
+              else if ( trigString === 'tan' ) {
+                  this.graphTitle.text = tanStr + ' ' + vsStr + ' ' + theta;
+                  //this.accordionBox.options.titleNode.text = 'tan vs' + theta;
+              }
           }
       }
     );

@@ -83,8 +83,15 @@ define( function( require ) {
         //accordianBox is empty, just need the button and title
 
         var emptyNode = new Text( ' ', { font: DISPLAY_FONT });
-        this.graphTitle = new Text( 'cos vs '+ theta, {font: DISPLAY_FONT });
-        var accordionInfoObject = { titleNode: this.graphTitle, showTitleWhenExpanded: false, titleAlignX: 'left', stroke: 'white', fill: 'white' };
+        this.graphTitle = new Text( 'cos vs ' + theta, {font: DISPLAY_FONT });  //need text her to set box width
+        var accordionInfoObject = {
+            titleNode: this.graphTitle,
+            showTitleWhenExpanded: false,
+            titleAlignX: 'left' + '',
+            stroke: 'white',
+            contentAlign: 'left',
+            fill: 'white'
+        };
         this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
@@ -331,8 +338,6 @@ define( function( require ) {
 
         //Order children views
         displayNode.children = [
-            background,
-            this.accordionBox,
             this.axesNode,
             thetaLabel,
             this.cosThetaLabel,
@@ -350,13 +355,14 @@ define( function( require ) {
         ];
 
         graphView.children = [
-          displayNode,
-          this.accordionBox
+            background,
+            this.accordionBox,
+            displayNode
         ];
 
-        this.accordionBox.expandedProperty.link( function( isVisible ){
-            displayNode.visible = isVisible;
-            //console.log( 'expandedProperty is ' + tOrF );
+        this.accordionBox.expandedProperty.link( function( tOrF ){
+            background.visible = tOrF;
+            displayNode.visible = tOrF;
         });
 
         // When dragging, move the sample element

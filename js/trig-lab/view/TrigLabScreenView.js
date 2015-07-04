@@ -171,10 +171,12 @@ define( function ( require ) {
         var resetAllButton = new ResetAllButton( {
             listener: function () {
                 viewProperties.reset();
+                graphView.accordionBox.expandedProperty.value = true;   
                 trigLabModel.setFullAngleInRadians( 0 );
             },
             right: this.layoutBounds.maxX - 10,
-            bottom: this.layoutBounds.maxY - 10
+            bottom: this.layoutBounds.maxY - 10,
+            radius: 18   //Dubson wants button smaller than default
         } );
         this.addChild( resetAllButton );
     }

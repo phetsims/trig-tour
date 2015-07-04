@@ -118,7 +118,8 @@ define( function( require ) {
       var roundFactor = Util.roundSymmetric( 1/dDeg );
       var roundedAngleTarget = Util.roundSymmetric( roundedAngleTarget*roundFactor )/roundFactor;
       angleTarget = roundedAngleTarget*Math.PI/180;
-      //console.log( 'testAngle = ' + testAngleTarget );
+      //
+      // console.log( 'testAngle = ' + testAngleTarget );
       var remainderAngle = angleTarget%( 2*Math.PI );
       this.fullTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(2*Math.PI ));
       remainderAngle = angleTarget%( Math.PI );

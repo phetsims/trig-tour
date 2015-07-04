@@ -8,6 +8,7 @@ define( function( require ) {
     'use strict';
 
     // modules
+    var AccordionBox = require( 'SUN/AccordionBox' );
     var ArrowLine = require( 'TRIG_LAB/trig-lab/view/ArrowLine' );
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
@@ -78,11 +79,19 @@ define( function( require ) {
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
 
+        //accordianBox is empty, just need the button and title
+        var emptyNode = new Text( 'TESTING', { font: DISPLAY_FONT });
+        var graphTitle = new Text( 'cos vs '+ theta, {font: DISPLAY_FONT });
+        var accordionInfoObject = { titleNode: graphTitle, showTitleWhenExpanded: false, stroke: 'white', fill: 'white' };
+        this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
         var arcRadius = 8;
         var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR } );
+        //align accordian box
+        this.accordionBox.left = background.left;
+        this.accordionBox.top = background.top;
 
         //draw x-, y-axes
         var xAxisLength = width;
@@ -316,6 +325,7 @@ define( function( require ) {
         //Order children views
         graphView.children = [
             background,
+            this.accordionBox,
             this.axesNode,
             thetaLabel,
             this.cosThetaLabel,

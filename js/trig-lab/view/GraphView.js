@@ -80,8 +80,7 @@ define( function( require ) {
         this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
         var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
 
-        //accordianBox is empty, just need the button and title
-
+        //accordionBox is empty, just need the button and title
         var emptyNode = new Text( ' ', { font: DISPLAY_FONT });
         this.graphTitle = new Text( 'cos vs ' + theta, {font: DISPLAY_FONT });  //need text her to set box width
         var accordionInfoObject = {
@@ -95,6 +94,7 @@ define( function( require ) {
             fill: 'white'
         };
         this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
+        
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;

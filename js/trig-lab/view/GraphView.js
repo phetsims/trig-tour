@@ -88,6 +88,8 @@ define( function( require ) {
             titleNode: this.graphTitle,
             showTitleWhenExpanded: false,
             titleAlignX: 'left' + '',
+            titleXSpacing: 15,
+            titleXMargin: 20,
             stroke: 'white',
             contentAlign: 'left',
             fill: 'white'

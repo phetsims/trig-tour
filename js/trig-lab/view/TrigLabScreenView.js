@@ -171,7 +171,7 @@ define( function ( require ) {
         var resetAllButton = new ResetAllButton( {
             listener: function () {
                 viewProperties.reset();
-                graphView.accordionBox.expandedProperty.value = true;   
+                graphView.accordionBox.expandedProperty.value = true;
                 trigLabModel.setFullAngleInRadians( 0 );
             },
             right: this.layoutBounds.maxX - 10,

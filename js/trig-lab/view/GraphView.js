@@ -455,6 +455,7 @@ define( function( require ) {
           },
           setTitleBar: function( trigString ) {
               if ( trigString === 'cos' ) {
+
                   this.graphTitle.text = cosStr + ' ' + vsStr + ' ' + theta;
               }
               else if ( trigString === 'sin' ) {

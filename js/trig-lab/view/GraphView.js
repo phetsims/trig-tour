@@ -94,7 +94,7 @@ define( function( require ) {
             fill: 'white'
         };
         this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
-        
+
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
@@ -237,7 +237,6 @@ define( function( require ) {
         this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3} );
 
 
-
         //Add TriangleNode arrow heads at ends of curves
         //Arguments: TriangleNode( length, width, color, rotationInDegrees )
         var pi = Math.PI;
@@ -335,8 +334,9 @@ define( function( require ) {
         //this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
 
-        var displayNode = new Node();
 
+        // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by accordionBox button
+        var displayNode = new Node();
 
         //Order children views
         displayNode.children = [
@@ -455,16 +455,13 @@ define( function( require ) {
           },
           setTitleBar: function( trigString ) {
               if ( trigString === 'cos' ) {
-                  //this.accordionBox.options.titleNode.text = 'cos vs' + theta;
                   this.graphTitle.text = cosStr + ' ' + vsStr + ' ' + theta;
               }
               else if ( trigString === 'sin' ) {
                   this.graphTitle.text = sinStr + ' ' + vsStr + ' ' + theta;
-                  //this.accordionBox.options.titleNode.text = 'sin vs' + theta;
               }
               else if ( trigString === 'tan' ) {
                   this.graphTitle.text = tanStr + ' ' + vsStr + ' ' + theta;
-                  //this.accordionBox.options.titleNode.text = 'tan vs' + theta;
               }
           }
       }

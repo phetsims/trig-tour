@@ -135,7 +135,7 @@ define( function( require ) {
 
         //draw 1/-1 labels on y-axis
         this.onesNode = new Node();
-        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+        var fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
         var oneLabel = new Text( oneStr, fontInfo );
         var minusOneLabel = new Text( minusOneStr, fontInfo );
         this.onesNode.children = [ oneLabel, minusOneLabel ];
@@ -180,7 +180,7 @@ define( function( require ) {
         this.tickMarkLabelsInRadians.visible = false;
 
         //Axes labels
-        var fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
+        fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaLabel = new Text( theta, fontInfo );
         thetaLabel.left = this.axesNode.right + 5; //= xAxis.right;
         thetaLabel.centerY = xAxis.centerY;

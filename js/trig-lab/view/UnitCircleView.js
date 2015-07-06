@@ -190,7 +190,7 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        var arcRadius = 0.2*radius;   //arc radius = 0.2 of rotor radius
+        arcRadius = 0.2*radius;   //arc radius = 0.2 of rotor radius
         var arcShape = new Shape();
         var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
         

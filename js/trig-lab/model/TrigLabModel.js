@@ -116,7 +116,7 @@ define( function( require ) {
       var roundedAngleTarget = angleTarget*180/Math.PI;
       var dDeg = 0.5;
       var roundFactor = Util.roundSymmetric( 1/dDeg );
-      var roundedAngleTarget = Util.roundSymmetric( roundedAngleTarget*roundFactor )/roundFactor;
+      roundedAngleTarget = Util.roundSymmetric( roundedAngleTarget*roundFactor )/roundFactor;
       angleTarget = roundedAngleTarget*Math.PI/180;
       //
       // console.log( 'testAngle = ' + testAngleTarget );

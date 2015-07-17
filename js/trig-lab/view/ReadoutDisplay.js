@@ -7,8 +7,6 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  //var Node = require( 'SCENERY/nodes/Node' );
-  //var Line = require( 'SCENERY/nodes/Line' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var ReadoutNode = require( 'TRIG_LAB/trig-lab/view/ReadoutNode' );

@@ -60,7 +60,7 @@ define( function ( require ) {
         //console.log( 'layoutBounds = '+this.layoutBounds );
 
 
-        //Set up call-backs
+        //Set up callbacks
         viewProperties.graphProperty.link( function( graph ) {
             //console.log('graphProperty called. graph = ' + graph);
             //set visibility of horizontal and vertical arrows on x-y-R triangle on unit circle
@@ -174,8 +174,8 @@ define( function ( require ) {
                 graphView.accordionBox.expandedProperty.value = true;
                 trigLabModel.setFullAngleInRadians( 0 );
             },
-            right: this.layoutBounds.maxX - 10,
-            bottom: this.layoutBounds.maxY - 10,
+            right: this.layoutBounds.maxX - 60,
+            top: controlPanel.bottom + 10, //this.layoutBounds.maxY - 10,
             radius: 18   //Dubson wants button smaller than default
         } );
         this.addChild( resetAllButton );

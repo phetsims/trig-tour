@@ -43,6 +43,7 @@ define( function( require ) {
     var piStr = require( 'string!TRIG_LAB/pi' );
 
     //constants
+    var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
     var COS_COLOR = UtilTrig.COS_COLOR;
     var SIN_COLOR = UtilTrig.SIN_COLOR;
     var TAN_COLOR = UtilTrig.TAN_COLOR;
@@ -82,7 +83,9 @@ define( function( require ) {
 
         //accordionBox is empty, just need the button and title
         var emptyNode = new Text( ' ', { font: DISPLAY_FONT });
-        this.graphTitle = new Text( 'cos vs ' + theta, {font: DISPLAY_FONT });  //need text her to set box width
+        //this.graphTitle = new Text( 'cos vs ' + theta, {font: DISPLAY_FONT });  //need text her to set box width
+        var cosThetaVsThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
+        this.graphTitle = cosThetaVsThetaLabel;
         var accordionInfoObject = {
             titleNode: this.graphTitle,
             showTitleWhenExpanded: false,
@@ -100,11 +103,15 @@ define( function( require ) {
         var bWidth = 1.05*width;
         var arcRadius = 8;
         var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR } );
-        //align accordian box
+        //align accordion box
         this.accordionBox.left = background.left;
         this.accordionBox.top = background.top;
 
-
+        //draw right and left border rectangles, which serve to hide indicator line when it is off the graph
+        var borderWidth = 400;
+        var borderHeight = 1000;
+        var rightBorder = new Rectangle(  -bWidth/2 - borderWidth, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
+        var leftBorder = new Rectangle( bWidth/2, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
 
         //draw x-, y-axes
         var xAxisLength = width;
@@ -142,8 +149,8 @@ define( function( require ) {
         var xOffset = 8;
         oneLabel.left =  xOffset ;
         minusOneLabel.right = -xOffset;
-        oneLabel.centerY =  -this.amplitude;
-        minusOneLabel.centerY = this.amplitude;
+        oneLabel.centerY =  -this.amplitude - 5;
+        minusOneLabel.centerY = this.amplitude + 5;
         //console.log( 'onesNode is ' + this.onesNode );
 
         //draw tic mark labels in degrees
@@ -353,7 +360,9 @@ define( function( require ) {
             this.tickMarkLabelsInRadians,
             xTics,
             yTics,
-            this.indicatorLine
+            this.indicatorLine,
+            rightBorder,
+            leftBorder
         ];
 
         graphView.children = [
@@ -454,15 +463,20 @@ define( function( require ) {
               else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
           },
           setTitleBar: function( trigString ) {
+              console.log( 'setTitleBar() called' );
               if ( trigString === 'cos' ) {
-
-                  this.graphTitle.text = cosStr + ' ' + vsStr + ' ' + theta;
+                  var cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+                  this.graphTitle.text = cosThetaVsThetaText; //cosStr + ' ' + vsStr + ' ' + theta;
               }
               else if ( trigString === 'sin' ) {
-                  this.graphTitle.text = sinStr + ' ' + vsStr + ' ' + theta;
+                  var sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+                  this.graphTitle.text = sinThetaVsThetaText;
+                  //this.graphTitle.text = sinStr + ' ' + vsStr + ' ' + theta;
               }
               else if ( trigString === 'tan' ) {
-                  this.graphTitle.text = tanStr + ' ' + vsStr + ' ' + theta;
+                  var tanThetaVsThetaText = tanStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+                  this.graphTitle.text = tanThetaVsThetaText;
+                  //this.graphTitle.text = tanStr + ' ' + vsStr + ' ' + theta;
               }
           }
       }

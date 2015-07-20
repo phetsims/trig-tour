@@ -32,10 +32,12 @@ define( function( require ) {
 
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
+    var DISPLAY_FONT_LARGE = new PhetFont( 22 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
     var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
     var LINE_COLOR = UtilTrig.LINE_COLOR;
     var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+    var TEXT_COLOR_GRAY = UtilTrig.TEXT_COLOR_GRAY;
     var COS_COLOR = UtilTrig.COS_COLOR;
     var SIN_COLOR = UtilTrig.SIN_COLOR;
     //var TAN_COLOR = UtilTrig.TAN_COLOR;
@@ -105,13 +107,12 @@ define( function( require ) {
 
         //draw vertical (sine) line on rotor triangle
         //displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
-        this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: SIN_COLOR } );
+        this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: 'black' } );
         this.vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
         //draw horizontal (cosine) line on rotor triangle
-        this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 6, stroke: COS_COLOR } );
+        this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 6, stroke: 'black' } );
         this.hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
-
 
         //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                 
@@ -121,16 +122,16 @@ define( function( require ) {
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
-        //draw x, y, and '1' labels on the xyR triangle
+        //Draw x, y, and '1' labels on the xyR triangle
         var labelCanvas = new Node();
-        fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+        fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
         var oneText = new Text( oneStr, fontInfo );
         xText = new Text( xStr, fontInfo );            //xText, yText already defined above
         yText = new Text( yStr, fontInfo );
         fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
         var thetaText = new Text( thetaStr, fontInfo );
         //+1, -1 labels on axes
-        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+        fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY };
         var oneXText = new Text( oneStr, fontInfo );
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var oneYText = new Text( oneStr, fontInfo );
@@ -209,7 +210,7 @@ define( function( require ) {
         angleArcPath.addChild( angleArcArrowHead );
         circleGraphic.addChild( angleArcPath );
 
-        //draw arc with gradually increasing radius
+        //draw angle arc with gradually increasing radius
         var drawAngleArc = function(){
             var arcShape = new Shape();  //This seems wasteful, but there is no Shape.clear() function
             arcRadius = 0.2*radius;

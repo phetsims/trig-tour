@@ -92,7 +92,7 @@ define( function( require ) {
             showTitleWhenExpanded: false,
             titleAlignX: 'left' + '',
             titleXSpacing: 15,
-            titleXMargin: 20,
+            titleXMargin: 15,
             stroke: 'white',
             contentAlign: 'left',
             fill: 'white'
@@ -102,17 +102,17 @@ define( function( require ) {
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
-        var arcRadius = 8;
+        var arcRadius = 10;
         var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, stroke: TEXT_COLOR_GRAY, lineWidth: 2 } );
         //align accordion box
-        this.accordionBox.left = background.left;
-        this.accordionBox.top = background.top;
+        this.accordionBox.left = background.left + 2;
+        this.accordionBox.top = background.top + 2;
 
         //draw right and left border rectangles, which serve to hide indicator line when it is off the graph
         var borderWidth = 400;
         var borderHeight = 1000;
-        var rightBorder = new Rectangle(  -bWidth/2 - borderWidth, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
-        var leftBorder = new Rectangle( bWidth/2, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
+        var rightBorder = new Rectangle(  -bWidth/2 - borderWidth - 1, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
+        var leftBorder = new Rectangle( bWidth/2 + 1, -0.8*borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR });
 
         //draw x-, y-axes
         var xAxisLength = width;

@@ -49,6 +49,7 @@ define( function( require ) {
     var TAN_COLOR = UtilTrig.TAN_COLOR;
     var LINE_COLOR = UtilTrig.LINE_COLOR;
     var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+    var TEXT_COLOR_GRAY = UtilTrig.TEXT_COLOR_GRAY;
     var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
     var DISPLAY_FONT = new PhetFont( 20 );
     var DISPLAY_FONT_SMALL = new PhetFont( 18 );
@@ -102,7 +103,7 @@ define( function( require ) {
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
         var arcRadius = 8;
-        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR } );
+        var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, stroke: TEXT_COLOR_GRAY, lineWidth: 2 } );
         //align accordion box
         this.accordionBox.left = background.left;
         this.accordionBox.top = background.top;

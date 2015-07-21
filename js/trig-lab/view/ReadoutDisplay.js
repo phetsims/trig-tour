@@ -36,7 +36,7 @@ define( function( require ) {
 
     // Call the super constructor
     AccordionBox.call( this, this.readoutNode, {
-      lineWidth: 2,
+      lineWidth: 1,
       cornerRadius: 10,
       buttonXMargin: 12, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,

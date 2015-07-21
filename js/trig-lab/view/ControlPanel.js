@@ -80,7 +80,7 @@ define( function( require ) {
     } );
 
 
-    Panel.call( this, content, {xMargin: 15, yMargin: 15, lineWidth: 2, fill: PANEL_COLOR} );
+    Panel.call( this, content, {xMargin: 15, yMargin: 15, lineWidth: 1, fill: PANEL_COLOR} );
 
   } // end ControlPanel constructor
 

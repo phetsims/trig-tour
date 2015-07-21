@@ -78,7 +78,7 @@ define( function( require ) {
         var bWidth = 2.4*radius;
         var bHeight = 2.4*radius;
         var arcRadius = 8;
-        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7} );
+        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke:TEXT_COLOR_GRAY, lineWidth: 2 } );
 
         //Draw x-, y-axes with x and y labels
         var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )
@@ -102,7 +102,7 @@ define( function( require ) {
         gridShape.lineTo( r, -r ).lineTo( r, r ).lineTo( -r, r ).lineTo( -r, -r );
         gridShape.moveTo( -r, -r/2 ).lineTo( r, -r/2 ).moveTo( -r, r/2 ).lineTo( r, r/2 );
         gridShape.moveTo( -r/2, -r ).lineTo( -r/2, r ).moveTo( r/2, -r ).lineTo( r/2, r );
-        this.grid = new Path( gridShape, { lineWidth: 2, stroke: '#aaa' });
+        this.grid = new Path( gridShape, { lineWidth: 2, stroke: TEXT_COLOR_GRAY });
         this.grid.visible = false;
 
         //draw vertical (sine) line on rotor triangle

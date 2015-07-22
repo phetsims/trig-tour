@@ -375,6 +375,11 @@ define( function( require ) {
         this.accordionBox.expandedProperty.link( function( tOrF ){
             background.visible = tOrF;
             displayNode.visible = tOrF;
+            if( tOrF ){
+              graphView.accordionBox.stroke = 'white';
+            }else{
+                graphView.accordionBox.stroke = 'black';
+            }
         });
 
         // When dragging, move the sample element

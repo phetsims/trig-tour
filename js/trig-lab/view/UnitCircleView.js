@@ -107,16 +107,16 @@ define( function( require ) {
 
         //draw vertical (sine) line on rotor triangle
         //displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
-        this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 6, stroke: 'black' } );
+        this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
         this.vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
         //draw horizontal (cosine) line on rotor triangle
-        this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 6, stroke: 'black' } );
+        this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
         this.hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
 
         //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                 
-        rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 3, stroke: '#000'} ) );
+        rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 4, stroke: '#000'} ) );
         rotorGraphic.addChild( new Circle( 7, { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
         var hitBound = 30;
         rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )

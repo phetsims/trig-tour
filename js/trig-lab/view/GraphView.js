@@ -89,8 +89,12 @@ define( function( require ) {
 
         //accordionBox is empty, just need the button and title
         var emptyNode = new Text( '   ', { font: DISPLAY_FONT });  //to make space for expandCollapseButton
-        var cosThetaVsThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
-        this.graphTitle = cosThetaVsThetaLabel;
+        this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+        this.sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+        this.tanThetaVsThetaText = tanStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+        //var trigFuncVsThetaLabel = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );// cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
+
+        this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );
         var titleDisplayHBox = new HBox( {children: [ emptyNode, this.graphTitle ], spacing: 5 });
 
         var panelOptions = {
@@ -474,16 +478,13 @@ define( function( require ) {
           setTitleBar: function( trigString ) {
               //console.log( 'setTitleBar() called' );
               if ( trigString === 'cos' ) {
-                  var cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-                  this.graphTitle.text = cosThetaVsThetaText;
+                  this.graphTitle.text = this.cosThetaVsThetaText;
               }
               else if ( trigString === 'sin' ) {
-                  var sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-                  this.graphTitle.text = sinThetaVsThetaText;
+                  this.graphTitle.text = this.sinThetaVsThetaText;
               }
               else if ( trigString === 'tan' ) {
-                  var tanThetaVsThetaText = tanStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-                  this.graphTitle.text = tanThetaVsThetaText;
+                  this.graphTitle.text = this.tanThetaVsThetaText;
               }
           }
       }

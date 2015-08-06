@@ -443,6 +443,7 @@ define( function( require ) {
         } );
 
         model.singularityProperty.link( function( singularity ) {
+            console.log('singularity');
             if( graphView.trigFunction === 'tan' ){
                 graphView.singularityIndicator.visible = singularity;
                 //graphView.indicatorLine.visible = !singularity;

@@ -80,10 +80,11 @@ define( function ( require ) {
             graphView.setTitleBar( graph );
             if( trigLabModel.singularity ){
                 if( graph === 'cos' || graph === 'sin'){
-                    graphView.indicatorLine.visible = true;
+                    graphView.indicatorLine.opacity = 1;
                     graphView.singularityIndicator.visible = false;
                 }else{
-                    graphView.indicatorLine.visible = false;
+                    //always want indicatorLine grabbable, so do not want .visible = false
+                    graphView.indicatorLine.opacity = 0;
                     graphView.singularityIndicator.visible = true;
                 }
             }

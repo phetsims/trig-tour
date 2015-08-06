@@ -23,10 +23,11 @@ define( function( require ) {
 
   //strings
   //next two strings used in definitions of succeeding strings, so not in alpha order
-  var equalStr = require( 'string!TRIG_LAB/equals' ) + ' ';
+  var equalStr = ' = ';//require( 'string!TRIG_LAB/equals' ) + ' ';
   var theta = require( 'string!TRIG_LAB/theta' );
 
-  var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
+  //var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
+  var angleStr = require( 'string!TRIG_LAB/angle' );
   var cosStr = require( 'string!TRIG_LAB/cos' );
   var degreesStr = require( 'string!TRIG_LAB/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
@@ -37,7 +38,7 @@ define( function( require ) {
   var radiansStr = require( 'string!TRIG_LAB/radians' );
   var sinStr = require( 'string!TRIG_LAB/sin' );
   var tanStr = require( 'string!TRIG_LAB/tan');
-  var xyEqualsStr = require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
+  var xyEqualsStr = '(x,y) = ';//require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
 
   var xStr = 'x';
   var yStr = 'y';
@@ -119,6 +120,7 @@ define( function( require ) {
     this.coordinatesHBox.centerY = coordinatesLabel.centerY;
 
     //Row 2: 'angle = ' value in degrees or radians; value is decimal number or exact fraction of radians (in special angle mode)
+    var angleEqualsStr = angleStr + ' = ';
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
     //this.angleReadoutDecimal = new Text( angleValue, fontInfo );    //angle readout as decimal number
     this.angleReadoutDecimal = new SubSupText( angleValue, fontInfo );    //angle readout as decimal number

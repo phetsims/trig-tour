@@ -1,6 +1,6 @@
 /**
  * Vertical or horizontal arrow node
- * consists of a line and a triangle
+ * consisting of a line and a triangle arrow-head
  * Created by Dubson on 6/16/2015.
  */
 

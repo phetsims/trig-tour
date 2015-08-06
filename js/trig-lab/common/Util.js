@@ -1,5 +1,6 @@
 /**
- * Color constants
+ * Layout bounds constant and
+ * color constants
  * Created by Dubson on 6/16/2015.
  */
 
@@ -18,8 +19,8 @@ define( function( require ) {
         TEXT_COLOR_GRAY: '#AAA',
         LINE_COLOR: '#000',
         PANEL_COLOR: '#f9f9f9',//'#EEE', //'#FFD9B3',  //
-        SIN_COLOR: '#0C0',
-        COS_COLOR: '#00D',
-        TAN_COLOR: '#F00'
+        SIN_COLOR: '#008700',  //color-blind green //'#0C0',
+        COS_COLOR: '#00D',     //normal blue
+        TAN_COLOR: '#ff5500'   //color-blind red//'#F00'
     };
 } );

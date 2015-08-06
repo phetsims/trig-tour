@@ -32,7 +32,7 @@ define( function( require ) {
 
     this.readoutNode = new ReadoutNode( model, properties );
 
-    this.expanded = new Property( true );
+    this.expandedProperty = new Property( true );
 
     // Call the super constructor
     AccordionBox.call( this, this.readoutNode, {
@@ -48,7 +48,7 @@ define( function( require ) {
       contentXMargin: 20,
       contentYMargin: 15,
       contentYSpacing: 8,
-      expandedProperty: this.expanded
+      expandedProperty: this.expandedProperty
     } );
 
   }

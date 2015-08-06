@@ -6,6 +6,9 @@
   "angleEquals": {
     "value": "angle = "
   },
+  "angle": {
+    "value": "angle"
+  },
   "cos": {
     "value": "cos"
   },

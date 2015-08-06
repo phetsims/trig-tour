@@ -20,12 +20,12 @@ define( function( require ) {
 
     PropertySet.call( this, {
       angle: 0,               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
-      singularity: false      //@private, indicates singularity in tan function at theta = +/- 90 degrees
+      singularity: false      //@private, indicates singularity in tan function at theta = +/- 90 degrees,true is angle is close to +/-90 degrees
     } );
-    this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi with 180 offset
+    this.smallAngle = 0;     //@private, smallAngle is between -pi and +pi = angle modulo 2*pi, with 180 offset
     this.previousAngle = 0;  //@private, smallAngle in previous step, needed to compute total angle from smallAngle
-    this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle incremented at 180 deg; needed to compute total angle from smallAngle
-    this.fullTurnCount = 0;  //@private, nbr of full turns around unit circle, incremented at theta = 0 deg
+    this.nbrFullTurns = 0;   //@private, nbr of turns around the unit circle incremented at angle = 180 deg; needed to compute total angle from smallAngle
+    this.fullTurnCount = 0;  //@private, nbr of full turns around unit circle, incremented at angle = 0 deg
     this.halfTurnCount = 0;  //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30,45, 60, 90...)
   }
@@ -60,6 +60,7 @@ define( function( require ) {
     getAngleInDegrees: function () {
        return this.angle*180/Math.PI;
     },
+    //small angle in rads is -pi to +pi
     getSmallAngleInRadians: function(){
         return this.smallAngle;
     },
@@ -101,34 +102,31 @@ define( function( require ) {
       this.halfTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/(Math.PI ));
       this.angle = angleInRads;
     } ,
-
+    //set the full angle, and various turns counts, given the current small angle
     setAngle: function ( smallAngle ){    //smallAngle in rads
       this.smallAngle = smallAngle;
-      var critAngle = 149*Math.PI/180;
-      if( ( this.smallAngle < 0 ) && (this.previousAngle > critAngle) ){
+      var comparisonAngle = 149*Math.PI/180;  //chosen somewhat arbitrarily but want this rather far from angle = 180 deg
+      if( ( this.smallAngle < 0 ) && (this.previousAngle > comparisonAngle) ){
         this.nbrFullTurns += 1;
-      }else if ( this.smallAngle > 0 && this.previousAngle < -critAngle ) {
+      }else if ( this.smallAngle > 0 && this.previousAngle < -comparisonAngle ) {
         this.nbrFullTurns -= 1;
       }
 
       var angleTarget = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
-      //round to nearest half-degree, must convert to degrees and then back to rads for this
+      //round to nearest half-degree,;must convert to degrees and then back to rads for this
       var roundedAngleTarget = angleTarget*180/Math.PI;
-      var dDeg = 0.5;
-      var roundFactor = Util.roundSymmetric( 1/dDeg );
+      var deltaDeg = 0.5;
+      var roundFactor = Util.roundSymmetric( 1/deltaDeg );
       roundedAngleTarget = Util.roundSymmetric( roundedAngleTarget*roundFactor )/roundFactor;
       angleTarget = roundedAngleTarget*Math.PI/180;
-      //
-      // console.log( 'testAngle = ' + testAngleTarget );
       var remainderAngle = angleTarget%( 2*Math.PI );
       this.fullTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(2*Math.PI ));
       remainderAngle = angleTarget%( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( angleTarget - remainderAngle )/(Math.PI ));
-
       this.angle = angleTarget;  //now can trigger angle update
       //console.log( 'Model.setAngle called. angleInDeg = ' + this.getAngleInDegrees() );
       this.previousAngle = smallAngle;
-    },
+    },//end setAngle()
     //takes small angle in rads and sets current angle to nearest special angle in rads
     setSpecialAngle: function ( smallAngle ){   //smallAngle in rads
       var smallAngleInDegs = smallAngle*180/Math.PI;

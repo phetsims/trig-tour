@@ -109,7 +109,7 @@ define( function( require ) {
         sinFractionHolder1,
         rightParensText
       ],
-      align: 'left',
+      align: 'center',
       spacing: 0
       });
     //coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise

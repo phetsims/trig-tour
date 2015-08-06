@@ -55,7 +55,7 @@ define( function ( require ) {
         readoutDisplay.top = 30;
         graphView.x = this.layoutBounds.centerX;
         graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
-        controlPanel.right = this.layoutBounds.right - 60;
+        controlPanel.centerX = 0.5*( unitCircleView.right + this.layoutBounds.right );
         controlPanel.top = this.layoutBounds.top + 30;
         //console.log( 'layoutBounds = '+this.layoutBounds );
 

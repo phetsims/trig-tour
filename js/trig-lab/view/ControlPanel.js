@@ -64,13 +64,13 @@ define( function( require ) {
 
     // Adjust touch areas
     var spacing = 15;
-
+    var separatorWidth = specialAnglesCheckBox.width + 10;
     var content = new VBox( {
       children: [
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( 150 ), //maxControlWidth ),
+        new HSeparator( separatorWidth ), //maxControlWidth ),
         specialAnglesCheckBox,
         labelsCheckBox,
         gridCheckBox

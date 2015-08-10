@@ -2,6 +2,7 @@
   "name": "trig-lab",
   "version": "1.0.0-dev.16",
   "license": "GPLv3",
+  "requirejsNamespace": "TRIG_LAB",
   "simTitleStringKey": "TRIG_LAB/trig-lab.name",
   "phetLibs": [
     "trig-lab"

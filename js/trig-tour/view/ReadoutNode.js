@@ -1,6 +1,6 @@
 /**
  * Live readout of angle, and values of sin, cos, tan.
- * Created by Dubson on 6/10/2015.
+ * Created by Michael Dubson (PhET developer) on 6/10/2015.
  */
 define( function( require ) {
   'use strict';
@@ -13,7 +13,6 @@ define( function( require ) {
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );

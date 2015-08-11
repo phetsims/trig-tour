@@ -1,5 +1,7 @@
 /**
- * Created by dubson on 6/10/2015.
+ * AccordionBox container of ReadoutNode,
+ * ReadoutNode contains all the user-viewed content.
+ * Created by Michael Dubson on 6/10/2015.
  */
 define( function( require ) {
   'use strict';
@@ -16,7 +18,6 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var PANEL_COLOR = Util.PANEL_COLOR;
-
 
   /**
    * Constructor for
@@ -42,7 +43,6 @@ define( function( require ) {
       buttonYMargin: 12,
       titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleAlignX: 'left',
-      //contentAlign: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
       contentXMargin: 20,

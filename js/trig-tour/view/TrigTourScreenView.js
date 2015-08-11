@@ -19,19 +19,19 @@ define( function ( require ) {
     var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
     /**
-     * @param {TrigTourModel} trigLabModel, model for sim
+     * @param {TrigTourModel} model for sim
      * @constructor
      */
-    function TrigTourScreenView( trigLabModel ) {
+    function TrigTourScreenView( trigTourModel ) {
 
         ScreenView.call( this );
         var trigTourScreenView = this;
         this.labelsVisible = false;  //set by Control Panel
 
         var viewProperties = new ViewProperties();
-        var unitCircleView = new UnitCircleView( trigLabModel );
-        var readoutDisplay = new ReadoutDisplay( trigLabModel, viewProperties );
-        var graphView = new GraphView( trigLabModel, 0.25*this.layoutBounds.height, 0.92*this.layoutBounds.width );
+        var unitCircleView = new UnitCircleView( trigTourModel );
+        var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
+        var graphView = new GraphView( trigTourModel, 0.25*this.layoutBounds.height, 0.92*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
 
         //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of unitCircle View
@@ -78,7 +78,7 @@ define( function ( require ) {
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
             //set title bar on graph view
             graphView.setTitleBar( graph );
-            if( trigLabModel.singularity ){
+            if( trigTourModel.singularity ){
                 if( graph === 'cos' || graph === 'sin'){
                     graphView.indicatorLine.opacity = 1;
                     graphView.singularityIndicator.visible = false;
@@ -132,7 +132,7 @@ define( function ( require ) {
         viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ){
             unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
             readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
-            trigLabModel.specialAnglesMode = specialAnglesVisible;
+            trigTourModel.specialAnglesMode = specialAnglesVisible;
 
             //select correct trig readouts
             readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
@@ -158,8 +158,8 @@ define( function ( require ) {
             //set precision of angle readout in degrees:
             //in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
             if( specialAnglesVisible ){
-                var currentSmallAngle = trigLabModel.getSmallAngleInRadians();
-                trigLabModel.setSpecialAngle( currentSmallAngle );
+                var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
+                trigTourModel.setSpecialAngle( currentSmallAngle );
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
             }else{
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );  //1 decimal place precision for continuous angles
@@ -174,7 +174,7 @@ define( function ( require ) {
                 viewProperties.reset();
                 graphView.expandedProperty.value = true;
                 readoutDisplay.expandedProperty.value = true;
-                trigLabModel.setFullAngleInRadians( 0 );
+                trigTourModel.setFullAngleInRadians( 0 );
             },
             right: this.layoutBounds.maxX - 60,
             top: controlPanel.bottom + 10, //this.layoutBounds.maxY - 10,

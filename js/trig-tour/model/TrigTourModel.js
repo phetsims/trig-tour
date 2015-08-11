@@ -28,6 +28,7 @@ define( function( require ) {
     this.fullTurnCount = 0;  //@private, nbr of turns around unit circle, incremented at angle = 0 deg
     this.halfTurnCount = 0;  //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30, 45, 60, 90...)
+
   }
 
   return inherit( PropertySet, TrigTourModel, {
@@ -87,9 +88,9 @@ define( function( require ) {
     getHalfTurnCount: function(){
       return this.halfTurnCount;
     },
-    setAngleInDegrees: function( angleInDegrees ){
-        this.angle = angleInDegrees*Math.PI/180;
-    },
+    //setAngleInDegrees: function( angleInDegrees ){
+    //    this.angle = angleInDegrees*Math.PI/180;
+    //},
 
     //set the full angle, the small angle and various turns counts, given the current full angle
     setFullAngleInRadians: function( angleInRads ){   //argument is total angle, not small angle
@@ -163,8 +164,13 @@ define( function( require ) {
       var fullTurnsAngle = fullAngle - remainderAngle;
       var remainderInDegrees = remainderAngle * 180 / Math.PI;
       var nearestSpecialAngleInDegrees = 0;
+
+      //Notice these are not the same special angles as in setSpecialAngle() above
       var specialAngles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
+
+      //borders are angles half-way between special angles
       var borders = [ 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165, 195, 217.5, 232.5, 255, 285, 307.5, 322.5, 345 ];
+      
       for ( var i = 0; i <= specialAngles.length - 1; i++ ) {
         if ( remainderInDegrees >= borders[ i ] && remainderInDegrees < borders[ i + 1 ] ) {
           nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];// * Math.PI / 180;

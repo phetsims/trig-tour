@@ -277,7 +277,7 @@ define( function( require ) {
             }else{
                 xText.visible = true;
             }
-            
+
             //position one-label
             var angleOffset = 9*pi/180;
             var sign = 1; //if sign = +1, one-label is to right of radius, if sign = -1 then to the left

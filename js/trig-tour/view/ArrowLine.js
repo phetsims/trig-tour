@@ -10,16 +10,11 @@ define( function( require ) {
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
     var Node = require( 'SCENERY/nodes/Node' );
-    //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-    //var Circle = require( 'SCENERY/nodes/Circle' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    //var Vector2 = require( 'DOT/Vector2' );
     var Shape = require( 'KITE/Shape' );
     var Path = require( 'SCENERY/nodes/Path' );
     var Util = require( 'DOT/Util' );
-    //var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
-
 
 
     /**

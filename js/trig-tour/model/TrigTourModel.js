@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Main model for Trig Lab Sim
+ * Main model for Trig Tour Sim
  * @author Michael Dubson (PhET)
  */
 define( function( require ) {
@@ -16,7 +16,7 @@ define( function( require ) {
    * @constructor
    *
    */
-  function TrigLabModel() {
+  function TrigTourModel() {
 
     PropertySet.call( this, {
       angle: 0,               //@private, total angle in radians, can be greater than 2*pi radians, or less than -2*pi radians
@@ -30,7 +30,7 @@ define( function( require ) {
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30,45, 60, 90...)
   }
 
-  return inherit( PropertySet, TrigLabModel, {
+  return inherit( PropertySet, TrigTourModel, {
     cos: function () {
       return Math.cos( this.angle );
     },

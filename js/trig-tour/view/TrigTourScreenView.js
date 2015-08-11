@@ -8,24 +8,24 @@ define( function ( require ) {
     'use strict';
 
     // modules
-    var ControlPanel = require( 'TRIG_LAB/trig-lab/view/ControlPanel' );
-    var GraphView = require( 'TRIG_LAB/trig-lab/view/GraphView' );
+    var ControlPanel = require( 'TRIG_TOUR/trig-tour/view/ControlPanel' );
+    var GraphView = require( 'TRIG_TOUR/trig-tour/view/GraphView' );
     var inherit = require( 'PHET_CORE/inherit' );
-    var ReadoutDisplay = require( 'TRIG_LAB/trig-lab/view/ReadoutDisplay' );
+    var ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/ReadoutDisplay' );
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
     var ScreenView = require( 'JOIST/ScreenView' );
-    var UnitCircleView = require( 'TRIG_LAB/trig-lab/view/UnitCircleView' );
-    var ViewProperties = require( 'TRIG_LAB/trig-lab/view/ViewProperties' );
+    var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
+    var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
     /**
-     * @param {TrigLabModel} trigLabModel, model for sim
+     * @param {TrigTourModel} trigLabModel, model for sim
      * @constructor
      */
-    function TrigLabScreenView( trigLabModel ) {
+    function TrigTourScreenView( trigLabModel ) {
 
         ScreenView.call( this );
-        var trigLabScreenView = this;
+        var trigTourScreenView = this;
         this.labelsVisible = false;  //set by Control Panel
 
         var viewProperties = new ViewProperties();
@@ -94,7 +94,7 @@ define( function ( require ) {
         } );
 
         viewProperties.labelsVisibleProperty.link( function( isVisible ){
-            trigLabScreenView.labelsVisible = isVisible;
+            trigTourScreenView.labelsVisible = isVisible;
             unitCircleView.setLabelVisibility( isVisible );
             graphView.onesNode.visible = isVisible;
             if( isVisible ){
@@ -113,7 +113,7 @@ define( function ( require ) {
         viewProperties.angleUnitsProperty.link ( function( units ){
             readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
             readoutDisplay.readoutNode.setUnits( units );
-            if( trigLabScreenView.labelsVisible ){
+            if( trigTourScreenView.labelsVisible ){
                 graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
                 graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
             }
@@ -183,5 +183,5 @@ define( function ( require ) {
         this.addChild( resetAllButton );
     }
 
-    return inherit( ScreenView, TrigLabScreenView, {} );
+    return inherit( ScreenView, TrigTourScreenView, {} );
 } );

@@ -6,7 +6,7 @@ define( function( require ) {
     'use strict';
 
     // modules
-    var ArrowLine = require( 'TRIG_LAB/trig-lab/view/ArrowLine' );
+    var ArrowLine = require( 'TRIG_TOUR/trig-tour/view/ArrowLine' );
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
@@ -19,7 +19,7 @@ define( function( require ) {
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Text = require( 'SCENERY/nodes/Text' );
-    var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
+    var UtilTrig = require( 'TRIG_TOUR/trig-tour/common/Util' );
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
@@ -28,7 +28,7 @@ define( function( require ) {
     var oneStr = '1';
     //var plusOneStr = '+1';
     var minusOneStr = '-1';
-    var thetaStr = require( 'string!TRIG_LAB/theta' ); // \u03b8 = unicode for theta
+    var thetaStr = require( 'string!TRIG_TOUR/theta' ); // \u03b8 = unicode for theta
 
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
@@ -46,7 +46,7 @@ define( function( require ) {
 
     /**
      * View of the unit circle with grabbable radial arm, called the rotor arm
-     * @param {TrigLabModel} model is the main model of the sim
+     * @param {TrigTourModel} model is the main model of the sim
      * @constructor
      */
 

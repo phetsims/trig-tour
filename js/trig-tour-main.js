@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var TrigLabScreen = require( 'TRIG_LAB/trig-lab/TrigLabScreen' );
+  var TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var simTitle = require( 'string!TRIG_LAB/trig-lab.name' );
+  var simTitle = require( 'string!TRIG_TOUR/trig-tour.name' );
 
   var simOptions = {
     credits: {
@@ -36,7 +36,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new TrigLabScreen() ], simOptions );
+    var sim = new Sim( simTitle, [ new TrigTourScreen() ], simOptions );
     sim.start();
   } );
 } );

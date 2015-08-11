@@ -10,12 +10,12 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
-  var TrigLabModel = require( 'TRIG_LAB/trig-lab/model/TrigLabModel' );
-  var TrigLabScreenView = require( 'TRIG_LAB/trig-lab/view/TrigLabScreenView' );
-  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var TrigLabModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
+  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
 
   // strings
-  var trigLabSimString = require( 'string!TRIG_LAB/trig-lab.name' );
+  var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.name' );
 
   //constants
   var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
@@ -23,7 +23,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function TrigLabScreen() {
+  function TrigTourScreen() {
 
     //If this is a single-screen sim, no icon is necessary.
 
@@ -32,10 +32,10 @@ define( function( require ) {
 
     Screen.call( this, trigLabSimString, icon,
       function() { return new TrigLabModel(); },
-      function( model ) { return new TrigLabScreenView( model ); },
+      function( model ) { return new TrigTourScreenView( model ); },
       { backgroundColor: BACKGROUND_COLOR }
     );
   }
 
-  return inherit( Screen, TrigLabScreen );
+  return inherit( Screen, TrigTourScreen );
 } );

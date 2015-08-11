@@ -1,5 +1,5 @@
 /**
- * Control Panel for Trig Lab sim
+ * Control Panel for Trig Tour sim
  * Created by dubson on 6/4/2015.
  */
 define( function( require ) {
@@ -16,13 +16,13 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
-  var cosStr = require( 'string!TRIG_LAB/cos' );
-  var sinStr = require( 'string!TRIG_LAB/sin' );
-  var tanStr = require( 'string!TRIG_LAB/tan' );
-  var labelsStr = require( 'string!TRIG_LAB/labels' );
-  var gridStr = require( 'string!TRIG_LAB/grid' );
-  var specialAnglesStr = require( 'string!TRIG_LAB/specialAngles' );
-  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var cosStr = require( 'string!TRIG_TOUR/cos' );
+  var sinStr = require( 'string!TRIG_TOUR/sin' );
+  var tanStr = require( 'string!TRIG_TOUR/tan' );
+  var labelsStr = require( 'string!TRIG_TOUR/labels' );
+  var gridStr = require( 'string!TRIG_TOUR/grid' );
+  var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
+  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );

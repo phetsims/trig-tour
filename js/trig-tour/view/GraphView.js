@@ -9,7 +9,7 @@ define( function( require ) {
 
     // modules
     //var AccordionBox = require( 'SUN/AccordionBox' );
-    var ArrowLine = require( 'TRIG_LAB/trig-lab/view/ArrowLine' );
+    var ArrowLine = require( 'TRIG_TOUR/trig-tour/view/ArrowLine' );
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
     var Circle = require( 'SCENERY/nodes/Circle' );
@@ -28,23 +28,23 @@ define( function( require ) {
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var SubSupText = require( 'SCENERY_PHET/SubSupText' );
     var Text = require( 'SCENERY/nodes/Text' );
-    var TriangleNode = require( 'TRIG_LAB/trig-lab/view/TriangleNode' );
+    var TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
     var Util = require( 'DOT/Util' );
-    var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
+    var UtilTrig = require( 'TRIG_TOUR/trig-tour/common/Util' );
     var Vector2 = require( 'DOT/Vector2' );
 
     //strings
     var oneStr = '1';
     var minusOneStr = '-1';
-    var theta = require( 'string!TRIG_LAB/theta' );
-    var cosStr = require( 'string!TRIG_LAB/cos' );
-    var sinStr = require( 'string!TRIG_LAB/sin' );
-    var tanStr = require( 'string!TRIG_LAB/tan' );
-    var vsStr = require( 'string!TRIG_LAB/vs' );
-    //var cosTheta = require( 'string!TRIG_LAB/cos' ) + theta ;
-    //var sinTheta = require( 'string!TRIG_LAB/sin' ) + theta ;
-    //var tanTheta = require( 'string!TRIG_LAB/tan' ) + theta ;
-    var piStr = require( 'string!TRIG_LAB/pi' );
+    var theta = require( 'string!TRIG_TOUR/theta' );
+    var cosStr = require( 'string!TRIG_TOUR/cos' );
+    var sinStr = require( 'string!TRIG_TOUR/sin' );
+    var tanStr = require( 'string!TRIG_TOUR/tan' );
+    var vsStr = require( 'string!TRIG_TOUR/vs' );
+    //var cosTheta = require( 'string!TRIG_TOUR/cos' ) + theta ;
+    //var sinTheta = require( 'string!TRIG_TOUR/sin' ) + theta ;
+    //var tanTheta = require( 'string!TRIG_TOUR/tan' ) + theta ;
+    var piStr = require( 'string!TRIG_TOUR/pi' );
 
     //constants
     var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
@@ -63,7 +63,7 @@ define( function( require ) {
     /**
      * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
      * has a draggable handle for changing the angle
-     * @param {TrigLabModel} model of the sim
+     * @param {TrigTourModel} model of the sim
      *
      *
      * @param {Number} height of this view node in pixels

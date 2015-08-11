@@ -7,7 +7,7 @@ define( function( require ) {
 
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var FractionNode = require( 'TRIG_LAB/trig-lab/view/FractionNode' );
+  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/FractionNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
@@ -17,28 +17,28 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
-  var UtilTrig = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var UtilTrig = require( 'TRIG_TOUR/trig-tour/common/Util' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   //strings
   //next two strings used in definitions of succeeding strings, so not in alpha order
-  var equalStr = ' = ';//require( 'string!TRIG_LAB/equals' ) + ' ';
-  var theta = require( 'string!TRIG_LAB/theta' );
+  var equalStr = ' = ';//require( 'string!TRIG_TOUR/equals' ) + ' ';
+  var theta = require( 'string!TRIG_TOUR/theta' );
 
-  //var angleEqualsStr = require( 'string!TRIG_LAB/angleEquals' ) + ' ';  //extra space added for pleasing layout
-  var angleStr = require( 'string!TRIG_LAB/angle' );
-  var cosStr = require( 'string!TRIG_LAB/cos' );
-  var degreesStr = require( 'string!TRIG_LAB/degrees' );
-  var infinitySymbolStr = require( 'string!TRIG_LAB/infinitySymbol' );
-  //var infinityWordStr = require( 'string!TRIG_LAB/infinityWord' );
-  var pi = require( 'string!TRIG_LAB/pi' );
-  var plusMinusStr =  require( 'string!TRIG_LAB/plusMinus' );
-  var radsStr = require( 'string!TRIG_LAB/rads' );
-  var radiansStr = require( 'string!TRIG_LAB/radians' );
-  var sinStr = require( 'string!TRIG_LAB/sin' );
-  var tanStr = require( 'string!TRIG_LAB/tan');
-  var xyEqualsStr = '(x,y) = ';//require( 'string!TRIG_LAB/xyEquals' ) + ' ';  //extra space added for pleasing layout
+  //var angleEqualsStr = require( 'string!TRIG_TOUR/angleEquals' ) + ' ';  //extra space added for pleasing layout
+  var angleStr = require( 'string!TRIG_TOUR/angle' );
+  var cosStr = require( 'string!TRIG_TOUR/cos' );
+  var degreesStr = require( 'string!TRIG_TOUR/degrees' );
+  var infinitySymbolStr = require( 'string!TRIG_TOUR/infinitySymbol' );
+  //var infinityWordStr = require( 'string!TRIG_TOUR/infinityWord' );
+  var pi = require( 'string!TRIG_TOUR/pi' );
+  var plusMinusStr =  require( 'string!TRIG_TOUR/plusMinus' );
+  var radsStr = require( 'string!TRIG_TOUR/rads' );
+  var radiansStr = require( 'string!TRIG_TOUR/radians' );
+  var sinStr = require( 'string!TRIG_TOUR/sin' );
+  var tanStr = require( 'string!TRIG_TOUR/tan');
+  var xyEqualsStr = '(x,y) = ';//require( 'string!TRIG_TOUR/xyEquals' ) + ' ';  //extra space added for pleasing layout
 
   var xStr = 'x';
   var yStr = 'y';
@@ -54,7 +54,7 @@ define( function( require ) {
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
-   * @param {TrigLabModel} model is the main model of the sim
+   * @param {TrigTourModel} model is the main model of the sim
    * @param {Object} properties
    * @constructor
    */

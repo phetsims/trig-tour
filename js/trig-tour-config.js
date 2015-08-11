@@ -8,7 +8,7 @@
 require.config( {
   // An array of dependencies to load. Useful when require is defined as a config object before require.js
   // is loaded, and you want to specify dependencies to load as soon as require() is defined.
-  deps: [ 'trig-lab-main' ],
+  deps: [ 'trig-tour-main' ],
 
   // baseUrl: don't bother trying to set it here, it is overridden by data-main in the top-level HTML file
 
@@ -38,7 +38,7 @@ require.config( {
     SUN: '../../sun/js',
 
     // this sim
-    TRIG_LAB: '.'
+    TRIG_TOUR: '.'
   },
 
   // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false

@@ -9,9 +9,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var ReadoutNode = require( 'TRIG_LAB/trig-lab/view/ReadoutNode' );
+  var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'TRIG_LAB/trig-lab/common/Util' );
+  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -20,7 +20,7 @@ define( function( require ) {
 
   /**
    * Constructor for
-   * @param {TrigLabModel} model is the main model of the sim
+   * @param {TrigTourModel} model is the main model of the sim
    * @constructor
    */
   function ReadoutDisplay( model, properties  ) {

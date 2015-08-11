@@ -1,7 +1,7 @@
 /**
  * Layout bounds constant and
  * color constants
- * Created by Dubson on 6/16/2015.
+ * Created by Michael Dubson (PhET developer) on 6/16/2015.
  */
 
 define( function( require ) {

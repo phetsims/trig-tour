@@ -1,14 +1,12 @@
 /**
- * 
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
  * Grabbable pointer indicates current value of theta and the function
- * Created by Dubson on 6/3/2015.
+ * Created by Michael Dubson (PhET developer) on 6/3/2015.
  */
 define( function( require ) {
     'use strict';
 
     // modules
-    //var AccordionBox = require( 'SUN/AccordionBox' );
     var ArrowLine = require( 'TRIG_TOUR/trig-tour/view/ArrowLine' );
     var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
     var Bounds2 = require( 'DOT/Bounds2' );
@@ -41,9 +39,6 @@ define( function( require ) {
     var sinStr = require( 'string!TRIG_TOUR/sin' );
     var tanStr = require( 'string!TRIG_TOUR/tan' );
     var vsStr = require( 'string!TRIG_TOUR/vs' );
-    //var cosTheta = require( 'string!TRIG_TOUR/cos' ) + theta ;
-    //var sinTheta = require( 'string!TRIG_TOUR/sin' ) + theta ;
-    //var tanTheta = require( 'string!TRIG_TOUR/tan' ) + theta ;
     var piStr = require( 'string!TRIG_TOUR/pi' );
 
     //constants
@@ -64,8 +59,6 @@ define( function( require ) {
      * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
      * has a draggable handle for changing the angle
      * @param {TrigTourModel} model of the sim
-     *
-     *
      * @param {Number} height of this view node in pixels
      * @param {Number} width of this view node in pixels
      * @constructor
@@ -75,24 +68,22 @@ define( function( require ) {
 
         var graphView = this;
         this.model = model;
-        this.trigFunction = '';  //{string} 'cos'|/'sin'/'tan' set by Control Panel
-        this.labelsVisible = 'false';  //set by Control Panel
-        this.expandedProperty = new Property( true );
+        this.trigFunction = '';         //{string} 'cos'|'sin'|'tan' set by Control Panel
+        this.labelsVisible = 'false';   //true is labels on graph are visible, set by Control Panel
+        this.expandedProperty = new Property( true );  //Graph can be hidden with expandCollapse button
 
         // Call the super constructor
         Node.call( graphView );
 
         var marginWidth = 25;   //distance in pixels between edge of Node and edge of nearest full wavelength
         var wavelength = ( width - 2*marginWidth )/4;  //wavelength of sinusoidal curve in pixels
-        this.amplitude = 0.45*height;  //amplitude of sinusiodal curve in pixels
-        var nbrOfWavelengths = 2*2;  //number of full wavelengths displayed, must be even number to keep graph symmetric
+        this.amplitude = 0.45*height;  //amplitude of sinusoidal curve in pixels
+        var nbrOfWavelengths = 2*2;    //number of full wavelengths displayed, must be even number to keep graph symmetric
 
-        //accordionBox is empty, just need the button and title
-        var emptyNode = new Text( '   ', { font: DISPLAY_FONT });  //to make space for expandCollapseButton
+        var emptyNode = new Text( '   ', { font: DISPLAY_FONT });    //to make space for expandCollapseButton
         this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
         this.sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
         this.tanThetaVsThetaText = tanStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-        //var trigFuncVsThetaLabel = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );// cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>',{ font: DISPLAY_FONT });
 
         this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );
         var titleDisplayHBox = new HBox( {children: [ emptyNode, this.graphTitle ], spacing: 5 });
@@ -110,24 +101,25 @@ define( function( require ) {
             minWidth: 0 // minimum width of the panel
         };
 
+        //when graph is collapsed/hidden, a title is displayed
         this.titleDisplayPanel = new Panel( titleDisplayHBox, panelOptions );
         this.expandCollapseButton = new ExpandCollapseButton(this.expandedProperty, {
             sideLength: 15,
             cursor: 'pointer'
         });
 
-        //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        //draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bHeight = 1.2*height;
         var bWidth = 1.05*width;
         var arcRadius = 10;
         var background = new Rectangle( -bWidth/2, -(bHeight/2) - 5, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, stroke: TEXT_COLOR_GRAY, lineWidth: 2 } );
+
         //align expandCollapseButton and titleDisplayButton
         this.expandCollapseButton.left = background.left + 7;
         this.expandCollapseButton.top = background.top + 7;
         this.titleDisplayPanel.left = background.left;
         this.titleDisplayPanel.top = background.top;
-        //this.accordionBox.left = background.left + 2;
-        //this.accordionBox.top = background.top + 2;
+
 
         //draw right and left border rectangles, which serve to hide indicator line when it is off the graph
         var borderWidth = 400;
@@ -173,15 +165,12 @@ define( function( require ) {
         minusOneLabel.right = -xOffset;
         oneLabel.centerY =  -this.amplitude - 5;
         minusOneLabel.centerY = this.amplitude + 5;
-        //console.log( 'onesNode is ' + this.onesNode );
 
         //draw tic mark labels in degrees
         this.tickMarkLabelsInDegrees = new Node();
         var label;
         for( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ){
-            //var nbrDegrees = 180*j.toFixed(0);
             var nbrDegrees = Util.toFixed( 180*j, 0 );
-            //console.log('j = '+j+'   nbrDegrees = '+nbrDegrees );
             nbrDegrees = nbrDegrees.toString();
             label = new SubSupText( nbrDegrees+'<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
             label.centerX = j*wavelength/2;
@@ -191,7 +180,7 @@ define( function( require ) {
             }
         }
 
-        //Tic mark labels in radians
+        //tic mark labels in radians
         this.tickMarkLabelsInRadians = new Node();
         var labelStr = '' ;
         var labelStrings = [ '-4' + piStr, '-3' + piStr,  '-2' + piStr, '-' + piStr, piStr, '2' + piStr, '3' + piStr, '4' + piStr ];
@@ -239,11 +228,11 @@ define( function( require ) {
             cosShape.lineTo( xPos, yOrigin - this.amplitude*Math.cos( 2*Math.PI*(xPos - xOrigin)/wavelength ));
         }
 
-        xPos = xOrigin - nbrOfPoints*dx/2;
+        xPos = xOrigin - nbrOfPoints*dx/2;  //start at left edge
         var tanValue = Math.tan( 2*Math.PI*(xPos - xOrigin)/wavelength ) ;
 
         //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
-        dx = wavelength/600;
+        dx = wavelength/600;  //x-distance between points on curve
         nbrOfPoints = ( nbrOfWavelengths + 0.08 )*wavelength/dx;
         var maxTanValue = 1.2;
         var minTanValue = -1.0;
@@ -307,7 +296,6 @@ define( function( require ) {
         //'Central' segment is the one centered on the origin.
         var xTanMax = Math.atan( maxTanValue )*wavelength/( 2*pi );
         var xTanMin = Math.atan( minTanValue )*wavelength/( 2*pi );
-        //console.log( 'xTanMax: ' + xTanMax + '    xTanMin:' + xTanMin );
         var xPosMax;
         var xPosMin;
         var yPosMax;
@@ -360,9 +348,7 @@ define( function( require ) {
         this.indicatorLine.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
         this.indicatorLine.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
         this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } ) ;
-        //this.redDotHandle.touchArea = new Bounds2( - hitBound, -hitBound, hitBound, hitBound ) ;
         this.indicatorLine.addChild( this.redDotHandle );
-
 
         // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by expandCollapseButton
         var displayNode = new Node();
@@ -400,16 +386,14 @@ define( function( require ) {
             graphView.titleDisplayPanel.visible = !tOrF;
         });
 
-        // When dragging, move the sample element
+
         this.indicatorLine.addInputListener( new SimpleDragHandler(
                 {
                     allowTouchSnag: true,
 
-                    start: function ( e ) {
-                        console.log( 'mouse down' );
-                        //var mouseDownPosition = e.pointer.point;
-                        //console.log( 'GraphView mouseDownPos = '  + mouseDownPosition );
-                    },
+                    //start: function ( e ) {
+                    //    console.log( 'mouse down' );
+                    //},
 
                     drag: function ( e ) {
                         var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
@@ -419,7 +403,6 @@ define( function( require ) {
                             model.setFullAngleInRadians( fullAngle );
                         }else{
                             model.setNearestSpecialAngle( fullAngle );
-                            //console.log( 'full ang = ' + model.getAngleInDegrees() );
                         }
                     }
                 } ) );
@@ -459,8 +442,6 @@ define( function( require ) {
 
     return inherit( Node, GraphView, {
           setIndicatorLine: function() {
-              //var angle = this.model.getAngleInRadians();
-              //console.log ('GraphView.setIndicator called. trigFunction = ' + this.trigFunction );
               var cosNow = this.model.cos();
               var sinNow = this.model.sin();
               var tanNow = this.model.tan();
@@ -482,7 +463,6 @@ define( function( require ) {
               else { console.log( 'ERROR in GraphView.setIndicatorLine()'); }
           },
           setTitleBar: function( trigString ) {
-              //console.log( 'setTitleBar() called' );
               if ( trigString === 'cos' ) {
                   this.graphTitle.text = this.cosThetaVsThetaText;
               }

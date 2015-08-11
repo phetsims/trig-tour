@@ -443,18 +443,15 @@ define( function( require ) {
         } );
 
         model.singularityProperty.link( function( singularity ) {
-            console.log('singularity');
             if( graphView.trigFunction === 'tan' ){
                 graphView.singularityIndicator.visible = singularity;
-                //graphView.indicatorLine.visible = !singularity;
                 //indicatorLine must always be draggable, so it must have .visible = true,
-                //and so, adjust visibility to user with opacity
+                //and so, adjust visibility by setting opacity
                 if( singularity ){
                     graphView.indicatorLine.opacity = 0;
                 }else{
                     graphView.indicatorLine.opacity = 1;
                 }
-
             }
         } );
 

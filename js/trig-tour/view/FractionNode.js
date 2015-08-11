@@ -164,6 +164,6 @@ define( function( require ) {
         sqRtPath.top = this.numeratorText.top;
         sqRtPath.centerX = this.numeratorText.centerX - 3;
       }
-    }//end createFraction()
-  }); //end return inherit..
+    }//end setFraction()
+  }); //end return inherit
 } );

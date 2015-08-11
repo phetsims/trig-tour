@@ -1,6 +1,6 @@
 /**
  * Displays a built-up fraction
- * Created by dubson on 6/10/2015.
+ * Created by Michael Dubson (PhET developer) on 6/10/2015.
  */
 
 define( function( require ) {
@@ -14,11 +14,8 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  //string
-  //var infinitySymbolStr = require( 'string!TRIG_TOUR/infinitySymbol' );  //needed for setting large font for infinity symbol
-
   /**
-   * Constructor for FractionNode which takes two string inputs, A and B, and creates built-up fraction A/B:
+   * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
    *    A
    *    -
    *    B
@@ -31,7 +28,7 @@ define( function( require ) {
    * @constructor
    */
 
-  function FractionNode( numerator, denominator, options ) {       //numerator and denominator can be Numbers or Strings
+  function FractionNode( numerator, denominator, options ) {   //numerator and denominator can be Numbers or Strings
 
     this.options = options;
     this.fractionNode = this;
@@ -42,7 +39,8 @@ define( function( require ) {
     this.numerator = numerator;
     this.denominator = denominator;
 
-    this.setFraction( );   //create the fraction
+    //create the fraction
+    this.setFraction( );
 
     this.mutate( options );
 
@@ -81,7 +79,7 @@ define( function( require ) {
         squareRootSignNeeded = true;
       }
 
-      var fontInfo = this.options; //{ font: DISPLAY_FONT };
+      var fontInfo = this.options;
 
       this.numeratorText = new Text( this.numerator, fontInfo );
       this.denominatorText = new Text( this.denominator, fontInfo );
@@ -98,7 +96,6 @@ define( function( require ) {
       }else{
           minusSign = new Line( 0, 0, 0, 0 );   //just a placeholder is no minus sign
       }
-
 
       //Draw horizontal line separating numerator and denominator
       if( squareRootSignNeeded ){
@@ -117,8 +114,6 @@ define( function( require ) {
         var h = 0.8*this.numeratorText.height;
         var w = h/4;
         sqRtShape.moveTo( -3*w/2, -h/2 ).lineTo( -w, 0 ).lineTo( 0, -h ).lineTo( W, -h );
-        //sqRtShape.moveTo( -5*w/3, h/2 ).lineTo( -w, h).lineTo( 0, 0 ).lineTo( W, 0 );
-        //sqRtPath.setShape( sqRtShape );
       }
       var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
 
@@ -126,7 +121,6 @@ define( function( require ) {
       if ( this.denominator === undefined || this.denominator === '' ) {
         //make current children invisible so numerator is not obscured
         noDenominator = true;
-        //console.log( 'no denominator ');
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[i].visible = false;
         }
@@ -152,7 +146,6 @@ define( function( require ) {
       if( !noDenominator ){
         this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
       }
-      //this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, denominatorText ];
       bar.left = 0;
       this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;
       var offset = 2;
@@ -170,9 +163,6 @@ define( function( require ) {
       if( squareRootSignNeeded ){
         sqRtPath.top = this.numeratorText.top;
         sqRtPath.centerX = this.numeratorText.centerX - 3;
-        //console.log( 'sqRtPath = ' + sqRtPath );
-        //console.log( 'sqRtPath.top = ' + sqRtPath.top );
-        //console.log( 'sqRtPath.x = ' + sqRtPath.x );
       }
     }//end createFraction()
   }); //end return inherit..

@@ -43,7 +43,7 @@ define( function( require ) {
         this.line = new Line( 0, 0, 0, 0, options );
         this.arrowHeadShape = new Shape();
         this.arrowHead = new Path( this.arrowHeadShape, { lineWidth: 1, fill: this.line.stroke });
-        
+
         arrowLine.drawArrowHead( this.arrowHeadLength );
 
         //place arrowHead on end of Line

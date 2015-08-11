@@ -1,5 +1,6 @@
 /**
  * Control Panel for Trig Tour sim
+ * on right side of stage
  * Created by dubson on 6/4/2015.
  */
 define( function( require ) {
@@ -28,10 +29,9 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
-  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
   // Text nodes
-  var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; //{ fontSize: 20 };
+  var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
   var cosText = new Text( cosStr, fontInfo );
   var sinText = new Text( sinStr, fontInfo );
   var tanText = new Text( tanStr, fontInfo );
@@ -70,7 +70,7 @@ define( function( require ) {
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( separatorWidth ), //maxControlWidth ),
+        new HSeparator( separatorWidth ),
         specialAnglesCheckBox,
         labelsCheckBox,
         gridCheckBox
@@ -78,7 +78,6 @@ define( function( require ) {
       align: 'left',
       spacing: spacing
     } );
-
 
     Panel.call( this, content, {xMargin: 15, yMargin: 15, lineWidth: 1, fill: PANEL_COLOR} );
 

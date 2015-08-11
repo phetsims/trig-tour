@@ -1,6 +1,6 @@
 /**
  * View property set, passed to control panel
- * Created by Dubson on 6/5/2015.
+ * Created by Michael Dubson (PhET developer) on 6/5/2015.
  */
 
 define( function( require ) {
@@ -17,7 +17,7 @@ define( function( require ) {
         this.viewProperties = this;
 
         PropertySet.call( this, {
-            graph: 'cos', // {string} which graph is visible, 'cos'|'sin' |'tan'
+            graph: 'cos',          //{string} which graph is visible, 'cos'|'sin' |'tan'
             angleUnits: 'degrees', //{string} which angle units, 'degrees'|'radians'
             labelsVisible: false,
             gridVisible: false,
@@ -27,11 +27,6 @@ define( function( require ) {
 
     return inherit( PropertySet, ViewProperties, {
         reset: function() {
-            //this.viewProperties.graph = 'cos';
-            //this.viewProperties.angleUnits = 'degrees';
-            //this.viewProperties.labelsVisible = false;
-            //this.viewProperties.gridVisible = false;
-            //this.viewProperties.specialAnglesVisible = false;
             this.graph = 'cos';
             this.angleUnits = 'degrees';
             this.labelsVisible = false;

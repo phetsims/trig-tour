@@ -12,7 +12,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  
+
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
    * @param {Number} length of triangle in pixels

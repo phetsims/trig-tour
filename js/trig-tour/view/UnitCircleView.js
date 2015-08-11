@@ -1,6 +1,6 @@
 /**
  * Unit Circle View
- * Created by Dubson on 6/2/2015.
+ * Created by Michael Dubson on 6/2/2015.
  */
 define( function( require ) {
     'use strict';
@@ -136,8 +136,6 @@ define( function( require ) {
         var minusOneXText = new Text( minusOneStr, fontInfo );
         var oneYText = new Text( oneStr, fontInfo );
         var minusOneYText = new Text( minusOneStr, fontInfo );
-        //var oneLabels = [ oneXText, minusOneXText, oneYText, minusOneYText ];
-        //this.grid.children = oneLabels;
 
         //position +/-1 labels on xy axes
         oneXText.left = this.grid.right + 5;
@@ -173,15 +171,14 @@ define( function( require ) {
                     // When dragging across it in a mobile device, pick it up
                     allowTouchSnag: true,
                     //start function for testing only
-                    start: function (e){ 
-                        //console.log( 'mouse down' );
+                    start: function (e){
                         mouseDownPosition = e.pointer.point;
                     },
 
                     drag: function(e){
                         var v1 =  rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-                        var smallAngle = -v1.angle();  //model angle is negative of xy screen coordinates angle
-                        //console.log( 'unit circle dragged. small angle is ' + smallAngle );
+                        //model angle is negative of xy screen coordinates angle
+                        var smallAngle = -v1.angle();
                         if( !model.specialAnglesMode ){
                             model.setAngle( smallAngle );
                         }else{
@@ -191,7 +188,7 @@ define( function( require ) {
                 } ) );
 
         //draw angle arc on unit circle
-        arcRadius = 0.2*radius;   //arc radius = 0.2 of rotor radius
+        arcRadius = 0.2*radius;   //initial arc radius = 0.2 of rotor radius
         var arcShape = new Shape();
         var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2} );
         
@@ -220,16 +217,16 @@ define( function( require ) {
             if( Math.abs(totalAngle) < 0.5 ){
                 deltaAngle = 0.02;
             }
-            var ang = 0;  //short for angle
+            var angle = 0;  //short for angle
             if( totalAngle >0 ){
-                for( ang = 0; ang <= totalAngle; ang += deltaAngle ){
+                for( angle = 0; angle <= totalAngle; angle += deltaAngle ){
                     arcRadius += deltaAngle;
-                    arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) ) ;
+                    arcShape.lineTo( arcRadius*Math.cos( angle ), -arcRadius*Math.sin( angle ) ) ;
                 }
             }else{
-                for( ang = 0; ang >= totalAngle; ang -= deltaAngle ){
+                for( angle = 0; angle >= totalAngle; angle -= deltaAngle ){
                     arcRadius += deltaAngle;
-                    arcShape.lineTo( arcRadius*Math.cos( ang ), -arcRadius*Math.sin( ang ) );
+                    arcShape.lineTo( arcRadius*Math.cos( angle ), -arcRadius*Math.sin( angle ) );
                 }
             }
 
@@ -243,14 +240,13 @@ define( function( require ) {
             }
             angleArcArrowHead.x = arcRadius*Math.cos( totalAngle );
             angleArcArrowHead.y = -arcRadius*Math.sin( totalAngle );
-            //arrow head on angle arc oriented correctly
+            //orient arrow head on angle arc correctly
             if( totalAngle < 0 ){
                 angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6/arcRadius );
             }else{
                 angleArcArrowHead.rotation = -totalAngle + ( 6/arcRadius );
             }
         };   //end drawAngleArc
-
 
 
         //visibility of x,y, and '1' labels on xyR triangle
@@ -281,6 +277,7 @@ define( function( require ) {
             }else{
                 xText.visible = true;
             }
+            
             //position one-label
             var angleOffset = 9*pi/180;
             var sign = 1; //if sign = +1, one-label is to right of radius, if sign = -1 then to the left

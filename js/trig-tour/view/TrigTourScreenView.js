@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Master layout of view on stage
+ * Main screen view, master layout of view on stage
  * @author Michael Dubson (PhET)
  */
 define( function ( require ) {
@@ -62,12 +62,13 @@ define( function ( require ) {
 
         //Set up callbacks
         viewProperties.graphProperty.link( function( graph ) {
-            //console.log('graphProperty called. graph = ' + graph);
+
             //set visibility of horizontal and vertical arrows on x-y-R triangle on unit circle
             unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
             unitCircleView.hLine.visible = ( graph === 'sin' );
             unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
             unitCircleView.vLine.visible = ( graph === 'cos' );
+
             //set visibility of curves on graph view
             graphView.trigFunction = graph;
             graphView.cosPath.visible = ( graph === 'cos' );
@@ -76,6 +77,7 @@ define( function ( require ) {
             graphView.sinThetaLabel.visible = ( graph === 'sin' );
             graphView.cosThetaLabel.visible = ( graph === 'cos' );
             graphView.tanThetaLabel.visible = ( graph === 'tan' );
+
             //set title bar on graph view
             graphView.setTitleBar( graph );
             if( trigTourModel.singularity ){
@@ -89,6 +91,7 @@ define( function ( require ) {
                 }
             }
             graphView.setIndicatorLine();
+
             //visibility of trig function readout
             readoutDisplay.readoutNode.setTrigRowVisibility( graph );
         } );

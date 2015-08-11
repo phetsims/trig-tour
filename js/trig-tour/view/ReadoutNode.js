@@ -22,22 +22,19 @@ define( function( require ) {
 
   //strings
   //next two strings used in definitions of succeeding strings, so not in alpha order
-  var equalStr = ' = ';//require( 'string!TRIG_TOUR/equals' ) + ' ';
+  var equalStr = ' = ';
   var theta = require( 'string!TRIG_TOUR/theta' );
-
-  //var angleEqualsStr = require( 'string!TRIG_TOUR/angleEquals' ) + ' ';  //extra space added for pleasing layout
   var angleStr = require( 'string!TRIG_TOUR/angle' );
   var cosStr = require( 'string!TRIG_TOUR/cos' );
   var degreesStr = require( 'string!TRIG_TOUR/degrees' );
   var infinitySymbolStr = require( 'string!TRIG_TOUR/infinitySymbol' );
-  //var infinityWordStr = require( 'string!TRIG_TOUR/infinityWord' );
   var pi = require( 'string!TRIG_TOUR/pi' );
   var plusMinusStr =  require( 'string!TRIG_TOUR/plusMinus' );
   var radsStr = require( 'string!TRIG_TOUR/rads' );
   var radiansStr = require( 'string!TRIG_TOUR/radians' );
   var sinStr = require( 'string!TRIG_TOUR/sin' );
   var tanStr = require( 'string!TRIG_TOUR/tan');
-  var xyEqualsStr = '(x,y) = ';//require( 'string!TRIG_TOUR/xyEquals' ) + ' ';  //extra space added for pleasing layout
+  var xyEqualsStr = '(x,y) = ';
 
   var xStr = 'x';
   var yStr = 'y';
@@ -45,11 +42,8 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
-  //var DISPLAY_FONT_VERY_LARGE = new PhetFont( 100 );
-  //var LINE_COLOR = UtilTrig.LINE_COLOR;
-  //var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
   var TEXT_COLOR = UtilTrig.TEXT_COLOR;
-  //var PANEL_COLOR = UtilTrig.PANEL_COLOR;
+
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
@@ -65,17 +59,16 @@ define( function( require ) {
     this.nbrDecimalPlaces = 1;      //number of decimal places for display of angle, = 0 for special angles
     this.radiansDisplayed = false;  //{boolean} set by ControlPanel
     this.specialAnglesOnly = false; //{boolean} set by ControlPanel
-    this.units = 'degrees';         //{string} 'degrees'|'radians' set by Readout panel
-    //this.unitsOnValue = 'rads';     //
+    this.units = 'degrees';         //{string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
     Node.call( readoutNode );
 
     var row1 = new Node();    //coordinates readout: (x, y) = ( cos, sin )
-    var row2 = new Node();    //angle = angle value in degrees or radians
-    //row 3 is this.trigRow3 declared below, trig function = trig value, where trig function = 'sin'|'cos'|'tan'
+    var row2 = new Node();    //angle readout: angle = value in degrees or radians
+    //row 3 is this.trigRow3 declared below, 'sin'|'cos'|'tan'= trig value
 
-    var angleValue = Util.toFixed( model.angle,  1 );      //read from model
+    var angleValue = Util.toFixed( model.angle, 1 );      //read from model
     var sinValue = Util.toFixed( model.sin(), 3 );
     var cosValue = Util.toFixed( model.cos(), 3 );
     var tanValue = Util.toFixed( model.tan(), 3 );
@@ -121,7 +114,6 @@ define( function( require ) {
     //Row 2: 'angle = ' value in degrees or radians; value is decimal number or exact fraction of radians (in special angle mode)
     var angleEqualsStr = angleStr + ' = ';
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
-    //this.angleReadoutDecimal = new Text( angleValue, fontInfo );    //angle readout as decimal number
     this.angleReadoutDecimal = new SubSupText( angleValue, fontInfo );    //angle readout as decimal number
     this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );  //needed in Special angles mode
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //used to display angle as FractionNode in Special angles mode
@@ -134,7 +126,6 @@ define( function( require ) {
     this.angleReadoutDecimal.left =  angleLabel.right ;
     this.nbrFullTurnsNode.left = angleLabel.right;
     this.angleReadoutFraction.left =  this.nbrFullTurnsNode.right ;
-
 
     //Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
@@ -163,7 +154,7 @@ define( function( require ) {
     this.tanReadoutFraction.visible = false;
 
     //Special symbol node to show +/- infinity value of tan when at singularity
-    this.plusMinusInfinityNode = new Node(); //Text( 'TESTING', { font: DISPLAY_FONT, fill: TEXT_COLOR } ); //
+    this.plusMinusInfinityNode = new Node();
     var plusMinusText = new Text( plusMinusStr, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
     var infinityText = new Text( infinitySymbolStr, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR });
     this.plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
@@ -207,7 +198,7 @@ define( function( require ) {
       [ pi, 4 ],
       [ pi, 3 ],
       [ pi, 2 ],
-      [ 2 + pi, 3 ],   //Remember it's string concatenation, so 2 + pi = 2*pi
+      [ 2 + pi, 3 ],   //Remember: it's string concatenation, so 2 + pi = 2*pi
       [ 3 + pi, 4 ],
       [ 5 + pi, 6 ],
       [ pi, '' ],
@@ -307,7 +298,7 @@ define( function( require ) {
       readoutNode.coordinatesReadout.text = '('+ cosText + ', ' + sinText + ')';
       readoutNode.setAngleReadout();
       readoutNode.setTrigReadout();
-    } ); //end model.angleProperty.link
+    } );
 
     model.singularityProperty.link( function( singularity ) {
       readoutNode.plusMinusInfinityNode.visible = singularity;
@@ -315,7 +306,6 @@ define( function( require ) {
         readoutNode.tanReadoutText.visible = !singularity;
       }
 
-      //debugger;
     } );
 
 

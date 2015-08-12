@@ -162,7 +162,7 @@ define( function ( require ) {
             //in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
             if( specialAnglesVisible ){
                 var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
-                trigTourModel.setSpecialAngle( currentSmallAngle );
+                trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
             }else{
                 //1 decimal place precision for continuous angles

@@ -154,7 +154,7 @@ define( function( require ) {
       var oneYText = new Text( oneStr, fontInfo );
       var minusOneYText = new Text( minusOneStr, fontInfo );
 
-      //position +/-1 labels on xy axes
+      //position +1/-1 labels on xy axes
       oneXText.left = this.grid.right + 5;
       oneXText.top = 7;
       minusOneXText.right = this.grid.left - 5;
@@ -206,7 +206,7 @@ define( function( require ) {
                 model.setAngle( smallAngle );
               }
               else {
-                model.setSpecialAngle( smallAngle );
+                model.setSpecialAngleWithSmallAngle( smallAngle );
               }
             }
             else {  //if maxAngleExceeded, update only if user decreases angle

@@ -140,7 +140,7 @@ define( function( require ) {
     },//end setAngle()
 
     //given the small angle in rads, sets current angle to nearest special angle in rads; called from UnitCircleView
-    setSpecialAngle: function ( smallAngle ){   //smallAngle in rads
+    setSpecialAngleWithSmallAngle: function ( smallAngle ){   //smallAngle in rads
       var smallAngleInDegs = smallAngle*180/Math.PI;
       var nearestSpecialAngleInRads = 0;
       var specialAngles = [ -150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
@@ -161,7 +161,7 @@ define( function( require ) {
 
 
     //Given the full angle, set angle to the nearest special angle; called from GraphView
-    setNearestSpecialAngle: function( fullAngle ) {   //full angle in radians
+    setSpecialAngleWithFullAngle: function( fullAngle ) {   //full angle in radians
       var remainderAngle = fullAngle % ( 2 * Math.PI );
       var fullTurnsAngle = fullAngle - remainderAngle;
       var remainderInDegrees = remainderAngle * 180 / Math.PI;

@@ -433,7 +433,7 @@ define( function( require ) {
               model.setFullAngleInRadians( fullAngle );
             }
             else {
-              model.setNearestSpecialAngle( fullAngle );
+              model.setSpecialAngleWithFullAngle( fullAngle );
             }
           }
         } ) );

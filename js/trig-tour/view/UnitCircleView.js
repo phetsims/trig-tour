@@ -1,6 +1,6 @@
 /**
  * Unit Circle View
- * Created by Michael Dubson on 6/2/2015.
+ * Created by Michael Dubson (PhET developer) on 6/2/2015.
  */
 define( function( require ) {
     'use strict';
@@ -28,7 +28,7 @@ define( function( require ) {
     var oneStr = '1';
     //var plusOneStr = '+1';
     var minusOneStr = '-1';
-    var thetaStr = require( 'string!TRIG_TOUR/theta' ); // \u03b8 = unicode for theta
+    var thetaStr = require( 'string!TRIG_TOUR/theta' );
 
     //constants
     var DISPLAY_FONT = new PhetFont( 20 );
@@ -61,28 +61,41 @@ define( function( require ) {
 
         //Draw Unit Circle
         var radius = 160; //radius of unit circle in pixels
-        var circleGraphic = new Circle( radius, { stroke:LINE_COLOR, lineWidth: 3 } );    //provides parent node and origin for rotorGraphic
+        //provides parent node and origin for rotorGraphic
+        var circleGraphic = new Circle( radius, { stroke:LINE_COLOR, lineWidth: 3 } );
 
         //Draw 'special angle' locations on unit circle
         //special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
         this.specialAnglesNode = new Node();
-        var anglesArray = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
+        var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
         var xPos, yPos; //x and y coordinates of special angle on unit circle
-        for (var i = 0; i < anglesArray.length; i++ ){
-            xPos = radius*Math.cos( anglesArray[i]*Math.PI/180 );
-            yPos = radius*Math.sin( anglesArray[i]*Math.PI/180 );
-            this.specialAnglesNode.addChild( new Circle( 5, { stroke:LINE_COLOR, fill:'white', lineWidth: 1, x: xPos, y: yPos }));
+        for (var i = 0; i < angles.length; i++ ){
+            xPos = radius*Math.cos( angles[i]*Math.PI/180 );
+            yPos = radius*Math.sin( angles[i]*Math.PI/180 );
+            this.specialAnglesNode.addChild( new Circle(
+                5,
+                { stroke:LINE_COLOR, fill:'white', lineWidth: 1, x: xPos, y: yPos }
+            ));
         }
 
         //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var bWidth = 2.4*radius;
         var bHeight = 2.4*radius;
         var arcRadius = 8;
-        var background = new Rectangle( -bWidth/2, -bHeight/2, bWidth, bHeight, arcRadius, arcRadius, { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke:TEXT_COLOR_GRAY, lineWidth: 2 } );
+        var background = new Rectangle(
+            -bWidth/2,
+            -bHeight/2,
+            bWidth,
+            bHeight,
+            arcRadius,
+            arcRadius,
+            { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke:TEXT_COLOR_GRAY, lineWidth: 2 }
+        );
 
         //Draw x-, y-axes with x and y labels
-        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 });//function ArrowNode( tailX, tailY, tipX, tipY, options )
-        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 0.3, headHeight: 12, headWidth: 8  });//function ArrowNode( tailX, tailY, tipX, tipY, options )
+        //ArrowNode( tailX, tailY, tipX, tipY, options )
+        var yAxis = new ArrowNode( 0, 1.2*radius, 0, -1.2*radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 });
+        var xAxis = new ArrowNode( -1.2*radius, 0, 1.2*radius, 0, { tailWidth: 0.3, headHeight: 12, headWidth: 8 });
 
         //Draw and position x-, y-axis labels
         var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR }; 
@@ -117,9 +130,13 @@ define( function( require ) {
         //Draw rotor arm with draggable red dot at end
         var rotorGraphic = new Node();                 
         rotorGraphic.addChild( new Line( 0,0, radius, 0, { lineWidth: 4, stroke: '#000'} ) );
-        rotorGraphic.addChild( new Circle( 7, { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' } )) ;
+        rotorGraphic.addChild( new Circle(
+            7,
+            { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' }
+        )) ;
         var hitBound = 30;
-        rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ; //Bounds2( minX, minY, maxX, maxY )
+        //Bounds2( minX, minY, maxX, maxY )
+        rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
         rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound ) ;
 
         //Draw x, y, and '1' labels on the xyR triangle

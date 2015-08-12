@@ -34,8 +34,8 @@ define( function ( require ) {
         var graphView = new GraphView( trigTourModel, 0.25*this.layoutBounds.height, 0.92*this.layoutBounds.width );
         var controlPanel = new ControlPanel( viewProperties );
 
-        //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of unitCircle View
-        //want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
+        //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
+        //unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
         var width = 2.4*160;
         var height = 2.4*160;
         var arcRadius = 8;
@@ -165,7 +165,8 @@ define( function ( require ) {
                 trigTourModel.setSpecialAngle( currentSmallAngle );
                 readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
             }else{
-                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );  //1 decimal place precision for continuous angles
+                //1 decimal place precision for continuous angles
+                readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );
             }
             readoutDisplay.readoutNode.setAngleReadout();
             readoutDisplay.readoutNode.setTrigReadout();

@@ -1,7 +1,7 @@
 /**
  * Control Panel for Trig Tour sim
  * on right side of stage
- * Created by dubson on 6/4/2015.
+ * Created by Michael Dubson (PhET developer) on 6/4/2015.
  */
 define( function( require ) {
   'use strict';
@@ -60,7 +60,11 @@ define( function( require ) {
     var checkBoxOptions = { checkBoxColorBackground: 'white' };
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
-    var specialAnglesCheckBox = new CheckBox( specialAnglesText, properties.specialAnglesVisibleProperty, checkBoxOptions );
+    var specialAnglesCheckBox = new CheckBox(
+        specialAnglesText,
+        properties.specialAnglesVisibleProperty,
+        checkBoxOptions
+    );
 
     // Adjust touch areas
     var spacing = 15;

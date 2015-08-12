@@ -29,8 +29,9 @@ define( function( require ) {
         var arrowLine = this;
         this.vertical = ( orientation === 'v' );
         options = _.extend( {
-            criticalFactor: 2,       //If arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
-            arrowHeadLength: 25      //arrow head length in pixels
+            //if arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
+            criticalFactor: 2,
+            arrowHeadLength: 25     //arrow head length in pixels
         }, options );
         this.options = options;
 
@@ -79,7 +80,8 @@ define( function( require ) {
         setEndPoint: function( displacement ){
             var sign = 0;  //+1, -1, or zero depending on sign of displacement
             if( displacement !== 0 ){
-                sign = Util.roundSymmetric( displacement / Math.abs( displacement ) ); //sign = +1 if pointing up/right, -1 if pointing down/left
+                //sign = +1 if arrow pointing up or right, -1 if pointing down or left
+                sign = Util.roundSymmetric( displacement / Math.abs( displacement ) );
             }
             this.arrowHead.setRotation( (sign - 1)*Math.PI/2 );
             var length = Math.abs( displacement );
@@ -87,7 +89,8 @@ define( function( require ) {
             if( this.vertical ){
                 if( length > this.criticalFactor*this.arrowHeadLength ){   //if arrow long enough
                     this.drawArrowHead( this.arrowHeadLength);
-                    this.line.setPoint2( 0, -displacement + 0.9*sign*this.arrowHeadLength ); //factor of 0.9 so that arrowHead overlaps line slightly
+                    //factor of 0.9 so that arrowHead overlaps line slightly
+                    this.line.setPoint2( 0, -displacement + 0.9*sign*this.arrowHeadLength );
                     if( sign > 0 ){
                         this.mouseMarker.setRect( -10, -length, 20, length );
                     }else{

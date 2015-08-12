@@ -78,7 +78,7 @@ define( function( require ) {
       var marginWidth = 25;   //distance in pixels between edge of Node and edge of nearest full wavelength
       var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
       this.amplitude = 0.45 * height;  //amplitude of sinusoidal curve in pixels
-      var nbrOfWavelengths = 2 * 2;    //number of full wavelengths displayed, must be even number to keep graph symmetric
+      var nbrOfWavelengths = 2 * 2;    //number of full wavelengths displayed, must be even to keep graph symmetric
 
       var emptyNode = new Text( '   ', { font: DISPLAY_FONT } );    //to make space for expandCollapseButton
       this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
@@ -127,8 +127,19 @@ define( function( require ) {
       //draw right and left border rectangles, which serve to hide indicator line when it is off the graph
       var borderWidth = 400;
       var borderHeight = 1000;
-      var rightBorder = new Rectangle( -bWidth / 2 - borderWidth - 1, -0.8 * borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR } );
-      var leftBorder = new Rectangle( bWidth / 2 + 1, -0.8 * borderHeight, borderWidth, borderHeight, { fill: BACKGROUND_COLOR } );
+      var rightBorder = new Rectangle(
+          -bWidth / 2 - borderWidth - 1,
+          -0.8 * borderHeight, borderWidth,
+          borderHeight,
+          { fill: BACKGROUND_COLOR }
+      );
+      var leftBorder = new Rectangle(
+          bWidth / 2 + 1,
+          -0.8 * borderHeight,
+          borderWidth,
+          borderHeight,
+          { fill: BACKGROUND_COLOR }
+      );
 
       //draw x-, y-axes
       var xAxisLength = width;
@@ -186,7 +197,16 @@ define( function( require ) {
       //tic mark labels in radians
       this.tickMarkLabelsInRadians = new Node();
       var labelStr = '';
-      var labelStrings = [ '-4' + piStr, '-3' + piStr, '-2' + piStr, '-' + piStr, piStr, '2' + piStr, '3' + piStr, '4' + piStr ];
+      var labelStrings = [
+        '-4' + piStr,
+        '-3' + piStr,
+        '-2' + piStr,
+        '-' + piStr,
+        piStr,
+        '2' + piStr,
+        '3' + piStr,
+        '4' + piStr
+      ];
       var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
       for ( i = 0; i < xPositions.length; i++ ) {
         labelStr = labelStrings[ i ];
@@ -359,7 +379,8 @@ define( function( require ) {
       this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } );
       this.indicatorLine.addChild( this.redDotHandle );
 
-      // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by expandCollapseButton
+      // All graphic elements, curves, axes, labels, etc are placed on display node,
+      // with visibility set by expandCollapseButton
       var displayNode = new Node();
 
       //Order children views

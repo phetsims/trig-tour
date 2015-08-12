@@ -1,7 +1,7 @@
 /**
  * Simple triangle graphic
  * Used as arrow heads on curves in GraphView
- * Created by dubson on 6/23/2015.
+ * Created by Michael Dubson (PhET developer) on 6/23/2015.
  */
 
 define( function( require ) {

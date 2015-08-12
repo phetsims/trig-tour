@@ -103,13 +103,13 @@ define( function( require ) {
       }else{
         length = 1.2*this.numeratorText.width;
       }
-      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } ); //dividing bar
+
+      //dividing bar
+      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
 
       //draw square root symbol
       var sqRtShape = new Shape();
-      //var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
       if( squareRootSignNeeded ){
-        //console.log( 'square root symbol constructed');
         var W = 1.2*this.numeratorText.width;
         var h = 0.8*this.numeratorText.height;
         var w = h/4;

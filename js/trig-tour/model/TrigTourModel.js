@@ -160,7 +160,7 @@ define( function( require ) {
     },//end setSpecialAngle()
 
 
-    //given the full angle, set angle to the nearest special angle; called from GraphView
+    //Given the full angle, set angle to the nearest special angle; called from GraphView
     setNearestSpecialAngle: function( fullAngle ) {   //full angle in radians
       var remainderAngle = fullAngle % ( 2 * Math.PI );
       var fullTurnsAngle = fullAngle - remainderAngle;
@@ -181,7 +181,7 @@ define( function( require ) {
           nearestSpecialAngleInDegrees = -specialAngles[ i + 1 ];// * Math.PI / 180;
         }
       }
-      //Must handle 0 deg and +/-360 deg angle as special cases.
+      //Must handle 0 and +/-360 deg angles as special cases.
       if ( remainderInDegrees < 15 && remainderInDegrees >= -15 ) {
         nearestSpecialAngleInDegrees = 0;
       }else if( remainderInDegrees >= 345 ){

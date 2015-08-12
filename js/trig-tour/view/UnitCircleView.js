@@ -10,11 +10,12 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var Image = require( 'SCENERY/nodes/Image');
+  //var Image = require( 'SCENERY/nodes/Image');
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Property = require('AXON/Property');
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
@@ -41,12 +42,9 @@ define( function( require ) {
   var TEXT_COLOR_GRAY = UtilTrig.TEXT_COLOR_GRAY;
   var COS_COLOR = UtilTrig.COS_COLOR;
   var SIN_COLOR = UtilTrig.SIN_COLOR;
-  //var TAN_COLOR = UtilTrig.TAN_COLOR;
   var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
-  //var BACKGROUND_COLOR = UtilTrig.BACKGROUND_COLOR;
 
-  //images
-  var dizzyMammoth = require( 'mipmap!TRIG_TOUR/dizzyMammoth.png' );
+
 
   /**
    * View of the unit circle with grabbable radial arm, called the rotor arm
@@ -86,7 +84,7 @@ define( function( require ) {
     var bWidth = 2.4 * radius;
     var bHeight = 2.4 * radius;
     var arcRadius = 8;
-    var background = new Rectangle(
+    this.background = new Rectangle(
       -bWidth / 2,
       -bHeight / 2,
       bWidth,
@@ -170,13 +168,11 @@ define( function( require ) {
 
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-    //dizzyImage of PhET girl is displayed if angle exceeds maximum angle
-    this.dizzyImage = new Image( dizzyMammoth );
-    this.dizzyImage.visible = false;
 
     //add the children to parent node
-    unitCircleView.children = [
-      background,
+    //var content = new Node();
+    unitCircleView.children =[
+      this.background,
       this.grid,
       circleGraphic,
       xAxis,
@@ -187,15 +183,16 @@ define( function( require ) {
       this.vLine,
       this.specialAnglesNode,
       rotorGraphic,
-      labelCanvas,
-      this.dizzyImage
+      labelCanvas
     ];
 
-    //If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears and user
-    //cannot increase magnitude of angle any further.  User can then only decrease magnitude of angle.
-    var maxAngleExceeded = false;
+
+    //If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears in
+    // TrigTourScreenView (the main view) and user cannot increase magnitude of angle any further.
+    // User can then only decrease magnitude of angle.
+    this.maxAngleExceededProperty = new Property( false );
     var maxAllowedSmallAngle = 0.5 * Math.PI;
-    var maxAllowedAngle = 25 * 2 * Math.PI + maxAllowedSmallAngle;
+    var maxAllowedAngle = 2 * 2 * Math.PI + maxAllowedSmallAngle;
 
     var mouseDownPosition = new Vector2( 0, 0 );
     rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -210,7 +207,7 @@ define( function( require ) {
         drag: function( e ) {
           var v1 = rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
           var smallAngle = -v1.angle(); //model angle is negative of xy screen coordinates angle
-          if ( !maxAngleExceeded ) {
+          if ( !unitCircleView.maxAngleExceededProperty.value ) {
             if ( !model.specialAnglesMode ) {
               model.setAngle( smallAngle );
             }
@@ -219,14 +216,12 @@ define( function( require ) {
             }
           }
           else {  //if maxAngleExceeded, update only if user decreases angle
-            unitCircleView.dizzyImage.visible = true;
             if ( Math.abs( smallAngle ) < maxAllowedSmallAngle ) {
               model.setAngle( smallAngle );
-              unitCircleView.dizzyImage.visible = false;
             }
           }
 
-          maxAngleExceeded = ( Math.abs( model.getAngleInRadians() ) > maxAllowedAngle );
+          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( model.getAngleInRadians() ) > maxAllowedAngle );
         }
       } ) );
 

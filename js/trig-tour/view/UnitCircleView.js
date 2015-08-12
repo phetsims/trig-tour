@@ -182,7 +182,7 @@ define( function( require ) {
         labelCanvas
       ];
 
-      //If user exceeds maximum allowed angle of +/-25.25 rotations, then dizzy PhET girl appears and user
+      //If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears and user
       //cannot increase magnitude of angle any further.  User can then only decrease magnitude of angle.
       var maxAngleExceeded = false;
       var maxAllowedSmallAngle = 0.5 * Math.PI;
@@ -214,6 +214,7 @@ define( function( require ) {
                 model.setAngle( smallAngle );
               }
             }
+
             maxAngleExceeded = ( Math.abs( model.getAngleInRadians() ) > maxAllowedAngle ) ;
           }
         } ) );

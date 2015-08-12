@@ -179,6 +179,7 @@ define( function ( require ) {
                 graphView.expandedProperty.value = true;
                 readoutDisplay.expandedProperty.value = true;
                 trigTourModel.setFullAngleInRadians( 0 );
+                unitCircleView.dizzyImage.visible = false;
             },
             right: this.layoutBounds.maxX - 60,
             top: controlPanel.bottom + 10, //this.layoutBounds.maxY - 10,

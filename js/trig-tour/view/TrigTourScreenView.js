@@ -66,8 +66,7 @@ define( function( require ) {
     this.dizzyImage.right = this.layoutBounds.right;
     this.dizzyImage.bottom = this.layoutBounds.bottom;
 
-
-
+    
     //Set up callbacks
     viewProperties.graphProperty.link( function( graph ) {
 
@@ -94,7 +93,7 @@ define( function( require ) {
           graphView.singularityIndicator.visible = false;
         }
         else {
-          //always want indicatorLine grabbable, so do not want .visible = false
+          //always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
           graphView.indicatorLine.opacity = 0;
           graphView.singularityIndicator.visible = true;
         }
@@ -200,7 +199,7 @@ define( function( require ) {
         trigTourScreenView.dizzyImage.visible = false;
       },
       right: this.layoutBounds.maxX - 60,
-      top: controlPanel.bottom + 10, //this.layoutBounds.maxY - 10,
+      top: controlPanel.bottom + 10,
       radius: 18   //Dubson prefers button smaller than default
     } );
     this.addChild( resetAllButton );

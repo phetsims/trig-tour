@@ -1,19 +1,19 @@
 {
-  "comment": "# trig-tour 1.0.0-dev.16 Wed Aug 05 2015 17:23:46 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.0-dev.16 Thu Aug 13 2015 11:46:55 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "858e65ac477bf1861883ce06eed56d9fdefa5027",
     "branch": "master"
   },
   "axon": {
-    "sha": "1f0ca9f4fca42ddd7912c7c99d6f96edcbb4a8be",
+    "sha": "5be7fe049bbc0963a28c0125dc90039f04fb651c",
     "branch": "master"
   },
   "brand": {
-    "sha": "b5e19af6d2d16f9c62f193c9462bf2eca898afe6",
+    "sha": "aa39bc48491aaee6c9059e0194c8974fd02bceba",
     "branch": "master"
   },
   "chipper": {
-    "sha": "34d89ed954c5a5f88a2fa323fb11a459f903093a",
+    "sha": "51c45026022c5096cd180c6f578379cfda7c5414",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "9c17c6a29a2cd7796b0cb6cfda158b0b99ebbf99",
+    "sha": "e9f47dd31e40b11de634fec9e82a12939c98031d",
     "branch": "master"
   },
   "kite": {
@@ -37,23 +37,23 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "b8816d6395ea01b2273110e49eadff7a7b82f359",
+    "sha": "3a136ff106beeb71270b3d3e60fd95b7490f2be7",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "62d12071a7768241b8b62d65f5d4c966ff31b514",
+    "sha": "9d57d70eacd33fa5342d548f775040a4f70c72b1",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "277a4ae4800db1754b12ea19885a0bce4f886cac",
+    "sha": "1759eadefb4f6d680f85aef394ea7727df1928e6",
     "branch": "master"
   },
   "sun": {
-    "sha": "70796d170f5189a4d41d26f528c5a8f45872b50b",
+    "sha": "1320a557747cdae948b731a9398ec3670b139334",
     "branch": "master"
   },
   "trig-tour": {
-    "sha": "6bf88fdfcd2bd86f0cdc62d4cba0fa370c1d3282",
+    "sha": "dcedf77323d88d5d9bcf35b731e86038df37f363",
     "branch": "master"
   }
 }

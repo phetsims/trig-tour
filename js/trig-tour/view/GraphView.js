@@ -222,6 +222,7 @@ define( function( require ) {
         label.top = xAxis.bottom;
         this.tickMarkLabelsInRadians.addChild( label );
       }
+
       //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
       this.onesNode.visible = false;
       this.tickMarkLabelsInDegrees.visible = false;
@@ -266,7 +267,6 @@ define( function( require ) {
       nbrOfPoints = ( nbrOfWavelengths + 0.08 ) * wavelength / dx;
       var maxTanValue = 1.2;
       var minTanValue = -1.0;
-
       var yPos;
       for ( i = 0; i < nbrOfPoints; i++ ) {
         tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
@@ -368,6 +368,12 @@ define( function( require ) {
 
       //SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
       this.singularityIndicator = new Line( 0, -800, 0, 400, { stroke: TAN_COLOR, lineWidth: 2, lineDash: [ 10, 5 ] } );
+      hitBound = 20;
+      //Bounds2( minX, minY, maxX, maxY )
+      var midX = this.singularityIndicator.centerX;
+      var midY = this.singularityIndicator.centerY;
+      this.singularityIndicator.mouseArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
+      this.singularityIndicator.touchArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
       this.singularityIndicator.visible = false;
       this.tanPath.addChild( this.singularityIndicator );
 
@@ -427,10 +433,6 @@ define( function( require ) {
       this.indicatorLine.addInputListener( new SimpleDragHandler(
         {
           allowTouchSnag: true,
-
-          //start: function ( e ) {
-          //    console.log( 'mouse down' );
-          //},
 
           drag: function( e ) {
             var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2

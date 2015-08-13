@@ -90,9 +90,6 @@ define( function( require ) {
     getHalfTurnCount: function(){
       return this.halfTurnCount;
     },
-    //setAngleInDegrees: function( angleInDegrees ){
-    //    this.angle = angleInDegrees*Math.PI/180;
-    //},
 
     //set the full angle, the small angle and various turns counts, given the current full angle
     setFullAngleInRadians: function( angleInRads ){   //argument is total angle, not small angle

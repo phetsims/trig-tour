@@ -370,8 +370,7 @@ define( function( require ) {
       this.singularityIndicator = new Line( 0, -800, 0, 400, { stroke: TAN_COLOR, lineWidth: 2, lineDash: [ 10, 5 ] } );
       hitBound = 20;
       //Bounds2( minX, minY, maxX, maxY )
-      var midX = this.singularityIndicator.centerX;
-      var midY = this.singularityIndicator.centerY;
+      midX = this.singularityIndicator.centerX;
       var minY = this.singularityIndicator.bottom;
       var maxY = this.singularityIndicator.top;
       this.singularityIndicator.mouseArea = new Bounds2(  midX - hitBound, minY, midX + hitBound, maxY );
@@ -381,7 +380,7 @@ define( function( require ) {
 
       //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
       //a red dot on top of the indicator line echoes red dot on unit circle
-      var hitBound = 30;
+      hitBound = 30;
       this.indicatorLine = new ArrowLine( this.amplitude, 'v', {
         stroke: '#0d0',
         lineWidth: 5,

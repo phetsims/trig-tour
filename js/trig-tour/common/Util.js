@@ -1,6 +1,5 @@
 /**
- * Layout bounds constant and
- * color constants
+ * Layout bounds constant and color constants
  * Created by Michael Dubson (PhET developer) on 6/16/2015.
  */
 

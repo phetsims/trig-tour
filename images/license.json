@@ -1,3 +1,10 @@
 {
-
+  "dizzyMammoth.png": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "stolen from Web"
+  }
 }

@@ -168,7 +168,6 @@ define( function( require ) {
 
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-
     //add the children to parent node
     //var content = new Node();
     unitCircleView.children =[
@@ -186,13 +185,12 @@ define( function( require ) {
       labelCanvas
     ];
 
-
     //If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears in
     // TrigTourScreenView (the main view) and user cannot increase magnitude of angle any further.
     // User can then only decrease magnitude of angle.
     this.maxAngleExceededProperty = new Property( false );
     var maxAllowedSmallAngle = 0.5 * Math.PI;
-    var maxAllowedAngle = 2 * 2 * Math.PI + maxAllowedSmallAngle;
+    var maxAllowedAngle = 25 * 2 * Math.PI + maxAllowedSmallAngle;
 
     var mouseDownPosition = new Vector2( 0, 0 );
     rotorGraphic.addInputListener( new SimpleDragHandler(
@@ -254,7 +252,7 @@ define( function( require ) {
       if ( Math.abs( totalAngle ) < 0.5 ) {
         deltaAngle = 0.02;
       }
-      var angle = 0;  //short for angle
+      var angle = 0;  
       if ( totalAngle > 0 ) {
         for ( angle = 0; angle <= totalAngle; angle += deltaAngle ) {
           arcRadius += deltaAngle;

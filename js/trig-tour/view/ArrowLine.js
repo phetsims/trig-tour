@@ -117,7 +117,7 @@ define( function( require ) {
             }
         },//end setEndPoint()
         drawArrowHead: function( arrowHeadLength ){
-            this.arrowHeadShape = new Shape();
+            this.arrowHeadShape = new Shape();  //seems wasteful to create new Shape, but any alternative?
             var hW = this.arrowHeadWidth;
             var hL = arrowHeadLength;
             if( this.vertical ){

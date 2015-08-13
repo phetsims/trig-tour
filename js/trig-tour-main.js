@@ -21,8 +21,8 @@ define( function( require ) {
       //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
       leadDesign: 'Amanda McGarry and Michael Dubson',
       softwareDevelopment: 'Michael Dubson',
-      team: 'Ariel Paul, Kathy Perkins'
-      //qualityAssurance: '',
+      team: 'Ariel Paul, Kathy Perkins',
+      qualityAssurance: 'Steele Dalton'
       //graphicArts: '',
       //thanks: ''
     }

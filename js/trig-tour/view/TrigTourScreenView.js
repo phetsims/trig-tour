@@ -70,7 +70,7 @@ define( function( require ) {
     //Set up callbacks
     viewProperties.graphProperty.link( function( graph ) {
 
-      //set visibility of horizontal and vertical arrows on x-y-R triangle on unit circle
+      //set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
       unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
       unitCircleView.hLine.visible = ( graph === 'sin' );
       unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
@@ -85,7 +85,7 @@ define( function( require ) {
       graphView.cosThetaLabel.visible = ( graph === 'cos' );
       graphView.tanThetaLabel.visible = ( graph === 'tan' );
 
-      //set title bar on graph view
+      //set title bar in GraphView
       graphView.setTitleBar( graph );
       if ( trigTourModel.singularity ) {
         if ( graph === 'cos' || graph === 'sin' ) {

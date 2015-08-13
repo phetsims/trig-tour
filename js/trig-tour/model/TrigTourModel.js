@@ -40,7 +40,7 @@ define( function( require ) {
       return Math.sin( this.angle );
     },
 
-    //Returns tangent of current angle. But when near +/-90 degs, cuts off tan value at +/- maxValue.
+    //Returns tangent of current angle. But when near +/-90 degrees, cuts off tan value at +/- maxValue.
     //Must cut off value at +/- maxValue or else Safari Browser won't display properly.
     tan: function () {
       var tanValue = Math.tan( this.angle );

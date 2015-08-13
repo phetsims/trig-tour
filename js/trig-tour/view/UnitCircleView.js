@@ -220,7 +220,6 @@ define( function( require ) {
               model.setAngle( smallAngle );
             }
           }
-
           unitCircleView.maxAngleExceededProperty.value = ( Math.abs( model.getAngleInRadians() ) > maxAllowedAngle );
         }
       } ) );

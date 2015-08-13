@@ -66,7 +66,7 @@ define( function( require ) {
     this.dizzyImage.right = this.layoutBounds.right;
     this.dizzyImage.bottom = this.layoutBounds.bottom;
 
-    
+
     //Set up callbacks
     viewProperties.graphProperty.link( function( graph ) {
 

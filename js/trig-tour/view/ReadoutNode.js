@@ -405,8 +405,8 @@ define( function( require ) {
         }
       }
       //Must handle smallAngle = 0 or pi as special cases
-      if( Util.roundSymmetric( this.model.getSmallAngleInDegrees() ) === 0
-          || Util.roundSymmetric( this.model.getSmallAngle0To360() ) === 180 ){
+      var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
+      if( roundedAngle === 0 || roundedAngle === 180 ){
         var nbrPiRads = this.model.getHalfTurnCount();
         var angleStr = nbrPiRads + pi;
         if( nbrPiRads === 0 ){

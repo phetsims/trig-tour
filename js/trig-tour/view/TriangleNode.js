@@ -15,6 +15,7 @@ define( function( require ) {
 
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
+   * Used as arrow heads on ends of curves in GraphView
    * @param {Number} length of triangle in pixels
    * @param {Number} width of triangle in pixels
    * @param {String} color string, e.g. '#0F0'

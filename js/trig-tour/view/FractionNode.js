@@ -24,7 +24,7 @@ define( function( require ) {
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
    * @param {string} numerator
    * @param {string} denominator
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
 

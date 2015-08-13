@@ -110,8 +110,10 @@ define( function( require ) {
 
       var hitBound = 30;
       //Bounds2( minX, minY, maxX, maxY )
-      this.expandCollapseButton.mouseArea = new Bounds2(  - hitBound, -hitBound, hitBound, hitBound );
-      this.expandCollapseButton.touchArea = new Bounds2(  - hitBound, -hitBound, hitBound, hitBound );
+      var midX = this.expandCollapseButton.centerX;
+      var midY = this.expandCollapseButton.centerY;
+      this.expandCollapseButton.mouseArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
+      this.expandCollapseButton.touchArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
 
       //draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
       var bHeight = 1.2 * height;

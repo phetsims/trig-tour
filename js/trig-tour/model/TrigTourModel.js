@@ -26,11 +26,10 @@ define( function( require ) {
     this.smallAngle = 0;    //@private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi
     this.previousAngle = 0; //@private, smallAngle in previous step, needed to compute total angle from smallAngle
     this.nbrFullTurns = 0;  //@private, nbr of turns around the unit circle, incremented at +/-180 deg,
-                            // needed to compute (full) angle from smallAngle
+                            //needed to compute (full) angle from smallAngle
     this.fullTurnCount = 0; //@private, nbr of turns around unit circle, incremented at angle = 0 deg
     this.halfTurnCount = 0; //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30, 45, 60, 90...)
-
   }
 
   return inherit( PropertySet, TrigTourModel, {
@@ -129,9 +128,9 @@ define( function( require ) {
       roundedTargetAngle = Util.roundSymmetric( roundedTargetAngle*roundFactor )/roundFactor;
       targetAngle = roundedTargetAngle*Math.PI/180;
       var remainderAngle = targetAngle%( 2*Math.PI );
-      this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle )/(2*Math.PI ));
+      this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle )/( 2*Math.PI ));
       remainderAngle = targetAngle%( Math.PI );
-      this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle )/(Math.PI ));
+      this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle )/( Math.PI ));
       this.angle = targetAngle;  //now can trigger angle update
       this.previousAngle = smallAngle;
     },//end setAngle()

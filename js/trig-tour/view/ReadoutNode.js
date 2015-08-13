@@ -346,8 +346,8 @@ define( function( require ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInRadians(), 3 ) + ' ' + radsStr;
       }
       else {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces )
-                                        + '<sup>o</sup>';
+        var roundedAngle = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces );
+        this.angleReadoutDecimal.text = roundedAngle + '<sup>o</sup>';
       }
     },
 

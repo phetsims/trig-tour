@@ -154,7 +154,7 @@ define( function( require ) {
         }
       }//end for
       this.setAngle( nearestSpecialAngleInRads );
-    },//end setSpecialAngle()
+    },//end setSpecialAngleWithSmallAngle()
 
 
     //Given the full angle, set angle to the nearest special angle; called from GraphView
@@ -189,6 +189,6 @@ define( function( require ) {
       var nearestSpecialAngleInRadians = nearestSpecialAngleInDegrees*Math.PI/180;
       var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );
-    }//end setNearestSpecialAngle
+    }//end setSpecialAngleWithFullAngle()
   } );
 } );

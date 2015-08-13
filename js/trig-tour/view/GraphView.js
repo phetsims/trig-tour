@@ -372,8 +372,10 @@ define( function( require ) {
       //Bounds2( minX, minY, maxX, maxY )
       var midX = this.singularityIndicator.centerX;
       var midY = this.singularityIndicator.centerY;
-      this.singularityIndicator.mouseArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
-      this.singularityIndicator.touchArea = new Bounds2(  midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
+      var minY = this.singularityIndicator.bottom;
+      var maxY = this.singularityIndicator.top;
+      this.singularityIndicator.mouseArea = new Bounds2(  midX - hitBound, minY, midX + hitBound, maxY );
+      this.singularityIndicator.touchArea = new Bounds2(  midX - hitBound, minY, midX + hitBound, maxY );
       this.singularityIndicator.visible = false;
       this.tanPath.addChild( this.singularityIndicator );
 

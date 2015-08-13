@@ -108,6 +108,11 @@ define( function( require ) {
         cursor: 'pointer'
       } );
 
+      var hitBound = 30;
+      //Bounds2( minX, minY, maxX, maxY )
+      this.expandCollapseButton.mouseArea = new Bounds2(  - hitBound, -hitBound, hitBound, hitBound );
+      this.expandCollapseButton.touchArea = new Bounds2(  - hitBound, -hitBound, hitBound, hitBound );
+
       //draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
       var bHeight = 1.2 * height;
       var bWidth = 1.05 * width;

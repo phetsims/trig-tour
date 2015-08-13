@@ -76,7 +76,7 @@ define( function( require ) {
         },
 
         //set position of tip of arrow head and size arrow appropriately
-        //displacement is signed length of arrow, displacement is + if arrow points right, or - if arrow points left
+        //displacement is signed length of arrow, + if arrow points right/up, or - if arrow points left/down
         setEndPoint: function( displacement ){
             var sign = 0;  //+1, -1, or zero depending on sign of displacement
             if( displacement !== 0 ){

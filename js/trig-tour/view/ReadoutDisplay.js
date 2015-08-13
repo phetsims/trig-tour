@@ -19,6 +19,9 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var PANEL_COLOR = Util.PANEL_COLOR;
 
+  //strings
+  var valuesStr = require( 'string!TRIG_TOUR/values' );
+
   /**
    * Constructor for
    * @param {TrigTourModel} model is the main model of the sim
@@ -41,7 +44,7 @@ define( function( require ) {
       cornerRadius: 10,
       buttonXMargin: 12, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+      titleNode: new Text( '   ' + valuesStr, { font: DISPLAY_FONT, fontWeight: 'bold' } ), //need space for button
       titleAlignX: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,

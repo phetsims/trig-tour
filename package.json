@@ -15,9 +15,6 @@
   },
   "phet": {
     "requirejsNamespace": "TRIG_TOUR",
-    "simTitleStringKey": "TRIG_TOUR/trig-tour.name",
-    "phetLibs": [
-      "trig-tour"
-    ]
+    "simTitleStringKey": "TRIG_TOUR/trig-tour.name"
   }
 }

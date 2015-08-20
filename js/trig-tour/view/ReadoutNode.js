@@ -16,7 +16,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
-  var UtilTrig = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var UtilTrig = require( 'TRIG_TOUR/trig-tour/view/Util' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 

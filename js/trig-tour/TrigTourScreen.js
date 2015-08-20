@@ -12,7 +12,7 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var TrigLabModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
-  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
 
   // strings
   var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.name' );

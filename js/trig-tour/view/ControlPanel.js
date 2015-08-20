@@ -23,7 +23,7 @@ define( function( require ) {
   var labelsStr = require( 'string!TRIG_TOUR/labels' );
   var gridStr = require( 'string!TRIG_TOUR/grid' );
   var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
-  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );

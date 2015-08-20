@@ -13,7 +13,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );

@@ -21,7 +21,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var UtilTrig = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var UtilTrig = require( 'TRIG_TOUR/trig-tour/view/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   //strings

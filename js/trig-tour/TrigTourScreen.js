@@ -12,7 +12,7 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var TrigLabModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
-  var Util = require( 'TRIG_TOUR/trig-tour/common/Util' );
+  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
 
   // strings
   var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.name' );
@@ -26,9 +26,7 @@ define( function( require ) {
   function TrigTourScreen() {
 
     //If this is a single-screen sim, no icon is necessary.
-
     var icon = null;
-    console.log( 'background color is ' + BACKGROUND_COLOR );
 
     Screen.call( this, trigLabSimString, icon,
       function() { return new TrigLabModel(); },

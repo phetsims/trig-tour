@@ -26,9 +26,7 @@ define( function( require ) {
   function TrigTourScreen() {
 
     //If this is a single-screen sim, no icon is necessary.
-
     var icon = null;
-    console.log( 'background color is ' + BACKGROUND_COLOR );
 
     Screen.call( this, trigLabSimString, icon,
       function() { return new TrigLabModel(); },

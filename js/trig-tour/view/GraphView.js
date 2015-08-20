@@ -504,7 +504,7 @@ define( function( require ) {
           this.indicatorLine.setColor( TAN_COLOR );
           this.redDotHandle.y = -tanNow * this.amplitude;
         }
-        else { console.log( 'ERROR in GraphView.setIndicatorLine()' ); }
+        else { console.error( 'ERROR in GraphView.setIndicatorLine()' ); }
       },
       setTitleBar: function( trigString ) {
         if ( trigString === 'cos' ) {

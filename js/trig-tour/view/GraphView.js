@@ -68,7 +68,7 @@ define(function (require) {
 
         var graphView = this;
         this.model = model;
-        this.trigFunction = '';         //{string} 'cos'|'sin'|'tan' set by Control Panel
+        this.trigFunction = 'cos';         //{string} 'cos'|'sin'|'tan' set by Control Panel
         this.labelsVisible = 'false';   //true is labels on graph are visible, set by Control Panel
         this.expandedProperty = new Property(true);  //Graph can be hidden with expandCollapse button
 
@@ -506,7 +506,7 @@ define(function (require) {
                 }
                 else {
                     //Do nothing, following line for debugging only
-                    //console.error('ERROR in GraphView.setIndicatorLine()');
+                    console.error('ERROR in GraphView.setIndicatorLine()');
                 }
             },
             setTitleBar: function (trigString) {

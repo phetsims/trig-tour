@@ -20,7 +20,7 @@ define( function( require ) {
   var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
   //images
-  var dizzyPhetGirl = require( 'mipmap!TRIG_TOUR/dizzyPhetGirl.jpeg' );
+  var dizzyPhetGirl = require( 'mipmap!TRIG_TOUR/dizzyPhetGirl.png' );
 
   /**
    * @param {TrigTourModel} model for sim

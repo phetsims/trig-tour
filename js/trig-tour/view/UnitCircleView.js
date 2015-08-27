@@ -190,7 +190,7 @@ define( function( require ) {
     // User can then only decrease magnitude of angle.
     this.maxAngleExceededProperty = new Property( false );
     var maxAllowedSmallAngle = 0.5 * Math.PI;
-    var maxAllowedAngle = 2 * 2 * Math.PI + maxAllowedSmallAngle;  //must be (integer+0.5) number of full rotations 
+    var maxAllowedAngle = 2 * 2 * Math.PI + maxAllowedSmallAngle;  //must be (integer+0.5) number of full rotations
 
     var mouseDownPosition = new Vector2( 0, 0 );
     rotorGraphic.addInputListener( new SimpleDragHandler(

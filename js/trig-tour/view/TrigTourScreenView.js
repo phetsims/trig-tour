@@ -20,7 +20,7 @@ define( function( require ) {
   var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
   //images
-  var dizzyMammoth = require( 'mipmap!TRIG_TOUR/dizzyMammoth.png' );
+  var dizzyPhetGirl = require( 'mipmap!TRIG_TOUR/dizzyPhetGirl.jpeg' );
 
   /**
    * @param {TrigTourModel} model for sim
@@ -37,7 +37,7 @@ define( function( require ) {
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width );
     var controlPanel = new ControlPanel( viewProperties );
-    this.dizzyImage = new Image( dizzyMammoth );
+    this.dizzyImage = new Image( dizzyPhetGirl );
 
     //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
     //unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle

@@ -37,7 +37,7 @@ define( function( require ) {
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width );
     var controlPanel = new ControlPanel( viewProperties );
-    this.dizzyImage = new Image( dizzyPhetGirl );
+    this.dizzyImage = new Image( dizzyPhetGirl, { scale: 0.6 } );
 
     //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
     //unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle

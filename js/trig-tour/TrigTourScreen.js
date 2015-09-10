@@ -15,7 +15,7 @@ define( function( require ) {
   var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
 
   // strings
-  var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.name' );
+  var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
   //constants
   var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;

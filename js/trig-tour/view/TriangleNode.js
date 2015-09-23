@@ -41,7 +41,7 @@ define( function( require ) {
     this.addChild( trianglePath );
     trianglePath.x = -1;//reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 
-  }//end constuctor
+  }
 
 
   return inherit( Node, TriangleNode );

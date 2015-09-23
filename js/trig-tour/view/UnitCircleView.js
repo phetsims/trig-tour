@@ -286,7 +286,7 @@ define( function( require ) {
       else {
         angleArcArrowHead.rotation = -totalAngle + ( 6 / arcRadius );
       }
-    };   //end drawAngleArc
+    };
 
 
     //visibility of x,y, and '1' labels on xyR triangle
@@ -354,8 +354,7 @@ define( function( require ) {
       yPos = -( arcRadius + 10 ) * Math.sin( totalAngle / 2 );
       thetaText.centerX = xPos;
       thetaText.centerY = yPos;
-    };//end positionLabels()
-
+    };
 
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {
@@ -371,7 +370,7 @@ define( function( require ) {
       drawAngleArc();
       positionLabels();
     } );
-  }//end constructor
+  }
 
   return inherit( Node, UnitCircleView );
 } );

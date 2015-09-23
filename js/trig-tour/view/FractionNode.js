@@ -46,7 +46,7 @@ define( function( require ) {
 
     this.mutate( options );
 
-  }//end of constructor
+  }
 
   return inherit( Node, FractionNode, {
     setValues: function( numerator, denominator ){
@@ -143,7 +143,7 @@ define( function( require ) {
         }
 
         return; //have to break out
-      } //end if
+      }
 
       if( !noDenominator ){
         this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
@@ -166,6 +166,6 @@ define( function( require ) {
         sqRtPath.top = this.numeratorText.top;
         sqRtPath.centerX = this.numeratorText.centerX - 3;
       }
-    }// end setFraction()
-  });// end return inherit
+    }
+  });
 } );

@@ -64,17 +64,17 @@ define( function( require ) {
     getAngleInDegrees: function () {
        return this.angle*180/Math.PI;
     },
-    
+
     //small angle in rads, between -pi and +pi
     getSmallAngleInRadians: function(){
         return this.smallAngle;
     },
-    
+
     //small angle in degrees between -180 and +180
     getSmallAngleInDegrees: function(){
       return this.smallAngle*180/Math.PI;
     },
-    
+
     //small angle in degrees 0 to +360
     getSmallAngle0To360: function(){
       if( this.smallAngle > 0 ){
@@ -108,7 +108,7 @@ define( function( require ) {
       this.halfTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/( Math.PI ));
       this.angle = angleInRads;
     } ,
-    
+
     //set the full angle, and various turns counts, given the current small angle
     setAngle: function ( smallAngle ){    //smallAngle in rads
       this.smallAngle = smallAngle;
@@ -120,7 +120,7 @@ define( function( require ) {
       }
 
       var targetAngle = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
-      
+
       //round to nearest half-degree; to do this, must convert to degrees and then back to rads 
       var roundedTargetAngle = targetAngle*180/Math.PI;
       var deltaDeg = 0.5;
@@ -133,7 +133,7 @@ define( function( require ) {
       this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle )/( Math.PI ));
       this.angle = targetAngle;  //now can trigger angle update
       this.previousAngle = smallAngle;
-    },//end setAngle()
+    },
 
     //given the small angle in rads, sets current angle to nearest special angle in rads; called from UnitCircleView
     setSpecialAngleWithSmallAngle: function ( smallAngle ){   //smallAngle in rads
@@ -151,9 +151,9 @@ define( function( require ) {
         if( smallAngleInDegs >= 165 || smallAngleInDegs < -165 ){
           nearestSpecialAngleInRads = Math.PI;
         }
-      }//end for
+      }
       this.setAngle( nearestSpecialAngleInRads );
-    },//end setSpecialAngleWithSmallAngle()
+    },
 
 
     //Given the full angle, set angle to the nearest special angle; called from GraphView
@@ -168,7 +168,7 @@ define( function( require ) {
 
       //borders are angles half-way between special angles
       var borders = [ 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165, 195, 217.5, 232.5, 255, 285, 307.5, 322.5, 345 ];
-      
+
       for ( var i = 0; i <= specialAngles.length - 1; i++ ) {
         if ( remainderInDegrees >= borders[ i ] && remainderInDegrees < borders[ i + 1 ] ) {
           nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];// * Math.PI / 180;
@@ -188,6 +188,6 @@ define( function( require ) {
       var nearestSpecialAngleInRadians = nearestSpecialAngleInDegrees*Math.PI/180;
       var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );
-    }//end setSpecialAngleWithFullAngle()
+    }
   } );
 } );

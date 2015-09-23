@@ -140,7 +140,7 @@ define( function( require ) {
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
       }
       readoutDisplay.readoutNode.setAngleReadout();
-    } );//end viewProperties.angleUnitsProperty.link
+    } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
       unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
@@ -182,7 +182,7 @@ define( function( require ) {
       }
       readoutDisplay.readoutNode.setAngleReadout();
       readoutDisplay.readoutNode.setTrigReadout();
-    } );//end viewProperties.specialAnglesVisibleProperty.link
+    } );
 
     //if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
     unitCircleView.maxAngleExceededProperty.link( function( tOrF ) {

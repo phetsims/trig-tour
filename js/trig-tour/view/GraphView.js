@@ -366,7 +366,7 @@ define(function (require) {
             this.tanPath.addChild(triangleNode);
             triangleNode.x = xPix;
             triangleNode.y = yPix + 1;
-        }//end for loop
+        }
 
         //SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
         this.singularityIndicator = new Line(0, -800, 0, 400, {stroke: TAN_COLOR, lineWidth: 2, lineDash: [10, 5]});
@@ -483,7 +483,7 @@ define(function (require) {
             }
         });
 
-    }//end constructor
+    }
 
     return inherit(Node, GraphView, {
             //indicator Line is a draggable vertical arrow, indicating current location on graph

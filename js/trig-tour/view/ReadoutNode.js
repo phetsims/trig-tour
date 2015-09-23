@@ -238,7 +238,7 @@ define( function( require ) {
       [ 7 + pi, 4 ],
       [ 11 + pi, 6 ],
       [ 2 + pi, '' ]
-    ];//end anglesInRadsFractions
+    ];
 
     //'q' is the flag which informs FractionNode that a square root symbol is required in the numerator
     this.cosFractions = [
@@ -337,7 +337,7 @@ define( function( require ) {
     } );
 
 
-  }//end constructor
+  }
 
 
   return inherit( Node, ReadoutNode, {
@@ -424,7 +424,7 @@ define( function( require ) {
         this.angleReadoutFraction.setValues( 'A', 'B' );
         this.angleReadoutFraction.visible = false;
       }
-    }, //end setSpecialAngleReadout()
+    },
     setTrigReadout: function(){
       var sinText = Util.toFixed( this.model.sin(), 3 );
       var cosText = Util.toFixed( this.model.cos(), 3 );

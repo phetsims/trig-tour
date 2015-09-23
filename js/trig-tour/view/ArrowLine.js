@@ -69,7 +69,7 @@ define( function( require ) {
 
         this.canvas.addChild( this.line );
         arrowLine.addChild( this.canvas );
-    }//end constructor
+    }
 
     return inherit( Node, ArrowLine, {
         setColor: function( color ){
@@ -117,7 +117,7 @@ define( function( require ) {
                     this.line.setPoint2( displacement - 0.9*sign*this.arrowHead.width, 0 );
                 }
             }
-        },//end setEndPoint()
+        },
         drawArrowHead: function( arrowHeadLength ){
             this.arrowHeadShape = new Shape();  //seems wasteful to create new Shape, but any alternative?
             var hW = this.arrowHeadWidth;
@@ -132,5 +132,5 @@ define( function( require ) {
         setLineWidth: function( lineWidth ){
             this.line.lineWidth = lineWidth;
         }
-    } ); //end return inherit
+    } );
 } );

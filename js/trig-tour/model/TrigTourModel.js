@@ -25,8 +25,8 @@ define( function( require ) {
     } );
     this.smallAngle = 0;    //@private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi
     this.previousAngle = 0; //@private, smallAngle in previous step, needed to compute total angle from smallAngle
-    this.nbrFullTurns = 0;  //@private, nbr of turns around the unit circle, incremented at +/-180 deg,
-                            //needed to compute (full) angle from smallAngle
+    this.rotationNumberFromPi = 0;  //@private, nbr of turns around the unit circle, incremented at +/-180 deg,
+                                    //needed to compute (full) angle from smallAngle
     this.fullTurnCount = 0; //@private, nbr of turns around unit circle, incremented at angle = 0 deg
     this.halfTurnCount = 0; //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30, 45, 60, 90...)
@@ -95,15 +95,15 @@ define( function( require ) {
       var remainderAngle = angleInRads%( 2*Math.PI );
       this.fullTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/(2*Math.PI ));
       if( Math.abs( remainderAngle ) <= Math.PI ){
-        this.nbrFullTurns = this.fullTurnCount;
+        this.rotationNumberFromPi = this.fullTurnCount;
       }else{
         if( angleInRads > 0 ){
-          this.nbrFullTurns = this.fullTurnCount + 1;
+          this.rotationNumberFromPi = this.fullTurnCount + 1;
         }else{
-          this.nbrFullTurns = this.fullTurnCount - 1;
+          this.rotationNumberFromPi = this.fullTurnCount - 1;
         }
       }
-      this.smallAngle = angleInRads - this.nbrFullTurns*2*Math.PI;
+      this.smallAngle = angleInRads - this.rotationNumberFromPi*2*Math.PI;
       remainderAngle = angleInRads%( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle )/( Math.PI ));
       this.angle = angleInRads;
@@ -114,12 +114,12 @@ define( function( require ) {
       this.smallAngle = smallAngle;
       var comparisonAngle = 149*Math.PI/180; //must be less than (180-30)deg in order to handle special angle correctly
       if( ( this.smallAngle < 0 ) && (this.previousAngle > comparisonAngle) ){
-        this.nbrFullTurns += 1;
+        this.rotationNumberFromPi += 1;
       }else if ( this.smallAngle > 0 && this.previousAngle < -comparisonAngle ) {
-        this.nbrFullTurns -= 1;
+        this.rotationNumberFromPi -= 1;
       }
 
-      var targetAngle = this.nbrFullTurns*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
+      var targetAngle = this.rotationNumberFromPi*2*Math.PI + this.smallAngle;  //don't want to trigger angle update yet
 
       //round to nearest half-degree; to do this, must convert to degrees and then back to rads 
       var roundedTargetAngle = targetAngle*180/Math.PI;

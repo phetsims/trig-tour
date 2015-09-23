@@ -18,7 +18,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
-  var UtilTrig = require( 'TRIG_TOUR/trig-tour/view/Util' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -44,7 +44,7 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
-  var TEXT_COLOR = UtilTrig.TEXT_COLOR;
+  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan

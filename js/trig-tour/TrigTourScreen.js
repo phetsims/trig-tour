@@ -12,13 +12,13 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var TrigLabModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
-  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   // strings
   var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
   //constants
-  var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
+  var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
 
   /**
    * @constructor

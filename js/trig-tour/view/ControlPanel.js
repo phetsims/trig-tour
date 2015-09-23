@@ -25,12 +25,12 @@ define( function( require ) {
   var labelsStr = require( 'string!TRIG_TOUR/labels' );
   var gridStr = require( 'string!TRIG_TOUR/grid' );
   var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
-  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
-  var TEXT_COLOR = Util.TEXT_COLOR;
-  var PANEL_COLOR = Util.PANEL_COLOR;
+  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   // Text nodes
   var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };

@@ -15,11 +15,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'TRIG_TOUR/trig-tour/view/Util' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
-  var PANEL_COLOR = Util.PANEL_COLOR;
+  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   //strings
   var valuesStr = require( 'string!TRIG_TOUR/values' );

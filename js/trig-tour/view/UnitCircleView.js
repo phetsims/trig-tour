@@ -23,7 +23,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var UtilTrig = require( 'TRIG_TOUR/trig-tour/view/Util' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
 
   //strings
@@ -39,12 +39,12 @@ define( function( require ) {
   var DISPLAY_FONT_LARGE = new PhetFont( 22 );
   var DISPLAY_FONT_SMALL = new PhetFont( 18 );
   var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
-  var LINE_COLOR = UtilTrig.LINE_COLOR;
-  var TEXT_COLOR = UtilTrig.TEXT_COLOR;
-  var TEXT_COLOR_GRAY = UtilTrig.TEXT_COLOR_GRAY;
-  var COS_COLOR = UtilTrig.COS_COLOR;
-  var SIN_COLOR = UtilTrig.SIN_COLOR;
-  var VIEW_BACKGROUND_COLOR = UtilTrig.VIEW_BACKGROUND_COLOR;
+  var LINE_COLOR = TrigTourColors.LINE_COLOR;
+  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
+  var COS_COLOR = TrigTourColors.COS_COLOR;
+  var SIN_COLOR = TrigTourColors.SIN_COLOR;
+  var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
 
 
 

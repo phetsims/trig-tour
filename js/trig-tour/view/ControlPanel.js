@@ -37,7 +37,7 @@ define( function( require ) {
   var cosText = new Text( cosStr, fontInfo );
   var sinText = new Text( sinStr, fontInfo );
   var tanText = new Text( tanStr, fontInfo );
-  var labelsText =  new Text( labelsStr, fontInfo );
+  var labelsText = new Text( labelsStr, fontInfo );
   var gridText = new Text( gridStr, fontInfo );
   var specialAnglesText = new Text( specialAnglesStr, fontInfo );
 
@@ -47,13 +47,13 @@ define( function( require ) {
    * @param {Object} properties
    * @constructor
    */
-  function ControlPanel( properties  ) {
+  function ControlPanel( properties ) {
 
     this.properties = properties;
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
     //properties.graph = 'cos'|'sin'|'tan'
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' } ;
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
     var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', cosText, myRadioButtonOptions );
     var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', sinText, myRadioButtonOptions );
     var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', tanText, myRadioButtonOptions );
@@ -63,9 +63,9 @@ define( function( require ) {
     var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
     var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
     var specialAnglesCheckBox = new CheckBox(
-        specialAnglesText,
-        properties.specialAnglesVisibleProperty,
-        checkBoxOptions
+      specialAnglesText,
+      properties.specialAnglesVisibleProperty,
+      checkBoxOptions
     );
 
     // Adjust touch areas
@@ -85,7 +85,7 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    Panel.call( this, content, {xMargin: 15, yMargin: 15, lineWidth: 1, fill: PANEL_COLOR} );
+    Panel.call( this, content, { xMargin: 15, yMargin: 15, lineWidth: 1, fill: PANEL_COLOR } );
 
   }
 

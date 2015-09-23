@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {TrigTourModel} model is the main model of the sim
    * @constructor
    */
-  function ReadoutDisplay( model, properties  ) {
+  function ReadoutDisplay( model, properties ) {
 
     //var readoutDisplay = this;
     this.model = model;

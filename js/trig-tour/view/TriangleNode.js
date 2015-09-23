@@ -32,12 +32,12 @@ define( function( require ) {
     Node.call( this.triangleNode );
 
     this.color = color;
-    this.rotation = rotationInDegrees*Math.PI/180;  //Node.rotation is in radians
+    this.rotation = rotationInDegrees * Math.PI / 180;  //Node.rotation is in radians
 
     //draw horizontal arrow pointing right
     var triangleShape = new Shape();
-    triangleShape.moveTo( 0, 0 ).lineTo( 0, width/2 ).lineTo( length, 0 ).lineTo( 0, -width/2 ).close();
-    var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: this.color });
+    triangleShape.moveTo( 0, 0 ).lineTo( 0, width / 2 ).lineTo( length, 0 ).lineTo( 0, -width / 2 ).close();
+    var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: this.color } );
     this.addChild( trianglePath );
     trianglePath.x = -1;//reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 

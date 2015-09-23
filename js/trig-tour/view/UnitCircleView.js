@@ -17,7 +17,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Property = require('AXON/Property');
+  var Property = require( 'AXON/Property' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
@@ -45,7 +45,6 @@ define( function( require ) {
   var COS_COLOR = TrigTourColors.COS_COLOR;
   var SIN_COLOR = TrigTourColors.SIN_COLOR;
   var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
-
 
 
   /**
@@ -172,7 +171,7 @@ define( function( require ) {
 
     //add the children to parent node
     //var content = new Node();
-    unitCircleView.children =[
+    unitCircleView.children = [
       this.background,
       this.grid,
       circleGraphic,
@@ -254,7 +253,7 @@ define( function( require ) {
       if ( Math.abs( totalAngle ) < 0.5 ) {
         deltaAngle = 0.02;
       }
-      var angle = 0;  
+      var angle = 0;
       if ( totalAngle > 0 ) {
         for ( angle = 0; angle <= totalAngle; angle += deltaAngle ) {
           arcRadius += deltaAngle;

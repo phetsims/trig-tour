@@ -287,7 +287,9 @@ define( function( require ) {
       }
     };
 
-    //visibility of x,y, and '1' labels on xyR triangle
+    // visibility of x,y, and '1' labels on xyR triangle.  This function is added in the constructor so that
+    // positionLabels() below can remain private.
+    // @public
     this.setLabelVisibility = function( isVisible ) {
       positionLabels();
       labelCanvas.visible = isVisible;

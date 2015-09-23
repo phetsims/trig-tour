@@ -20,7 +20,7 @@ define( function( require ) {
   var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
   //images
-  var dizzyPhetGirl = require( 'mipmap!TRIG_TOUR/dizzyPhetGirl.png' );
+  var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
 
   /**
    * @param {TrigTourModel} model for sim
@@ -37,7 +37,7 @@ define( function( require ) {
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width );
     var controlPanel = new ControlPanel( viewProperties );
-    this.dizzyImage = new Image( dizzyPhetGirl, { scale: 0.6 } );
+    this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
 
     //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
     //unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
@@ -50,7 +50,7 @@ define( function( require ) {
     this.addChild( unitCircleView );
     this.addChild( readoutDisplay );
     this.addChild( controlPanel );
-    this.addChild( this.dizzyImage );
+    this.addChild( this.dizzyPhetGirlImage );
 
     //Layout children Views
     unitCircleView.x = this.layoutBounds.centerX;
@@ -63,8 +63,8 @@ define( function( require ) {
     graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
     controlPanel.centerX = 0.5 * ( unitCircleView.right + this.layoutBounds.right );
     controlPanel.top = this.layoutBounds.top + 30;
-    this.dizzyImage.right = this.layoutBounds.right;
-    this.dizzyImage.bottom = this.layoutBounds.bottom;
+    this.dizzyPhetGirlImage.right = this.layoutBounds.right;
+    this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
 
 
     //Set up callbacks
@@ -186,7 +186,7 @@ define( function( require ) {
 
     //if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
     unitCircleView.maxAngleExceededProperty.link( function( tOrF ) {
-      trigTourScreenView.dizzyImage.visible = tOrF;
+      trigTourScreenView.dizzyPhetGirlImage.visible = tOrF;
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
@@ -196,7 +196,7 @@ define( function( require ) {
         graphView.expandedProperty.value = true;
         readoutDisplay.expandedProperty.value = true;
         trigTourModel.setFullAngleInRadians( 0 );
-        trigTourScreenView.dizzyImage.visible = false;
+        trigTourScreenView.dizzyPhetGirlImage.visible = false;
       },
       right: this.layoutBounds.maxX - 60,
       top: controlPanel.bottom + 10,

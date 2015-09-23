@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * Simple triangle graphic
  * Used as arrow heads on curves in GraphView

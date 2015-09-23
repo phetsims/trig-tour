@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * AccordionBox container of ReadoutNode,
  * ReadoutNode contains all the user-viewed content.

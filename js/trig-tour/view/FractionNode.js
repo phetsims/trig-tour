@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * Displays a built-up fraction
  * Created by Michael Dubson (PhET developer) on 6/10/2015.

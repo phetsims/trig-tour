@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * View property set, passed to control panel
  * Created by Michael Dubson (PhET developer) on 6/5/2015.

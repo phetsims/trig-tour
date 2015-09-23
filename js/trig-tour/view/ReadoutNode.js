@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * Live readout of angle, and values of sin, cos, tan.
  * Created by Michael Dubson (PhET developer) on 6/10/2015.

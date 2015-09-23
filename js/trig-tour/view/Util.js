@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * Layout bounds constant and color constants
  * Created by Michael Dubson (PhET developer) on 6/16/2015.

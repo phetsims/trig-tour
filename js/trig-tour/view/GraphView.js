@@ -1,3 +1,5 @@
+// Copyright 2002-2015, University of Colorado Boulder
+
 /**
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
  * Grabbable pointer indicates current value of theta and the function

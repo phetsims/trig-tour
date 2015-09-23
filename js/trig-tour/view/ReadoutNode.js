@@ -2,7 +2,8 @@
 
 /**
  * Live readout of angle, and values of sin, cos, tan.
- * Created by Michael Dubson (PhET developer) on 6/10/2015.
+ *
+ * @author Michael Dubson (PhET developer) on 6/10/2015.
  */
 define( function( require ) {
   'use strict';
@@ -50,17 +51,17 @@ define( function( require ) {
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
    * @param {TrigTourModel} model is the main model of the sim
-   * @param {Object} properties
+   * @param {ViewProperties} viewProperties
    * @constructor
    */
-  function ReadoutNode( model, properties ) {
+  function ReadoutNode( model, viewProperties ) {
 
     var readoutNode = this;
     this.model = model;
-    this.properties = properties;
+    this.viewProperties = viewProperties;
     this.nbrDecimalPlaces = 1;      //number of decimal places for display of angle, = 0 for special angles
-    this.radiansDisplayed = false;  //{boolean} set by ControlPanel
-    this.specialAnglesOnly = false; //{boolean} set by ControlPanel
+    //this.radiansDisplayed = false;  //{boolean} set by ControlPanel
+    //this.specialAnglesOnly = false; //{boolean} set by ControlPanel
     this.units = 'degrees';         //{string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
@@ -209,13 +210,13 @@ define( function( require ) {
     var degText = new Text( degreesStr, fontInfo );
     var radText = new Text( radiansStr, fontInfo );
     var degreesRadioButton = new AquaRadioButton(
-      properties.angleUnitsProperty,
+      viewProperties.angleUnitsProperty,
       'degrees',
       degText,
       myRadioButtonOptions
     );
     var radiansRadioButton = new AquaRadioButton(
-      properties.angleUnitsProperty,
+      viewProperties.angleUnitsProperty,
       'radians',
       radText,
       myRadioButtonOptions
@@ -335,15 +336,12 @@ define( function( require ) {
 
     model.singularityProperty.link( function( singularity ) {
       readoutNode.plusMinusInfinityNode.visible = singularity;
-      if ( !readoutNode.specialAnglesOnly ) {
+      if ( !readoutNode.viewProperties.specialAnglesVisible ) {
         readoutNode.tanReadoutText.visible = !singularity;
       }
 
     } );
-
-
   }
-
 
   return inherit( Node, ReadoutNode, {
     //set readout units to either degrees or radians
@@ -370,13 +368,15 @@ define( function( require ) {
 
     //sets format of angle readout (row 2) of readout panel: degrees, radians, or special angles
     setAngleReadout: function() {
-      if ( !this.radiansDisplayed ) {
+      var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
+      var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
+      if ( !radiansDisplayed ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
-      if ( this.radiansDisplayed && !this.specialAnglesOnly ) {
+      if ( radiansDisplayed && !specialAnglesOnly ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.angle, 3 ) + ' ' + radsStr;
       }
-      if ( this.radiansDisplayed && this.specialAnglesOnly ) {
+      if ( radiansDisplayed && specialAnglesOnly ) {
         this.setSpecialAngleReadout();
       }
     },
@@ -439,7 +439,7 @@ define( function( require ) {
       var sinText = Util.toFixed( this.model.sin(), 3 );
       var cosText = Util.toFixed( this.model.cos(), 3 );
       var tanText = Util.toFixed( this.model.tan(), 3 );
-      if ( this.specialAnglesOnly ) {
+      if ( this.viewProperties.specialAnglesVisible ) {
         this.setSpecialAngleTrigReadout();
       }
       else {

@@ -30,12 +30,15 @@ define( function( require ) {
 
     ScreenView.call( this );
     var trigTourScreenView = this;
-    this.labelsVisible = false;  //set by Control Panel
 
+    this.labelsVisible = false;  //set by Control Panel
     var viewProperties = new ViewProperties();
-    var unitCircleView = new UnitCircleView( trigTourModel );
+
+    var unitCircleView = new UnitCircleView( trigTourModel, viewProperties.specialAnglesVisibleProperty );
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
-    var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width );
+    var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width,
+      viewProperties.specialAnglesVisibleProperty );
+
     var controlPanel = new ControlPanel( viewProperties );
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
 
@@ -145,7 +148,6 @@ define( function( require ) {
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
       unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
       readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
-      trigTourModel.specialAnglesMode = specialAnglesVisible;
 
       //select correct trig readouts
       readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;

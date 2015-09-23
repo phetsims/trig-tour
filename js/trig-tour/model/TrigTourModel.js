@@ -29,7 +29,6 @@ define( function( require ) {
                                     //needed to compute (full) angle from smallAngle
     this.fullTurnCount = 0; // @public, nbr of turns around unit circle, incremented at angle = 0 deg
     this.halfTurnCount = 0; // @public, nbr of half turns around unit circle, incremented at small angle = 0 and 180
-    this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30, 45, 60, 90...)
   }
 
   return inherit( PropertySet, TrigTourModel, {

@@ -63,10 +63,11 @@ define( function( require ) {
    * @param {TrigTourModel} model of the sim
    * @param {Number} height of y-axis on graph
    * @param {Number} width of x-axis on graph
+   * @param {Property} specialAnglesVisibleProperty
    * @constructor
    */
 
-  function GraphView( model, height, width ) {      //height and width of axes on graph
+  function GraphView( model, height, width, specialAnglesVisibleProperty ) {
 
     var graphView = this;
     this.model = model;
@@ -441,7 +442,7 @@ define( function( require ) {
           var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
           var fullAngle = ( 2 * Math.PI * position.x / wavelength );   //in radians
 
-          if ( !model.specialAnglesMode ) {
+          if ( !specialAnglesVisibleProperty.value ) {
             model.setFullAngleInRadians( fullAngle );
           }
           else {

@@ -49,11 +49,13 @@ define( function( require ) {
 
   /**
    * View of the unit circle with grabbable radial arm, called the rotor arm
-   * @param {TrigTourModel} model is the main model of the sim
+   *
+   * @param {TrigTourModel} model - the main model of the sim
+   * @param {Property} specialAnglesVisibleProperty - property tracking visiblity of special angles.
    * @constructor
    */
 
-  function UnitCircleView( model ) {
+  function UnitCircleView( model, specialAnglesVisibleProperty ) {
 
     var unitCircleView = this;
     this.model = model;
@@ -207,7 +209,7 @@ define( function( require ) {
           var v1 = rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
           var smallAngle = -v1.angle(); //model angle is negative of xy screen coordinates angle
           if ( !unitCircleView.maxAngleExceededProperty.value ) {
-            if ( !model.specialAnglesMode ) {
+            if ( !specialAnglesVisibleProperty.value ) {
               model.setAngle( smallAngle );
             }
             else {

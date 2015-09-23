@@ -491,9 +491,6 @@ define( function( require ) {
           this.tanReadoutFraction.setValues( this.tanFractions[ i ][ 0 ], this.tanFractions[ i ][ 1 ] );
         }
       }
-
-      //hack to prevent coordinatesHBox layout from wandering, don't know why this line needed
-      this.coordinatesHBox.centerY = -7;
     }
   } );
 } );

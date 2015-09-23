@@ -19,16 +19,16 @@ define( function( require ) {
   function TrigTourModel() {
 
     PropertySet.call( this, {
-      angle: 0,             //@public, total angle in radians, can be greater than 2*pi, or less than -2*pi
-      singularity: false    //@public, indicates singularity in tan function at theta = +/- 90 degrees
+      angle: 0,             // @public, total angle in radians, can be greater than 2*pi, or less than -2*pi
+      singularity: false    // @public, indicates singularity in tan function at theta = +/- 90 degrees
                             // true if angle is close to +/-90 degrees
     } );
-    this.smallAngle = 0;    //@private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi
-    this.previousAngle = 0; //@private, smallAngle in previous step, needed to compute total angle from smallAngle
+    this.smallAngle = 0;    // @private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi
+    this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total angle from smallAngle
     this.rotationNumberFromPi = 0;  //@private, nbr of turns around the unit circle, incremented at +/-180 deg,
                                     //needed to compute (full) angle from smallAngle
-    this.fullTurnCount = 0; //@private, nbr of turns around unit circle, incremented at angle = 0 deg
-    this.halfTurnCount = 0; //@private, nbr of half turns around unit circle, incremented at small angle = 0 and 180
+    this.fullTurnCount = 0; // @public, nbr of turns around unit circle, incremented at angle = 0 deg
+    this.halfTurnCount = 0; // @public, nbr of half turns around unit circle, incremented at small angle = 0 and 180
     this.specialAnglesMode = false;  //{boolean} true if special angles only (0, 30, 45, 60, 90...)
   }
 
@@ -58,6 +58,7 @@ define( function( require ) {
       }
       return returnValue;
     },
+
     getAngleInRadians: function(){
       return this.angle;
     },
@@ -82,12 +83,6 @@ define( function( require ) {
       }else{
         return 360 + this.smallAngle*180/Math.PI;
       }
-    },
-    getFullTurnCount: function(){
-      return this.fullTurnCount;
-    },
-    getHalfTurnCount: function(){
-      return this.halfTurnCount;
     },
 
     //set the full angle, the small angle and various turns counts, given the current full angle

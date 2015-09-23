@@ -383,7 +383,7 @@ define( function( require ) {
         angleInDegs = angleInDegs%360;
       }
       //number of full turns around unit circle, incremented at theta = 0
-      var fullTurnCount = this.model.getFullTurnCount();
+      var fullTurnCount = this.model.fullTurnCount;
       var piRadsCount = 2*fullTurnCount;    //number of half turns around unit circle; half-turn = pi radians
       var fullTurnStr = '';   //angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
       if( piRadsCount !== 0 ){
@@ -409,7 +409,7 @@ define( function( require ) {
       //Must handle smallAngle = 0 or pi as special cases
       var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
       if( roundedAngle === 0 || roundedAngle === 180 ){
-        var nbrPiRads = this.model.getHalfTurnCount();
+        var nbrPiRads = this.model.halfTurnCount;
         var angleStr = nbrPiRads + pi;
         if( nbrPiRads === 0 ){
           angleStr = '0';

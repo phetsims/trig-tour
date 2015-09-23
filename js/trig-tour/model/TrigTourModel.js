@@ -19,8 +19,8 @@ define( function( require ) {
   function TrigTourModel() {
 
     PropertySet.call( this, {
-      angle: 0,             //@private, total angle in radians, can be greater than 2*pi, or less than -2*pi
-      singularity: false    //@private, indicates singularity in tan function at theta = +/- 90 degrees
+      angle: 0,             //@public, total angle in radians, can be greater than 2*pi, or less than -2*pi
+      singularity: false    //@public, indicates singularity in tan function at theta = +/- 90 degrees
                             // true if angle is close to +/-90 degrees
     } );
     this.smallAngle = 0;    //@private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi

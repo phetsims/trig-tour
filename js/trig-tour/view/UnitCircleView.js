@@ -49,15 +49,13 @@ define( function( require ) {
   /**
    * Constructor for the UnitCircleView.
    *
-   * @param {TrigTourModel} model - the main model of the sim
+   * @param {TrigTourModel} trigLabModel - the main model of the sim
    * @param {Property} specialAnglesVisibleProperty - property tracking visibility of special angles.
    * @constructor
    */
-  function UnitCircleView( model, specialAnglesVisibleProperty ) {
+  function UnitCircleView( trigLabModel, specialAnglesVisibleProperty ) {
 
     var unitCircleView = this;
-    this.model = model;
-    var trigLabModel = model;
 
     // Call the super constructor
     Node.call( unitCircleView );
@@ -208,18 +206,18 @@ define( function( require ) {
           var smallAngle = -v1.angle(); //model angle is negative of xy screen coordinates angle
           if ( !unitCircleView.maxAngleExceededProperty.value ) {
             if ( !specialAnglesVisibleProperty.value ) {
-              model.setAngle( smallAngle );
+              trigLabModel.setAngle( smallAngle );
             }
             else {
-              model.setSpecialAngleWithSmallAngle( smallAngle );
+              trigLabModel.setSpecialAngleWithSmallAngle( smallAngle );
             }
           }
           else {  //if maxAngleExceeded, update only if user decreases angle
             if ( Math.abs( smallAngle ) < maxAllowedSmallAngle ) {
-              model.setAngle( smallAngle );
+              trigLabModel.setAngle( smallAngle );
             }
           }
-          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( model.getAngleInRadians() ) > maxAllowedAngle );
+          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( trigLabModel.getAngleInRadians() ) > maxAllowedAngle );
         }
       } ) );
 
@@ -248,7 +246,7 @@ define( function( require ) {
       var arcShape = new Shape();  //This seems wasteful, but there is no Shape.clear() function
       arcRadius = 0.2 * radius;
       arcShape.moveTo( arcRadius, 0 );
-      var totalAngle = model.getAngleInRadians();
+      var totalAngle = trigLabModel.getAngleInRadians();
       var deltaAngle = 0.1;  //delta-angle in radians
       if ( Math.abs( totalAngle ) < 0.5 ) {
         deltaAngle = 0.02;
@@ -357,7 +355,7 @@ define( function( require ) {
     };
 
     // Register for synchronization with model.
-    model.angleProperty.link( function( angle ) {
+    trigLabModel.angleProperty.link( function( angle ) {
       rotorGraphic.rotation = -angle;  //model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );

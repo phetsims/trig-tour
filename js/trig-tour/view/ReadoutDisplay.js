@@ -3,7 +3,8 @@
 /**
  * AccordionBox container of ReadoutNode,
  * ReadoutNode contains all the user-viewed content.
- * Created by Michael Dubson on 6/10/2015.
+ *
+ * @author Michael Dubson on 6/10/2015.
  */
 define( function( require ) {
   'use strict';
@@ -27,16 +28,15 @@ define( function( require ) {
   /**
    * Constructor for
    * @param {TrigTourModel} model is the main model of the sim
+   * @param {ViewProperties} viewProperties
    * @constructor
    */
-  function ReadoutDisplay( model, properties ) {
+  function ReadoutDisplay( model, viewProperties ) {
 
-    //var readoutDisplay = this;
     this.model = model;
-    this.properties = properties;
+    this.viewProperties = viewProperties;
 
-
-    this.readoutNode = new ReadoutNode( model, properties );
+    this.readoutNode = new ReadoutNode( model, viewProperties );
 
     this.expandedProperty = new Property( true );
 
@@ -55,7 +55,6 @@ define( function( require ) {
       contentYSpacing: 8,
       expandedProperty: this.expandedProperty
     } );
-
   }
 
   return inherit( AccordionBox, ReadoutDisplay );

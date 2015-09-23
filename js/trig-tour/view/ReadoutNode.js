@@ -50,6 +50,7 @@ define( function( require ) {
   /**
    * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
+   *
    * @param {TrigTourModel} model is the main model of the sim
    * @param {ViewProperties} viewProperties
    * @constructor
@@ -60,8 +61,6 @@ define( function( require ) {
     this.model = model;
     this.viewProperties = viewProperties;
     this.nbrDecimalPlaces = 1;      //number of decimal places for display of angle, = 0 for special angles
-    //this.radiansDisplayed = false;  //{boolean} set by ControlPanel
-    //this.specialAnglesOnly = false; //{boolean} set by ControlPanel
     this.units = 'degrees';         //{string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
@@ -71,7 +70,7 @@ define( function( require ) {
     var row2 = new Node();    //angle readout: angle = value in degrees or radians
     //row 3 is this.trigRow3 declared below, 'sin'|'cos'|'tan'= trig value
 
-    var angleValue = Util.toFixed( model.angle, 1 );      //read from model
+    var angleValue = Util.toFixed( model.angle, 1 );
     var sinValue = Util.toFixed( model.sin(), 3 );
     var cosValue = Util.toFixed( model.cos(), 3 );
     var tanValue = Util.toFixed( model.tan(), 3 );
@@ -80,9 +79,9 @@ define( function( require ) {
     var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
-    //Row 1: Coordinates readout (x, y) = ( cos value, sin value )
-    //cos and sin values are either decimal numbers ( this.coordinatesReadout )
-    //or, in Special Angle mode, they are built-up fractions of number of rads ( this.coordinatesHBox )
+    // Row 1: Coordinates readout (x, y) = ( cos value, sin value )
+    // cos and sin values are either decimal numbers ( this.coordinatesReadout )
+    // or, in Special Angle mode, they are built-up fractions of number of rads ( this.coordinatesHBox )
     var coordinatesLabel = new Text( xyEqualsStr, fontBoldInfo );
     this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //dummy arguments to set bounds
     this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
@@ -108,6 +107,7 @@ define( function( require ) {
       align: 'center',
       spacing: 0
     } );
+
     //coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
     row1.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
     this.coordinatesReadout.left = coordinatesLabel.right;
@@ -339,12 +339,15 @@ define( function( require ) {
       if ( !readoutNode.viewProperties.specialAnglesVisible ) {
         readoutNode.tanReadoutText.visible = !singularity;
       }
-
     } );
   }
 
   return inherit( Node, ReadoutNode, {
-    //set readout units to either degrees or radians
+    /**
+     * Set readout units to either degrees or radians.
+     *
+     * @param {string} units one of 'degrees' || 'radians'
+     */
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
@@ -356,52 +359,74 @@ define( function( require ) {
       }
     },
 
-    //Trig Row is row 3 of the readout panel, displays value of either sin, cos, or tan
+    /**
+     * Set which type of trig display is visible.  Trig row is row 3 of the readout panel.  Displays value of either
+     * sin, cos, or tan.
+     *
+     * @param {string} graph
+     */
     setTrigRowVisibility: function( graph ) {
       this.trigRow3.children[ 0 ].visible = ( graph === 'sin' );
       this.trigRow3.children[ 1 ].visible = ( graph === 'cos' );
       this.trigRow3.children[ 2 ].visible = ( graph === 'tan' );
     },
-    setAngleReadoutPrecision: function( nbrDecimalPlaces ) {
-      this.nbrDecimalPlaces = nbrDecimalPlaces;
+
+    /**
+     * Set the angle readout precision.
+     *
+     * @param {number} decimalPrecision
+     */
+    setAngleReadoutPrecision: function( decimalPrecision ) {
+      this.nbrDecimalPlaces = decimalPrecision;
     },
 
-    //sets format of angle readout (row 2) of readout panel: degrees, radians, or special angles
+    /**
+     * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
+     */
     setAngleReadout: function() {
       var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
       var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
       if ( !radiansDisplayed ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
-      if ( radiansDisplayed && !specialAnglesOnly ) {
+      if ( radiansDisplayed && !specialAnglesVisible ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.angle, 3 ) + ' ' + radsStr;
       }
-      if ( radiansDisplayed && specialAnglesOnly ) {
+      if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();
       }
     },
+
+    /**
+     * Set the special angle readout.
+     */
     setSpecialAngleReadout: function() {
       this.angleReadoutFraction.visible = true;
+
       //need integer value of angle, since internal arithmetic often not-quite integer
       var angleInDegs = Util.roundSymmetric( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
       if ( Math.abs( angleInDegs ) > 360 ) {
         angleInDegs = angleInDegs % 360;
       }
+
       //number of full turns around unit circle, incremented at theta = 0
       var fullTurnCount = this.model.fullTurnCount;
-      var piRadsCount = 2 * fullTurnCount;    //number of half turns around unit circle; half-turn = pi radians
-      var fullTurnStr = '';   //angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
+      var piRadsCount = 2 * fullTurnCount; //  number of half turns around unit circle; half-turn = pi radians
+      var fullTurnStr = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
       if ( piRadsCount !== 0 ) {
-        if ( fullTurnCount > 0 ) {  //if angle positive
+        if ( fullTurnCount > 0 ) {
+          // if angle positive
           fullTurnStr = piRadsCount + pi + ' + ';
         }
-        else {                    //if angle negative, minus sign is constructed in FractionNode
+        else {
+          // if angle negative, minus sign is constructed in FractionNode
           fullTurnStr = piRadsCount + pi + ' ';
         }
       }
       else {  //if zero turns
         fullTurnStr = '';
       }
+
       this.nbrFullTurnsNode.setValues( fullTurnStr, '' );
       this.angleReadoutFraction.left = this.nbrFullTurnsNode.right; //this.nbrFullTurnsText.right;
       for ( var i = 0; i < this.angleFractions.length; i++ ) {
@@ -414,6 +439,7 @@ define( function( require ) {
           this.angleReadoutFraction.setValues( '-' + this.angleFractions[ i ][ 0 ], this.angleFractions[ i ][ 1 ] );
         }
       }
+
       //Must handle smallAngle = 0 or pi as special cases
       var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
@@ -435,6 +461,10 @@ define( function( require ) {
         this.angleReadoutFraction.visible = false;
       }
     },
+
+    /**
+     * Set the trig readout display.
+     */
     setTrigReadout: function() {
       var sinText = Util.toFixed( this.model.sin(), 3 );
       var cosText = Util.toFixed( this.model.cos(), 3 );
@@ -448,6 +478,10 @@ define( function( require ) {
         this.tanReadoutText.text = tanText;
       }
     },
+
+    /**
+     * Set the special angle readout display.
+     */
     setSpecialAngleTrigReadout: function() {
       var smallAngleInDegrees = Util.roundSymmetric( this.model.getSmallAngle0To360() );
       for ( var i = 0; i < this.angles.length; i++ ) {

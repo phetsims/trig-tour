@@ -2,9 +2,9 @@
 
 /**
  * Displays a built-up fraction
- * Created by Michael Dubson (PhET developer) on 6/10/2015.
+ *
+ * @author Michael Dubson (PhET developer) on 6/10/2015.
  */
-
 define( function( require ) {
   'use strict';
 
@@ -24,13 +24,12 @@ define( function( require ) {
    *    If either A or B (but not both) is negative, a minus sign is displayed at the same level as the divider bar
    *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
-   * @param {string} numerator
-   * @param {string} denominator
+   * @param {string|number} numerator
+   * @param {string|number} denominator
    * @param {Object} options
    * @constructor
    */
-
-  function FractionNode( numerator, denominator, options ) {   //numerator and denominator can be Numbers or Strings
+  function FractionNode( numerator, denominator, options ) {
 
     this.options = options;
     this.fractionNode = this;
@@ -49,12 +48,22 @@ define( function( require ) {
   }
 
   return inherit( Node, FractionNode, {
+
+    /**
+     * Set the numerator and denominator of this fractionNode.
+     *
+     * @param {string|number} numerator
+     * @param {string|number} denominator
+     */
     setValues: function( numerator, denominator ) {
       this.numerator = numerator;
       this.denominator = denominator;
       this.setFraction();
     },
 
+    /**
+     * Set the fraction node and draw its various parts.
+     */
     setFraction: function() {
       var minusSign;                    //short horizontal line for minus sign, in front of divisor bar
       var numeratorNegative = false;    //true if numerator is negative

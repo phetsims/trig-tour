@@ -1,9 +1,9 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Control Panel for Trig Tour sim
- * on right side of stage
- * Created by Michael Dubson (PhET developer) on 6/4/2015.
+ * Control Panel for Trig Tour sim, on right side of screenView
+ *
+ * @author Michael Dubson (PhET developer) on 6/4/2015.
  */
 define( function( require ) {
   'use strict';
@@ -17,6 +17,12 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+
+  // constants
+  var DISPLAY_FONT = new PhetFont( 20 );
+  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   //strings
   var cosStr = require( 'string!TRIG_TOUR/cos' );
@@ -25,12 +31,6 @@ define( function( require ) {
   var labelsStr = require( 'string!TRIG_TOUR/labels' );
   var gridStr = require( 'string!TRIG_TOUR/grid' );
   var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-
-  // constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   // Text nodes
   var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
@@ -41,30 +41,30 @@ define( function( require ) {
   var gridText = new Text( gridStr, fontInfo );
   var specialAnglesText = new Text( specialAnglesStr, fontInfo );
 
-
   /**
    * Constructor for the control panel
-   * @param {Object} properties
+   *
+   * @param {ViewProperties} viewProperties
    * @constructor
    */
-  function ControlPanel( properties ) {
+  function ControlPanel( viewProperties ) {
 
-    this.properties = properties;
+    this.viewProperties = viewProperties;
 
     //A cluster of 3 radio buttons for displaying either cos, sin or tan
-    //properties.graph = 'cos'|'sin'|'tan'
+    //viewProperties.graph = 'cos'|'sin'|'tan'
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
-    var cosRadioButton = new AquaRadioButton( properties.graphProperty, 'cos', cosText, myRadioButtonOptions );
-    var sinRadioButton = new AquaRadioButton( properties.graphProperty, 'sin', sinText, myRadioButtonOptions );
-    var tanRadioButton = new AquaRadioButton( properties.graphProperty, 'tan', tanText, myRadioButtonOptions );
+    var cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, myRadioButtonOptions );
+    var sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, myRadioButtonOptions );
+    var tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, myRadioButtonOptions );
 
     //3 checkboxes: Labels, Grid, Special Angles
     var checkBoxOptions = { checkBoxColorBackground: 'white' };
-    var labelsCheckBox = new CheckBox( labelsText, properties.labelsVisibleProperty, checkBoxOptions );
-    var gridCheckBox = new CheckBox( gridText, properties.gridVisibleProperty, checkBoxOptions );
+    var labelsCheckBox = new CheckBox( labelsText, viewProperties.labelsVisibleProperty, checkBoxOptions );
+    var gridCheckBox = new CheckBox( gridText, viewProperties.gridVisibleProperty, checkBoxOptions );
     var specialAnglesCheckBox = new CheckBox(
       specialAnglesText,
-      properties.specialAnglesVisibleProperty,
+      viewProperties.specialAnglesVisibleProperty,
       checkBoxOptions
     );
 

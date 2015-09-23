@@ -1,7 +1,8 @@
-// Copyright 2002-2015, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorad5o Boulder
 
 /**
  * Main model for Trig Tour Sim
+ *
  * @author Michael Dubson (PhET)
  */
 define( function( require ) {
@@ -13,34 +14,53 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
+   * Constructor for TrigTourModel.
+   *
    * @constructor
-   * No parameter
    */
   function TrigTourModel() {
 
+    // @public
     PropertySet.call( this, {
-      angle: 0,             // @public, total angle in radians, can be greater than 2*pi, or less than -2*pi
-      singularity: false    // @public, indicates singularity in tan function at theta = +/- 90 degrees
+      angle: 0,             // total angle in radians, can be greater than 2*pi, or less than -2*pi
+      singularity: false    // indicates singularity in tan function at theta = +/- 90 degrees
                             // true if angle is close to +/-90 degrees
     } );
-    this.smallAngle = 0;    // @private, smallAngle = angle modulo 2*pi with 180 offset, is between -pi and +pi
+
+    this.smallAngle = 0;    // @private, angle modulo 2*pi with 180 offset, is between -pi and +pi
     this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total angle from smallAngle
-    this.rotationNumberFromPi = 0;  //@private, nbr of turns around the unit circle, incremented at +/-180 deg,
+    this.rotationNumberFromPi = 0;  //@private, number of turns around the unit circle, incremented at +/-180 deg,
                                     //needed to compute (full) angle from smallAngle
-    this.fullTurnCount = 0; // @public, nbr of turns around unit circle, incremented at angle = 0 deg
-    this.halfTurnCount = 0; // @public, nbr of half turns around unit circle, incremented at small angle = 0 and 180
+    this.fullTurnCount = 0; // @public, number of turns around unit circle, incremented at angle = 0 deg
+    this.halfTurnCount = 0; // @public, number of half turns around unit circle, incremented at small angle = 0 and 180
   }
 
   return inherit( PropertySet, TrigTourModel, {
+
+    /**
+     * Returns cos of the total model angle in radians.
+     *
+     * @returns {number}
+     */
     cos: function() {
       return Math.cos( this.angle );
     },
+
+    /**
+     * Returns sin of the total model angle in radians.
+     *
+     * @returns {number}
+     */
     sin: function() {
       return Math.sin( this.angle );
     },
 
-    //Returns tangent of current angle. But when near +/-90 degrees, cuts off tan value at +/- maxValue.
-    //Must cut off value at +/- maxValue or else Safari Browser won't display properly.
+    /**
+     * Returns tangent of current model angle in radians. When near +/-90 degrees, cuts off tan value at +/- maxValue.
+     * Must cut off value at +/- maxValue or else Safari Browser won't display properly.
+     *
+     * @returns {number}
+     */
     tan: function() {
       var tanValue = Math.tan( this.angle );
       var maxValue = 350;
@@ -60,37 +80,65 @@ define( function( require ) {
       return returnValue;
     },
 
+    /**
+     * Get the current model angle in radians.
+     *
+     * @returns {number}
+     */
     getAngleInRadians: function() {
       return this.angle;
     },
+
+    /**
+     * Get the current model angle in degress.
+     *
+     * @returns {number}
+     */
     getAngleInDegrees: function() {
-      return this.angle * 180 / Math.PI;
+      return Util.toDegrees( this.angle );
     },
 
-    //small angle in rads, between -pi and +pi
+    /**
+     * Returns the small angle in radians, between -pi and +pi
+     *
+     * @returns {number}
+     */
     getSmallAngleInRadians: function() {
       return this.smallAngle;
     },
 
-    //small angle in degrees between -180 and +180
+    /**
+     * Return the small angle in degrees between -180 and +180.
+     *
+     * @returns {number}
+     */
     getSmallAngleInDegrees: function() {
-      return this.smallAngle * 180 / Math.PI;
+      return Util.toDegrees( this.smallAngle );
     },
 
-    //small angle in degrees 0 to +360
+    /**
+     * Convenience function, return the small angle in degrees bound by 0 to +360
+     *
+     * @returns {number}
+     */
     getSmallAngle0To360: function() {
       if ( this.smallAngle > 0 ) {
-        return this.smallAngle * 180 / Math.PI;
+        return Util.toDegrees( this.smallAngle );
       }
       else {
-        return 360 + this.smallAngle * 180 / Math.PI;
+        return 360 + Util.toDegrees( this.smallAngle );
       }
     },
 
-    //set the full angle, the small angle and various turns counts, given the current full angle
-    setFullAngleInRadians: function( angleInRads ) {   //argument is total angle, not small angle
+    /**
+     * Set the full angle, small angle, and various turns counts.
+     *
+     * @param {number} angleInRads - a new angle for the full model angle
+     */
+    setFullAngleInRadians: function( angleInRads ) {
       var remainderAngle = angleInRads % ( 2 * Math.PI );
-      this.fullTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle ) / (2 * Math.PI ) );
+      this.fullTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle ) / ( 2 * Math.PI ) );
+
       if ( Math.abs( remainderAngle ) <= Math.PI ) {
         this.rotationNumberFromPi = this.fullTurnCount;
       }
@@ -108,10 +156,16 @@ define( function( require ) {
       this.angle = angleInRads;
     },
 
-    //set the full angle, and various turns counts, given the current small angle
-    setAngle: function( smallAngle ) {    //smallAngle in rads
+    /**
+     * Set the full angle, and various turn counts, given the current small angle.
+     *
+     * @param {number} smallAngle
+     */
+    setAngle: function( smallAngle ) {
       this.smallAngle = smallAngle;
-      var comparisonAngle = 149 * Math.PI / 180; //must be less than (180-30)deg in order to handle special angle correctly
+
+      //must be less than (180-30)deg in order to handle special angle correctly
+      var comparisonAngle = 149 * Math.PI / 180;
       if ( ( this.smallAngle < 0 ) && (this.previousAngle > comparisonAngle) ) {
         this.rotationNumberFromPi += 1;
       }
@@ -119,7 +173,8 @@ define( function( require ) {
         this.rotationNumberFromPi -= 1;
       }
 
-      var targetAngle = this.rotationNumberFromPi * 2 * Math.PI + this.smallAngle;  //don't want to trigger angle update yet
+      //don't want to trigger angle update yet
+      var targetAngle = this.rotationNumberFromPi * 2 * Math.PI + this.smallAngle;
 
       //round to nearest half-degree; to do this, must convert to degrees and then back to rads 
       var roundedTargetAngle = targetAngle * 180 / Math.PI;
@@ -128,6 +183,8 @@ define( function( require ) {
       roundedTargetAngle = Util.roundSymmetric( roundedTargetAngle * roundFactor ) / roundFactor;
       targetAngle = roundedTargetAngle * Math.PI / 180;
       var remainderAngle = targetAngle % ( 2 * Math.PI );
+
+      // set turn counts and angles
       this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
       remainderAngle = targetAngle % ( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
@@ -135,8 +192,12 @@ define( function( require ) {
       this.previousAngle = smallAngle;
     },
 
-    //given the small angle in rads, sets current angle to nearest special angle in rads; called from UnitCircleView
-    setSpecialAngleWithSmallAngle: function( smallAngle ) {   //smallAngle in rads
+    /**
+     * Given the small angle in radians, set the current angle to nearest special angle in radians.
+     *
+     * @param {number} smallAngle - small angle in radians
+     */
+    setSpecialAngleWithSmallAngle: function( smallAngle ) {
       var smallAngleInDegs = smallAngle * 180 / Math.PI;
       var nearestSpecialAngleInRads = 0;
       var specialAngles = [ -150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
@@ -155,9 +216,12 @@ define( function( require ) {
       this.setAngle( nearestSpecialAngleInRads );
     },
 
-
-    //Given the full angle, set angle to the nearest special angle; called from GraphView
-    setSpecialAngleWithFullAngle: function( fullAngle ) {   //full angle in radians
+    /**
+     * Given the full angle, set angle to the nearest special angle.
+     *
+     * @param {number} fullAngle - full angle in radians
+     */
+    setSpecialAngleWithFullAngle: function( fullAngle ) {
       var remainderAngle = fullAngle % ( 2 * Math.PI );
       var fullTurnsAngle = fullAngle - remainderAngle;
       var remainderInDegrees = remainderAngle * 180 / Math.PI;
@@ -171,12 +235,13 @@ define( function( require ) {
 
       for ( var i = 0; i <= specialAngles.length - 1; i++ ) {
         if ( remainderInDegrees >= borders[ i ] && remainderInDegrees < borders[ i + 1 ] ) {
-          nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];// * Math.PI / 180;
+          nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];
         }
         if ( remainderInDegrees <= -borders[ i ] && remainderInDegrees > -borders[ i + 1 ] ) {
-          nearestSpecialAngleInDegrees = -specialAngles[ i + 1 ];// * Math.PI / 180;
+          nearestSpecialAngleInDegrees = -specialAngles[ i + 1 ];
         }
       }
+
       //Must handle 0 and +/-360 deg angles as special cases.
       if ( remainderInDegrees < 15 && remainderInDegrees >= -15 ) {
         nearestSpecialAngleInDegrees = 0;
@@ -187,6 +252,7 @@ define( function( require ) {
       else if ( remainderInDegrees < -345 ) {
         nearestSpecialAngleInDegrees = -360;
       }
+
       var nearestSpecialAngleInRadians = nearestSpecialAngleInDegrees * Math.PI / 180;
       var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );

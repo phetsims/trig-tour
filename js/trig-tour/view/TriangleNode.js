@@ -3,9 +3,9 @@
 /**
  * Simple triangle graphic
  * Used as arrow heads on curves in GraphView
- * Created by Michael Dubson (PhET developer) on 6/23/2015.
+ *
+ * @author Michael Dubson (PhET developer) on 6/23/2015.
  */
-
 define( function( require ) {
   'use strict';
 
@@ -18,10 +18,11 @@ define( function( require ) {
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
    * Used as arrow heads on ends of curves in GraphView
-   * @param {Number} length of triangle in pixels
-   * @param {Number} width of triangle in pixels
-   * @param {String} color string, e.g. '#0F0'
-   * @param {Number} rotationInDegrees = rotation of node about (0,0)
+   *
+   * @param {number} length of triangle in pixels
+   * @param {number} width of triangle in pixels
+   * @param {string} color string, e.g. '#0F0'
+   * @param {number} rotationInDegrees = rotation of node about (0,0)
    * @constructor
    */
   function TriangleNode( length, width, color, rotationInDegrees ) {
@@ -39,10 +40,9 @@ define( function( require ) {
     triangleShape.moveTo( 0, 0 ).lineTo( 0, width / 2 ).lineTo( length, 0 ).lineTo( 0, -width / 2 ).close();
     var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: this.color } );
     this.addChild( trianglePath );
-    trianglePath.x = -1;//reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
+    trianglePath.x = -1; //reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 
   }
-
 
   return inherit( Node, TriangleNode );
 } );

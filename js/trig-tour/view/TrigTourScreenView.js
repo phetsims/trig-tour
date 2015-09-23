@@ -2,6 +2,7 @@
 
 /**
  * Main screen view, master layout of view on stage
+ *
  * @author Michael Dubson (PhET)
  */
 define( function( require ) {
@@ -23,7 +24,9 @@ define( function( require ) {
   var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
 
   /**
-   * @param {TrigTourModel} model for sim
+   * Constructor for TrigTourScreenView.
+   *
+   * @param {TrigTourModel} trigTourModel - main model for sim
    * @constructor
    */
   function TrigTourScreenView( trigTourModel ) {

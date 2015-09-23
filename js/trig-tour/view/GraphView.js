@@ -2,8 +2,9 @@
 
 /**
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
- * Grabbable pointer indicates current value of theta and the function
- * Created by Michael Dubson (PhET developer) on 6/3/2015.
+ * Grabbable pointer indicates current value of theta and the function.
+ *
+ * @author Michael Dubson (PhET developer) on 6/3/2015.
  */
 define( function( require ) {
   'use strict';
@@ -58,21 +59,21 @@ define( function( require ) {
   var DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
   /**
-   * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians,
-   * has a draggable handle for changing the angle
+   * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
+   * has a draggable handle for changing the angle.
+   *
    * @param {TrigTourModel} model of the sim
-   * @param {Number} height of y-axis on graph
-   * @param {Number} width of x-axis on graph
+   * @param {number} height of y-axis on graph
+   * @param {number} width of x-axis on graph
    * @param {Property} specialAnglesVisibleProperty
    * @constructor
    */
-
   function GraphView( model, height, width, specialAnglesVisibleProperty ) {
 
     var graphView = this;
     this.model = model;
-    this.trigFunction = 'cos';         //{string} 'cos'|'sin'|'tan' set by Control Panel
-    this.expandedProperty = new Property( true );  //Graph can be hidden with expandCollapse button
+    this.trigFunction = 'cos'; // @public, {string} 'cos'|'sin'|'tan' set by Control Panel
+    this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
     // Call the super constructor
     Node.call( graphView );
@@ -478,46 +479,53 @@ define( function( require ) {
         }
       }
     } );
-
   }
 
   return inherit( Node, GraphView, {
-      //indicator Line is a draggable vertical arrow, indicating current location on graph
-      setIndicatorLine: function() {
-        var cosNow = this.model.cos();
-        var sinNow = this.model.sin();
-        var tanNow = this.model.tan();
-        if ( this.trigFunction === 'cos' ) {
-          this.indicatorLine.setEndPoint( cosNow * this.amplitude );
-          this.indicatorLine.setColor( COS_COLOR );
-          this.redDotHandle.y = -cosNow * this.amplitude;
-        }
-        else if ( this.trigFunction === 'sin' ) {
-          this.indicatorLine.setEndPoint( sinNow * this.amplitude );
-          this.indicatorLine.setColor( SIN_COLOR );
-          this.redDotHandle.y = -sinNow * this.amplitude;
-        }
-        else if ( this.trigFunction === 'tan' ) {
-          this.indicatorLine.setEndPoint( tanNow * this.amplitude );
-          this.indicatorLine.setColor( TAN_COLOR );
-          this.redDotHandle.y = -tanNow * this.amplitude;
-        }
-        else {
-          //Do nothing, following line for debugging only
-          console.error( 'ERROR in GraphView.setIndicatorLine()' );
-        }
-      },
-      setTitleBar: function( trigString ) {
-        if ( trigString === 'cos' ) {
-          this.graphTitle.text = this.cosThetaVsThetaText;
-        }
-        else if ( trigString === 'sin' ) {
-          this.graphTitle.text = this.sinThetaVsThetaText;
-        }
-        else if ( trigString === 'tan' ) {
-          this.graphTitle.text = this.tanThetaVsThetaText;
-        }
+
+    /**
+     * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
+     */
+    setIndicatorLine: function() {
+      var cosNow = this.model.cos();
+      var sinNow = this.model.sin();
+      var tanNow = this.model.tan();
+      if ( this.trigFunction === 'cos' ) {
+        this.indicatorLine.setEndPoint( cosNow * this.amplitude );
+        this.indicatorLine.setColor( COS_COLOR );
+        this.redDotHandle.y = -cosNow * this.amplitude;
+      }
+      else if ( this.trigFunction === 'sin' ) {
+        this.indicatorLine.setEndPoint( sinNow * this.amplitude );
+        this.indicatorLine.setColor( SIN_COLOR );
+        this.redDotHandle.y = -sinNow * this.amplitude;
+      }
+      else if ( this.trigFunction === 'tan' ) {
+        this.indicatorLine.setEndPoint( tanNow * this.amplitude );
+        this.indicatorLine.setColor( TAN_COLOR );
+        this.redDotHandle.y = -tanNow * this.amplitude;
+      }
+      else {
+        //Do nothing, following line for debugging only
+        console.error( 'ERROR in GraphView.setIndicatorLine()' );
+      }
+    },
+
+    /**
+     * Set the title bar text.
+     *
+     * @param {string} trigString
+     */
+    setTitleBar: function( trigString ) {
+      if ( trigString === 'cos' ) {
+        this.graphTitle.text = this.cosThetaVsThetaText;
+      }
+      else if ( trigString === 'sin' ) {
+        this.graphTitle.text = this.sinThetaVsThetaText;
+      }
+      else if ( trigString === 'tan' ) {
+        this.graphTitle.text = this.tanThetaVsThetaText;
       }
     }
-  );
+  } );
 } );

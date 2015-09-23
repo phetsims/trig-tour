@@ -1,12 +1,10 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Vertical or horizontal arrow,
- * consisting of a line and a triangular arrow-head,
- * used in UnitCircleView and GraphView
- * Created by Michael Dubson (PhET developer) on 6/16/2015.
+ * Vertical or horizontal arrow, consisting of a line and a triangular arrow-head.
+ *
+ * @author Michael Dubson (PhET developer) on 6/16/2015.
  */
-
 define( function( require ) {
   'use strict';
 
@@ -20,16 +18,18 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * Constructor for ArrowLine which renders rotor as a scenery node.
-   * @param {Number} defaultLength of arrow in pixels
-   * @param {String} orientation = 'v' or 'h' for vertical or horizontal
-   * @param {Object} options passed to Line, plus extra options
+   * Constructor for ArrowLine which is an arrow node with a head that dynamically resizes to a fraction of the tail
+   * length.
+   *
+   * @param {number} defaultLength of arrow in pixels
+   * @param {string} orientation = 'v' or 'h' for vertical or horizontal
+   * @param {object} options passed to Line, plus extra options
    * @constructor
    */
   function ArrowLine( defaultLength, orientation, options ) {
 
     var arrowLine = this;
-    this.vertical = ( orientation === 'v' );
+    this.vertical = ( orientation === 'v' ); // @private
     options = _.extend( {
       //if arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
       criticalFactor: 2,

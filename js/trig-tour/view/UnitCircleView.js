@@ -1,8 +1,9 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Unit Circle View
- * Created by Michael Dubson (PhET developer) on 6/2/2015.
+ * Unit Circle View. Has a grabbable radial arm called a rotor.
+ *
+ * @author Michael Dubson (PhET developer) on 6/2/2015.
  */
 define( function( require ) {
   'use strict';
@@ -12,7 +13,6 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  //var Image = require( 'SCENERY/nodes/Image');
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -46,15 +46,13 @@ define( function( require ) {
   var SIN_COLOR = TrigTourColors.SIN_COLOR;
   var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
 
-
   /**
-   * View of the unit circle with grabbable radial arm, called the rotor arm
+   * Constructor for the UnitCircleView.
    *
    * @param {TrigTourModel} model - the main model of the sim
-   * @param {Property} specialAnglesVisibleProperty - property tracking visiblity of special angles.
+   * @param {Property} specialAnglesVisibleProperty - property tracking visibility of special angles.
    * @constructor
    */
-
   function UnitCircleView( model, specialAnglesVisibleProperty ) {
 
     var unitCircleView = this;
@@ -288,7 +286,6 @@ define( function( require ) {
         angleArcArrowHead.rotation = -totalAngle + ( 6 / arcRadius );
       }
     };
-
 
     //visibility of x,y, and '1' labels on xyR triangle
     this.setLabelVisibility = function( isVisible ) {

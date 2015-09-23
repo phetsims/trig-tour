@@ -1,4 +1,4 @@
-// Copyright 2002-2015, University of Colorad5o Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * Main model for Trig Tour Sim

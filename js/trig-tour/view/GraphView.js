@@ -72,7 +72,6 @@ define( function( require ) {
     var graphView = this;
     this.model = model;
     this.trigFunction = 'cos';         //{string} 'cos'|'sin'|'tan' set by Control Panel
-    this.labelsVisible = 'false';   //true is labels on graph are visible, set by Control Panel
     this.expandedProperty = new Property( true );  //Graph can be hidden with expandCollapse button
 
     // Call the super constructor
@@ -450,10 +449,6 @@ define( function( require ) {
           }
         }
       } ) );
-
-    this.setLabelVisibility = function( tOrF ) {
-      this.labelsVisible = tOrF;
-    };
 
     // Register for synchronization with model.
     model.angleProperty.link( function( angle ) {

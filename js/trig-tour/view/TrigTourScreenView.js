@@ -31,7 +31,6 @@ define( function( require ) {
     ScreenView.call( this );
     var trigTourScreenView = this;
 
-    this.labelsVisible = false;  //set by Control Panel
     var viewProperties = new ViewProperties();
 
     var unitCircleView = new UnitCircleView( trigTourModel, viewProperties.specialAnglesVisibleProperty );
@@ -108,7 +107,6 @@ define( function( require ) {
     } );
 
     viewProperties.labelsVisibleProperty.link( function( isVisible ) {
-      trigTourScreenView.labelsVisible = isVisible;
       unitCircleView.setLabelVisibility( isVisible );
       graphView.onesNode.visible = isVisible;
       if ( isVisible ) {
@@ -128,7 +126,7 @@ define( function( require ) {
     viewProperties.angleUnitsProperty.link( function( units ) {
       readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
       readoutDisplay.readoutNode.setUnits( units );
-      if ( trigTourScreenView.labelsVisible ) {
+      if ( viewProperties.labelsVisible ) {
         graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
         graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
       }

@@ -60,7 +60,6 @@ define( function( require ) {
     this.line.addChild( this.arrowHead );
 
     //overlay invisible rectangle on top of line, to activate mouse cursor
-    //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
     this.mouseMarker = new Rectangle( -10, -50, 20, 100, { fill: 'green', opacity: 0, cursor: 'pointer' } );
 
     //need mouse pointer active only for vertical line in graphView

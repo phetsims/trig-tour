@@ -79,7 +79,7 @@ define( function( require ) {
       ) );
     }
 
-    //draw background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+    //draw background
     var bWidth = 2.4 * radius;
     var bHeight = 2.4 * radius;
     var arcRadius = 8;
@@ -94,7 +94,6 @@ define( function( require ) {
     );
 
     //Draw x-, y-axes with x and y labels
-    //ArrowNode( tailX, tailY, tipX, tipY, options )
     var yAxis = new ArrowNode( 0, 1.2 * radius, 0, -1.2 * radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
     var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
 
@@ -136,7 +135,6 @@ define( function( require ) {
       { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' }
     ) );
     var hitBound = 30;
-    //Bounds2( minX, minY, maxX, maxY )
     rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
     rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
 
@@ -168,7 +166,6 @@ define( function( require ) {
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
     //add the children to parent node
-    //var content = new Node();
     unitCircleView.children = [
       this.background,
       this.grid,

@@ -289,7 +289,6 @@ define( function( require ) {
 
 
     //Add TriangleNode arrow heads at ends of curves
-    //Arguments: TriangleNode( length, width, color, rotationInDegrees )
     var pi = Math.PI;
     var leftEnd = -( nbrOfWavelengths + 0.08 ) * wavelength / 2;
     var rightEnd = ( nbrOfWavelengths + 0.08 ) * wavelength / 2;
@@ -354,8 +353,8 @@ define( function( require ) {
     for ( i = 0; i < arrowHeads.length; i++ ) {
       var xPix = arrowHeads[ i ].x;
       var yPix = arrowHeads[ i ].y;
-      //console.log( 'xC = ' + xC + '   yC = ' + yC );
       var xTan = xPix * 2 * pi / wavelength;
+
       //Derivative of tan is 1 + tan^2
       var tanSlope = ( this.amplitude * 2 * pi / wavelength ) * ( 1 + Math.tan( xTan ) * Math.tan( xTan ) );
       rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
@@ -372,7 +371,6 @@ define( function( require ) {
     //SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
     this.singularityIndicator = new Line( 0, -800, 0, 400, { stroke: TAN_COLOR, lineWidth: 2, lineDash: [ 10, 5 ] } );
     hitBound = 20;
-    //Bounds2( minX, minY, maxX, maxY )
     midX = this.singularityIndicator.centerX;
     var minY = this.singularityIndicator.bottom;
     var maxY = this.singularityIndicator.top;
@@ -432,7 +430,6 @@ define( function( require ) {
       displayNode.visible = tOrF;
       graphView.titleDisplayPanel.visible = !tOrF;
     } );
-
 
     this.indicatorLine.addInputListener( new SimpleDragHandler(
       {

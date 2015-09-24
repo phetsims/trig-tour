@@ -13,7 +13,6 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   return {
-    // layout bounds used throughout the simulation for laying out the screens
     BACKGROUND_COLOR: '#fff6cc',
     VIEW_BACKGROUND_COLOR: '#FFF',
     TEXT_COLOR: '#000',

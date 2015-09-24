@@ -203,7 +203,7 @@ define( function( require ) {
           var smallAngle = -v1.angle(); //model angle is negative of xy screen coordinates angle
           if ( !unitCircleView.maxAngleExceededProperty.value ) {
             if ( !specialAnglesVisibleProperty.value ) {
-              trigTourModel.setAngle( smallAngle );
+              trigTourModel.setFullAngle( smallAngle );
             }
             else {
               trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
@@ -211,10 +211,10 @@ define( function( require ) {
           }
           else {  //if maxAngleExceeded, update only if user decreases angle
             if ( Math.abs( smallAngle ) < maxAllowedSmallAngle ) {
-              trigTourModel.setAngle( smallAngle );
+              trigTourModel.setFullAngle( smallAngle );
             }
           }
-          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( trigTourModel.getAngleInRadians() ) > maxAllowedAngle );
+          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( trigTourModel.getFullAngleInRadians() ) > maxAllowedAngle );
         }
       } ) );
 
@@ -243,7 +243,7 @@ define( function( require ) {
       var arcShape = new Shape();  //This seems wasteful, but there is no Shape.clear() function
       arcRadius = 0.2 * radius;
       arcShape.moveTo( arcRadius, 0 );
-      var totalAngle = trigTourModel.getAngleInRadians();
+      var totalAngle = trigTourModel.getFullAngleInRadians();
       var deltaAngle = 0.1;  //delta-angle in radians
       if ( Math.abs( totalAngle ) < 0.5 ) {
         deltaAngle = 0.02;
@@ -293,7 +293,7 @@ define( function( require ) {
     //position the x, y, '1', and theta labels on the xyR triangle of the unit circle
     var positionLabels = function() {
       var smallAngle = trigTourModel.getSmallAngleInRadians();
-      var totalAngle = trigTourModel.getAngleInRadians();
+      var totalAngle = trigTourModel.getFullAngleInRadians();
       var pi = Math.PI;
       //set visibility of the labels
       if ( Math.abs( totalAngle ) < 40 * pi / 180 ) {
@@ -352,7 +352,7 @@ define( function( require ) {
     };
 
     // Register for synchronization with model.
-    trigTourModel.angleProperty.link( function( angle ) {
+    trigTourModel.fullAngleProperty.link( function( angle ) {
       rotorGraphic.rotation = -angle;  //model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );

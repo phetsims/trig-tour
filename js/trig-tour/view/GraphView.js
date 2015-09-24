@@ -449,8 +449,8 @@ define( function( require ) {
       } ) );
 
     // Register for synchronization with model.
-    model.angleProperty.link( function( angle ) {
-      var xPos = angle / (2 * Math.PI) * wavelength;
+    model.fullAngleProperty.link( function( fullAngle ) {
+      var xPos = fullAngle / (2 * Math.PI) * wavelength;
       graphView.indicatorLine.x = xPos;
       var tanSize = Math.abs( model.tan() );
       if ( graphView.trigFunction === 'tan' && tanSize > 1.5 ) {

@@ -48,7 +48,7 @@ define( function( require ) {
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
   /**
-   * Constructor for ReadoutNode which displays live values of angle, sin, cos, and tan
+   * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
    * This node is the content of AccordionBox ReadoutDisplay
    *
    * @param {TrigTourModel} model is the main model of the sim
@@ -60,17 +60,17 @@ define( function( require ) {
     var readoutNode = this;
     this.model = model;
     this.viewProperties = viewProperties;
-    this.nbrDecimalPlaces = 1;      //number of decimal places for display of angle, = 0 for special angles
+    this.nbrDecimalPlaces = 1;      //number of decimal places for display of fullAngle, = 0 for special angles
     this.units = 'degrees';         //{string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
     Node.call( readoutNode );
 
     var row1 = new Node();    //coordinates readout: (x, y) = ( cos, sin )
-    var row2 = new Node();    //angle readout: angle = value in degrees or radians
+    var row2 = new Node();    //fullAngle readout: fullAngle = value in degrees or radians
     //row 3 is this.trigRow3 declared below, 'sin'|'cos'|'tan'= trig value
 
-    var angleValue = Util.toFixed( model.angle, 1 );
+    var fullAngleValue = Util.toFixed( model.fullAngle, 1 );
     var sinValue = Util.toFixed( model.sin(), 3 );
     var cosValue = Util.toFixed( model.cos(), 3 );
     var tanValue = Util.toFixed( model.tan(), 3 );
@@ -86,7 +86,7 @@ define( function( require ) {
     this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  //dummy arguments to set bounds
     this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
     this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  //don't need till row 3, trig function readout
-    this.coordinatesReadout = new Text( '', fontInfo );     //text provided by model.angleProperty.link, below
+    this.coordinatesReadout = new Text( '', fontInfo );     //text provided by model.fullAngleProperty.link, below
     var leftParensText = new Text( '( ', largeFontInfo );
     var commaText = new Text( ' ,  ', fontInfo );
     var rightParensText = new Text( ' )', largeFontInfo );
@@ -118,7 +118,7 @@ define( function( require ) {
     // value is decimal number or exact fraction of radians (in special angle mode)
     var angleEqualsStr = angleStr + ' = ';
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
-    this.angleReadoutDecimal = new SubSupText( angleValue, fontInfo );    //angle readout as decimal number
+    this.angleReadoutDecimal = new SubSupText( fullAngleValue, fontInfo );    //angle readout as decimal number
     this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );  //needed in Special angles mode
 
     //used to display angle as FractionNode in Special angles mode
@@ -326,7 +326,7 @@ define( function( require ) {
     readoutNode.addChild( contentVBox );
 
     // Register for synchronization with model.
-    model.angleProperty.link( function( angle ) {    //angle is in radians
+    model.fullAngleProperty.link( function( fullAngle ) {    //fullAngle is in radians
       var sinText = Util.toFixed( model.sin(), 3 );
       var cosText = Util.toFixed( model.cos(), 3 );
       readoutNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
@@ -351,10 +351,10 @@ define( function( require ) {
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInRadians(), 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInRadians(), 3 ) + ' ' + radsStr;
       }
       else {
-        var roundedAngle = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces );
+        var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.nbrDecimalPlaces );
         this.angleReadoutDecimal.text = roundedAngle + '<sup>o</sup>';
       }
     },
@@ -372,7 +372,7 @@ define( function( require ) {
     },
 
     /**
-     * Set the angle readout precision.
+     * Set the fullAngle readout precision.
      *
      * @param {number} decimalPrecision
      */
@@ -387,10 +387,10 @@ define( function( require ) {
       var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
       var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
       if ( !radiansDisplayed ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.angle, 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsStr;
       }
       if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();
@@ -404,7 +404,7 @@ define( function( require ) {
       this.angleReadoutFraction.visible = true;
 
       //need integer value of angle, since internal arithmetic often not-quite integer
-      var angleInDegs = Util.roundSymmetric( this.model.getAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
+      var angleInDegs = Util.roundSymmetric( this.model.getFullAngleInDegrees() );  //need integer value of angle, internal arithmetic often not-quite integer
       if ( Math.abs( angleInDegs ) > 360 ) {
         angleInDegs = angleInDegs % 360;
       }

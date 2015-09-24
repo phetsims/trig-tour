@@ -22,47 +22,47 @@ define( function( require ) {
 
     // @public
     PropertySet.call( this, {
-      angle: 0,             // total angle in radians, can be greater than 2*pi, or less than -2*pi
+      fullAngle: 0,             // total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
       singularity: false    // indicates singularity in tan function at theta = +/- 90 degrees
-                            // true if angle is close to +/-90 degrees
+                            // true if fullAngle is close to +/-90 degrees
     } );
 
-    this.smallAngle = 0;    // @private, angle modulo 2*pi with 180 offset, is between -pi and +pi
-    this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total angle from smallAngle
+    this.smallAngle = 0;    // @private, fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
+    this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total fullAngle from smallAngle
     this.rotationNumberFromPi = 0;  //@private, number of turns around the unit circle, incremented at +/-180 deg,
-                                    //needed to compute (full) angle from smallAngle
-    this.fullTurnCount = 0; // @public, number of turns around unit circle, incremented at angle = 0 deg
-    this.halfTurnCount = 0; // @public, number of half turns around unit circle, incremented at small angle = 0 and 180
+                                    //needed to compute fullAngle from smallAngle
+    this.fullTurnCount = 0; // @public, number of turns around unit circle, incremented at fullAngle = 0 deg
+    this.halfTurnCount = 0; // @public, number of half turns around unit circle, incremented at smallAngle = 0 and 180
   }
 
   return inherit( PropertySet, TrigTourModel, {
 
     /**
-     * Returns cos of the total model angle in radians.
+     * Returns cos of the total model fullAngle in radians.
      *
      * @returns {number}
      */
     cos: function() {
-      return Math.cos( this.angle );
+      return Math.cos( this.fullAngle );
     },
 
     /**
-     * Returns sin of the total model angle in radians.
+     * Returns sin of the total model fullAngle in radians.
      *
      * @returns {number}
      */
     sin: function() {
-      return Math.sin( this.angle );
+      return Math.sin( this.fullAngle );
     },
 
     /**
-     * Returns tangent of current model angle in radians. When near +/-90 degrees, cuts off tan value at +/- maxValue.
+     * Returns tangent of current model fullAngle in radians. When near +/-90 degrees, cuts off tan value at +/- maxValue.
      * Must cut off value at +/- maxValue or else Safari Browser won't display properly.
      *
      * @returns {number}
      */
     tan: function() {
-      var tanValue = Math.tan( this.angle );
+      var tanValue = Math.tan( this.fullAngle );
       var maxValue = 350;
       this.singularity = false;
       var returnValue;
@@ -81,21 +81,21 @@ define( function( require ) {
     },
 
     /**
-     * Get the current model angle in radians.
+     * Get the current model fullAngle in radians.
      *
      * @returns {number}
      */
-    getAngleInRadians: function() {
-      return this.angle;
+    getFullAngleInRadians: function() {
+      return this.fullAngle;
     },
 
     /**
-     * Get the current model angle in degress.
+     * Get the current model fullAngle in degrees.
      *
      * @returns {number}
      */
-    getAngleInDegrees: function() {
-      return Util.toDegrees( this.angle );
+    getFullAngleInDegrees: function() {
+      return Util.toDegrees( this.fullAngle );
     },
 
     /**
@@ -131,29 +131,29 @@ define( function( require ) {
     },
 
     /**
-     * Set the full angle, small angle, and various turns counts.
+     * Set the full angle, small angle, and various turn counts.
      *
-     * @param {number} angleInRads - a new angle for the full model angle
+     * @param {number} fullAngleInRads - requested new angle
      */
-    setFullAngleInRadians: function( angleInRads ) {
-      var remainderAngle = angleInRads % ( 2 * Math.PI );
-      this.fullTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle ) / ( 2 * Math.PI ) );
+    setFullAngleInRadians: function( fullAngleInRads ) {
+      var remainderAngle = fullAngleInRads % ( 2 * Math.PI );
+      this.fullTurnCount = Util.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( 2 * Math.PI ) );
 
       if ( Math.abs( remainderAngle ) <= Math.PI ) {
         this.rotationNumberFromPi = this.fullTurnCount;
       }
       else {
-        if ( angleInRads > 0 ) {
+        if ( fullAngleInRads > 0 ) {
           this.rotationNumberFromPi = this.fullTurnCount + 1;
         }
         else {
           this.rotationNumberFromPi = this.fullTurnCount - 1;
         }
       }
-      this.smallAngle = angleInRads - this.rotationNumberFromPi * 2 * Math.PI;
-      remainderAngle = angleInRads % ( Math.PI );
-      this.halfTurnCount = Util.roundSymmetric( ( angleInRads - remainderAngle ) / ( Math.PI ) );
-      this.angle = angleInRads;
+      this.smallAngle = fullAngleInRads - this.rotationNumberFromPi * 2 * Math.PI;
+      remainderAngle = fullAngleInRads % ( Math.PI );
+      this.halfTurnCount = Util.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
+      this.fullAngle = fullAngleInRads;
     },
 
     /**
@@ -161,7 +161,7 @@ define( function( require ) {
      *
      * @param {number} smallAngle
      */
-    setAngle: function( smallAngle ) {
+    setFullAngle: function( smallAngle ) {
       this.smallAngle = smallAngle;
 
       //must be less than (180-30)deg in order to handle special angle correctly
@@ -188,12 +188,12 @@ define( function( require ) {
       this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
       remainderAngle = targetAngle % ( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
-      this.angle = targetAngle;  //now can trigger angle update
+      this.fullAngle = targetAngle;  // now can trigger angle update
       this.previousAngle = smallAngle;
     },
 
     /**
-     * Given the small angle in radians, set the current angle to nearest special angle in radians.
+     * Given the small angle in radians, set the current fullAngle to nearest special angle in radians.
      *
      * @param {number} smallAngle - small angle in radians
      */
@@ -213,7 +213,7 @@ define( function( require ) {
           nearestSpecialAngleInRads = Math.PI;
         }
       }
-      this.setAngle( nearestSpecialAngleInRads );
+      this.setFullAngle( nearestSpecialAngleInRads );
     },
 
     /**

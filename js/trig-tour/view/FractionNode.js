@@ -15,6 +15,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
@@ -103,7 +104,7 @@ define( function( require ) {
       var length = 8;
       var midHeight = 7;
       if ( minusSignNeeded ) {
-        minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
+        minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 2, lineCap: 'round' } );
       }
       else {
         minusSign = new Line( 0, 0, 0, 0 );   //just a placeholder is no minus sign
@@ -118,7 +119,7 @@ define( function( require ) {
       }
 
       //dividing bar
-      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: '#000', lineWidth: 2, lineCap: 'round' } );
+      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 2, lineCap: 'round' } );
 
       //draw square root symbol
       var sqRtShape = new Shape();
@@ -128,7 +129,7 @@ define( function( require ) {
         var w = h / 4;
         sqRtShape.moveTo( -3 * w / 2, -h / 2 ).lineTo( -w, 0 ).lineTo( 0, -h ).lineTo( W, -h );
       }
-      var sqRtPath = new Path( sqRtShape, { stroke: '#000', lineWidth: 1, lineCap: 'round' } );
+      var sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
 
       //if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {

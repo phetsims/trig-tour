@@ -129,7 +129,7 @@ define( function( require ) {
 
     //Draw rotor arm with draggable red dot at end
     var rotorGraphic = new Node();
-    rotorGraphic.addChild( new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: '#000' } ) );
+    rotorGraphic.addChild( new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } ) );
     rotorGraphic.addChild( new Circle(
       7,
       { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' }

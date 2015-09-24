@@ -66,12 +66,12 @@ define( function( require ) {
      * Set the fraction node and draw its various parts.
      */
     setFraction: function() {
-      var minusSign;                    //short horizontal line for minus sign, in front of divisor bar
-      var numeratorNegative = false;    //true if numerator is negative
-      var denominatorNegative = false;  //true if denominator is negative
-      var minusSignNeeded = false;      //true if sign of over-all fraction is negative
-      var squareRootSignNeeded = false; //true if square root symbol is needed over the numerator
-      var noDenominator = false;        //true if only the numerator is displayed as a non-fraction number
+      var minusSign;                    // short horizontal line for minus sign, in front of divisor bar
+      var numeratorNegative = false;    // true if numerator is negative
+      var denominatorNegative = false;  // true if denominator is negative
+      var minusSignNeeded = false;      // true if sign of over-all fraction is negative
+      var squareRootSignNeeded = false; // true if square root symbol is needed over the numerator
+      var denominatorNeeded = true;     // true if only the numerator is displayed as a fractional number
 
       //Check that arguments are strings
       if ( typeof this.numerator !== 'string' ) { this.numerator = this.numerator.toString(); }
@@ -104,7 +104,11 @@ define( function( require ) {
       var length = 8;
       var midHeight = 7;
       if ( minusSignNeeded ) {
-        minusSign = new Line( 0, -midHeight, length, -midHeight, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 2, lineCap: 'round' } );
+        minusSign = new Line( 0, -midHeight, length, -midHeight, {
+          stroke: TrigTourColors.LINE_COLOR,
+          lineWidth: 2,
+          lineCap: 'round'
+        } );
       }
       else {
         minusSign = new Line( 0, 0, 0, 0 );   //just a placeholder is no minus sign
@@ -119,7 +123,11 @@ define( function( require ) {
       }
 
       //dividing bar
-      var bar = new Line( 0, -midHeight, length, -midHeight, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 2, lineCap: 'round' } );
+      var bar = new Line( 0, -midHeight, length, -midHeight, {
+        stroke: TrigTourColors.LINE_COLOR,
+        lineWidth: 2,
+        lineCap: 'round'
+      } );
 
       //draw square root symbol
       var sqRtShape = new Shape();
@@ -134,7 +142,7 @@ define( function( require ) {
       //if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {
         //make current children invisible so numerator is not obscured
-        noDenominator = true;
+        denominatorNeeded = false;
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[ i ].visible = false;
         }
@@ -157,7 +165,7 @@ define( function( require ) {
         return; //have to break out
       }
 
-      if ( !noDenominator ) {
+      if ( denominatorNeeded ) {
         this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
       }
       bar.left = 0;
@@ -171,7 +179,7 @@ define( function( require ) {
         bar.left = minusSign.right + offset;
         this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;
       }
-      if ( noDenominator ) {
+      else if ( !denominatorNeeded ) {
         this.numeratorText.left = minusSign.right + offset;
       }
       if ( squareRootSignNeeded ) {

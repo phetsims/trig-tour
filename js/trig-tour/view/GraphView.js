@@ -112,7 +112,6 @@ define( function( require ) {
     } );
 
     var hitBound = 30;
-    //Bounds2( minX, minY, maxX, maxY )
     var midX = this.expandCollapseButton.centerX;
     var midY = this.expandCollapseButton.centerY;
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );

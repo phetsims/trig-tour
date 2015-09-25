@@ -131,7 +131,7 @@ define( function( require ) {
     },
 
     /**
-     * Set the full angle, small angle, and various turn counts.
+     * Set the full angle, and the associated small angle and various turn counts.
      *
      * @param {number} fullAngleInRads - requested new angle
      */
@@ -157,7 +157,7 @@ define( function( require ) {
     },
 
     /**
-     * Set the full angle, and various turn counts, given the current small angle.
+     * Set the full angle and its associated small angle and turn counts from a desired small angle.
      *
      * @param {number} smallAngle
      */

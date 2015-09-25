@@ -381,11 +381,10 @@ define( function( require ) {
     // indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
     // a red dot on top of the indicator line echoes red dot on unit circle
     hitBound = 30;
-    this.indicatorLine = new ArrowLine( this.amplitude, 'v', {
-      stroke: '#0d0',
-      lineWidth: 5,
-      criticalFactor: 2,
-      arrowHeadLength: 20,
+    this.indicatorLine = new ArrowLine( this.amplitude, 'vertical', {
+      tailWidth: 5,
+      headWidth: 12,
+      headHeight: 20,
       cursor: 'pointer'
     } );
     this.indicatorLine.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
@@ -453,10 +452,10 @@ define( function( require ) {
       graphView.indicatorLine.x = xPos;
       var tanSize = Math.abs( model.tan() );
       if ( graphView.trigFunction === 'tan' && tanSize > 1.5 ) {
-        graphView.indicatorLine.setLineWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
+        graphView.indicatorLine.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
       else {
-        graphView.indicatorLine.setLineWidth( 5 );
+        graphView.indicatorLine.setTailWidth( 5 );
       }
       graphView.singularityIndicator.x = xPos;
       graphView.setIndicatorLine();

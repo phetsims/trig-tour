@@ -10,132 +10,68 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  var Path = require( 'SCENERY/nodes/Path' );
   var Util = require( 'DOT/Util' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
 
   /**
    * Constructor for ArrowLine which is an arrow node with a head that dynamically resizes to a fraction of the tail
    * length.
    *
    * @param {number} defaultLength of arrow in pixels
-   * @param {string} orientation = 'v' or 'h' for vertical or horizontal
+   * @param {string} orientation =  one of 'vertical' or 'horizontal'
    * @param {object} options passed to Line, plus extra options
    * @constructor
    */
   function ArrowLine( defaultLength, orientation, options ) {
 
-    var arrowLine = this;
-    this.vertical = ( orientation === 'v' ); // @private
-    options = _.extend( {
-      // if arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
-      criticalFactor: 2,
-      arrowHeadLength: 25 // arrow head length in pixels
-    }, options );
-    this.options = options;
+    var tipX = 0;
+    var tipY = 0;
+    this.orientation = orientation; // @private, 'horizontal' or 'vertical' orientation
 
-    Node.call( arrowLine );
-    this.criticalFactor = options.criticalFactor;
-    this.arrowHeadLength = options.arrowHeadLength;
-    this.arrowHeadWidth = (3 / 5) * this.arrowHeadLength;
-
-    // arrowLine consists of Line and triangular arrowHead Path
-    this.line = new Line( 0, 0, 0, 0, options );
-    this.arrowHeadShape = new Shape();
-    this.arrowHead = new Path( this.arrowHeadShape, { lineWidth: 1, fill: this.line.stroke } );
-
-    arrowLine.drawArrowHead( this.arrowHeadLength );
-
-    // place arrowHead on end of Line
-    if ( this.vertical ) {
-      this.arrowHead.y = defaultLength;
+    if ( orientation === 'vertical' ) {
+      tipY = defaultLength;
     }
     else {
-      this.arrowHead.x = defaultLength;
-    }
-    this.canvas = new Node();
-    this.line.addChild( this.arrowHead );
-
-    // overlay invisible rectangle on top of line, to activate mouse cursor
-    this.mouseMarker = new Rectangle( -10, -50, 20, 100, { fill: 'green', opacity: 0, cursor: 'pointer' } );
-
-    // need mouse pointer active only for vertical line in graphView
-    if ( orientation === 'v' ) {
-      this.line.addChild( this.mouseMarker );
+      tipX = defaultLength;
     }
 
-    this.canvas.addChild( this.line );
-    arrowLine.addChild( this.canvas );
+    ArrowNode.call( this, 0, 0, tipX, tipY, _.extend( {
+      isHeadDynamic: true,
+      fractionalHeadHeight: 3 / 5,
+      headHeight: 25,
+      headWidth: 15,
+      lineWidth: 0
+    }, options ) );
+    this.options = options;
   }
 
-  return inherit( Node, ArrowLine, {
+  return inherit( ArrowNode, ArrowLine, {
+
+    /**
+     * @public Set the color of this arrow, with no stroke this is just the fill.
+     * @param {string | Color} color
+     */
     setColor: function( color ) {
-      this.line.stroke = color;
-      this.arrowHead.fill = color;
+      this.fill = color;
     },
 
-    // set position of tip of arrow head and size arrow appropriately
-    // displacement is signed length of arrow, + if arrow points right/up, or - if arrow points left/down
+    /**
+     * Set the endpoint for the arrow.  Dependent on sign and magnitude of end point displacement.
+     * @param displacement
+     */
     setEndPoint: function( displacement ) {
-      var sign = 0;  // +1, -1, or zero depending on sign of displacement
-      if ( displacement !== 0 ) {
-        // sign = +1 if arrow pointing up or right, -1 if pointing down or left
-        sign = Util.roundSymmetric( displacement / Math.abs( displacement ) );
+      // determine the sign of displacement if displacement is non zero
+      // sign is positive if arrow is pointing up or right, negative if pointing down or left
+      var sign = displacement === 0 ? 0 : Util.roundSymmetric( displacement / Math.abs( displacement ) );
+
+      var arrowLength = Math.abs( displacement );
+      if ( this.orientation === 'vertical' ) {
+        this.setTailAndTip( this.tailX, this.tailY, this.tipX, -sign * arrowLength );
       }
-      this.arrowHead.setRotation( (sign - 1) * Math.PI / 2 );
-      var length = Math.abs( displacement );
-      var scaleFactor;
-      if ( this.vertical ) {
-        if ( length > this.criticalFactor * this.arrowHeadLength ) {   //if arrow long enough
-          this.drawArrowHead( this.arrowHeadLength );
-          // factor of 0.9 so that arrowHead overlaps line slightly
-          this.line.setPoint2( 0, -displacement + 0.9 * sign * this.arrowHeadLength );
-          if ( sign > 0 ) {
-            this.mouseMarker.setRect( -10, -length, 20, length );
-          }
-          else {
-            this.mouseMarker.setRect( -10, 0, 20, length );
-          }
-          this.arrowHead.y = -displacement;
-        }
-        else {    // if arrow too small for arrowHead to fit
-          scaleFactor = Math.max( 0.1, length / ( this.criticalFactor * this.arrowHeadLength ) );
-          this.drawArrowHead( this.arrowHeadLength * scaleFactor );
-          this.arrowHead.y = -displacement;
-          this.line.setPoint2( 0, -displacement + 0.9 * sign * this.arrowHead.height );
-        }
+      else if ( this.orientation === 'horizontal' ) {
+        this.setTailAndTip( this.tailX, this.tailY, sign * arrowLength, this.tipY );
       }
-      else {  //if horizontal
-        if ( length > this.criticalFactor * this.arrowHeadLength ) {    //if arrow long enough
-          this.drawArrowHead( this.arrowHeadLength );
-          this.line.setPoint2( displacement - 0.9 * sign * this.arrowHeadLength, 0 );
-          this.arrowHead.x = displacement;
-        }
-        else {  //if too small for arrowHead to fit
-          scaleFactor = Math.max( 0.1, length / ( this.criticalFactor * this.arrowHeadLength ) );
-          this.drawArrowHead( this.arrowHeadLength * scaleFactor );
-          this.arrowHead.x = displacement;
-          this.line.setPoint2( displacement - 0.9 * sign * this.arrowHead.width, 0 );
-        }
-      }
-    },
-    drawArrowHead: function( arrowHeadLength ) {
-      this.arrowHeadShape = new Shape();  //seems wasteful to create new Shape, but any alternative?
-      var hW = this.arrowHeadWidth;
-      var hL = arrowHeadLength;
-      if ( this.vertical ) {
-        this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW / 2, hL ).lineTo( hW / 2, hL ).close();
-      }
-      else {
-        this.arrowHeadShape.moveTo( 0, 0 ).lineTo( -hL, hW / 2 ).lineTo( -hL, -hW / 2 ).close();
-      }
-      this.arrowHead.setShape( this.arrowHeadShape );
-    },
-    setLineWidth: function( lineWidth ) {
-      this.line.lineWidth = lineWidth;
     }
+
   } );
 } );

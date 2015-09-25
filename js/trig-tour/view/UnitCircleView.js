@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ArrowLine = require( 'TRIG_TOUR/trig-tour/view/ArrowLine' );
+  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -118,13 +118,13 @@ define( function( require ) {
     this.grid.visible = false;
 
     // draw vertical (sine) line on rotor triangle
-    // displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
-    this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
-    this.vArrowLine = new ArrowLine( radius, 'vertical', { tailWidth: 6, fill: SIN_COLOR } );
+    // displayed line is either simple Line (no arrow head) or TrigIndicatorArrowNode (with arrow head)
+    this.verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
+    this.verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { tailWidth: 6, fill: SIN_COLOR } );
 
     // draw horizontal (cosine) line on rotor triangle
-    this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
-    this.hArrowLine = new ArrowLine( radius, 'horizontal', { tailWidth: 6, fill: COS_COLOR } );
+    this.horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
+    this.horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', { tailWidth: 6, fill: COS_COLOR } );
 
     // Draw rotor arm with draggable red dot at end
     var rotorGraphic = new Node();
@@ -171,10 +171,10 @@ define( function( require ) {
       circleGraphic,
       xAxis,
       yAxis,
-      this.hArrowLine,
-      this.hLine,
-      this.vArrowLine,
-      this.vLine,
+      this.horizontalIndicatorArrow,
+      this.horizontalLine,
+      this.verticalIndicatorArrow,
+      this.verticalLine,
       this.specialAnglesNode,
       rotorGraphic,
       labelCanvas
@@ -356,12 +356,12 @@ define( function( require ) {
       rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );
-      unitCircleView.vLine.x = radius * cos;
-      unitCircleView.vLine.setPoint2( 0, -radius * sin );
-      unitCircleView.hLine.setPoint2( radius * cos, 0 );
-      unitCircleView.vArrowLine.x = radius * cos;
-      unitCircleView.vArrowLine.setEndPoint( radius * sin );
-      unitCircleView.hArrowLine.setEndPoint( radius * cos );
+      unitCircleView.verticalLine.x = radius * cos;
+      unitCircleView.verticalLine.setPoint2( 0, -radius * sin );
+      unitCircleView.horizontalLine.setPoint2( radius * cos, 0 );
+      unitCircleView.verticalIndicatorArrow.x = radius * cos;
+      unitCircleView.verticalIndicatorArrow.setEndPoint( radius * sin );
+      unitCircleView.horizontalIndicatorArrow.setEndPoint( radius * cos );
       drawAngleArc();
       positionLabels();
     } );

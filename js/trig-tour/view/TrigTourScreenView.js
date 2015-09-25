@@ -76,10 +76,10 @@ define( function( require ) {
     viewProperties.graphProperty.link( function( graph ) {
 
       //set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
-      unitCircleView.hArrowLine.visible = ( graph === 'cos' || graph === 'tan' );
-      unitCircleView.hLine.visible = ( graph === 'sin' );
-      unitCircleView.vArrowLine.visible = ( graph === 'sin' || graph === 'tan' );
-      unitCircleView.vLine.visible = ( graph === 'cos' );
+      unitCircleView.horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
+      unitCircleView.horizontalLine.visible = ( graph === 'sin' );
+      unitCircleView.verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
+      unitCircleView.verticalLine.visible = ( graph === 'cos' );
 
       //set visibility of curves on graph view
       graphView.trigFunction = graph;

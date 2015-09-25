@@ -10,7 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ArrowLine = require( 'TRIG_TOUR/trig-tour/view/ArrowLine' );
+  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -381,7 +381,7 @@ define( function( require ) {
     // indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
     // a red dot on top of the indicator line echoes red dot on unit circle
     hitBound = 30;
-    this.indicatorLine = new ArrowLine( this.amplitude, 'vertical', {
+    this.indicatorLine = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
       tailWidth: 5,
       headWidth: 12,
       headHeight: 20,

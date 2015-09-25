@@ -14,7 +14,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
 
   /**
-   * Constructor for ArrowLine which is an arrow node with a head that dynamically resizes to a fraction of the tail
+   * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction of the tail
    * length.
    *
    * @param {number} defaultLength of arrow in pixels
@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {object} options passed to Line, plus extra options
    * @constructor
    */
-  function ArrowLine( defaultLength, orientation, options ) {
+  function TrigIndicatorArrowNode( defaultLength, orientation, options ) {
 
     var tipX = 0;
     var tipY = 0;
@@ -45,7 +45,7 @@ define( function( require ) {
     this.options = options;
   }
 
-  return inherit( ArrowNode, ArrowLine, {
+  return inherit( ArrowNode, TrigIndicatorArrowNode, {
 
     /**
      * @public Set the color of this arrow, with no stroke this is just the fill.

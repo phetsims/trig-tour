@@ -33,10 +33,9 @@ define( function( require ) {
   function FractionNode( numerator, denominator, options ) {
 
     this.options = options;
-    this.fractionNode = this;
 
     // call the super constructor
-    Node.call( this.fractionNode );
+    Node.call( this );
 
     this.numerator = numerator;
     this.denominator = denominator;
@@ -79,17 +78,17 @@ define( function( require ) {
 
       // Process leading minus sign and square root tag
       if ( this.numerator.charAt( 0 ) === '-' ) {
-        //remove minus sign, if found
+        // remove minus sign, if found
         this.numerator = this.numerator.slice( 1 );
         numeratorNegative = true;
       }
       if ( this.denominator.charAt( 0 ) === '-' ) {
-        //remove minus sign, if found
+        // remove minus sign, if found
         this.denominator = this.denominator.slice( 1 );
         denominatorNegative = true;
       }
       if ( this.numerator.charAt( 0 ) === 'q' ) {
-        //remove squareRoot tag, if found
+        // remove squareRoot tag, if found
         this.numerator = this.numerator.slice( 1 );
         squareRootSignNeeded = true;
       }
@@ -151,7 +150,7 @@ define( function( require ) {
           this.children[ i ].visible = false;
         }
 
-        this.fractionNode.children = [ minusSign, sqRtPath, this.numeratorText ];
+        this.children = [ minusSign, sqRtPath, this.numeratorText ];
 
         if ( minusSignNeeded ) {
           minusSign.left = 0;
@@ -166,11 +165,11 @@ define( function( require ) {
           this.numeratorText.centerX = sqRtPath.centerX + 3;
         }
 
-        return; //have to break out
+        return; // have to break out
       }
 
       if ( denominatorNeeded ) {
-        this.fractionNode.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
+        this.children = [ sqRtPath, minusSign, this.numeratorText, bar, this.denominatorText ];
       }
       bar.left = 0;
       this.numeratorText.centerX = this.denominatorText.centerX = bar.centerX;

@@ -31,9 +31,9 @@ define( function( require ) {
     var arrowLine = this;
     this.vertical = ( orientation === 'v' ); // @private
     options = _.extend( {
-      //if arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
+      // if arrow length shorter than criticalFactor times arrow head length, then start scaling arrowLine
       criticalFactor: 2,
-      arrowHeadLength: 25     //arrow head length in pixels
+      arrowHeadLength: 25 // arrow head length in pixels
     }, options );
     this.options = options;
 
@@ -42,14 +42,14 @@ define( function( require ) {
     this.arrowHeadLength = options.arrowHeadLength;
     this.arrowHeadWidth = (3 / 5) * this.arrowHeadLength;
 
-    //arrowLine consists of Line and triangular arrowHead Path
+    // arrowLine consists of Line and triangular arrowHead Path
     this.line = new Line( 0, 0, 0, 0, options );
     this.arrowHeadShape = new Shape();
     this.arrowHead = new Path( this.arrowHeadShape, { lineWidth: 1, fill: this.line.stroke } );
 
     arrowLine.drawArrowHead( this.arrowHeadLength );
 
-    //place arrowHead on end of Line
+    // place arrowHead on end of Line
     if ( this.vertical ) {
       this.arrowHead.y = defaultLength;
     }
@@ -59,10 +59,10 @@ define( function( require ) {
     this.canvas = new Node();
     this.line.addChild( this.arrowHead );
 
-    //overlay invisible rectangle on top of line, to activate mouse cursor
+    // overlay invisible rectangle on top of line, to activate mouse cursor
     this.mouseMarker = new Rectangle( -10, -50, 20, 100, { fill: 'green', opacity: 0, cursor: 'pointer' } );
 
-    //need mouse pointer active only for vertical line in graphView
+    // need mouse pointer active only for vertical line in graphView
     if ( orientation === 'v' ) {
       this.line.addChild( this.mouseMarker );
     }
@@ -77,12 +77,12 @@ define( function( require ) {
       this.arrowHead.fill = color;
     },
 
-    //set position of tip of arrow head and size arrow appropriately
-    //displacement is signed length of arrow, + if arrow points right/up, or - if arrow points left/down
+    // set position of tip of arrow head and size arrow appropriately
+    // displacement is signed length of arrow, + if arrow points right/up, or - if arrow points left/down
     setEndPoint: function( displacement ) {
-      var sign = 0;  //+1, -1, or zero depending on sign of displacement
+      var sign = 0;  // +1, -1, or zero depending on sign of displacement
       if ( displacement !== 0 ) {
-        //sign = +1 if arrow pointing up or right, -1 if pointing down or left
+        // sign = +1 if arrow pointing up or right, -1 if pointing down or left
         sign = Util.roundSymmetric( displacement / Math.abs( displacement ) );
       }
       this.arrowHead.setRotation( (sign - 1) * Math.PI / 2 );
@@ -91,7 +91,7 @@ define( function( require ) {
       if ( this.vertical ) {
         if ( length > this.criticalFactor * this.arrowHeadLength ) {   //if arrow long enough
           this.drawArrowHead( this.arrowHeadLength );
-          //factor of 0.9 so that arrowHead overlaps line slightly
+          // factor of 0.9 so that arrowHead overlaps line slightly
           this.line.setPoint2( 0, -displacement + 0.9 * sign * this.arrowHeadLength );
           if ( sign > 0 ) {
             this.mouseMarker.setRect( -10, -length, 20, length );
@@ -101,7 +101,7 @@ define( function( require ) {
           }
           this.arrowHead.y = -displacement;
         }
-        else {    //if arrow too small for arrowHead to fit
+        else {    // if arrow too small for arrowHead to fit
           scaleFactor = Math.max( 0.1, length / ( this.criticalFactor * this.arrowHeadLength ) );
           this.drawArrowHead( this.arrowHeadLength * scaleFactor );
           this.arrowHead.y = -displacement;

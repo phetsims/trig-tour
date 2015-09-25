@@ -44,8 +44,8 @@ define( function( require ) {
     var controlPanel = new ControlPanel( viewProperties );
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
 
-    //white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
-    //unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
+    // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
+    // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
     var width = 2.4 * 160;
     var height = 2.4 * 160;
     var arcRadius = 8;
@@ -57,7 +57,7 @@ define( function( require ) {
     this.addChild( controlPanel );
     this.addChild( this.dizzyPhetGirlImage );
 
-    //Layout children Views
+    // Layout children Views
     unitCircleView.x = this.layoutBounds.centerX;
     unitCircleView.top = this.layoutBounds.top + 20;
     whiteSheet.x = unitCircleView.x;
@@ -72,7 +72,7 @@ define( function( require ) {
     this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
 
 
-    //Set up callbacks
+    // Set up callbacks
     viewProperties.graphProperty.link( function( graph ) {
 
       //set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
@@ -90,7 +90,7 @@ define( function( require ) {
       graphView.cosThetaLabel.visible = ( graph === 'cos' );
       graphView.tanThetaLabel.visible = ( graph === 'tan' );
 
-      //set title bar in GraphView
+      // set title bar in GraphView
       graphView.setTitleBar( graph );
       if ( trigTourModel.singularity ) {
         if ( graph === 'cos' || graph === 'sin' ) {
@@ -98,14 +98,14 @@ define( function( require ) {
           graphView.singularityIndicator.visible = false;
         }
         else {
-          //always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
+          // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
           graphView.indicatorLine.opacity = 0;
           graphView.singularityIndicator.visible = true;
         }
       }
       graphView.setIndicatorLine();
 
-      //visibility of trig function readout
+      // visibility of trig function readout
       readoutDisplay.readoutNode.setTrigRowVisibility( graph );
     } );
 
@@ -172,22 +172,22 @@ define( function( require ) {
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
       }
 
-      //set precision of angle readout in degrees:
-      //in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
+      // set precision of angle readout in degrees:
+      // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
       if ( specialAnglesVisible ) {
         var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
         trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
         readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
       }
       else {
-        //1 decimal place precision for continuous angles
+        // 1 decimal place precision for continuous angles
         readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );
       }
       readoutDisplay.readoutNode.setAngleReadout();
       readoutDisplay.readoutNode.setTrigReadout();
     } );
 
-    //if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
+    // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
     unitCircleView.maxAngleExceededProperty.link( function( tOrF ) {
       trigTourScreenView.dizzyPhetGirlImage.visible = tOrF;
     } );
@@ -203,7 +203,7 @@ define( function( require ) {
       },
       right: this.layoutBounds.maxX - 60,
       top: controlPanel.bottom + 10,
-      radius: 18   //Dubson prefers button smaller than default
+      radius: 18   // Dubson prefers button smaller than default
     } );
     this.addChild( resetAllButton );
   }

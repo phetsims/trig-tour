@@ -35,13 +35,13 @@ define( function( require ) {
     this.options = options;
     this.fractionNode = this;
 
-    // Call the super constructor
+    // call the super constructor
     Node.call( this.fractionNode );
 
     this.numerator = numerator;
     this.denominator = denominator;
 
-    //create the fraction
+    // create the fraction
     this.setFraction();
 
     this.mutate( options );
@@ -73,20 +73,23 @@ define( function( require ) {
       var squareRootSignNeeded = false; // true if square root symbol is needed over the numerator
       var denominatorNeeded = true;     // true if only the numerator is displayed as a fractional number
 
-      //Check that arguments are strings
+      // Check that arguments are strings
       if ( typeof this.numerator !== 'string' ) { this.numerator = this.numerator.toString(); }
       if ( typeof this.denominator !== 'string' ) { this.denominator = this.denominator.toString(); }
 
-      //Process leading minus sign and square root tag
-      if ( this.numerator.charAt( 0 ) === '-' ) {  //remove minus sign, if found
+      // Process leading minus sign and square root tag
+      if ( this.numerator.charAt( 0 ) === '-' ) {
+        //remove minus sign, if found
         this.numerator = this.numerator.slice( 1 );
         numeratorNegative = true;
       }
-      if ( this.denominator.charAt( 0 ) === '-' ) {  //remove minus sign, if found
+      if ( this.denominator.charAt( 0 ) === '-' ) {
+        //remove minus sign, if found
         this.denominator = this.denominator.slice( 1 );
         denominatorNegative = true;
       }
-      if ( this.numerator.charAt( 0 ) === 'q' ) { //remove squareRoot tag, if found
+      if ( this.numerator.charAt( 0 ) === 'q' ) {
+        //remove squareRoot tag, if found
         this.numerator = this.numerator.slice( 1 );
         squareRootSignNeeded = true;
       }
@@ -100,7 +103,7 @@ define( function( require ) {
         minusSignNeeded = true;
       }
 
-      //Draw minus sign to go in front of fraction, if needed.
+      // Draw minus sign to go in front of fraction, if needed.
       var length = 8;
       var midHeight = 7;
       if ( minusSignNeeded ) {
@@ -111,10 +114,11 @@ define( function( require ) {
         } );
       }
       else {
-        minusSign = new Line( 0, 0, 0, 0 );   //just a placeholder is no minus sign
+        // just a placeholder is no minus sign
+        minusSign = new Line( 0, 0, 0, 0 );
       }
 
-      //Draw horizontal line separating numerator and denominator
+      // Draw horizontal line separating numerator and denominator
       if ( squareRootSignNeeded ) {
         length = 1.8 * this.numeratorText.width;
       }
@@ -122,14 +126,14 @@ define( function( require ) {
         length = 1.2 * this.numeratorText.width;
       }
 
-      //dividing bar
+      // dividing bar
       var bar = new Line( 0, -midHeight, length, -midHeight, {
         stroke: TrigTourColors.LINE_COLOR,
         lineWidth: 2,
         lineCap: 'round'
       } );
 
-      //draw square root symbol
+      // draw square root symbol
       var sqRtShape = new Shape();
       if ( squareRootSignNeeded ) {
         var W = 1.2 * this.numeratorText.width;
@@ -139,9 +143,9 @@ define( function( require ) {
       }
       var sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
 
-      //if no denominator argument is passed in, then display the numerator as a non-fraction number
+      // if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( this.denominator === undefined || this.denominator === '' ) {
-        //make current children invisible so numerator is not obscured
+        // make current children invisible so numerator is not obscured
         denominatorNeeded = false;
         for ( var i = 0; i < this.children.length; i++ ) {
           this.children[ i ].visible = false;

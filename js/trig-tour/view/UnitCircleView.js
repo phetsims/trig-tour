@@ -26,15 +26,14 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  //strings
+  // strings
   var xStr = 'x';
   var yStr = 'y';
   var oneStr = '1';
-  //var plusOneStr = '+1';
   var minusOneStr = '-1';
   var thetaStr = require( 'string!TRIG_TOUR/theta' );
 
-  //constants
+  // constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 22 );
   var DISPLAY_FONT_SMALL = new PhetFont( 18 );
@@ -60,13 +59,13 @@ define( function( require ) {
     // Call the super constructor
     Node.call( unitCircleView );
 
-    //Draw Unit Circle
+    // Draw Unit Circle
     var radius = 160; //radius of unit circle in pixels
     //provides parent node and origin for rotorGraphic
     var circleGraphic = new Circle( radius, { stroke: LINE_COLOR, lineWidth: 3 } );
 
-    //Draw 'special angle' locations on unit circle
-    //special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
+    // Draw 'special angle' locations on unit circle
+    // special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
     this.specialAnglesNode = new Node();
     var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
     var xPos, yPos; //x and y coordinates of special angle on unit circle
@@ -79,7 +78,7 @@ define( function( require ) {
       ) );
     }
 
-    //draw background
+    // draw background
     var bWidth = 2.4 * radius;
     var bHeight = 2.4 * radius;
     var arcRadius = 8;
@@ -93,11 +92,11 @@ define( function( require ) {
       { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
     );
 
-    //Draw x-, y-axes with x and y labels
+    // Draw x-, y-axes with x and y labels
     var yAxis = new ArrowNode( 0, 1.2 * radius, 0, -1.2 * radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
     var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
 
-    //Draw and position x-, y-axis labels
+    // Draw and position x-, y-axis labels
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     var xText = new Text( xStr, fontInfo );
     var yText = new Text( yStr, fontInfo );
@@ -108,7 +107,7 @@ define( function( require ) {
     yText.right = -12;
     yText.top = -1.2 * radius - 2;
 
-    //Draw Grid, simple square grid, visibility set by Control Panel;
+    // Draw Grid, simple square grid, visibility set by Control Panel;
     var r = radius;
     var gridShape = new Shape();
     gridShape.moveTo( -r, -r );
@@ -118,16 +117,16 @@ define( function( require ) {
     this.grid = new Path( gridShape, { lineWidth: 2, stroke: TEXT_COLOR_GRAY } );
     this.grid.visible = false;
 
-    //draw vertical (sine) line on rotor triangle
-    //displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
+    // draw vertical (sine) line on rotor triangle
+    // displayed line is either simple Line (no arrow head) or ArrowLine (with arrow head)
     this.vLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
     this.vArrowLine = new ArrowLine( radius, 'v', { lineWidth: 6, stroke: SIN_COLOR } );
 
-    //draw horizontal (cosine) line on rotor triangle
+    // draw horizontal (cosine) line on rotor triangle
     this.hLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
     this.hArrowLine = new ArrowLine( radius, 'h', { lineWidth: 6, stroke: COS_COLOR } );
 
-    //Draw rotor arm with draggable red dot at end
+    // Draw rotor arm with draggable red dot at end
     var rotorGraphic = new Node();
     rotorGraphic.addChild( new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } ) );
     rotorGraphic.addChild( new Circle(
@@ -138,7 +137,7 @@ define( function( require ) {
     rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
     rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
 
-    //Draw x, y, and '1' labels on the xyR triangle
+    // Draw x, y, and '1' labels on the xyR triangle
     var labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var oneText = new Text( oneStr, fontInfo );
@@ -146,14 +145,14 @@ define( function( require ) {
     yText = new Text( yStr, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
     var thetaText = new Text( thetaStr, fontInfo );
-    //+1, -1 labels on axes
+    // +1, -1 labels on axes
     fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY };
     var oneXText = new Text( oneStr, fontInfo );
     var minusOneXText = new Text( minusOneStr, fontInfo );
     var oneYText = new Text( oneStr, fontInfo );
     var minusOneYText = new Text( minusOneStr, fontInfo );
 
-    //position +1/-1 labels on xy axes
+    // position +1/-1 labels on xy axes
     oneXText.left = this.grid.right + 5;
     oneXText.top = 7;
     minusOneXText.right = this.grid.left - 5;
@@ -165,7 +164,7 @@ define( function( require ) {
 
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-    //add the children to parent node
+    // add the children to parent node
     unitCircleView.children = [
       this.background,
       this.grid,
@@ -181,7 +180,7 @@ define( function( require ) {
       labelCanvas
     ];
 
-    //If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears in
+    // If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears in
     // TrigTourScreenView (the main view) and user cannot increase magnitude of angle any further.
     // User can then only decrease magnitude of angle.
     this.maxAngleExceededProperty = new Property( false );
@@ -193,7 +192,7 @@ define( function( require ) {
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
-        //start function for testing only
+        // start function for testing only
         start: function( e ) {
           mouseDownPosition = e.pointer.point;
         },
@@ -209,7 +208,8 @@ define( function( require ) {
               trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
             }
           }
-          else {  //if maxAngleExceeded, update only if user decreases angle
+          else {
+            // maxAngleExceeded, update only if user decreases angle
             if ( Math.abs( smallAngle ) < maxAllowedSmallAngle ) {
               trigTourModel.setFullAngle( smallAngle );
             }
@@ -218,18 +218,18 @@ define( function( require ) {
         }
       } ) );
 
-    //draw angle arc on unit circle
+    // draw angle arc on unit circle
     arcRadius = 0.2 * radius;   //initial arc radius = 0.2 of rotor radius
     var arcShape = new Shape();
     var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2 } );
 
-    //following code is to speed up drawing
+    // following code is to speed up drawing
     var emptyBounds = new Bounds2( 0, 0, 0, 0 );
     angleArcPath.computeShapeBounds = function() {
       return emptyBounds;
     };
 
-    //draw Arrow Head on Angle Arc
+    // draw Arrow Head on Angle Arc
     var arrowHeadShape = new Shape();
     var hW = 7;     //arrow head width
     var hL = 12;    //arrow head length
@@ -238,13 +238,13 @@ define( function( require ) {
     angleArcPath.addChild( angleArcArrowHead );
     circleGraphic.addChild( angleArcPath );
 
-    //draw angle arc with gradually increasing radius
+    // draw angle arc with gradually increasing radius
     var drawAngleArc = function() {
-      var arcShape = new Shape();  //This seems wasteful, but there is no Shape.clear() function
+      var arcShape = new Shape(); // This seems wasteful, but there is no Shape.clear() function
       arcRadius = 0.2 * radius;
       arcShape.moveTo( arcRadius, 0 );
       var totalAngle = trigTourModel.getFullAngleInRadians();
-      var deltaAngle = 0.1;  //delta-angle in radians
+      var deltaAngle = 0.1;  // delta-angle in radians
       if ( Math.abs( totalAngle ) < 0.5 ) {
         deltaAngle = 0.02;
       }
@@ -264,7 +264,7 @@ define( function( require ) {
 
       angleArcPath.setShape( arcShape );
 
-      //show arrow head on angle arc if angle is > 45 degs
+      // show arrow head on angle arc if angle is > 45 degs
       if ( Math.abs( totalAngle ) < 45 * Math.PI / 180 ) {
         angleArcArrowHead.visible = false;
       }
@@ -273,7 +273,7 @@ define( function( require ) {
       }
       angleArcArrowHead.x = arcRadius * Math.cos( totalAngle );
       angleArcArrowHead.y = -arcRadius * Math.sin( totalAngle );
-      //orient arrow head on angle arc correctly
+      // orient arrow head on angle arc correctly
       if ( totalAngle < 0 ) {
         angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6 / arcRadius );
       }
@@ -290,12 +290,12 @@ define( function( require ) {
       labelCanvas.visible = isVisible;
     };
 
-    //position the x, y, '1', and theta labels on the xyR triangle of the unit circle
+    // position the x, y, '1', and theta labels on the xyR triangle of the unit circle
     var positionLabels = function() {
       var smallAngle = trigTourModel.getSmallAngleInRadians();
       var totalAngle = trigTourModel.getFullAngleInRadians();
       var pi = Math.PI;
-      //set visibility of the labels
+      // set visibility of the labels
       if ( Math.abs( totalAngle ) < 40 * pi / 180 ) {
         thetaText.visible = false;
       }
@@ -316,9 +316,9 @@ define( function( require ) {
         xText.visible = true;
       }
 
-      //position one-label
+      // position one-label
       var angleOffset = 9 * pi / 180;
-      var sign = 1; //if sign = +1, one-label is to right of radius, if sign = -1 then to the left
+      var sign = 1; // if sign = +1, one-label is to right of radius, if sign = -1 then to the left
       if ( ( smallAngle > pi / 2 && smallAngle <= pi ) || ( smallAngle >= -pi / 2 && smallAngle < 0 ) ) {
         sign = -1;
       }
@@ -327,14 +327,14 @@ define( function( require ) {
       oneText.centerX = 0.6 * xInPix;
       oneText.centerY = -0.6 * yInPix;
 
-      //position x-label
+      // position x-label
       var xPos = 0.5 * radius * Math.cos( smallAngle );
       var yPos = 0.6 * xText.height;
       if ( smallAngle < 0 ) { yPos = -0.6 * xText.height; }
       xText.centerX = xPos;
       xText.centerY = yPos;
 
-      //position y-label
+      // position y-label
       sign = 1;
       if ( ( smallAngle > pi / 2 && smallAngle < pi ) || ( smallAngle > -pi && smallAngle < -pi / 2 ) ) {
         sign = -1;
@@ -344,7 +344,7 @@ define( function( require ) {
       yText.centerX = xPos;
       yText.centerY = yPos;
 
-      //show and position theta-label on angle arc if arc is greater than 20 degs
+      // show and position theta-label on angle arc if arc is greater than 20 degs
       xPos = ( arcRadius + 10 ) * Math.cos( totalAngle / 2 );
       yPos = -( arcRadius + 10 ) * Math.sin( totalAngle / 2 );
       thetaText.centerX = xPos;
@@ -353,7 +353,7 @@ define( function( require ) {
 
     // Register for synchronization with model.
     trigTourModel.fullAngleProperty.link( function( angle ) {
-      rotorGraphic.rotation = -angle;  //model angle is negative of xy screen coords angle
+      rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );
       unitCircleView.vLine.x = radius * cos;

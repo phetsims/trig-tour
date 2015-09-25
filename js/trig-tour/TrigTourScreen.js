@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function TrigTourScreen() {
 
-    //If this is a single-screen sim, no icon is necessary.
+    // If this is a single-screen sim, no icon is necessary.
     var icon = null;
 
     Screen.call( this, trigLabSimString, icon,

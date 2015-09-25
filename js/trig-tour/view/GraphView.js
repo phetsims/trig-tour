@@ -78,10 +78,10 @@ define( function( require ) {
     // Call the super constructor
     Node.call( graphView );
 
-    var marginWidth = 25;   //distance in pixels between edge of Node and edge of nearest full wavelength
+    var marginWidth = 25;   // distance in pixels between edge of Node and edge of nearest full wavelength
     var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
-    this.amplitude = 0.45 * height;  //amplitude of sinusoidal curve in pixels
-    var nbrOfWavelengths = 2 * 2;    //number of full wavelengths displayed, must be even to keep graph symmetric
+    this.amplitude = 0.45 * height;  // @private amplitude of sinusoidal curve in pixels
+    var nbrOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var emptyNode = new Text( '   ', { font: DISPLAY_FONT } );    //to make space for expandCollapseButton
     this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
@@ -104,7 +104,7 @@ define( function( require ) {
       minWidth: 0 // minimum width of the panel
     };
 
-    //when graph is collapsed/hidden, a title is displayed
+    // when graph is collapsed/hidden, a title is displayed
     this.titleDisplayPanel = new Panel( titleDisplayHBox, panelOptions );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
       sideLength: 15,
@@ -117,7 +117,7 @@ define( function( require ) {
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
     this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
 
-    //draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+    // draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
     var bHeight = 1.2 * height;
     var bWidth = 1.05 * width;
     var arcRadius = 10;
@@ -127,13 +127,13 @@ define( function( require ) {
       lineWidth: 2
     } );
 
-    //align expandCollapseButton and titleDisplayButton
+    // align expandCollapseButton and titleDisplayButton
     this.expandCollapseButton.left = background.left + 7;
     this.expandCollapseButton.top = background.top + 7;
     this.titleDisplayPanel.left = background.left;
     this.titleDisplayPanel.top = background.top;
 
-    //draw right and left border rectangles, which serve to hide indicator line when it is off the graph
+    // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
     var borderWidth = 400;
     var borderHeight = 1000;
     var rightBorder = new Rectangle(
@@ -150,14 +150,14 @@ define( function( require ) {
       { fill: BACKGROUND_COLOR }
     );
 
-    //draw x-, y-axes
+    // draw x-, y-axes
     var xAxisLength = width;
-    var xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, //tailX, tailY, tipX, tipY, options
+    var xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0,
       { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8 } );
     var yAxis = new ArrowNode( 0, 1.2 * this.amplitude, 0, -1.3 * this.amplitude,
       { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8 } );
 
-    //draw tic marks for x-, y-axes
+    // draw tic marks for x-, y-axes
     var ticLength = 5;
     var xTics = new Node();
     var yTics = new Node();
@@ -174,10 +174,10 @@ define( function( require ) {
       yTics.addChild( yTic );
     }
 
-    this.axesNode = new Node();   //axes bounds of this are used in layout
+    this.axesNode = new Node();
     this.axesNode.children = [ xAxis, yAxis ];
 
-    //draw 1/-1 labels on y-axis
+    // draw 1/-1 labels on y-axis
     this.onesNode = new Node();
     var fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
     var oneLabel = new Text( oneStr, fontInfo );
@@ -189,7 +189,7 @@ define( function( require ) {
     oneLabel.centerY = -this.amplitude - 5;
     minusOneLabel.centerY = this.amplitude + 5;
 
-    //draw tic mark labels in degrees
+    // draw tic mark labels in degrees
     this.tickMarkLabelsInDegrees = new Node();
     var label;
     for ( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ) {
@@ -203,7 +203,7 @@ define( function( require ) {
       }
     }
 
-    //tic mark labels in radians
+    // tic mark labels in radians
     this.tickMarkLabelsInRadians = new Node();
     var labelStr = '';
     var labelStrings = [
@@ -225,12 +225,12 @@ define( function( require ) {
       this.tickMarkLabelsInRadians.addChild( label );
     }
 
-    //visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+    // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
     this.onesNode.visible = false;
     this.tickMarkLabelsInDegrees.visible = false;
     this.tickMarkLabelsInRadians.visible = false;
 
-    //Axes labels
+    // Axes labels
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
     var thetaLabel = new Text( theta, fontInfo );
     thetaLabel.left = this.axesNode.right + 5; //= xAxis.right;
@@ -241,7 +241,7 @@ define( function( require ) {
     this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right = yAxis.left - 10;
     this.cosThetaLabel.top = this.sinThetaLabel.top = this.tanThetaLabel.top = yAxis.top;
 
-    //Draw sinusoidal curves
+    // Draw sinusoidal curves
     var cosShape = new Shape();
     var sinShape = new Shape();
     var tanShape = new Shape();
@@ -254,7 +254,7 @@ define( function( require ) {
     cosShape.moveTo( xPos, yOrigin - this.amplitude * Math.cos( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
     tanShape.moveTo( xPos, yOrigin - this.amplitude * Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
 
-    //draw sin and cos curves
+    // draw sin and cos curves
     for ( i = 0; i < nbrOfPoints; i++ ) {
       xPos += dx;
       sinShape.lineTo( xPos, yOrigin - this.amplitude * Math.sin( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
@@ -264,7 +264,7 @@ define( function( require ) {
     xPos = xOrigin - nbrOfPoints * dx / 2;  //start at left edge
     var tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
 
-    //draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
+    // draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
     dx = wavelength / 600;  //x-distance between points on curve
     nbrOfPoints = ( nbrOfWavelengths + 0.08 ) * wavelength / dx;
     var maxTanValue = 1.2;
@@ -287,14 +287,14 @@ define( function( require ) {
     this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3 } );
 
 
-    //Add TriangleNode arrow heads at ends of curves
+    // Add TriangleNode arrow heads at ends of curves
     var pi = Math.PI;
     var leftEnd = -( nbrOfWavelengths + 0.08 ) * wavelength / 2;
     var rightEnd = ( nbrOfWavelengths + 0.08 ) * wavelength / 2;
     var arrowL = 15;     //arrow head length
     var arrowW = 8;      //arrow head width
 
-    //Place arrow heads on left and right ends of sin curve
+    // Place arrow heads on left and right ends of sin curve
     var slopeLeft = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * leftEnd / wavelength );
     var slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * rightEnd / wavelength );
     var angleLeft = Math.atan( slopeLeft ) * 180 / pi;
@@ -307,7 +307,7 @@ define( function( require ) {
     sinArrowRight.y = -this.amplitude * Math.sin( 2 * pi * rightEnd / wavelength );
     this.sinPath.children = [ sinArrowLeft, sinArrowRight ];
 
-    //Place arrow heads on ends of cos curve
+    // Place arrow heads on ends of cos curve
     slopeLeft = ( this.amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * leftEnd / wavelength );
     slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * rightEnd / wavelength );
     angleLeft = Math.atan( slopeLeft ) * 180 / pi;
@@ -323,8 +323,8 @@ define( function( require ) {
     //Place arrow heads on ends of all tan curve segments. This is pretty tricky
     var arrowHeads = []; //array of arrow heads
 
-    //x and y coordinates of ends of the 'central' tan segment, in pixels.
-    //'Central' segment is the one centered on the origin.
+    // x and y coordinates of ends of the 'central' tan segment, in pixels.
+    // 'Central' segment is the one centered on the origin.
     var xTanMax = Math.atan( maxTanValue ) * wavelength / ( 2 * pi );
     var xTanMin = Math.atan( minTanValue ) * wavelength / ( 2 * pi );
     var xPosMax;
@@ -340,9 +340,9 @@ define( function( require ) {
       arrowHeads.push( new Vector2( xPosMin, yPosMin ) );
     }
 
-    //The left and right end arrow heads are special cases.
-    //Remove extraneous left- and right-end arrow heads created in previous for-loop
-    //and replace with correct arrow heads
+    // The left and right end arrow heads are special cases.
+    // Remove extraneous left- and right-end arrow heads created in previous for-loop
+    // and replace with correct arrow heads
     var yLeftEnd = -Math.tan( leftEnd * 2 * pi / wavelength ) * this.amplitude;
     var yRightEnd = -Math.tan( rightEnd * 2 * pi / wavelength ) * this.amplitude;
     arrowHeads.splice( arrowHeads.length - 2, 1, new Vector2( rightEnd, yRightEnd ) );
@@ -354,7 +354,7 @@ define( function( require ) {
       var yPix = arrowHeads[ i ].y;
       var xTan = xPix * 2 * pi / wavelength;
 
-      //Derivative of tan is 1 + tan^2
+      // Derivative of tan is 1 + tan^2
       var tanSlope = ( this.amplitude * 2 * pi / wavelength ) * ( 1 + Math.tan( xTan ) * Math.tan( xTan ) );
       rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
       if ( i % 2 !== 0 ) {
@@ -367,7 +367,7 @@ define( function( require ) {
       triangleNode.y = yPix + 1;
     }
 
-    //SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
+    // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
     this.singularityIndicator = new Line( 0, -800, 0, 400, { stroke: TAN_COLOR, lineWidth: 2, lineDash: [ 10, 5 ] } );
     hitBound = 20;
     midX = this.singularityIndicator.centerX;
@@ -378,8 +378,8 @@ define( function( require ) {
     this.singularityIndicator.visible = false;
     this.tanPath.addChild( this.singularityIndicator );
 
-    //indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
-    //a red dot on top of the indicator line echoes red dot on unit circle
+    // indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
+    // a red dot on top of the indicator line echoes red dot on unit circle
     hitBound = 30;
     this.indicatorLine = new ArrowLine( this.amplitude, 'v', {
       stroke: '#0d0',
@@ -397,7 +397,7 @@ define( function( require ) {
     // with visibility set by expandCollapseButton
     var displayNode = new Node();
 
-    //Order children views
+    // Order children views
     displayNode.children = [
       this.axesNode,
       thetaLabel,
@@ -436,7 +436,7 @@ define( function( require ) {
 
         drag: function( e ) {
           var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
-          var fullAngle = ( 2 * Math.PI * position.x / wavelength );   //in radians
+          var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           if ( !specialAnglesVisibleProperty.value ) {
             model.setFullAngleInRadians( fullAngle );

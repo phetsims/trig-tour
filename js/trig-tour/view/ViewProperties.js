@@ -15,11 +15,10 @@ define( function( require ) {
 
   /**
    * Constructor for trig-tour ViewProperties.
+   *
    * @constructor
    */
   function ViewProperties() {
-    this.viewProperties = this;
-
     PropertySet.call( this, {
       graph: 'cos',          // {string} which graph is visible, 'cos'|'sin' |'tan'
       angleUnits: 'degrees', // {string} which angle units, 'degrees'|'radians'

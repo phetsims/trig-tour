@@ -28,10 +28,8 @@ define( function( require ) {
    */
   function TriangleNode( length, width, color, rotationInDegrees ) {
 
-    this.triangleNode = this;
-
     // Call the super constructor
-    Node.call( this.triangleNode );
+    Node.call( this );
 
     this.rotation = Util.toRadians( rotationInDegrees ); // Node.rotation is in radians
 

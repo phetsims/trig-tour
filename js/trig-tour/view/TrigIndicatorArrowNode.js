@@ -4,6 +4,7 @@
  * Vertical or horizontal arrow, consisting of a line and a triangular arrow-head.
  *
  * @author Michael Dubson (PhET developer) on 6/16/2015.
+ * @author Jesse Greenberg
  */
 define( function( require ) {
   'use strict';
@@ -14,12 +15,12 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
 
   /**
-   * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction of the tail
-   * length.
+   * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction
+   * of the tail length.
    *
    * @param {number} defaultLength of arrow in pixels
    * @param {string} orientation =  one of 'vertical' or 'horizontal'
-   * @param {object} options passed to Line, plus extra options
+   * @param {object} options passed to ArrowNode
    * @constructor
    */
   function TrigIndicatorArrowNode( defaultLength, orientation, options ) {

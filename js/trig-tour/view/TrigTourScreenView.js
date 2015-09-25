@@ -134,12 +134,12 @@ define( function( require ) {
         graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
       }
       if ( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly ) {
-        readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
+        readoutDisplay.readoutNode.fullAngleFractionNode.visible = true;
         readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
       }
       else {
-        readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
+        readoutDisplay.readoutNode.fullAngleFractionNode.visible = false;
         readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
       }
@@ -162,12 +162,12 @@ define( function( require ) {
 
       //select correct angle readout
       if ( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ) {
-        readoutDisplay.readoutNode.nbrFullTurnsNode.visible = true;
+        readoutDisplay.readoutNode.fullAngleFractionNode.visible = true;
         readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
       }
       else {
-        readoutDisplay.readoutNode.nbrFullTurnsNode.visible = false;
+        readoutDisplay.readoutNode.fullAngleFractionNode.visible = false;
         readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
         readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
       }
@@ -188,8 +188,8 @@ define( function( require ) {
     } );
 
     // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
-    unitCircleView.maxAngleExceededProperty.link( function( tOrF ) {
-      trigTourScreenView.dizzyPhetGirlImage.visible = tOrF;
+    unitCircleView.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
+      trigTourScreenView.dizzyPhetGirlImage.visible = maxAngleExceeded;
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model

@@ -58,9 +58,11 @@ define( function( require ) {
   function ReadoutNode( model, viewProperties ) {
 
     var readoutNode = this;
+
+    // @private
     this.model = model;
     this.viewProperties = viewProperties;
-    this.nbrDecimalPlaces = 1;      // number of decimal places for display of fullAngle, = 0 for special angles
+    this.decimalPrecision = 1;      // number of decimal places for display of fullAngle, = 0 for special angles
     this.units = 'degrees';         // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
@@ -119,7 +121,7 @@ define( function( require ) {
     var angleEqualsStr = angleStr + ' = ';
     var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
     this.angleReadoutDecimal = new SubSupText( fullAngleValue, fontInfo ); // angle readout as decimal number
-    this.nbrFullTurnsNode = new FractionNode( 'A', '', fontInfo );  // needed in Special angles mode
+    this.fullAngleFractionNode = new FractionNode( 'A', '', fontInfo );  // node representing fractional form of full angle
 
     // used to display angle as FractionNode in Special angles mode
     this.angleReadoutFraction = new FractionNode( '-A', 'B', fontInfo );
@@ -127,13 +129,13 @@ define( function( require ) {
     this.angleReadoutFraction.visible = false;
 
     // Either angleReadoutDecimal visible (decimal number values)
-    // or (nbrFullTurnsNode + angleReadoutFraction) visible in Special angles mode
-    row2.children = [ angleLabel, this.angleReadoutDecimal, this.nbrFullTurnsNode, this.angleReadoutFraction ];
+    // or (fullAngleFractionNode + angleReadoutFraction) visible in Special angles mode
+    row2.children = [ angleLabel, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
 
     // row 2 layout
     this.angleReadoutDecimal.left = angleLabel.right;
-    this.nbrFullTurnsNode.left = angleLabel.right;
-    this.angleReadoutFraction.left = this.nbrFullTurnsNode.right;
+    this.fullAngleFractionNode.left = angleLabel.right;
+    this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
 
     // Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
@@ -207,18 +209,18 @@ define( function( require ) {
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
-    var degText = new Text( degreesStr, fontInfo );
-    var radText = new Text( radiansStr, fontInfo );
+    var degreeText = new Text( degreesStr, fontInfo );
+    var radiansText = new Text( radiansStr, fontInfo );
     var degreesRadioButton = new AquaRadioButton(
       viewProperties.angleUnitsProperty,
       'degrees',
-      degText,
+      degreeText,
       myRadioButtonOptions
     );
     var radiansRadioButton = new AquaRadioButton(
       viewProperties.angleUnitsProperty,
       'radians',
-      radText,
+      radiansText,
       myRadioButtonOptions
     );
 
@@ -305,10 +307,8 @@ define( function( require ) {
       [ 0, '' ]
     ];
 
-
     // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
     var spacing = 10;
-
     var contentVBox = new VBox( {
       children: [
         row1,
@@ -354,7 +354,7 @@ define( function( require ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInRadians(), 3 ) + ' ' + radsStr;
       }
       else {
-        var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.nbrDecimalPlaces );
+        var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision );
         this.angleReadoutDecimal.text = roundedAngle + '<sup>o</sup>';
       }
     },
@@ -377,7 +377,7 @@ define( function( require ) {
      * @param {number} decimalPrecision
      */
     setAngleReadoutPrecision: function( decimalPrecision ) {
-      this.nbrDecimalPlaces = decimalPrecision;
+      this.decimalPrecision = decimalPrecision;
     },
 
     /**
@@ -387,7 +387,7 @@ define( function( require ) {
       var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
       var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
       if ( !radiansDisplayed ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.nbrDecimalPlaces ) + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision ) + '<sup>o</sup>';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsStr;
@@ -411,15 +411,16 @@ define( function( require ) {
 
       // number of full turns around unit circle, incremented at theta = 0
       var fullTurnCount = this.model.fullTurnCount;
-      var piRadsCount = 2 * fullTurnCount; // number of half turns around unit circle; half-turn = pi radians
+      var piRadiansCount = 2 * fullTurnCount; // number of half turns around unit circle; half-turn = pi radians
       var fullTurnStr = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
-      if ( piRadsCount !== 0 ) {
+      if ( piRadiansCount !== 0 ) {
         if ( fullTurnCount > 0 ) {
-          fullTurnStr = piRadsCount + pi + ' + ';
+          //console.log( 'here' );
+          fullTurnStr = piRadiansCount + pi + ' + ';
         }
         else {
           // if angle negative, minus sign is constructed in FractionNode
-          fullTurnStr = piRadsCount + pi + ' ';
+          fullTurnStr = piRadiansCount + pi + ' ';
         }
       }
       else {
@@ -427,8 +428,8 @@ define( function( require ) {
         fullTurnStr = '';
       }
 
-      this.nbrFullTurnsNode.setValues( fullTurnStr, '' );
-      this.angleReadoutFraction.left = this.nbrFullTurnsNode.right; //this.nbrFullTurnsText.right;
+      this.fullAngleFractionNode.setValues( fullTurnStr, '' );
+      this.angleReadoutFraction.left = this.fullAngleFractionNode.right; //this.nbrFullTurnsText.right;
       for ( var i = 0; i < this.angleFractions.length; i++ ) {
         // if angle positive
         if ( this.angles[ i ] === angleInDegs ) {
@@ -454,7 +455,7 @@ define( function( require ) {
         else if ( nbrPiRads === -1 ) {
           angleStr = '-' + pi;
         }
-        this.nbrFullTurnsNode.setValues( angleStr, '' );
+        this.fullAngleFractionNode.setValues( angleStr, '' );
 
         // dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );

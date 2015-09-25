@@ -79,13 +79,13 @@ define( function( require ) {
     }
 
     // draw background
-    var bWidth = 2.4 * radius;
+    var backgroundWidth = 2.4 * radius;
     var bHeight = 2.4 * radius;
     var arcRadius = 8;
-    this.background = new Rectangle(
-      -bWidth / 2,
+    this.backgroundRectangle = new Rectangle(
+      -backgroundWidth / 2,
       -bHeight / 2,
-      bWidth,
+      backgroundWidth,
       bHeight,
       arcRadius,
       arcRadius,
@@ -108,12 +108,11 @@ define( function( require ) {
     yText.top = -1.2 * radius - 2;
 
     // Draw Grid, simple square grid, visibility set by Control Panel;
-    var r = radius;
     var gridShape = new Shape();
-    gridShape.moveTo( -r, -r );
-    gridShape.lineTo( r, -r ).lineTo( r, r ).lineTo( -r, r ).lineTo( -r, -r );
-    gridShape.moveTo( -r, -r / 2 ).lineTo( r, -r / 2 ).moveTo( -r, r / 2 ).lineTo( r, r / 2 );
-    gridShape.moveTo( -r / 2, -r ).lineTo( -r / 2, r ).moveTo( r / 2, -r ).lineTo( r / 2, r );
+    gridShape.moveTo( -radius, -radius );
+    gridShape.lineTo( radius, -radius ).lineTo( radius, radius ).lineTo( -radius, radius ).lineTo( -radius, -radius );
+    gridShape.moveTo( -radius, -radius / 2 ).lineTo( radius, -radius / 2 ).moveTo( -radius, radius / 2 ).lineTo( radius, radius / 2 );
+    gridShape.moveTo( -radius / 2, -radius ).lineTo( -radius / 2, radius ).moveTo( radius / 2, -radius ).lineTo( radius / 2, radius );
     this.grid = new Path( gridShape, { lineWidth: 2, stroke: TEXT_COLOR_GRAY } );
     this.grid.visible = false;
 
@@ -166,7 +165,7 @@ define( function( require ) {
 
     // add the children to parent node
     unitCircleView.children = [
-      this.background,
+      this.backgroundRectangle,
       this.grid,
       circleGraphic,
       xAxis,
@@ -231,9 +230,12 @@ define( function( require ) {
 
     // draw Arrow Head on Angle Arc
     var arrowHeadShape = new Shape();
-    var hW = 7;     //arrow head width
-    var hL = 12;    //arrow head length
-    arrowHeadShape.moveTo( 0, 0 ).lineTo( -hW / 2, hL ).lineTo( hW / 2, hL ).close();
+    var arrowHeadWidth = 7;
+    var arrowHeadLength = 12;    //arrow head length
+    arrowHeadShape.moveTo( 0, 0 )
+      .lineTo( -arrowHeadWidth / 2, arrowHeadLength )
+      .lineTo( arrowHeadWidth / 2, arrowHeadLength )
+      .close();
     var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: LINE_COLOR } );
     angleArcPath.addChild( angleArcArrowHead );
     circleGraphic.addChild( angleArcPath );
@@ -264,7 +266,7 @@ define( function( require ) {
 
       angleArcPath.setShape( arcShape );
 
-      // show arrow head on angle arc if angle is > 45 degs
+      // show arrow head on angle arc if angle is > 45 degrees
       if ( Math.abs( totalAngle ) < 45 * Math.PI / 180 ) {
         angleArcArrowHead.visible = false;
       }

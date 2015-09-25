@@ -81,7 +81,7 @@ define( function( require ) {
     var marginWidth = 25;   // distance in pixels between edge of Node and edge of nearest full wavelength
     var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
     this.amplitude = 0.45 * height;  // @private amplitude of sinusoidal curve in pixels
-    var nbrOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
+    var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var emptyNode = new Text( '   ', { font: DISPLAY_FONT } );    //to make space for expandCollapseButton
     this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
@@ -117,33 +117,33 @@ define( function( require ) {
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
     this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
 
-    // draw white background Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    var bHeight = 1.2 * height;
-    var bWidth = 1.05 * width;
+    // draw white background
+    var backgroundHeight = 1.2 * height;
+    var backgroundWidth = 1.05 * width;
     var arcRadius = 10;
-    var background = new Rectangle( -bWidth / 2, -(bHeight / 2) - 5, bWidth, bHeight, arcRadius, arcRadius, {
+    var backgroundRectangle = new Rectangle( -backgroundWidth / 2, -(backgroundHeight / 2) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
       fill: VIEW_BACKGROUND_COLOR,
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
     } );
 
     // align expandCollapseButton and titleDisplayButton
-    this.expandCollapseButton.left = background.left + 7;
-    this.expandCollapseButton.top = background.top + 7;
-    this.titleDisplayPanel.left = background.left;
-    this.titleDisplayPanel.top = background.top;
+    this.expandCollapseButton.left = backgroundRectangle.left + 7;
+    this.expandCollapseButton.top = backgroundRectangle.top + 7;
+    this.titleDisplayPanel.left = backgroundRectangle.left;
+    this.titleDisplayPanel.top = backgroundRectangle.top;
 
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
     var borderWidth = 400;
     var borderHeight = 1000;
     var rightBorder = new Rectangle(
-      -bWidth / 2 - borderWidth - 1,
+      -backgroundWidth / 2 - borderWidth - 1,
       -0.8 * borderHeight, borderWidth,
       borderHeight,
       { fill: BACKGROUND_COLOR }
     );
     var leftBorder = new Rectangle(
-      bWidth / 2 + 1,
+      backgroundWidth / 2 + 1,
       -0.8 * borderHeight,
       borderWidth,
       borderHeight,
@@ -163,7 +163,7 @@ define( function( require ) {
     var yTics = new Node();
     var xTic;
     var yTic;
-    for ( var i = -2 * nbrOfWavelengths; i <= 2 * nbrOfWavelengths; i++ ) {
+    for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
       xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
       xTic.x = i * wavelength / 4;
       xTics.addChild( xTic );
@@ -174,11 +174,11 @@ define( function( require ) {
       yTics.addChild( yTic );
     }
 
-    this.axesNode = new Node();
+    this.axesNode = new Node(); // @public (read-only)
     this.axesNode.children = [ xAxis, yAxis ];
 
     // draw 1/-1 labels on y-axis
-    this.onesNode = new Node();
+    this.onesNode = new Node(); // @public (read-only)
     var fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
     var oneLabel = new Text( oneStr, fontInfo );
     var minusOneLabel = new Text( minusOneStr, fontInfo );
@@ -192,10 +192,10 @@ define( function( require ) {
     // draw tic mark labels in degrees
     this.tickMarkLabelsInDegrees = new Node();
     var label;
-    for ( var j = -nbrOfWavelengths; j <= nbrOfWavelengths; j++ ) {
-      var nbrDegrees = Util.toFixed( 180 * j, 0 );
-      nbrDegrees = nbrDegrees.toString();
-      label = new SubSupText( nbrDegrees + '<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
+    for ( var j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
+      var degrees = Util.toFixed( 180 * j, 0 );
+      degrees = degrees.toString();
+      label = new SubSupText( degrees + '<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;
       label.top = xAxis.bottom;
       if ( j !== 0 ) {
@@ -205,7 +205,7 @@ define( function( require ) {
 
     // tic mark labels in radians
     this.tickMarkLabelsInRadians = new Node();
-    var labelStr = '';
+    var labelString = '';
     var labelStrings = [
       '-4' + piStr,
       '-3' + piStr,
@@ -218,8 +218,8 @@ define( function( require ) {
     ];
     var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
     for ( i = 0; i < xPositions.length; i++ ) {
-      labelStr = labelStrings[ i ];
-      label = new Text( labelStr, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
+      labelString = labelStrings[ i ];
+      label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
       label.centerX = xPositions[ i ] * wavelength / 2;
       label.top = xAxis.bottom;
       this.tickMarkLabelsInRadians.addChild( label );
@@ -246,32 +246,32 @@ define( function( require ) {
     var sinShape = new Shape();
     var tanShape = new Shape();
     var dx = wavelength / 100;
-    var nbrOfPoints = ( nbrOfWavelengths + 0.08 ) * wavelength / dx;
+    var numberOfPoints = ( numberOfWavelengths + 0.08 ) * wavelength / dx;
     var xOrigin = 0;
     var yOrigin = 0;
-    var xPos = xOrigin - nbrOfPoints * dx / 2;
+    var xPos = xOrigin - numberOfPoints * dx / 2;
     sinShape.moveTo( xPos, yOrigin - this.amplitude * Math.sin( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
     cosShape.moveTo( xPos, yOrigin - this.amplitude * Math.cos( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
     tanShape.moveTo( xPos, yOrigin - this.amplitude * Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
 
     // draw sin and cos curves
-    for ( i = 0; i < nbrOfPoints; i++ ) {
+    for ( i = 0; i < numberOfPoints; i++ ) {
       xPos += dx;
       sinShape.lineTo( xPos, yOrigin - this.amplitude * Math.sin( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
       cosShape.lineTo( xPos, yOrigin - this.amplitude * Math.cos( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
     }
 
-    xPos = xOrigin - nbrOfPoints * dx / 2;  //start at left edge
+    xPos = xOrigin - numberOfPoints * dx / 2;  //start at left edge
     var tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
 
     // draw tangent curve cut off at upper and lower limits, need more resolution due to steep slope
     dx = wavelength / 600;  //x-distance between points on curve
-    nbrOfPoints = ( nbrOfWavelengths + 0.08 ) * wavelength / dx;
+    numberOfPoints = ( numberOfWavelengths + 0.08 ) * wavelength / dx;
     var maxTanValue = 1.2;
     var minTanValue = -1.0;
     var yPos;
-    for ( i = 0; i < nbrOfPoints; i++ ) {
-      tanValue = Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength );
+    for ( i = 0; i < numberOfPoints; i++ ) {
+      tanValue = Math.tan( 2 * Math.PI * ( xPos - xOrigin ) / wavelength );
       yPos = yOrigin - this.amplitude * tanValue;
       if ( ( tanValue <= maxTanValue ) && ( tanValue > minTanValue ) ) {
         tanShape.lineTo( xPos, yPos );
@@ -289,18 +289,18 @@ define( function( require ) {
 
     // Add TriangleNode arrow heads at ends of curves
     var pi = Math.PI;
-    var leftEnd = -( nbrOfWavelengths + 0.08 ) * wavelength / 2;
-    var rightEnd = ( nbrOfWavelengths + 0.08 ) * wavelength / 2;
-    var arrowL = 15;     //arrow head length
-    var arrowW = 8;      //arrow head width
+    var leftEnd = -( numberOfWavelengths + 0.08 ) * wavelength / 2;
+    var rightEnd = ( numberOfWavelengths + 0.08 ) * wavelength / 2;
+    var arrowHeadLength = 15;
+    var arrowHeadWidth = 8;
 
     // Place arrow heads on left and right ends of sin curve
     var slopeLeft = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * leftEnd / wavelength );
     var slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * rightEnd / wavelength );
     var angleLeft = Math.atan( slopeLeft ) * 180 / pi;
     var angleRight = Math.atan( slopeRight ) * 180 / pi;
-    var sinArrowLeft = new TriangleNode( arrowL, arrowW, SIN_COLOR, -angleLeft + 180 );
-    var sinArrowRight = new TriangleNode( arrowL, arrowW, SIN_COLOR, -angleRight );
+    var sinArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleLeft + 180 );
+    var sinArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleRight );
     sinArrowLeft.x = leftEnd;
     sinArrowRight.x = rightEnd;
     sinArrowLeft.y = -this.amplitude * Math.sin( 2 * pi * leftEnd / wavelength );
@@ -312,8 +312,8 @@ define( function( require ) {
     slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * rightEnd / wavelength );
     angleLeft = Math.atan( slopeLeft ) * 180 / pi;
     angleRight = Math.atan( slopeRight ) * 180 / pi;
-    var cosArrowLeft = new TriangleNode( arrowL, arrowW, COS_COLOR, angleLeft + 180 );
-    var cosArrowRight = new TriangleNode( arrowL, arrowW, COS_COLOR, angleRight );
+    var cosArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleLeft + 180 );
+    var cosArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleRight );
     cosArrowLeft.x = leftEnd;
     cosArrowRight.x = rightEnd;
     cosArrowLeft.y = -this.amplitude * Math.cos( 2 * pi * leftEnd / wavelength );
@@ -331,7 +331,7 @@ define( function( require ) {
     var xPosMin;
     var yPosMax;
     var yPosMin;
-    for ( i = -nbrOfWavelengths; i <= nbrOfWavelengths; i++ ) {
+    for ( i = -numberOfWavelengths; i <= numberOfWavelengths; i++ ) {
       xPosMax = i * wavelength / 2 + xTanMax;
       xPosMin = i * wavelength / 2 + xTanMin;
       yPosMax = -Math.tan( xPosMax * 2 * pi / wavelength ) * this.amplitude;
@@ -361,7 +361,7 @@ define( function( require ) {
         rotationAngle += 180;
       }
 
-      triangleNode = new TriangleNode( arrowL, arrowW, TAN_COLOR, rotationAngle );
+      triangleNode = new TriangleNode( arrowHeadLength, arrowHeadWidth, TAN_COLOR, rotationAngle );
       this.tanPath.addChild( triangleNode );
       triangleNode.x = xPix;
       triangleNode.y = yPix + 1;
@@ -417,16 +417,16 @@ define( function( require ) {
     ];
 
     graphView.children = [
-      background,
+      backgroundRectangle,
       this.titleDisplayPanel,
       this.expandCollapseButton,
       displayNode
     ];
 
-    this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-      background.visible = tOrF;
-      displayNode.visible = tOrF;
-      graphView.titleDisplayPanel.visible = !tOrF;
+    this.expandCollapseButton.expandedProperty.link( function( expanded ) {
+      backgroundRectangle.visible = expanded;
+      displayNode.visible = expanded;
+      graphView.titleDisplayPanel.visible = !expanded;
     } );
 
     this.indicatorLine.addInputListener( new SimpleDragHandler(

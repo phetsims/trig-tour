@@ -39,7 +39,7 @@ define( function( require ) {
     var unitCircleView = new UnitCircleView( trigTourModel, viewProperties.specialAnglesVisibleProperty );
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width,
-      viewProperties.specialAnglesVisibleProperty );
+      viewProperties.specialAnglesVisibleProperty, viewProperties.graphProperty );
 
     var controlPanel = new ControlPanel( viewProperties );
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
@@ -82,7 +82,6 @@ define( function( require ) {
       unitCircleView.verticalLine.visible = ( graph === 'cos' );
 
       //set visibility of curves on graph view
-      graphView.trigFunction = graph;
       graphView.cosPath.visible = ( graph === 'cos' );
       graphView.sinPath.visible = ( graph === 'sin' );
       graphView.tanPath.visible = ( graph === 'tan' );
@@ -103,7 +102,7 @@ define( function( require ) {
           graphView.singularityIndicator.visible = true;
         }
       }
-      graphView.setIndicatorLine();
+      graphView.setTrigIndicatorArrowNode();
 
       // visibility of trig function readout
       readoutDisplay.readoutNode.setTrigRowVisibility( graph );

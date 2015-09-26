@@ -65,14 +65,15 @@ define( function( require ) {
    * @param {TrigTourModel} model of the sim
    * @param {number} height of y-axis on graph
    * @param {number} width of x-axis on graph
-   * @param {Property} specialAnglesVisibleProperty
+   * @param {Property.<boolean>} specialAnglesVisibleProperty
+   * @param {Property.<string>} graphProperty - which graph is visible, one of 'cos', 'sin', or 'tan'
    * @constructor
    */
-  function GraphView( model, height, width, specialAnglesVisibleProperty ) {
+  function GraphView( model, height, width, specialAnglesVisibleProperty, graphProperty ) {
 
     var graphView = this;
     this.model = model;
-    this.trigFunction = 'cos'; // @public, {string} 'cos'|'sin'|'tan' set by Control Panel
+    this.graphProperty = graphProperty;
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
     // Call the super constructor
@@ -378,19 +379,19 @@ define( function( require ) {
     this.singularityIndicator.visible = false;
     this.tanPath.addChild( this.singularityIndicator );
 
-    // indicatorLine is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
+    // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
     // a red dot on top of the indicator line echoes red dot on unit circle
     hitBound = 30;
-    this.indicatorLine = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
+    this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
       tailWidth: 5,
       headWidth: 12,
       headHeight: 20,
       cursor: 'pointer'
     } );
-    this.indicatorLine.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
-    this.indicatorLine.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
+    this.trigIndicatorArrowNode.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
+    this.trigIndicatorArrowNode.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } );
-    this.indicatorLine.addChild( this.redDotHandle );
+    this.trigIndicatorArrowNode.addChild( this.redDotHandle );
 
     // All graphic elements, curves, axes, labels, etc are placed on display node,
     // with visibility set by expandCollapseButton
@@ -411,7 +412,7 @@ define( function( require ) {
       this.tickMarkLabelsInRadians,
       xTics,
       yTics,
-      this.indicatorLine,
+      this.trigIndicatorArrowNode,
       rightBorder,
       leftBorder
     ];
@@ -429,12 +430,12 @@ define( function( require ) {
       graphView.titleDisplayPanel.visible = !expanded;
     } );
 
-    this.indicatorLine.addInputListener( new SimpleDragHandler(
+    this.trigIndicatorArrowNode.addInputListener( new SimpleDragHandler(
       {
         allowTouchSnag: true,
 
         drag: function( e ) {
-          var position = graphView.indicatorLine.globalToParentPoint( e.pointer.point );   //returns Vector2
+          var position = graphView.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
           var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           if ( !specialAnglesVisibleProperty.value ) {
@@ -446,31 +447,40 @@ define( function( require ) {
         }
       } ) );
 
-    // Register for synchronization with model.
-    model.fullAngleProperty.link( function( fullAngle ) {
-      var xPos = fullAngle / (2 * Math.PI) * wavelength;
-      graphView.indicatorLine.x = xPos;
+    // Register for synchronization with model
+    // function that reduces the indicator arrow tail width around the tan function singularity
+    var setIndicatorTailWidth = function() {
       var tanSize = Math.abs( model.tan() );
-      if ( graphView.trigFunction === 'tan' && tanSize > 1.5 ) {
-        graphView.indicatorLine.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
+      if ( graphView.graphProperty.value === 'tan' && tanSize > 1.5 ) {
+        graphView.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
       else {
-        graphView.indicatorLine.setTailWidth( 5 );
+        graphView.trigIndicatorArrowNode.setTailWidth( 5 );
       }
+    };
+
+    model.fullAngleProperty.link( function( fullAngle ) {
+      var xPos = fullAngle / (2 * Math.PI) * wavelength;
+      graphView.trigIndicatorArrowNode.x = xPos;
       graphView.singularityIndicator.x = xPos;
-      graphView.setIndicatorLine();
+      setIndicatorTailWidth();
+      graphView.setTrigIndicatorArrowNode();
+    } );
+
+    // whenever the graph changes, make sure that the trigIndicatorArrowNode has a correctly sized tail width
+    graphProperty.link( function( graph ) {
+      setIndicatorTailWidth();
     } );
 
     model.singularityProperty.link( function( singularity ) {
-      if ( graphView.trigFunction === 'tan' ) {
+      if ( graphView.graphProperty.value === 'tan' ) {
         graphView.singularityIndicator.visible = singularity;
-        //indicatorLine must always be draggable, so it must have .visible = true,
-        //and so, adjust visibility by setting opacity
+        // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
         if ( singularity ) {
-          graphView.indicatorLine.opacity = 0;
+          graphView.trigIndicatorArrowNode.opacity = 0;
         }
         else {
-          graphView.indicatorLine.opacity = 1;
+          graphView.trigIndicatorArrowNode.opacity = 1;
         }
       }
     } );
@@ -481,28 +491,28 @@ define( function( require ) {
     /**
      * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
      */
-    setIndicatorLine: function() {
+    setTrigIndicatorArrowNode: function() {
       var cosNow = this.model.cos();
       var sinNow = this.model.sin();
       var tanNow = this.model.tan();
-      if ( this.trigFunction === 'cos' ) {
-        this.indicatorLine.setEndPoint( cosNow * this.amplitude );
-        this.indicatorLine.setColor( COS_COLOR );
+      if ( this.graphProperty.value === 'cos' ) {
+        this.trigIndicatorArrowNode.setEndPoint( cosNow * this.amplitude );
+        this.trigIndicatorArrowNode.setColor( COS_COLOR );
         this.redDotHandle.y = -cosNow * this.amplitude;
       }
-      else if ( this.trigFunction === 'sin' ) {
-        this.indicatorLine.setEndPoint( sinNow * this.amplitude );
-        this.indicatorLine.setColor( SIN_COLOR );
+      else if ( this.graphProperty.value === 'sin' ) {
+        this.trigIndicatorArrowNode.setEndPoint( sinNow * this.amplitude );
+        this.trigIndicatorArrowNode.setColor( SIN_COLOR );
         this.redDotHandle.y = -sinNow * this.amplitude;
       }
-      else if ( this.trigFunction === 'tan' ) {
-        this.indicatorLine.setEndPoint( tanNow * this.amplitude );
-        this.indicatorLine.setColor( TAN_COLOR );
+      else if ( this.graphProperty.value === 'tan' ) {
+        this.trigIndicatorArrowNode.setEndPoint( tanNow * this.amplitude );
+        this.trigIndicatorArrowNode.setColor( TAN_COLOR );
         this.redDotHandle.y = -tanNow * this.amplitude;
       }
       else {
         //Do nothing, following line for debugging only
-        console.error( 'ERROR in GraphView.setIndicatorLine()' );
+        console.error( 'ERROR in GraphView.setTrigIndicatorArrowNode()' );
       }
     },
 

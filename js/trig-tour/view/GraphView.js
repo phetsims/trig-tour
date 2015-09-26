@@ -298,8 +298,8 @@ define( function( require ) {
     // Place arrow heads on left and right ends of sin curve
     var slopeLeft = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * leftEnd / wavelength );
     var slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * rightEnd / wavelength );
-    var angleLeft = Math.atan( slopeLeft ) * 180 / pi;
-    var angleRight = Math.atan( slopeRight ) * 180 / pi;
+    var angleLeft = Util.toDegrees( Math.atan( slopeLeft ) );
+    var angleRight = Util.toDegrees( Math.atan( slopeRight ) );
     var sinArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleLeft + 180 );
     var sinArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleRight );
     sinArrowLeft.x = leftEnd;
@@ -311,8 +311,8 @@ define( function( require ) {
     // Place arrow heads on ends of cos curve
     slopeLeft = ( this.amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * leftEnd / wavelength );
     slopeRight = ( this.amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * rightEnd / wavelength );
-    angleLeft = Math.atan( slopeLeft ) * 180 / pi;
-    angleRight = Math.atan( slopeRight ) * 180 / pi;
+    angleLeft = Util.toDegrees( Math.atan( slopeLeft ) );
+    angleRight = Util.toDegrees( Math.atan( slopeRight ) );
     var cosArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleLeft + 180 );
     var cosArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleRight );
     cosArrowLeft.x = leftEnd;
@@ -357,7 +357,7 @@ define( function( require ) {
 
       // Derivative of tan is 1 + tan^2
       var tanSlope = ( this.amplitude * 2 * pi / wavelength ) * ( 1 + Math.tan( xTan ) * Math.tan( xTan ) );
-      rotationAngle = -Math.atan( tanSlope ) * 180 / pi;
+      rotationAngle = -Util.toDegrees( Math.atan( tanSlope ) );
       if ( i % 2 !== 0 ) {
         rotationAngle += 180;
       }

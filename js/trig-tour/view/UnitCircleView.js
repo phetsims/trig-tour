@@ -25,6 +25,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var xStr = 'x';
@@ -70,8 +71,8 @@ define( function( require ) {
     var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
     var xPos, yPos; //x and y coordinates of special angle on unit circle
     for ( var i = 0; i < angles.length; i++ ) {
-      xPos = radius * Math.cos( angles[ i ] * Math.PI / 180 );
-      yPos = radius * Math.sin( angles[ i ] * Math.PI / 180 );
+      xPos = radius * Math.cos( Util.toRadians( angles[ i ] ) );
+      yPos = radius * Math.sin( Util.toRadians( angles[ i ] ) );
       this.specialAnglesNode.addChild( new Circle(
         5,
         { stroke: LINE_COLOR, fill: 'white', lineWidth: 1, x: xPos, y: yPos }
@@ -123,7 +124,10 @@ define( function( require ) {
 
     // draw horizontal (cosine) line on rotor triangle
     this.horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
-    this.horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', { tailWidth: 6, fill: COS_COLOR } );
+    this.horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', {
+      tailWidth: 6,
+      fill: COS_COLOR
+    } );
 
     // Draw rotor arm with draggable red dot at end
     var rotorGraphic = new Node();
@@ -267,7 +271,7 @@ define( function( require ) {
       angleArcPath.setShape( arcShape );
 
       // show arrow head on angle arc if angle is > 45 degrees
-      if ( Math.abs( totalAngle ) < 45 * Math.PI / 180 ) {
+      if ( Math.abs( totalAngle ) < Util.toRadians( 45 ) ) {
         angleArcArrowHead.visible = false;
       }
       else {
@@ -298,13 +302,13 @@ define( function( require ) {
       var totalAngle = trigTourModel.getFullAngleInRadians();
       var pi = Math.PI;
       // set visibility of the labels
-      if ( Math.abs( totalAngle ) < 40 * pi / 180 ) {
+      if ( Math.abs( totalAngle ) < Util.toRadians( 40 ) ) {
         thetaText.visible = false;
       }
       else {
         thetaText.visible = true;
       }
-      var sAngle = Math.abs( smallAngle * 180 / pi );  //small angle in degrees
+      var sAngle = Math.abs( Util.toDegrees( smallAngle ) );  //small angle in degrees
       if ( sAngle < 10 || (180 - sAngle) < 10 ) {
         yText.visible = false;
       }
@@ -319,7 +323,7 @@ define( function( require ) {
       }
 
       // position one-label
-      var angleOffset = 9 * pi / 180;
+      var angleOffset = Util.toRadians( 9 );
       var sign = 1; // if sign = +1, one-label is to right of radius, if sign = -1 then to the left
       if ( ( smallAngle > pi / 2 && smallAngle <= pi ) || ( smallAngle >= -pi / 2 && smallAngle < 0 ) ) {
         sign = -1;

@@ -187,7 +187,7 @@ define( function( require ) {
     } );
 
     // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
-    unitCircleView.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
+    trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
       trigTourScreenView.dizzyPhetGirlImage.visible = maxAngleExceeded;
     } );
 

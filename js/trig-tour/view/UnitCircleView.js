@@ -17,7 +17,6 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Property = require( 'AXON/Property' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
@@ -26,6 +25,7 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
   var Util = require( 'DOT/Util' );
+  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
 
   // strings
   var xStr = 'x';
@@ -183,13 +183,6 @@ define( function( require ) {
       labelCanvas
     ];
 
-    // If user exceeds maximum allowed angle of +/-25.25 rotations, then image of dizzy PhET girl appears in
-    // TrigTourScreenView (the main view) and user cannot increase magnitude of angle any further.
-    // User can then only decrease magnitude of angle.
-    this.maxAngleExceededProperty = new Property( false );
-    var maxAllowedSmallAngle = 0.5 * Math.PI;
-    var maxAllowedAngle = 2 * 2 * Math.PI + maxAllowedSmallAngle;  //must be (integer+0.5) number of full rotations
-
     var mouseDownPosition = new Vector2( 0, 0 );
     rotorGraphic.addInputListener( new SimpleDragHandler(
       {
@@ -201,11 +194,15 @@ define( function( require ) {
         },
 
         drag: function( e ) {
-          var v1 = rotorGraphic.globalToParentPoint( e.pointer.point );   //returns Vector2
-          var smallAngle = -v1.angle(); //model angle is negative of xy screen coordinates angle
-          if ( !unitCircleView.maxAngleExceededProperty.value ) {
+          var v1 = rotorGraphic.globalToParentPoint( e.pointer.point );
+          var smallAngle = -v1.angle(); // model angle is negative of xy screen coordinates angle
+
+          // make sure the full angle does not exceed max allowed angle
+          trigTourModel.checkMaxAngleExceeded();
+
+          if ( !trigTourModel.maxAngleExceeded ) {
             if ( !specialAnglesVisibleProperty.value ) {
-              trigTourModel.setFullAngle( smallAngle );
+              trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
             else {
               trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
@@ -213,11 +210,10 @@ define( function( require ) {
           }
           else {
             // maxAngleExceeded, update only if user decreases angle
-            if ( Math.abs( smallAngle ) < maxAllowedSmallAngle ) {
-              trigTourModel.setFullAngle( smallAngle );
+            if ( Math.abs( smallAngle ) < TrigTourModel.MAX_SMALL_ANGLE_LIMIT ) {
+              trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
           }
-          unitCircleView.maxAngleExceededProperty.value = ( Math.abs( trigTourModel.getFullAngleInRadians() ) > maxAllowedAngle );
         }
       } ) );
 

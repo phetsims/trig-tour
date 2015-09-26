@@ -13,6 +13,10 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
 
+  // constants
+  var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
+  var MAX_ANGLE_LIMIT = 4 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
+
   /**
    * Constructor for TrigTourModel.
    *
@@ -22,9 +26,10 @@ define( function( require ) {
 
     // @public
     PropertySet.call( this, {
-      fullAngle: 0,             // total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
-      singularity: false    // indicates singularity in tan function at theta = +/- 90 degrees
-                            // true if fullAngle is close to +/-90 degrees
+      fullAngle: 0,             // @public total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
+      singularity: false,       // @public indicates singularity in tan function at theta = +/- 90 degrees
+                                // @public true if fullAngle is close to +/-90 degrees
+      maxAngleExceeded: false   // @public (read-only) true if user exceeds maximum allowed angle
     } );
 
     this.smallAngle = 0;    // @private, fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
@@ -161,7 +166,7 @@ define( function( require ) {
      *
      * @param {number} smallAngle
      */
-    setFullAngle: function( smallAngle ) {
+    setFullAngleWithSmallAngle: function( smallAngle ) {
       this.smallAngle = smallAngle;
 
       // must be less than (180-30)deg in order to handle special angle correctly
@@ -213,7 +218,7 @@ define( function( require ) {
           nearestSpecialAngleInRads = Math.PI;
         }
       }
-      this.setFullAngle( nearestSpecialAngleInRads );
+      this.setFullAngleWithSmallAngle( nearestSpecialAngleInRads );
     },
 
     /**
@@ -256,6 +261,24 @@ define( function( require ) {
       var nearestSpecialAngleInRadians = Util.toRadians( nearestSpecialAngleInDegrees );
       var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );
+    },
+
+    /**
+     * Checks to see if the user exceeds max number of rotations.  If the user exceeds +/- 2.25 rotations, the fullAngle
+     * can not grow in magnitude. Sets the max angleExceeded property and is called whenever user tries to change
+     * the fullAngle.
+     *
+     * @public
+     */
+    checkMaxAngleExceeded: function() {
+      // determine if max angle is exceeded and set the property.
+      this.maxAngleExceeded = ( Math.abs( this.getFullAngleInRadians() ) > MAX_ANGLE_LIMIT );
     }
+  }, {
+
+    // statics
+    MAX_SMALL_ANGLE_LIMIT: MAX_SMALL_ANGLE_LIMIT,
+    MAX_ANGLE_LIMIT: MAX_ANGLE_LIMIT
+
   } );
 } );

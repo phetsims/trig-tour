@@ -33,6 +33,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
+  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
 
   //strings
   var oneStr = '1';
@@ -62,17 +63,17 @@ define( function( require ) {
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
    * has a draggable handle for changing the angle.
    *
-   * @param {TrigTourModel} model of the sim
+   * @param {TrigTourModel} trigTourModel
    * @param {number} height of y-axis on graph
    * @param {number} width of x-axis on graph
    * @param {Property.<boolean>} specialAnglesVisibleProperty
    * @param {Property.<string>} graphProperty - which graph is visible, one of 'cos', 'sin', or 'tan'
    * @constructor
    */
-  function GraphView( model, height, width, specialAnglesVisibleProperty, graphProperty ) {
+  function GraphView( trigTourModel, height, width, specialAnglesVisibleProperty, graphProperty ) {
 
     var graphView = this;
-    this.model = model;
+    this.trigTourModel = trigTourModel;
     this.graphProperty = graphProperty;
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
@@ -438,11 +439,22 @@ define( function( require ) {
           var position = graphView.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
           var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
-          if ( !specialAnglesVisibleProperty.value ) {
-            model.setFullAngleInRadians( fullAngle );
+          // make sure the full angle does not exceed max allowed angle
+          trigTourModel.checkMaxAngleExceeded();
+
+          if ( !trigTourModel.maxAngleExceeded ) {
+            if ( !specialAnglesVisibleProperty.value ) {
+              trigTourModel.setFullAngleInRadians( fullAngle );
+            }
+            else {
+              trigTourModel.setSpecialAngleWithFullAngle( fullAngle );
+            }
           }
           else {
-            model.setSpecialAngleWithFullAngle( fullAngle );
+            // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
+            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
+              trigTourModel.setFullAngleInRadians( fullAngle );
+            }
           }
         }
       } ) );
@@ -450,7 +462,7 @@ define( function( require ) {
     // Register for synchronization with model
     // function that reduces the indicator arrow tail width around the tan function singularity
     var setIndicatorTailWidth = function() {
-      var tanSize = Math.abs( model.tan() );
+      var tanSize = Math.abs( trigTourModel.tan() );
       if ( graphView.graphProperty.value === 'tan' && tanSize > 1.5 ) {
         graphView.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
@@ -459,7 +471,7 @@ define( function( require ) {
       }
     };
 
-    model.fullAngleProperty.link( function( fullAngle ) {
+    trigTourModel.fullAngleProperty.link( function( fullAngle ) {
       var xPos = fullAngle / (2 * Math.PI) * wavelength;
       graphView.trigIndicatorArrowNode.x = xPos;
       graphView.singularityIndicator.x = xPos;
@@ -472,7 +484,7 @@ define( function( require ) {
       setIndicatorTailWidth();
     } );
 
-    model.singularityProperty.link( function( singularity ) {
+    trigTourModel.singularityProperty.link( function( singularity ) {
       if ( graphView.graphProperty.value === 'tan' ) {
         graphView.singularityIndicator.visible = singularity;
         // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
@@ -492,9 +504,9 @@ define( function( require ) {
      * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
      */
     setTrigIndicatorArrowNode: function() {
-      var cosNow = this.model.cos();
-      var sinNow = this.model.sin();
-      var tanNow = this.model.tan();
+      var cosNow = this.trigTourModel.cos();
+      var sinNow = this.trigTourModel.sin();
+      var tanNow = this.trigTourModel.tan();
       if ( this.graphProperty.value === 'cos' ) {
         this.trigIndicatorArrowNode.setEndPoint( cosNow * this.amplitude );
         this.trigIndicatorArrowNode.setColor( COS_COLOR );

@@ -22,6 +22,7 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
 
   //strings
   //next two strings used in definitions of succeeding strings, so not in alpha order
@@ -224,89 +225,6 @@ define( function( require ) {
       myRadioButtonOptions
     );
 
-    // Arrays needed for display of special angles
-    // Special angles in degrees
-    this.angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
-    // Corresponding special angles in radians
-    this.angleFractions = [
-      [ 0, '' ],
-      [ pi, 6 ],
-      [ pi, 4 ],
-      [ pi, 3 ],
-      [ pi, 2 ],
-      [ 2 + pi, 3 ],   // Remember: it's string concatenation, so 2 + pi = 2*pi
-      [ 3 + pi, 4 ],
-      [ 5 + pi, 6 ],
-      [ pi, '' ],
-      [ 7 + pi, 6 ],
-      [ 5 + pi, 4 ],
-      [ 4 + pi, 3 ],
-      [ 3 + pi, 2 ],
-      [ 5 + pi, 3 ],
-      [ 7 + pi, 4 ],
-      [ 11 + pi, 6 ],
-      [ 2 + pi, '' ]
-    ];
-
-    // 'q' is the flag which informs FractionNode that a square root symbol is required in the numerator
-    this.cosFractions = [
-      [ 1, '' ],
-      [ 'q' + 3, 2 ],
-      [ 'q' + 2, 2 ],
-      [ 1, 2 ],
-      [ 0, '' ],
-      [ -1, 2 ],
-      [ '-q' + 2, 2 ],
-      [ '-q' + 3, 2 ],
-      [ -1, '' ],
-      [ '-q' + 3, 2 ],
-      [ '-q' + 2, 2 ],
-      [ -1, 2 ],
-      [ 0, '' ],
-      [ 1, 2 ],
-      [ 'q' + 2, 2 ],
-      [ 'q' + 3, 2 ],
-      [ 1, '' ]
-    ];
-    this.sinFractions = [
-      [ 0, '' ],
-      [ 1, 2 ],
-      [ 'q' + 2, 2 ],
-      [ 'q' + 3, 2 ],
-      [ 1, '' ],
-      [ 'q' + 3, 2 ],
-      [ 'q' + 2, 2 ],
-      [ 1, 2 ],
-      [ 0, '' ],
-      [ -1, 2 ],
-      [ '-q' + 2, 2 ],
-      [ '-q' + 3, 2 ],
-      [ -1, '' ],
-      [ '-q' + 3, 2 ],
-      [ '-q' + 2, 2 ],
-      [ -1, 2 ],
-      [ 0, '' ]
-    ];
-    this.tanFractions = [
-      [ 0, '' ],
-      [ 'q' + 3, 3 ],
-      [ 1, '' ],
-      [ 'q' + 3, '' ],
-      [ ' ', '' ], // leave blank for display of plusMinusInfinityNode
-      [ '-q' + 3, '' ],
-      [ -1, '' ],
-      [ '-q' + 3, 3 ],
-      [ 0, '' ],
-      [ 'q' + 3, 3 ],
-      [ 1, '' ],
-      [ 'q' + 3, '' ],
-      [ ' ', '' ], // leave blank for display of plusMinusInfinityNode
-      [ '-q' + 3, '' ],
-      [ -1, '' ],
-      [ '-q' + 3, 3 ],
-      [ 0, '' ]
-    ];
-
     // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
     var spacing = 10;
     var contentVBox = new VBox( {
@@ -401,6 +319,8 @@ define( function( require ) {
      * Set the special angle readout.
      */
     setSpecialAngleReadout: function() {
+      var thisNode = this;
+
       this.angleReadoutFraction.visible = true;
 
       // need integer value of angle, since internal arithmetic often not-quite integer
@@ -415,7 +335,6 @@ define( function( require ) {
       var fullTurnStr = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
       if ( piRadiansCount !== 0 ) {
         if ( fullTurnCount > 0 ) {
-          //console.log( 'here' );
           fullTurnStr = piRadiansCount + pi + ' + ';
         }
         else {
@@ -428,17 +347,17 @@ define( function( require ) {
         fullTurnStr = '';
       }
 
-      this.fullAngleFractionNode.setValues( fullTurnStr, '' );
-      this.angleReadoutFraction.left = this.fullAngleFractionNode.right; //this.nbrFullTurnsText.right;
-      for ( var i = 0; i < this.angleFractions.length; i++ ) {
-        // if angle positive
-        if ( this.angles[ i ] === angleInDegs ) {
-          this.angleReadoutFraction.setValues( this.angleFractions[ i ][ 0 ], this.angleFractions[ i ][ 1 ] );
-        }
-        // if angle negative
-        else if ( this.angles[ i ] === -angleInDegs ) {
-          this.angleReadoutFraction.setValues( '-' + this.angleFractions[ i ][ 0 ], this.angleFractions[ i ][ 1 ] );
-        }
+      this.fullAngleFractionNode.setValues( fullTurnStr, '', false );
+      this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
+
+      // set the angle readout, making sure that the angle is defined in the special fracitons object
+      var specialAngleFractions = SpecialAngles.SPECIAL_ANGLE_FRACTIONS;
+      if ( specialAngleFractions[ angleInDegs ] ) {
+        thisNode.angleReadoutFraction.setValues(
+          specialAngleFractions[ angleInDegs ].numerator,
+          specialAngleFractions[ angleInDegs ].denominator,
+          false /* no radicals for special angle fractions */
+        );
       }
 
       // Must handle smallAngle = 0 or pi as special cases
@@ -485,13 +404,26 @@ define( function( require ) {
      */
     setSpecialAngleTrigReadout: function() {
       var smallAngleInDegrees = Util.roundSymmetric( this.model.getSmallAngle0To360() );
-      for ( var i = 0; i < this.angles.length; i++ ) {
-        if ( this.angles[ i ] === smallAngleInDegrees ) {
-          this.sinReadoutFraction.setValues( this.sinFractions[ i ][ 0 ], this.sinFractions[ i ][ 1 ] );
-          this.cosReadoutFraction.setValues( this.cosFractions[ i ][ 0 ], this.cosFractions[ i ][ 1 ] );
-          this.tanReadoutFraction.setValues( this.tanFractions[ i ][ 0 ], this.tanFractions[ i ][ 1 ] );
+
+      // get the values needed to represent the special angle as a fraction.
+      var specialCosFraction = SpecialAngles.SPECIAL_COS_FRACTIONS[ smallAngleInDegrees ];
+      var specialSinFraction = SpecialAngles.SPECIAL_SIN_FRACTIONS[ smallAngleInDegrees ];
+      var specialTanFraction = SpecialAngles.SPECIAL_TAN_FRACTIONS[ smallAngleInDegrees ];
+
+      var setFractionValues = function( readoutFraction, specialFraction ) {
+        // sanity check to make sure that the special fraction is defined in the special fractions objects above
+        if ( specialFraction ) {
+          readoutFraction.setValues(
+            specialFraction.numerator,
+            specialFraction.denominator,
+            specialFraction.radical,
+            specialFraction.negative
+          );
         }
-      }
+      };
+      setFractionValues( this.sinReadoutFraction, specialSinFraction );
+      setFractionValues( this.cosReadoutFraction, specialCosFraction );
+      setFractionValues( this.tanReadoutFraction, specialTanFraction );
     }
   } );
 } );

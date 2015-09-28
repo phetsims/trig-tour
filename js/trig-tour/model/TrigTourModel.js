@@ -1,4 +1,4 @@
-// Copyright 2002-2015, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder5
 
 /**
  * Main model for Trig Tour Sim
@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
+  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
 
   // constants
   var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
@@ -198,20 +199,22 @@ define( function( require ) {
     },
 
     /**
-     * Given the small angle in radians, set the current fullAngle to nearest special angle in radians.
+     * Given the small angle in radians, set the current fullAngle to nearest special angle in radians. The small angle
+     * is bound in the range of -PI to PI due to the delta of the drag handler, so the list of special angles is
+     * also bound to this range.
      *
      * @param {number} smallAngle - small angle in radians
      */
     setSpecialAngleWithSmallAngle: function( smallAngle ) {
       var smallAngleInDegrees = Util.toDegrees( smallAngle );
       var nearestSpecialAngleInRads = 0;
-      var specialAngles = [ -150, -135, -120, -90, -60, -45, -30, 0, 30, 45, 60, 90, 120, 135, 150, 180 ];
+      var specialAnglesFromPi = SpecialAngles.SPECIAL_ANGLES_FROM_PI;
 
       // borders are angles half-way between special angles
-      var borders = [ -165, -142.5, -127.5, -105, -75, -52.5, -37.5, -15, 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165 ];
-      for ( var i = 0; i < specialAngles.length; i++ ) {
-        if ( smallAngleInDegrees >= borders[ i ] && smallAngleInDegrees < borders[ i + 1 ] ) {
-          nearestSpecialAngleInRads = Util.toRadians( specialAngles[ i ] );
+      var borderAnglesFromPi = SpecialAngles.BORDER_ANGLES_FROM_PI;
+      for ( var i = 0; i < specialAnglesFromPi.length; i++ ) {
+        if ( smallAngleInDegrees >= borderAnglesFromPi[ i ] && smallAngleInDegrees < borderAnglesFromPi[ i + 1 ] ) {
+          nearestSpecialAngleInRads = Util.toRadians( specialAnglesFromPi[ i ] );
         }
         // Must deal with angle = 180 deg  as a special case.
         if ( smallAngleInDegrees >= 165 || smallAngleInDegrees < -165 ) {
@@ -233,16 +236,16 @@ define( function( require ) {
       var nearestSpecialAngleInDegrees = 0;
 
       // Notice these are not the same special angles as in setSpecialAngle() above
-      var specialAngles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ];
+      var specialAngles = SpecialAngles.SPECIAL_ANGLES;
 
       // borders are angles half-way between special angles
-      var borders = [ 15, 37.5, 52.5, 75, 105, 127.5, 142.5, 165, 195, 217.5, 232.5, 255, 285, 307.5, 322.5, 345 ];
+      var borderAngles = SpecialAngles.BORDER_ANGLES;
 
       for ( var i = 0; i <= specialAngles.length - 1; i++ ) {
-        if ( remainderInDegrees >= borders[ i ] && remainderInDegrees < borders[ i + 1 ] ) {
+        if ( remainderInDegrees >= borderAngles[ i ] && remainderInDegrees < borderAngles[ i + 1 ] ) {
           nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];
         }
-        if ( remainderInDegrees <= -borders[ i ] && remainderInDegrees > -borders[ i + 1 ] ) {
+        if ( remainderInDegrees <= -borderAngles[ i ] && remainderInDegrees > -borderAngles[ i + 1 ] ) {
           nearestSpecialAngleInDegrees = -specialAngles[ i + 1 ];
         }
       }

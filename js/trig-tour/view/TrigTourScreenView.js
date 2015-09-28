@@ -93,12 +93,12 @@ define( function( require ) {
       graphView.setTitleBar( graph );
       if ( trigTourModel.singularity ) {
         if ( graph === 'cos' || graph === 'sin' ) {
-          graphView.indicatorLine.opacity = 1;
+          graphView.trigIndicatorArrowNode.opacity = 1;
           graphView.singularityIndicator.visible = false;
         }
         else {
           // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
-          graphView.indicatorLine.opacity = 0;
+          graphView.trigIndicatorArrowNode.opacity = 0;
           graphView.singularityIndicator.visible = true;
         }
       }

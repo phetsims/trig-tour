@@ -32,15 +32,6 @@ define( function( require ) {
   var gridStr = require( 'string!TRIG_TOUR/grid' );
   var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
 
-  // Text nodes
-  var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-  var cosText = new Text( cosStr, fontInfo );
-  var sinText = new Text( sinStr, fontInfo );
-  var tanText = new Text( tanStr, fontInfo );
-  var labelsText = new Text( labelsStr, fontInfo );
-  var gridText = new Text( gridStr, fontInfo );
-  var specialAnglesText = new Text( specialAnglesStr, fontInfo );
-
   /**
    * Constructor for the control panel
    *
@@ -50,6 +41,15 @@ define( function( require ) {
   function ControlPanel( viewProperties ) {
 
     this.viewProperties = viewProperties;
+
+    // create the text nodes
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    var cosText = new Text( cosStr, fontInfo );
+    var sinText = new Text( sinStr, fontInfo );
+    var tanText = new Text( tanStr, fontInfo );
+    var labelsText = new Text( labelsStr, fontInfo );
+    var gridText = new Text( gridStr, fontInfo );
+    var specialAnglesText = new Text( specialAnglesStr, fontInfo );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     // viewProperties.graph = 'cos'|'sin'|'tan'

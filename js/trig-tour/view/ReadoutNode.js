@@ -350,12 +350,16 @@ define( function( require ) {
       this.fullAngleFractionNode.setValues( fullTurnStr, '', false );
       this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
 
-      // set the angle readout, making sure that the angle is defined in the special fracitons object
+      // set the angle readout, making sure that the angle is defined in the special fractions object
       var specialAngleFractions = SpecialAngles.SPECIAL_ANGLE_FRACTIONS;
-      if ( specialAngleFractions[ angleInDegs ] ) {
+      if ( specialAngleFractions[ angleInDegs ] || specialAngleFractions[ -angleInDegs ] ) {
+        // correct for negative angles, fraction must reflect if negative and objects in SpecialAngles do not track
+        // this information
+        var sign = angleInDegs >= 0 ? '' : '-';
+        var coefficient = angleInDegs >= 0 ? +1 : -1;
         thisNode.angleReadoutFraction.setValues(
-          specialAngleFractions[ angleInDegs ].numerator,
-          specialAngleFractions[ angleInDegs ].denominator,
+          sign + specialAngleFractions[ coefficient * angleInDegs ].numerator, // string concatenation
+          specialAngleFractions[ coefficient * angleInDegs ].denominator,
           false /* no radicals for special angle fractions */
         );
       }

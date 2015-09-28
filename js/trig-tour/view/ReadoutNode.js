@@ -23,10 +23,9 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
 
   //strings
-  //next two strings used in definitions of succeeding strings, so not in alpha order
-  var equalStr = ' = ';
   var theta = require( 'string!TRIG_TOUR/theta' );
   var angleStr = require( 'string!TRIG_TOUR/angle' );
   var cosStr = require( 'string!TRIG_TOUR/cos' );
@@ -38,10 +37,6 @@ define( function( require ) {
   var radiansStr = require( 'string!TRIG_TOUR/radians' );
   var sinStr = require( 'string!TRIG_TOUR/sin' );
   var tanStr = require( 'string!TRIG_TOUR/tan' );
-  var xyEqualsStr = '(x,y) = ';
-
-  var xStr = 'x';
-  var yStr = 'y';
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -85,7 +80,7 @@ define( function( require ) {
     // Row 1: Coordinates readout (x, y) = ( cos value, sin value )
     // cos and sin values are either decimal numbers ( this.coordinatesReadout )
     // or, in Special Angle mode, they are built-up fractions of number of rads ( this.coordinatesHBox )
-    var coordinatesLabel = new Text( xyEqualsStr, fontBoldInfo );
+    var coordinatesLabel = new Text( TrigTourMathStrings.X_Y_EQUALS_STRING, fontBoldInfo );
     this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  // dummy arguments to set bounds
     this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
     this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  // don't need till row 3, trig function readout
@@ -140,12 +135,15 @@ define( function( require ) {
 
     // Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
-    var sinLabel = new HTMLText( sinStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
-    var cosLabel = new HTMLText( cosStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
-    var tanLabel = new HTMLText( tanStr + '<i>' + theta + '</i>' + equalStr, fontBoldInfo );
-    var cosFraction = new FractionNode( xStr, 1, fontBoldInfo );
-    var sinFraction = new FractionNode( yStr, 1, fontBoldInfo );
-    var tanFraction = new FractionNode( yStr, xStr, fontBoldInfo );
+    var equalString = TrigTourMathStrings.EQUALS_STRING;
+    var xString = TrigTourMathStrings.X_STRING;
+    var yString = TrigTourMathStrings.Y_STRING;
+    var sinLabel = new HTMLText( sinStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
+    var cosLabel = new HTMLText( cosStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
+    var tanLabel = new HTMLText( tanStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
+    var cosFraction = new FractionNode( xString, 1, fontBoldInfo );
+    var sinFraction = new FractionNode( yString, 1, fontBoldInfo );
+    var tanFraction = new FractionNode( yString, xString, fontBoldInfo );
 
     // trig readout is either decimal number (type Text) or built-up fraction (type FractionNode)
     this.sinReadoutText = new Text( sinValue, fontInfo );
@@ -155,9 +153,9 @@ define( function( require ) {
     this.sinFractionHolder2 = new Node();
     this.cosFractionHolder2.addChild( this.cosReadoutFraction );
     this.sinFractionHolder2.addChild( this.sinReadoutFraction );
-    var equalText1 = new Text( equalStr, fontBoldInfo );
-    var equalText2 = new Text( equalStr, fontBoldInfo );
-    var equalText3 = new Text( equalStr, fontBoldInfo );
+    var equalText1 = new Text( equalString, fontBoldInfo );
+    var equalText2 = new Text( equalString, fontBoldInfo );
+    var equalText3 = new Text( equalString, fontBoldInfo );
     // either ReadoutText or FractionHolder2 visible, FractionHolder2 visible in Special Angles mode
     this.sinRow = new Node(
       {

@@ -26,12 +26,9 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var Util = require( 'DOT/Util' );
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
 
   // strings
-  var xStr = 'x';
-  var yStr = 'y';
-  var oneStr = '1';
-  var minusOneStr = '-1';
   var thetaStr = require( 'string!TRIG_TOUR/theta' );
 
   // constants
@@ -99,8 +96,8 @@ define( function( require ) {
 
     // Draw and position x-, y-axis labels
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var xText = new Text( xStr, fontInfo );
-    var yText = new Text( yStr, fontInfo );
+    var xText = new Text( TrigTourMathStrings.X_STRING, fontInfo );
+    var yText = new Text( TrigTourMathStrings.Y_STRING, fontInfo );
     xAxis.addChild( xText );
     yAxis.addChild( yText );
     xText.left = 1.2 * radius + 5;
@@ -143,17 +140,17 @@ define( function( require ) {
     // Draw x, y, and '1' labels on the xyR triangle
     var labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
-    var oneText = new Text( oneStr, fontInfo );
-    xText = new Text( xStr, fontInfo );            //xText, yText already defined above
-    yText = new Text( yStr, fontInfo );
+    var oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
+    xText = new Text( TrigTourMathStrings.X_STRING, fontInfo );            //xText, yText already defined above
+    yText = new Text( TrigTourMathStrings.Y_STRING, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
     var thetaText = new Text( thetaStr, fontInfo );
     // +1, -1 labels on axes
     fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY };
-    var oneXText = new Text( oneStr, fontInfo );
-    var minusOneXText = new Text( minusOneStr, fontInfo );
-    var oneYText = new Text( oneStr, fontInfo );
-    var minusOneYText = new Text( minusOneStr, fontInfo );
+    var oneXText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
+    var minusOneXText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
+    var oneYText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
+    var minusOneYText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
 
     // position +1/-1 labels on xy axes
     oneXText.left = this.grid.right + 5;

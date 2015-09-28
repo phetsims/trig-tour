@@ -208,6 +208,7 @@ define( function( require ) {
     // tic mark labels in radians
     this.tickMarkLabelsInRadians = new Node();
     var labelString = '';
+    // TODO: This should use a string utils pattern.
     var labelStrings = [
       '-4' + piStr,
       '-3' + piStr,
@@ -452,7 +453,7 @@ define( function( require ) {
           }
           else {
             // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
-            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
+            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_FULL_ANGLE ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
           }

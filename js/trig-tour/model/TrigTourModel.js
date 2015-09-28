@@ -16,7 +16,7 @@ define( function( require ) {
 
   // constants
   var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
-  var MAX_ANGLE_LIMIT = 4 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
+  var MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
 
   /**
    * Constructor for TrigTourModel.
@@ -267,9 +267,9 @@ define( function( require ) {
     },
 
     /**
-     * Checks to see if the user exceeds max number of rotations.  If the user exceeds +/- 2.25 rotations, the fullAngle
-     * can not grow in magnitude. Sets the max angleExceeded property and is called whenever user tries to change
-     * the fullAngle.
+     * Checks to see if the user exceeds max number of rotations.  If the user exceeds +/- 25.25 rotations, the
+     * fullAngle can not grow in magnitude. Sets the max angleExceeded property and is called whenever user tries to
+     * change the fullAngle.
      *
      * @public
      */

@@ -4,6 +4,9 @@
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
  * Grabbable pointer indicates current value of theta and the function.
  *
+ * The graph exists in a panel that can be minimized so that the graph is hidden on the display.  Since the
+ * panel needs to shrink down to the size of the title when minimized, AccordionBox could not be used.
+ *
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  */
 define( function( require ) {
@@ -11,7 +14,6 @@ define( function( require ) {
 
   // modules
   var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
@@ -27,23 +29,20 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Vector2 = require( 'DOT/Vector2' );
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
 
   //strings
-  var oneStr = '1';
-  var minusOneStr = '-1';
   var theta = require( 'string!TRIG_TOUR/theta' );
   var cosStr = require( 'string!TRIG_TOUR/cos' );
   var sinStr = require( 'string!TRIG_TOUR/sin' );
   var tanStr = require( 'string!TRIG_TOUR/tan' );
   var vsStr = require( 'string!TRIG_TOUR/vs' );
-  var piStr = require( 'string!TRIG_TOUR/pi' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
@@ -51,13 +50,9 @@ define( function( require ) {
   var SIN_COLOR = TrigTourColors.SIN_COLOR;
   var TAN_COLOR = TrigTourColors.TAN_COLOR;
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
   var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
   var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
   var DISPLAY_FONT = new PhetFont( 20 );
-  var DISPLAY_FONT_SMALL = new PhetFont( 18 );
-  var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
-  var DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
   /**
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
@@ -66,19 +61,18 @@ define( function( require ) {
    * @param {TrigTourModel} trigTourModel
    * @param {number} height of y-axis on graph
    * @param {number} width of x-axis on graph
-   * @param {Property.<boolean>} specialAnglesVisibleProperty
-   * @param {Property.<string>} graphProperty - which graph is visible, one of 'cos', 'sin', or 'tan'
+   * @param {ViewProperties} viewProperties - which graph is visible, one of 'cos', 'sin', or 'tan'
    * @constructor
    */
-  function GraphView( trigTourModel, height, width, specialAnglesVisibleProperty, graphProperty ) {
+  function GraphView( trigTourModel, height, width, viewProperties ) {
 
-    var graphView = this;
+    var thisGraphView = this;
     this.trigTourModel = trigTourModel;
-    this.graphProperty = graphProperty;
+    this.viewProperties = viewProperties;
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
     // Call the super constructor
-    Node.call( graphView );
+    Node.call( thisGraphView );
 
     var marginWidth = 25;   // distance in pixels between edge of Node and edge of nearest full wavelength
     var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
@@ -152,97 +146,8 @@ define( function( require ) {
       { fill: BACKGROUND_COLOR }
     );
 
-    // draw x-, y-axes
-    var xAxisLength = width;
-    var xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0,
-      { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8 } );
-    var yAxis = new ArrowNode( 0, 1.2 * this.amplitude, 0, -1.3 * this.amplitude,
-      { tailWidth: 0.3, fill: LINE_COLOR, headHeight: 12, headWidth: 8 } );
-
-    // draw tic marks for x-, y-axes
-    var ticLength = 5;
-    var xTics = new Node();
-    var yTics = new Node();
-    var xTic;
-    var yTic;
-    for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
-      xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
-      xTic.x = i * wavelength / 4;
-      xTics.addChild( xTic );
-    }
-    for ( i = -1; i <= 1; i += 2 ) {
-      yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR } );
-      yTic.y = i * this.amplitude;
-      yTics.addChild( yTic );
-    }
-
-    this.axesNode = new Node(); // @public (read-only)
-    this.axesNode.children = [ xAxis, yAxis ];
-
-    // draw 1/-1 labels on y-axis
-    this.onesNode = new Node(); // @public (read-only)
-    var fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-    var oneLabel = new Text( oneStr, fontInfo );
-    var minusOneLabel = new Text( minusOneStr, fontInfo );
-    this.onesNode.children = [ oneLabel, minusOneLabel ];
-    var xOffset = 8;
-    oneLabel.left = xOffset;
-    minusOneLabel.right = -xOffset;
-    oneLabel.centerY = -this.amplitude - 5;
-    minusOneLabel.centerY = this.amplitude + 5;
-
-    // draw tic mark labels in degrees
-    this.tickMarkLabelsInDegrees = new Node();
-    var label;
-    for ( var j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
-      var degrees = Util.toFixed( 180 * j, 0 );
-      degrees = degrees.toString();
-      label = new SubSupText( degrees + '<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
-      label.centerX = j * wavelength / 2;
-      label.top = xAxis.bottom;
-      if ( j !== 0 ) {
-        this.tickMarkLabelsInDegrees.addChild( label );
-      }
-    }
-
-    // tic mark labels in radians
-    this.tickMarkLabelsInRadians = new Node();
-    var labelString = '';
-    // TODO: This should use a string utils pattern.
-    var labelStrings = [
-      '-4' + piStr,
-      '-3' + piStr,
-      '-2' + piStr,
-      '-' + piStr,
-      piStr,
-      '2' + piStr,
-      '3' + piStr,
-      '4' + piStr
-    ];
-    var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
-    for ( i = 0; i < xPositions.length; i++ ) {
-      labelString = labelStrings[ i ];
-      label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
-      label.centerX = xPositions[ i ] * wavelength / 2;
-      label.top = xAxis.bottom;
-      this.tickMarkLabelsInRadians.addChild( label );
-    }
-
-    // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
-    this.onesNode.visible = false;
-    this.tickMarkLabelsInDegrees.visible = false;
-    this.tickMarkLabelsInRadians.visible = false;
-
-    // Axes labels
-    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
-    var thetaLabel = new Text( theta, fontInfo );
-    thetaLabel.left = this.axesNode.right + 5; //= xAxis.right;
-    thetaLabel.centerY = xAxis.centerY;
-    this.cosThetaLabel = new HTMLText( cosStr + '<i>' + theta + '</i>', { font: DISPLAY_FONT } );
-    this.sinThetaLabel = new HTMLText( sinStr + '<i>' + theta + '</i>', { font: DISPLAY_FONT } );
-    this.tanThetaLabel = new HTMLText( tanStr + '<i>' + theta + '</i>', { font: DISPLAY_FONT } );
-    this.cosThetaLabel.right = this.sinThetaLabel.right = this.tanThetaLabel.right = yAxis.left - 10;
-    this.cosThetaLabel.top = this.sinThetaLabel.top = this.tanThetaLabel.top = yAxis.top;
+    // @public (read-only)
+    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
 
     // Draw sinusoidal curves
     var cosShape = new Shape();
@@ -258,7 +163,7 @@ define( function( require ) {
     tanShape.moveTo( xPos, yOrigin - this.amplitude * Math.tan( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
 
     // draw sin and cos curves
-    for ( i = 0; i < numberOfPoints; i++ ) {
+    for ( var i = 0; i < numberOfPoints; i++ ) {
       xPos += dx;
       sinShape.lineTo( xPos, yOrigin - this.amplitude * Math.sin( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
       cosShape.lineTo( xPos, yOrigin - this.amplitude * Math.cos( 2 * Math.PI * (xPos - xOrigin) / wavelength ) );
@@ -288,7 +193,6 @@ define( function( require ) {
     this.sinPath = new Path( sinShape, { stroke: SIN_COLOR, lineWidth: 3 } );
     this.cosPath = new Path( cosShape, { stroke: COS_COLOR, lineWidth: 3 } );
     this.tanPath = new Path( tanShape, { stroke: TAN_COLOR, lineWidth: 3 } );
-
 
     // Add TriangleNode arrow heads at ends of curves
     var pi = Math.PI;
@@ -395,31 +299,23 @@ define( function( require ) {
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
 
-    // All graphic elements, curves, axes, labels, etc are placed on display node,
-    // with visibility set by expandCollapseButton
+    // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by
+    // expandCollapseButton
     var displayNode = new Node();
 
-    // Order children views
+    // Rendering order for display children.
     displayNode.children = [
-      this.axesNode,
-      thetaLabel,
-      this.cosThetaLabel,
-      this.sinThetaLabel,
-      this.tanThetaLabel,
+      this.graphAxesNode.axisNode,
       this.sinPath,
       this.cosPath,
       this.tanPath,
-      this.onesNode,
-      this.tickMarkLabelsInDegrees,
-      this.tickMarkLabelsInRadians,
-      xTics,
-      yTics,
+      this.graphAxesNode.labelsNode,
       this.trigIndicatorArrowNode,
       rightBorder,
       leftBorder
     ];
 
-    graphView.children = [
+    thisGraphView.children = [
       backgroundRectangle,
       this.titleDisplayPanel,
       this.expandCollapseButton,
@@ -429,7 +325,7 @@ define( function( require ) {
     this.expandCollapseButton.expandedProperty.link( function( expanded ) {
       backgroundRectangle.visible = expanded;
       displayNode.visible = expanded;
-      graphView.titleDisplayPanel.visible = !expanded;
+      thisGraphView.titleDisplayPanel.visible = !expanded;
     } );
 
     this.trigIndicatorArrowNode.addInputListener( new SimpleDragHandler(
@@ -437,14 +333,14 @@ define( function( require ) {
         allowTouchSnag: true,
 
         drag: function( e ) {
-          var position = graphView.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
+          var position = thisGraphView.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
           var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
           if ( !trigTourModel.maxAngleExceeded ) {
-            if ( !specialAnglesVisibleProperty.value ) {
+            if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
             else {
@@ -464,36 +360,56 @@ define( function( require ) {
     // function that reduces the indicator arrow tail width around the tan function singularity
     var setIndicatorTailWidth = function() {
       var tanSize = Math.abs( trigTourModel.tan() );
-      if ( graphView.graphProperty.value === 'tan' && tanSize > 1.5 ) {
-        graphView.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
+      if ( thisGraphView.viewProperties.graphProperty.value === 'tan' && tanSize > 1.5 ) {
+        thisGraphView.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
       else {
-        graphView.trigIndicatorArrowNode.setTailWidth( 5 );
+        thisGraphView.trigIndicatorArrowNode.setTailWidth( 5 );
       }
     };
 
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
       var xPos = fullAngle / (2 * Math.PI) * wavelength;
-      graphView.trigIndicatorArrowNode.x = xPos;
-      graphView.singularityIndicator.x = xPos;
+      thisGraphView.trigIndicatorArrowNode.x = xPos;
+      thisGraphView.singularityIndicator.x = xPos;
       setIndicatorTailWidth();
-      graphView.setTrigIndicatorArrowNode();
+      thisGraphView.setTrigIndicatorArrowNode();
     } );
 
-    // whenever the graph changes, make sure that the trigIndicatorArrowNode has a correctly sized tail width
-    graphProperty.link( function( graph ) {
+    viewProperties.graphProperty.link( function( graph ) {
+      // whenever the graph changes, make sure that the trigIndicatorArrowNode has a correctly sized tail width
       setIndicatorTailWidth();
+
+      //set visibility of curves on graph view
+      thisGraphView.cosPath.visible = ( graph === 'cos' );
+      thisGraphView.sinPath.visible = ( graph === 'sin' );
+      thisGraphView.tanPath.visible = ( graph === 'tan' );
+
+      // set title bar in GraphView
+      thisGraphView.setTitleBar( graph );
+      if ( trigTourModel.singularity ) {
+        if ( graph === 'cos' || graph === 'sin' ) {
+          thisGraphView.trigIndicatorArrowNode.opacity = 1;
+          thisGraphView.singularityIndicator.visible = false;
+        }
+        else {
+          // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
+          thisGraphView.trigIndicatorArrowNode.opacity = 0;
+          thisGraphView.singularityIndicator.visible = true;
+        }
+      }
+      thisGraphView.setTrigIndicatorArrowNode();
     } );
 
     trigTourModel.singularityProperty.link( function( singularity ) {
-      if ( graphView.graphProperty.value === 'tan' ) {
-        graphView.singularityIndicator.visible = singularity;
+      if ( thisGraphView.viewProperties.graphProperty.value === 'tan' ) {
+        thisGraphView.singularityIndicator.visible = singularity;
         // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
         if ( singularity ) {
-          graphView.trigIndicatorArrowNode.opacity = 0;
+          thisGraphView.trigIndicatorArrowNode.opacity = 0;
         }
         else {
-          graphView.trigIndicatorArrowNode.opacity = 1;
+          thisGraphView.trigIndicatorArrowNode.opacity = 1;
         }
       }
     } );
@@ -508,17 +424,17 @@ define( function( require ) {
       var cosNow = this.trigTourModel.cos();
       var sinNow = this.trigTourModel.sin();
       var tanNow = this.trigTourModel.tan();
-      if ( this.graphProperty.value === 'cos' ) {
+      if ( this.viewProperties.graphProperty.value === 'cos' ) {
         this.trigIndicatorArrowNode.setEndPoint( cosNow * this.amplitude );
         this.trigIndicatorArrowNode.setColor( COS_COLOR );
         this.redDotHandle.y = -cosNow * this.amplitude;
       }
-      else if ( this.graphProperty.value === 'sin' ) {
+      else if ( this.viewProperties.graphProperty.value === 'sin' ) {
         this.trigIndicatorArrowNode.setEndPoint( sinNow * this.amplitude );
         this.trigIndicatorArrowNode.setColor( SIN_COLOR );
         this.redDotHandle.y = -sinNow * this.amplitude;
       }
-      else if ( this.graphProperty.value === 'tan' ) {
+      else if ( this.viewProperties.graphProperty.value === 'tan' ) {
         this.trigIndicatorArrowNode.setEndPoint( tanNow * this.amplitude );
         this.trigIndicatorArrowNode.setColor( TAN_COLOR );
         this.redDotHandle.y = -tanNow * this.amplitude;

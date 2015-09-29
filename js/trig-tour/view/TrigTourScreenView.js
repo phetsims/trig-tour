@@ -38,8 +38,7 @@ define( function( require ) {
 
     var unitCircleView = new UnitCircleView( trigTourModel, viewProperties.specialAnglesVisibleProperty );
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties );
-    var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width,
-      viewProperties.specialAnglesVisibleProperty, viewProperties.graphProperty );
+    var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
 
     var controlPanel = new ControlPanel( viewProperties );
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
@@ -65,44 +64,20 @@ define( function( require ) {
     readoutDisplay.left = this.layoutBounds.left + 30;
     readoutDisplay.top = 30;
     graphView.x = this.layoutBounds.centerX;
-    graphView.y = this.layoutBounds.bottom - graphView.axesNode.bottom - 15;
+    graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
     controlPanel.centerX = 0.5 * ( unitCircleView.right + this.layoutBounds.right );
     controlPanel.top = this.layoutBounds.top + 30;
     this.dizzyPhetGirlImage.right = this.layoutBounds.right;
     this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
 
-
     // Set up callbacks
     viewProperties.graphProperty.link( function( graph ) {
 
-      //set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
+      // set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
       unitCircleView.horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
       unitCircleView.horizontalLine.visible = ( graph === 'sin' );
       unitCircleView.verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
       unitCircleView.verticalLine.visible = ( graph === 'cos' );
-
-      //set visibility of curves on graph view
-      graphView.cosPath.visible = ( graph === 'cos' );
-      graphView.sinPath.visible = ( graph === 'sin' );
-      graphView.tanPath.visible = ( graph === 'tan' );
-      graphView.sinThetaLabel.visible = ( graph === 'sin' );
-      graphView.cosThetaLabel.visible = ( graph === 'cos' );
-      graphView.tanThetaLabel.visible = ( graph === 'tan' );
-
-      // set title bar in GraphView
-      graphView.setTitleBar( graph );
-      if ( trigTourModel.singularity ) {
-        if ( graph === 'cos' || graph === 'sin' ) {
-          graphView.trigIndicatorArrowNode.opacity = 1;
-          graphView.singularityIndicator.visible = false;
-        }
-        else {
-          // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
-          graphView.trigIndicatorArrowNode.opacity = 0;
-          graphView.singularityIndicator.visible = true;
-        }
-      }
-      graphView.setTrigIndicatorArrowNode();
 
       // visibility of trig function readout
       readoutDisplay.readoutNode.setTrigRowVisibility( graph );
@@ -110,15 +85,6 @@ define( function( require ) {
 
     viewProperties.labelsVisibleProperty.link( function( isVisible ) {
       unitCircleView.setLabelVisibility( isVisible );
-      graphView.onesNode.visible = isVisible;
-      if ( isVisible ) {
-        graphView.tickMarkLabelsInRadians.visible = readoutDisplay.readoutNode.radiansDisplayed;
-        graphView.tickMarkLabelsInDegrees.visible = !readoutDisplay.readoutNode.radiansDisplayed;
-      }
-      else {
-        graphView.tickMarkLabelsInRadians.visible = false;
-        graphView.tickMarkLabelsInDegrees.visible = false;
-      }
     } );
 
     viewProperties.gridVisibleProperty.link( function( isVisible ) {
@@ -128,10 +94,6 @@ define( function( require ) {
     viewProperties.angleUnitsProperty.link( function( units ) {
       readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
       readoutDisplay.readoutNode.setUnits( units );
-      if ( viewProperties.labelsVisible ) {
-        graphView.tickMarkLabelsInRadians.visible = ( units === 'radians');
-        graphView.tickMarkLabelsInDegrees.visible = ( units !== 'radians');
-      }
       if ( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly ) {
         readoutDisplay.readoutNode.fullAngleFractionNode.visible = true;
         readoutDisplay.readoutNode.angleReadoutFraction.visible = true;

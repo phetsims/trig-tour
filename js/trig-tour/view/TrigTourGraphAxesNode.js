@@ -1,8 +1,9 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
- * Grabbable pointer indicates current value of theta and the function.
+ * Axes and labels for the GraphView in trig-tour.  The axes and labels are broken into two nodes which are publicly
+ * accessible so that the graph can be correctly layered in GraphView.  In order for the graph to be layered correctly,
+ * the axes must be rendered first with the trig plots second, followed by the labels.
  *
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  * @author Jesse Greenberg
@@ -38,6 +39,16 @@ define( function( require ) {
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
 
+  /**
+   * Constructor.
+   *
+   * @param {number} width
+   * @param {number} wavelength
+   * @param {number} numberOfWavelengths
+   * @param {number} amplitude
+   * @param {ViewProperties} viewProperties
+   * @constructor
+   */
   function TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, amplitude, viewProperties ) {
 
     Node.call( this );

@@ -26,17 +26,17 @@ define( function( require ) {
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
 
   //strings
-  var theta = require( 'string!TRIG_TOUR/theta' );
-  var angleStr = require( 'string!TRIG_TOUR/angle' );
-  var cosStr = require( 'string!TRIG_TOUR/cos' );
-  var degreesStr = require( 'string!TRIG_TOUR/degrees' );
-  var infinitySymbolStr = require( 'string!TRIG_TOUR/infinitySymbol' );
+  var thetaString = require( 'string!TRIG_TOUR/theta' );
+  var angleString = require( 'string!TRIG_TOUR/angle' );
+  var cosString = require( 'string!TRIG_TOUR/cos' );
+  var degreesString = require( 'string!TRIG_TOUR/degrees' );
+  var infinitySymbolString = require( 'string!TRIG_TOUR/infinitySymbol' );
   var pi = require( 'string!TRIG_TOUR/pi' );
-  var plusMinusStr = require( 'string!TRIG_TOUR/plusMinus' );
-  var radsStr = require( 'string!TRIG_TOUR/rads' );
-  var radiansStr = require( 'string!TRIG_TOUR/radians' );
-  var sinStr = require( 'string!TRIG_TOUR/sin' );
-  var tanStr = require( 'string!TRIG_TOUR/tan' );
+  var plusMinusString = require( 'string!TRIG_TOUR/plusMinus' );
+  var radsString = require( 'string!TRIG_TOUR/rads' );
+  var radiansString = require( 'string!TRIG_TOUR/radians' );
+  var sinString = require( 'string!TRIG_TOUR/sin' );
+  var tanString = require( 'string!TRIG_TOUR/tan' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -114,8 +114,8 @@ define( function( require ) {
 
     // Row 2: 'angle = ' value in degrees or radians;
     //  value is decimal number or exact fraction of radians (in special angle mode)
-    var angleEqualsStr = angleStr + ' = ';
-    var angleLabel = new Text( angleEqualsStr, fontBoldInfo );
+    var angleEqualsString = angleString + ' = ';
+    var angleLabel = new Text( angleEqualsString, fontBoldInfo );
     this.angleReadoutDecimal = new SubSupText( fullAngleValue, fontInfo ); // angle readout as decimal number
     this.fullAngleFractionNode = new FractionNode( 'A', '', fontInfo );  // node representing fractional form of full angle
 
@@ -138,9 +138,9 @@ define( function( require ) {
     var equalString = TrigTourMathStrings.EQUALS_STRING;
     var xString = TrigTourMathStrings.X_STRING;
     var yString = TrigTourMathStrings.Y_STRING;
-    var sinLabel = new HTMLText( sinStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
-    var cosLabel = new HTMLText( cosStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
-    var tanLabel = new HTMLText( tanStr + '<i>' + theta + '</i>' + equalString, fontBoldInfo );
+    var sinLabel = new HTMLText( sinString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
+    var cosLabel = new HTMLText( cosString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
+    var tanLabel = new HTMLText( tanString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
     var cosFraction = new FractionNode( xString, 1, fontBoldInfo );
     var sinFraction = new FractionNode( yString, 1, fontBoldInfo );
     var tanFraction = new FractionNode( yString, xString, fontBoldInfo );
@@ -169,8 +169,8 @@ define( function( require ) {
 
     // Special symbol node to show +/- infinity value of tan when at singularity
     this.plusMinusInfinityNode = new Node();
-    var plusMinusText = new Text( plusMinusStr, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
-    var infinityText = new Text( infinitySymbolStr, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
+    var plusMinusText = new Text( plusMinusString, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
+    var infinityText = new Text( infinitySymbolString, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
     this.plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
     plusMinusText.left = 0;
     infinityText.left = plusMinusText.right;
@@ -208,8 +208,8 @@ define( function( require ) {
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
-    var degreeText = new Text( degreesStr, fontInfo );
-    var radiansText = new Text( radiansStr, fontInfo );
+    var degreeText = new Text( degreesString, fontInfo );
+    var radiansText = new Text( radiansString, fontInfo );
     var degreesRadioButton = new AquaRadioButton(
       viewProperties.angleUnitsProperty,
       'degrees',
@@ -267,7 +267,7 @@ define( function( require ) {
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInRadians(), 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInRadians(), 3 ) + ' ' + radsString;
       }
       else {
         var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision );
@@ -306,7 +306,7 @@ define( function( require ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision ) + '<sup>o</sup>';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsStr;
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsString;
       }
       if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();
@@ -330,22 +330,22 @@ define( function( require ) {
       // number of full turns around unit circle, incremented at theta = 0
       var fullTurnCount = this.model.fullTurnCount;
       var piRadiansCount = 2 * fullTurnCount; // number of half turns around unit circle; half-turn = pi radians
-      var fullTurnStr = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnStr + small angle
+      var fullTurnString = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnString + small angle
       if ( piRadiansCount !== 0 ) {
         if ( fullTurnCount > 0 ) {
-          fullTurnStr = piRadiansCount + pi + ' + ';
+          fullTurnString = piRadiansCount + pi + ' + ';
         }
         else {
           // if angle negative, minus sign is constructed in FractionNode
-          fullTurnStr = piRadiansCount + pi + ' ';
+          fullTurnString = piRadiansCount + pi + ' ';
         }
       }
       else {
         // if zero turns, set full turn string to null string.
-        fullTurnStr = '';
+        fullTurnString = '';
       }
 
-      this.fullAngleFractionNode.setValues( fullTurnStr, '', false );
+      this.fullAngleFractionNode.setValues( fullTurnString, '', false );
       this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
 
       // set the angle readout, making sure that the angle is defined in the special fractions object
@@ -366,17 +366,17 @@ define( function( require ) {
       var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
         var nbrPiRads = this.model.halfTurnCount;
-        var angleStr = nbrPiRads + pi;
+        var angleString = nbrPiRads + pi;
         if ( nbrPiRads === 0 ) {
-          angleStr = '0';
+          angleString = '0';
         }
         else if ( nbrPiRads === 1 ) {
-          angleStr = pi;
+          angleString = pi;
         }
         else if ( nbrPiRads === -1 ) {
-          angleStr = '-' + pi;
+          angleString = '-' + pi;
         }
-        this.fullAngleFractionNode.setValues( angleStr, '' );
+        this.fullAngleFractionNode.setValues( angleString, '' );
 
         // dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );

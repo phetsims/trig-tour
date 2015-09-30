@@ -23,7 +23,7 @@ define( function( require ) {
   var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   //strings
-  var valuesStr = require( 'string!TRIG_TOUR/values' );
+  var valuesString = require( 'string!TRIG_TOUR/values' );
 
   /**
    * Constructor for
@@ -46,7 +46,7 @@ define( function( require ) {
       cornerRadius: 10,
       buttonXMargin: 12, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( valuesStr, { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleXSpacing: 10.5,
       titleAlignX: 'left',
       fill: PANEL_COLOR,

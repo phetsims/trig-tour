@@ -29,7 +29,7 @@ define( function( require ) {
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
 
   // strings
-  var thetaStr = require( 'string!TRIG_TOUR/theta' );
+  var thetaString = require( 'string!TRIG_TOUR/theta' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -144,7 +144,7 @@ define( function( require ) {
     xText = new Text( TrigTourMathStrings.X_STRING, fontInfo );            //xText, yText already defined above
     yText = new Text( TrigTourMathStrings.Y_STRING, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
-    var thetaText = new Text( thetaStr, fontInfo );
+    var thetaText = new Text( thetaString, fontInfo );
     // +1, -1 labels on axes
     fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY };
     var oneXText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );

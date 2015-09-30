@@ -37,11 +37,11 @@ define( function( require ) {
   var HSeparator = require( 'SUN/HSeparator' );
 
   //strings
-  var theta = require( 'string!TRIG_TOUR/theta' );
-  var cosStr = require( 'string!TRIG_TOUR/cos' );
-  var sinStr = require( 'string!TRIG_TOUR/sin' );
-  var tanStr = require( 'string!TRIG_TOUR/tan' );
-  var vsStr = require( 'string!TRIG_TOUR/vs' );
+  var thetaString = require( 'string!TRIG_TOUR/theta' );
+  var cosString = require( 'string!TRIG_TOUR/cos' );
+  var sinString = require( 'string!TRIG_TOUR/sin' );
+  var tanString = require( 'string!TRIG_TOUR/tan' );
+  var vsString = require( 'string!TRIG_TOUR/vs' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
@@ -81,9 +81,9 @@ define( function( require ) {
 
     var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
     // @private
-    this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-    this.sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
-    this.tanThetaVsThetaText = tanStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
+    this.cosThetaVsThetaText = cosString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
+    this.sinThetaVsThetaText = sinString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
+    this.tanThetaVsThetaText = tanString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
 
     // @private
     this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );

@@ -25,12 +25,12 @@ define( function( require ) {
   var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   //strings
-  var cosStr = require( 'string!TRIG_TOUR/cos' );
-  var sinStr = require( 'string!TRIG_TOUR/sin' );
-  var tanStr = require( 'string!TRIG_TOUR/tan' );
-  var labelsStr = require( 'string!TRIG_TOUR/labels' );
-  var gridStr = require( 'string!TRIG_TOUR/grid' );
-  var specialAnglesStr = require( 'string!TRIG_TOUR/specialAngles' );
+  var cosString = require( 'string!TRIG_TOUR/cos' );
+  var sinString = require( 'string!TRIG_TOUR/sin' );
+  var tanString = require( 'string!TRIG_TOUR/tan' );
+  var labelsString = require( 'string!TRIG_TOUR/labels' );
+  var gridString = require( 'string!TRIG_TOUR/grid' );
+  var specialAnglesString = require( 'string!TRIG_TOUR/specialAngles' );
 
   /**
    * Constructor for the control panel
@@ -44,12 +44,12 @@ define( function( require ) {
 
     // create the text nodes
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var cosText = new Text( cosStr, fontInfo );
-    var sinText = new Text( sinStr, fontInfo );
-    var tanText = new Text( tanStr, fontInfo );
-    var labelsText = new Text( labelsStr, fontInfo );
-    var gridText = new Text( gridStr, fontInfo );
-    var specialAnglesText = new Text( specialAnglesStr, fontInfo );
+    var cosText = new Text( cosString, fontInfo );
+    var sinText = new Text( sinString, fontInfo );
+    var tanText = new Text( tanString, fontInfo );
+    var labelsText = new Text( labelsString, fontInfo );
+    var gridText = new Text( gridString, fontInfo );
+    var specialAnglesText = new Text( specialAnglesString, fontInfo );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     // viewProperties.graph = 'cos'|'sin'|'tan'

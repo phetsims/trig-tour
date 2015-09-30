@@ -46,7 +46,8 @@ define( function( require ) {
       cornerRadius: 10,
       buttonXMargin: 12, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( ' ' + valuesStr, { font: DISPLAY_FONT, fontWeight: 'bold' } ), // need space for button
+      titleNode: new Text( valuesStr, { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+      titleXSpacing: 10.5,
       titleAlignX: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,

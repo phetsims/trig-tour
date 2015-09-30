@@ -30,11 +30,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
   var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
+  var HSeparator = require( 'SUN/HSeparator' );
 
   //strings
   var theta = require( 'string!TRIG_TOUR/theta' );
@@ -79,8 +79,7 @@ define( function( require ) {
     this.amplitude = 0.45 * height;  // @private amplitude of sinusoidal curve in pixels
     var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
-    var emptyNode = new Text( '   ', { font: DISPLAY_FONT } );    //to make space for expandCollapseButton
-
+    var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
     // @private
     this.cosThetaVsThetaText = cosStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
     this.sinThetaVsThetaText = sinStr + '<i>' + theta + '</i>' + ' ' + vsStr + ' ' + '<i>' + theta + '</i>';
@@ -88,7 +87,7 @@ define( function( require ) {
 
     // @private
     this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );
-    var titleDisplayHBox = new HBox( { children: [ emptyNode, this.graphTitle ], spacing: 5 } );
+    var titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
 
     var panelOptions = {
       fill: 'white',

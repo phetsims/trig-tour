@@ -43,7 +43,6 @@ define( function( require ) {
       headWidth: 15,
       lineWidth: 0
     }, options ) );
-    this.options = options;
   }
 
   return inherit( ArrowNode, TrigIndicatorArrowNode, {

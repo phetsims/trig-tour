@@ -16,6 +16,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
@@ -33,9 +34,13 @@ define( function( require ) {
   function FractionNode( numerator, denominator, options ) {
 
     options = _.extend( {
-      radical: false // does this fraction contain a radical in the numerator?
+      radical: false, // does this fraction contain a radical in the numerator?
+
+      // fonts for numerator and denominator text
+      font: new PhetFont( 20 ),
+      fill: TrigTourColors.TEXT_COLOR,
+      fontWeight: 'normal'
     }, options );
-    this.options = options; // @private options
 
     // call the super constructor
     Node.call( this );
@@ -43,6 +48,7 @@ define( function( require ) {
     this.numerator = numerator; // @public (read-only)
     this.denominator = denominator; // @public (read-only)
     this.radical = options.radical; // @public (read-only)
+    this.fontOptions = _.pick( options, 'font', 'fill', 'fontWeight' ); // @private options for text
 
     // create the fraction
     this.setFraction();
@@ -100,9 +106,9 @@ define( function( require ) {
       // JavaScript does not have an xor operator
       minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
-      var fontInfo = this.options;
-      var numeratorText = new Text( this.numerator, fontInfo );
-      var denominatorText = new Text( this.denominator, fontInfo );
+      var fontOptions = this.fontOptions;
+      var numeratorText = new Text( this.numerator, fontOptions );
+      var denominatorText = new Text( this.denominator, fontOptions );
 
       // Draw minus sign to go in front of fraction, if needed.
       var length = 8;

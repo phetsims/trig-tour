@@ -53,7 +53,7 @@ define( function( require ) {
    */
   function ReadoutNode( model, viewProperties ) {
 
-    var readoutNode = this;
+    var thisReadoutNode = this;
 
     // @private
     this.model = model;
@@ -62,7 +62,7 @@ define( function( require ) {
     this.units = 'degrees';         // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
 
     // Call the super constructor
-    Node.call( readoutNode );
+    Node.call( thisReadoutNode );
 
     var row1 = new Node();    // coordinates readout: (x, y) = ( cos, sin )
     var row2 = new Node();    // fullAngle readout: fullAngle = value in degrees or radians
@@ -229,7 +229,7 @@ define( function( require ) {
       children: [
         row1,
         row2,
-        readoutNode.trigRow3,
+        thisReadoutNode.trigRow3,
         new HSeparator( 180 ),
         degreesRadioButton,
         radiansRadioButton
@@ -239,21 +239,21 @@ define( function( require ) {
       resize: false
     } );
 
-    readoutNode.addChild( contentVBox );
+    thisReadoutNode.addChild( contentVBox );
 
     // Register for synchronization with model.
     model.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
       var sinText = Util.toFixed( model.sin(), 3 );
       var cosText = Util.toFixed( model.cos(), 3 );
-      readoutNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
-      readoutNode.setAngleReadout();
-      readoutNode.setTrigReadout();
+      thisReadoutNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
+      thisReadoutNode.setAngleReadout();
+      thisReadoutNode.setTrigReadout();
     } );
 
     model.singularityProperty.link( function( singularity ) {
-      readoutNode.plusMinusInfinityNode.visible = singularity;
-      if ( !readoutNode.viewProperties.specialAnglesVisible ) {
-        readoutNode.tanReadoutText.visible = !singularity;
+      thisReadoutNode.plusMinusInfinityNode.visible = singularity;
+      if ( !thisReadoutNode.viewProperties.specialAnglesVisible ) {
+        thisReadoutNode.tanReadoutText.visible = !singularity;
       }
     } );
   }

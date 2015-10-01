@@ -52,10 +52,10 @@ define( function( require ) {
    */
   function UnitCircleView( trigTourModel, specialAnglesVisibleProperty ) {
 
-    var unitCircleView = this;
+    var thisView = this;
 
     // Call the super constructor
-    Node.call( unitCircleView );
+    Node.call( thisView );
 
     // Draw Unit Circle
     var radius = 160; //radius of unit circle in pixels
@@ -165,7 +165,7 @@ define( function( require ) {
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
     // add the children to parent node
-    unitCircleView.children = [
+    thisView.children = [
       this.backgroundRectangle,
       this.grid,
       circleGraphic,
@@ -355,12 +355,12 @@ define( function( require ) {
       rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );
-      unitCircleView.verticalLine.x = radius * cos;
-      unitCircleView.verticalLine.setPoint2( 0, -radius * sin );
-      unitCircleView.horizontalLine.setPoint2( radius * cos, 0 );
-      unitCircleView.verticalIndicatorArrow.x = radius * cos;
-      unitCircleView.verticalIndicatorArrow.setEndPoint( radius * sin );
-      unitCircleView.horizontalIndicatorArrow.setEndPoint( radius * cos );
+      thisView.verticalLine.x = radius * cos;
+      thisView.verticalLine.setPoint2( 0, -radius * sin );
+      thisView.horizontalLine.setPoint2( radius * cos, 0 );
+      thisView.verticalIndicatorArrow.x = radius * cos;
+      thisView.verticalIndicatorArrow.setEndPoint( radius * sin );
+      thisView.horizontalIndicatorArrow.setEndPoint( radius * cos );
       drawAngleArc();
       positionLabels();
     } );

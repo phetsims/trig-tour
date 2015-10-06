@@ -175,7 +175,7 @@ define( function( require ) {
     } );
     this.trigIndicatorArrowNode.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
     this.trigIndicatorArrowNode.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
-    this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: "red", cursor: 'pointer' } );
+    this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
 
     // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by

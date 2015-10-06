@@ -131,7 +131,7 @@ define( function( require ) {
     rotorGraphic.addChild( new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } ) );
     rotorGraphic.addChild( new Circle(
       7,
-      { stroke: LINE_COLOR, fill: "red", x: radius, y: 0, cursor: 'pointer' }
+      { stroke: LINE_COLOR, fill: 'red', x: radius, y: 0, cursor: 'pointer' }
     ) );
     var hitBound = 30;
     rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );

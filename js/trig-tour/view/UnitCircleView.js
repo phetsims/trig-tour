@@ -23,7 +23,6 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Util = require( 'DOT/Util' );
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );

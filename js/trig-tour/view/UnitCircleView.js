@@ -180,14 +180,12 @@ define( function( require ) {
       labelCanvas
     ];
 
-    var mouseDownPosition = new Vector2( 0, 0 );
     rotorGraphic.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
         // start function for testing only
         start: function( e ) {
-          mouseDownPosition = e.pointer.point;
         },
 
         drag: function( e ) {

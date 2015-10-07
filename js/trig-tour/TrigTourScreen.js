@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
-  var TrigLabModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
@@ -29,7 +29,7 @@ define( function( require ) {
     var icon = null;
 
     Screen.call( this, trigLabSimString, icon,
-      function() { return new TrigLabModel(); },
+      function() { return new TrigTourModel(); },
       function( model ) { return new TrigTourScreenView( model ); },
       { backgroundColor: BACKGROUND_COLOR }
     );

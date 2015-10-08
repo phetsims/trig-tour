@@ -31,12 +31,12 @@ define( function( require ) {
    * @param {ViewProperties} viewProperties
    * @constructor
    */
-  function ReadoutDisplay( model, viewProperties ) {
+  function ReadoutDisplay( model, viewProperties, maxPanelWidth ) {
 
     this.model = model;
     this.viewProperties = viewProperties;
 
-    this.readoutNode = new ReadoutNode( model, viewProperties );
+    this.readoutNode = new ReadoutNode( model, viewProperties, maxPanelWidth );
 
     this.expandedProperty = new Property( true );
 
@@ -46,7 +46,7 @@ define( function( require ) {
       cornerRadius: 10,
       buttonXMargin: 12, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold', maxWidth: maxPanelWidth } ),
       titleXSpacing: 10.5,
       titleAlignX: 'left',
       fill: PANEL_COLOR,

@@ -23,6 +23,7 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
   var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+  var RADIO_BUTTON_RADIUS = 10;
 
   //strings
   var cosString = require( 'string!TRIG_TOUR/cos' );
@@ -38,12 +39,21 @@ define( function( require ) {
    * @param {ViewProperties} viewProperties
    * @constructor
    */
-  function ControlPanel( viewProperties ) {
+  function ControlPanel( viewProperties, maxPanelWidth, options ) {
+
+    options = _.extend( {
+      xMargin: 15,
+      yMargin: 15,
+      lineWidth: 1,
+      fill: PANEL_COLOR,
+      resize: false
+    }, options );
 
     this.viewProperties = viewProperties;
 
-    // create the text nodes
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    // create the text nodes, determining their max width from the panel width and the width of the buttons.
+    var maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
     var cosText = new Text( cosString, fontInfo );
     var sinText = new Text( sinString, fontInfo );
     var tanText = new Text( tanString, fontInfo );
@@ -53,7 +63,7 @@ define( function( require ) {
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     // viewProperties.graph = 'cos'|'sin'|'tan'
-    var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
+    var radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
     var cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
     var sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
     var tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
@@ -85,7 +95,7 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    Panel.call( this, content, { xMargin: 15, yMargin: 15, lineWidth: 1, fill: PANEL_COLOR } );
+    Panel.call( this, content, options );
 
   }
 

@@ -49,9 +49,10 @@ define( function( require ) {
    *
    * @param {TrigTourModel} model is the main model of the sim
    * @param {ViewProperties} viewProperties
+   * @param {number} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
    * @constructor
    */
-  function ReadoutNode( model, viewProperties ) {
+  function ReadoutNode( model, viewProperties, maxPanelWidth ) {
 
     var thisReadoutNode = this;
 
@@ -64,8 +65,8 @@ define( function( require ) {
     // Call the super constructor
     Node.call( thisReadoutNode );
 
-    var row1 = new Node();    // coordinates readout: (x, y) = ( cos, sin )
-    var row2 = new Node();    // fullAngle readout: fullAngle = value in degrees or radians
+    var row1 = new Node( { maxWidth: maxPanelWidth } );    // coordinates readout: (x, y) = ( cos, sin )
+    var row2 = new Node( { maxWidth: maxPanelWidth } );    // fullAngle readout: fullAngle = value in degrees or radians
     // row 3 is this.trigRow3 declared below, 'sin'|'cos'|'tan'= trig value
 
     var fullAngleValue = Util.toFixed( model.fullAngle, 1 );
@@ -204,10 +205,10 @@ define( function( require ) {
     this.plusMinusInfinityNode.left = equalText3.right;
 
     // visibility of trigRow3 set from Control Panel
-    this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ] } );
+    this.trigRow3 = new Node( { children: [ this.sinRow, this.cosRow, this.tanRow ], maxWidth: maxPanelWidth } );
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
+    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white', maxWidth: maxPanelWidth };
     var degreeText = new Text( degreesString, fontInfo );
     var radiansText = new Text( radiansString, fontInfo );
     var degreesRadioButton = new AquaRadioButton(

@@ -86,7 +86,7 @@ define( function( require ) {
     this.tanThetaVsThetaText = tanString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
 
     // @private
-    this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT } );
+    this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT, maxWidth: width / 3 } );
     var titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
 
     var panelOptions = {

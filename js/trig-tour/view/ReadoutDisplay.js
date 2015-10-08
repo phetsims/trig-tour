@@ -21,6 +21,9 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+  var BUTTON_X_MARGIN = 12;
+  var TITLE_X_SPACING = 10.5;
+  var CONTENT_X_MARGIN = 20;
 
   //strings
   var valuesString = require( 'string!TRIG_TOUR/values' );
@@ -36,7 +39,9 @@ define( function( require ) {
     this.model = model;
     this.viewProperties = viewProperties;
 
-    this.readoutNode = new ReadoutNode( model, viewProperties, maxPanelWidth );
+    // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
+    var maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
+    this.readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
 
     this.expandedProperty = new Property( true );
 
@@ -44,14 +49,14 @@ define( function( require ) {
     AccordionBox.call( this, this.readoutNode, {
       lineWidth: 1,
       cornerRadius: 10,
-      buttonXMargin: 12, // horizontal space between button and left|right edge of box
+      buttonXMargin: BUTTON_X_MARGIN, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold', maxWidth: maxPanelWidth } ),
-      titleXSpacing: 10.5,
+      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold', maxWidth: maxContentWidth } ),
+      titleXSpacing: TITLE_X_SPACING,
       titleAlignX: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
-      contentXMargin: 20,
+      contentXMargin: CONTENT_X_MARGIN,
       contentYMargin: 15,
       contentYSpacing: 8,
       expandedProperty: this.expandedProperty

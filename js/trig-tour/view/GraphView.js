@@ -35,6 +35,7 @@ define( function( require ) {
   var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
   var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
   var HSeparator = require( 'SUN/HSeparator' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   //strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
@@ -80,13 +81,14 @@ define( function( require ) {
     var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
+    var graphTitlePattern = '{0}' + '<i>' + '{1}' + '</i>' + ' ' + '{2}' + '<i>' + ' ' + '{3}' + '</i>';
     // @private
-    this.cosThetaVsThetaText = cosString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
-    this.sinThetaVsThetaText = sinString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
-    this.tanThetaVsThetaText = tanString + '<i>' + thetaString + '</i>' + ' ' + vsString + ' ' + '<i>' + thetaString + '</i>';
+    this.cosThetaVsThetaString = StringUtils.format( graphTitlePattern, cosString, thetaString, vsString, thetaString );
+    this.sinThetaVsThetaString = StringUtils.format( graphTitlePattern, sinString, thetaString, vsString, thetaString );
+    this.tanThetaVsThetaString = StringUtils.format( graphTitlePattern, tanString, thetaString, vsString, thetaString );
 
     // @private
-    this.graphTitle = new HTMLText( this.cosThetaVsThetaText, { font: DISPLAY_FONT, maxWidth: width / 3 } );
+    this.graphTitle = new HTMLText( this.tanThetaVsThetaString, { font: DISPLAY_FONT, maxWidth: width / 3 } );
     var titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
 
     var panelOptions = {
@@ -328,13 +330,13 @@ define( function( require ) {
      */
     setTitleBar: function( trigString ) {
       if ( trigString === 'cos' ) {
-        this.graphTitle.text = this.cosThetaVsThetaText;
+        this.graphTitle.text = this.cosThetaVsThetaString;
       }
       else if ( trigString === 'sin' ) {
-        this.graphTitle.text = this.sinThetaVsThetaText;
+        this.graphTitle.text = this.sinThetaVsThetaString;
       }
       else if ( trigString === 'tan' ) {
-        this.graphTitle.text = this.tanThetaVsThetaText;
+        this.graphTitle.text = this.tanThetaVsThetaString;
       }
     }
   } );

@@ -15,9 +15,6 @@ define( function( require ) {
     ONE_STRING: '1',
     MINUS_ONE_STRING: '-1',
     MINUS_STRING: '-',
-    EQUALS_STRING: ' = ',
-    X_Y_EQUALS_STRING: '(x,y) = ',
-    X_STRING: 'x',
-    Y_STRING: 'y'
+    EQUALS_STRING: ' = '
   };
 } );

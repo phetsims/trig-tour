@@ -1,4 +1,3 @@
-
 {
   "trig-tour.title": {
     "value": "Trig Tour"
@@ -57,10 +56,16 @@
   "theta": {
     "value": "\u03b8"
   },
-  "values":{
+  "x": {
+    "value": "x"
+  },
+  "y": {
+    "value": "y"
+  },
+  "values": {
     "value": "Values"
   },
-  "vs":{
+  "vs": {
     "value": "vs"
   },
   "xyEquals": {

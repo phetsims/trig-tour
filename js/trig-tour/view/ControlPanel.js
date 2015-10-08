@@ -37,6 +37,8 @@ define( function( require ) {
    * Constructor for the control panel
    *
    * @param {ViewProperties} viewProperties
+   * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
+   * @param {object} options
    * @constructor
    */
   function ControlPanel( viewProperties, maxPanelWidth, options ) {
@@ -51,7 +53,7 @@ define( function( require ) {
 
     this.viewProperties = viewProperties;
 
-    // create the text nodes, determining their max width from the panel width and the width of the buttons.
+    // create the text nodes, determining their max width from the panel width and the width of the buttons
     var maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
     var cosText = new Text( cosString, fontInfo );

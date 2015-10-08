@@ -29,6 +29,8 @@ define( function( require ) {
 
   // strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
+  var xString = require( 'string!TRIG_TOUR/x' );
+  var yString = require( 'string!TRIG_TOUR/y' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -95,8 +97,8 @@ define( function( require ) {
 
     // Draw and position x-, y-axis labels
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var xText = new Text( TrigTourMathStrings.X_STRING, fontInfo );
-    var yText = new Text( TrigTourMathStrings.Y_STRING, fontInfo );
+    var xText = new Text( xString, fontInfo );
+    var yText = new Text( yString, fontInfo );
     xAxis.addChild( xText );
     yAxis.addChild( yText );
     xText.left = 1.2 * radius + 5;
@@ -140,8 +142,8 @@ define( function( require ) {
     var labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    xText = new Text( TrigTourMathStrings.X_STRING, fontInfo );            //xText, yText already defined above
-    yText = new Text( TrigTourMathStrings.Y_STRING, fontInfo );
+    xText = new Text( xString, fontInfo );            //xText, yText already defined above
+    yText = new Text( yString, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
     var thetaText = new Text( thetaString, fontInfo );
     // +1, -1 labels on axes

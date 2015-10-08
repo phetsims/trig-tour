@@ -28,7 +28,7 @@ define( function( require ) {
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
    * @param {string|number} numerator
    * @param {string|number} denominator
-   * @param {Object} options
+   * @param {object} options
    * @constructor
    */
   function FractionNode( numerator, denominator, options ) {

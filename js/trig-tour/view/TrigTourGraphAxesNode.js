@@ -23,6 +23,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -38,6 +39,7 @@ define( function( require ) {
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
+  var trigThetaPatternString = require( 'string!TRIG_TOUR/trigThetaPattern' );
 
   /**
    * Constructor.
@@ -151,10 +153,10 @@ define( function( require ) {
     thetaLabel.left = this.right - 8;
     thetaLabel.centerY = xAxis.centerY - 15;
     var maxTrigLabelWidth = xAxis.width / 4;
-    var trigLableOptions = { font: DISPLAY_FONT, maxWidth: maxTrigLabelWidth };
-    var cosThetaLabel = new HTMLText( cosString + '<i>' + thetaString + '</i>', trigLableOptions );
-    var sinThetaLabel = new HTMLText( sinString + '<i>' + thetaString + '</i>', trigLableOptions );
-    var tanThetaLabel = new HTMLText( tanString + '<i>' + thetaString + '</i>', trigLableOptions );
+    var trigLabelOptions = { font: DISPLAY_FONT, maxWidth: maxTrigLabelWidth };
+    var cosThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, cosString, thetaString ), trigLabelOptions );
+    var sinThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, sinString, thetaString ), trigLabelOptions );
+    var tanThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, tanString, thetaString ), trigLabelOptions );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
 

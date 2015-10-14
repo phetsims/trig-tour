@@ -70,6 +70,9 @@
   },
   "xyEquals": {
     "value": "(x,y) = "
+  },
+  "trigThetaPattern": {
+    "value": "{0}<i>{1}</i>"
   }
 }
 

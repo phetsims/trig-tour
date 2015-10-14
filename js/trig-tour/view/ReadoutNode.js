@@ -40,6 +40,7 @@ define( function( require ) {
   var tanString = require( 'string!TRIG_TOUR/tan' );
   var xString = require( 'string!TRIG_TOUR/x' );
   var yString = require( 'string!TRIG_TOUR/y' );
+  var trigThetaPatternString = require( 'string!TRIG_TOUR/trigThetaPattern' );
 
   // non-translatable string
   var equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -95,7 +96,7 @@ define( function( require ) {
     this.tanReadoutFraction = new FractionNode( '-1', '2', fontInfo );  // don't need till row 3, trig function readout
     this.coordinatesReadout = new Text( '', fontInfo );     // text provided by model.fullAngleProperty.link, below
 
-    // create the text for the
+    // create the text for the parentheses.  Comma uses different font options, so a pattern cannot be used.
     var leftParensText = new Text( '( ', largeFontInfo );
     var commaText = new Text( ' ,  ', fontInfo );
     var rightParensText = new Text( ' )', largeFontInfo );
@@ -147,9 +148,10 @@ define( function( require ) {
 
     // Row 3: trig function label = trig fraction = trig value
     // trig function label = 'sin'|'cos'|'tan', trig fraction = 'y/1'|'x/1'|'y/x'
-    var sinLabel = new HTMLText( sinString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
-    var cosLabel = new HTMLText( cosString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
-    var tanLabel = new HTMLText( tanString + '<i>' + thetaString + '</i>' + equalString, fontBoldInfo );
+    var trigLabelPattern = trigThetaPatternString + '{2}';
+    var sinLabel = new HTMLText( StringUtils.format( trigLabelPattern, sinString, thetaString, equalString ), fontBoldInfo );
+    var cosLabel = new HTMLText( StringUtils.format( trigLabelPattern, cosString, thetaString, equalString ), fontBoldInfo );
+    var tanLabel = new HTMLText( StringUtils.format( trigLabelPattern, tanString, thetaString, equalString ), fontBoldInfo );
     var cosFraction = new FractionNode( xString, 1, fontBoldInfo );
     var sinFraction = new FractionNode( yString, 1, fontBoldInfo );
     var tanFraction = new FractionNode( yString, xString, fontBoldInfo );

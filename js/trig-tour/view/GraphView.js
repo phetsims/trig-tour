@@ -168,15 +168,12 @@ define( function( require ) {
 
     // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
     // a red dot on top of the indicator line echoes red dot on unit circle
-    hitBound = 30;
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
       tailWidth: 5,
       headWidth: 12,
       headHeight: 20,
       cursor: 'pointer'
     } );
-    this.trigIndicatorArrowNode.touchArea = new Bounds2( -hitBound, -300, hitBound, +100 );
-    this.trigIndicatorArrowNode.mouseArea = new Bounds2( -hitBound, -300, hitBound, +100 );
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
 
@@ -234,6 +231,7 @@ define( function( require ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
           }
+
         }
       } ) );
 

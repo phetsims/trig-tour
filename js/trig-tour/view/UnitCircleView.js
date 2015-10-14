@@ -43,6 +43,8 @@ define( function( require ) {
   var COS_COLOR = TrigTourColors.COS_COLOR;
   var SIN_COLOR = TrigTourColors.SIN_COLOR;
   var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
+  var ARROW_HEAD_WIDTH = 8;
+  var MAX_LABEL_WIDTH = ARROW_HEAD_WIDTH * 3;
 
   /**
    * Constructor for the UnitCircleView.
@@ -92,11 +94,19 @@ define( function( require ) {
     );
 
     // Draw x-, y-axes with x and y labels
-    var yAxis = new ArrowNode( 0, 1.2 * radius, 0, -1.2 * radius, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
-    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, { tailWidth: 0.3, headHeight: 12, headWidth: 8 } );
+    var yAxis = new ArrowNode( 0, 1.2 * radius, 0, -1.2 * radius, {
+      tailWidth: 0.3,
+      headHeight: 12,
+      headWidth: ARROW_HEAD_WIDTH
+    } );
+    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, {
+      tailWidth: 0.3,
+      headHeight: 12,
+      headWidth: ARROW_HEAD_WIDTH
+    } );
 
     // Draw and position x-, y-axis labels
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var xText = new Text( xString, fontInfo );
     var yText = new Text( yString, fontInfo );
     xAxis.addChild( xText );
@@ -140,14 +150,14 @@ define( function( require ) {
 
     // Draw x, y, and '1' labels on the xyR triangle
     var labelCanvas = new Node();
-    fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
+    fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
     xText = new Text( xString, fontInfo );            //xText, yText already defined above
     yText = new Text( yString, fontInfo );
-    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR };
+    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var thetaText = new Text( thetaString, fontInfo );
     // +1, -1 labels on axes
-    fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY };
+    fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY, maxWidth: MAX_LABEL_WIDTH };
     var oneXText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
     var minusOneXText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
     var oneYText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );

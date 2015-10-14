@@ -150,12 +150,13 @@ define( function( require ) {
     var thetaLabel = new Text( thetaString, fontInfo );
     thetaLabel.left = this.right - 8;
     thetaLabel.centerY = xAxis.centerY - 15;
-    var cosThetaLabel = new HTMLText( cosString + '<i>' + thetaString + '</i>', { font: DISPLAY_FONT } );
-    var sinThetaLabel = new HTMLText( sinString + '<i>' + thetaString + '</i>', { font: DISPLAY_FONT } );
-    var tanThetaLabel = new HTMLText( tanString + '<i>' + thetaString + '</i>', { font: DISPLAY_FONT } );
+    var maxTrigLabelWidth = xAxis.width / 4;
+    var trigLableOptions = { font: DISPLAY_FONT, maxWidth: maxTrigLabelWidth };
+    var cosThetaLabel = new HTMLText( cosString + '<i>' + thetaString + '</i>', trigLableOptions );
+    var sinThetaLabel = new HTMLText( sinString + '<i>' + thetaString + '</i>', trigLableOptions );
+    var tanThetaLabel = new HTMLText( tanString + '<i>' + thetaString + '</i>', trigLableOptions );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
-    console.log( thetaLabel.width );
 
     this.axisNode.children = [ xAxis, yAxis, thetaLabel, cosThetaLabel, sinThetaLabel, tanThetaLabel ];
     this.labelsNode.children = [ onesNode, tickMarkLabelsInDegrees, tickMarkLabelsInRadians, xTics, yTics ];

@@ -32,7 +32,7 @@ define( function( require ) {
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var degreesString = require( 'string!TRIG_TOUR/degrees' );
   var infinitySymbolString = require( 'string!TRIG_TOUR/infinitySymbol' );
-  var pi = require( 'string!TRIG_TOUR/pi' );
+  var piString = require( 'string!TRIG_TOUR/pi' );
   var plusMinusString = require( 'string!TRIG_TOUR/plusMinus' );
   var radsString = require( 'string!TRIG_TOUR/rads' );
   var radiansString = require( 'string!TRIG_TOUR/radians' );
@@ -127,8 +127,8 @@ define( function( require ) {
 
     // Row 2: 'angle = ' value in degrees or radians;
     //  value is decimal number or exact fraction of radians (in special angle mode)
-    var angleEqualsString = angleString + ' = ';
-    var angleLabel = new Text( angleEqualsString, fontBoldInfo );
+    var angleLabelText = new Text( angleString, fontBoldInfo );
+    var angleLabelEqualsText = new Text( equalString, fontBoldInfo );
     this.angleReadoutDecimal = new SubSupText( fullAngleValue, fontInfo ); // angle readout as decimal number
     this.fullAngleFractionNode = new FractionNode( 'A', '', fontInfo );  // node representing fractional form of full angle
 
@@ -139,11 +139,12 @@ define( function( require ) {
 
     // Either angleReadoutDecimal visible (decimal number values)
     // or (fullAngleFractionNode + angleReadoutFraction) visible in Special angles mode
-    row2.children = [ angleLabel, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
+    row2.children = [ angleLabelText, angleLabelEqualsText, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
 
     // row 2 layout
-    this.angleReadoutDecimal.left = angleLabel.right;
-    this.fullAngleFractionNode.left = angleLabel.right;
+    angleLabelEqualsText.left = angleLabelText.right;
+    this.angleReadoutDecimal.left = angleLabelEqualsText.right;
+    this.fullAngleFractionNode.left = angleLabelEqualsText.right;
     this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
 
     // Row 3: trig function label = trig fraction = trig value
@@ -344,11 +345,11 @@ define( function( require ) {
       var fullTurnString = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnString + small angle
       if ( piRadiansCount !== 0 ) {
         if ( fullTurnCount > 0 ) {
-          fullTurnString = piRadiansCount + pi + ' + ';
+          fullTurnString = piRadiansCount + piString + ' + ';
         }
         else {
           // if angle negative, minus sign is constructed in FractionNode
-          fullTurnString = piRadiansCount + pi + ' ';
+          fullTurnString = piRadiansCount + piString + ' ';
         }
       }
       else {
@@ -377,17 +378,17 @@ define( function( require ) {
       var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
         var nbrPiRads = this.model.halfTurnCount;
-        var angleString = nbrPiRads + pi;
+        var angleRadianString = nbrPiRads + piString;
         if ( nbrPiRads === 0 ) {
-          angleString = '0';
+          angleRadianString = '0';
         }
         else if ( nbrPiRads === 1 ) {
-          angleString = pi;
+          angleRadianString = piString;
         }
         else if ( nbrPiRads === -1 ) {
-          angleString = '-' + pi;
+          angleRadianString = '-' + piString;
         }
-        this.fullAngleFractionNode.setValues( angleString, '' );
+        this.fullAngleFractionNode.setValues( angleRadianString, '' );
 
         // dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
         this.angleReadoutFraction.setValues( 'A', 'B' );

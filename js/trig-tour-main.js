@@ -18,7 +18,7 @@ define( function( require ) {
 
   var simOptions = {
     credits: {
-      leadDesign: 'Amanda McGarry, Michael Dubson',
+      leadDesign: 'Michael Dubson, Amanda McGarry',
       softwareDevelopment: 'Michael Dubson',
       team: 'Ariel Paul, Kathy Perkins',
       qualityAssurance: 'Steele Dalton, Elise Morgan, Oliver Orejola, Bryan Yoelin'

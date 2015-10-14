@@ -18,13 +18,10 @@ define( function( require ) {
 
   var simOptions = {
     credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
-      leadDesign: 'Amanda McGarry and Michael Dubson',
+      leadDesign: 'Amanda McGarry, Michael Dubson',
       softwareDevelopment: 'Michael Dubson',
       team: 'Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton'
-      //graphicArts: '',
-      //thanks: ''
+      qualityAssurance: 'Steele Dalton, Elise Morgan, Oliver Orejola, Bryan Yoelin'
     }
   };
 

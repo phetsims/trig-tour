@@ -1,47 +1,47 @@
 {
-  "comment": "# trig-tour 1.0.0-dev.17 Thu Aug 13 2015 11:59:42 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.0-dev.18 Wed Oct 14 2015 19:01:26 GMT-0600 (Mountain Daylight Time)",
   "assert": {
-    "sha": "858e65ac477bf1861883ce06eed56d9fdefa5027",
+    "sha": "11bc6a6d0344ba1a8b95982bad3552bffbdfdfd6",
     "branch": "master"
   },
   "axon": {
-    "sha": "5be7fe049bbc0963a28c0125dc90039f04fb651c",
+    "sha": "e22373472d82b525f3de6c817010ee3ee4f74e44",
     "branch": "master"
   },
   "brand": {
-    "sha": "aa39bc48491aaee6c9059e0194c8974fd02bceba",
+    "sha": "8a756e53f976c89cf091350b67f880fc9b521096",
     "branch": "master"
   },
   "chipper": {
-    "sha": "51c45026022c5096cd180c6f578379cfda7c5414",
+    "sha": "157b9cf31c1ba02fe4171acf25ff27b94e058e4e",
     "branch": "master"
   },
   "dot": {
-    "sha": "e34c6b2c53b83ea1f8d2a5091cadfdc6353a501d",
+    "sha": "d99cbe46e8496bbfe2554ddfcc15022ffdfcae83",
     "branch": "master"
   },
   "joist": {
-    "sha": "e9f47dd31e40b11de634fec9e82a12939c98031d",
+    "sha": "121bb0de7deb33ab3495339d212c979741ab610a",
     "branch": "master"
   },
   "kite": {
-    "sha": "2497814682e359a8500fcb2a6dca2e276a00b6f9",
+    "sha": "40dc703a07c774464f060dda6a67485704ca9e22",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "8e31808c67a23066b43fbbd2080784daa44433c2",
+    "sha": "e9f36af114717781b776243db8ed25986cbba7ce",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "89a44d2cefd4b66f031f7f3fc30c0578a3130b5e",
+    "sha": "0e4754feb35bc853b9a1f685e0270f5d53b9b7f8",
     "branch": "master"
   },
   "scenery": {
-    "sha": "3a136ff106beeb71270b3d3e60fd95b7490f2be7",
+    "sha": "c1d6232d478df7fb437de1c913e27087a8dd5981",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "9d57d70eacd33fa5342d548f775040a4f70c72b1",
+    "sha": "88ade50794057afc23b6b98e3d1757b61612d938",
     "branch": "master"
   },
   "sherpa": {
@@ -49,11 +49,15 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "1320a557747cdae948b731a9398ec3670b139334",
+    "sha": "b66398a529a18e696832fd10cae1adf90598e75e",
+    "branch": "master"
+  },
+  "tandem": {
+    "sha": "c54f108248c06ef22c3091a36e60cdf27d3e0919",
     "branch": "master"
   },
   "trig-tour": {
-    "sha": "db2352699a5f4d748b72ecfe1a94b27c6f37c5cf",
+    "sha": "00c1618a0858d5ef34f75c1e8fbc0b18c942486c",
     "branch": "master"
   }
 }

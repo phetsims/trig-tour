@@ -26,6 +26,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
 
   // strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
@@ -68,7 +69,7 @@ define( function( require ) {
     // Draw 'special angle' locations on unit circle
     // special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
     this.specialAnglesNode = new Node();
-    var angles = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, -45, -60, -90, -120, -135, -150 ];
+    var angles = SpecialAngles.SPECIAL_ANGLES;
     var xPos, yPos; //x and y coordinates of special angle on unit circle
     for ( var i = 0; i < angles.length; i++ ) {
       xPos = radius * Math.cos( Util.toRadians( angles[ i ] ) );
@@ -303,26 +304,12 @@ define( function( require ) {
       var smallAngle = trigTourModel.getSmallAngleInRadians();
       var totalAngle = trigTourModel.getFullAngleInRadians();
       var pi = Math.PI;
-      // set visibility of the labels
-      if ( Math.abs( totalAngle ) < Util.toRadians( 40 ) ) {
-        thetaText.visible = false;
-      }
-      else {
-        thetaText.visible = true;
-      }
+
+      // set visibility of the labels, dependent on angle magnitude to avoid occlusion
+      thetaText.visible = !( Math.abs( totalAngle ) < Util.toRadians( 40 ) );
       var sAngle = Math.abs( Util.toDegrees( smallAngle ) );  //small angle in degrees
-      if ( sAngle < 10 || (180 - sAngle) < 10 ) {
-        yText.visible = false;
-      }
-      else {
-        yText.visible = true;
-      }
-      if ( Math.abs( 90 - sAngle ) < 5 ) {
-        xText.visible = false;
-      }
-      else {
-        xText.visible = true;
-      }
+      yText.visible = !( sAngle < 10 || (180 - sAngle) < 10 );
+      xText.visible = !( Math.abs( 90 - sAngle ) < 5 );
 
       // position one-label
       var angleOffset = Util.toRadians( 9 );

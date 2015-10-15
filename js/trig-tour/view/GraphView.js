@@ -166,8 +166,8 @@ define( function( require ) {
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );
 
-    // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and trigFunction(angle)
-    // a red dot on top of the indicator line echoes red dot on unit circle
+    // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and
+    // trigFunction(angle) a red dot on top of the indicator line echoes red dot on unit circle
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
       tailWidth: 5,
       headWidth: 12,

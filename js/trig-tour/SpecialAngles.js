@@ -1,7 +1,9 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Special angles use throughout trig-tour.
+ * Special angles use throughout trig-tour.  The special angles can be represented in radians and degrees.  The first
+ * arrays represent the special angle in degrees.  The structures below hold the information necessary for
+ * FractionNode to build up the fractions which represent special angles in radians.
  *
  * @author Jesse Greenberg
  */

@@ -1,7 +1,7 @@
 {
   "name": "trig-tour",
   "version": "1.0.0-dev.18",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/trig-tour.git"

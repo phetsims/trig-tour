@@ -70,7 +70,10 @@ define( function( require ) {
     // special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
     this.specialAnglesNode = new Node();
     var angles = SpecialAngles.SPECIAL_ANGLES;
-    var xPos, yPos; //x and y coordinates of special angle on unit circle
+
+    //x and y coordinates of special angle on unit circle
+    var xPos;
+    var yPos;
     for ( var i = 0; i < angles.length; i++ ) {
       xPos = radius * Math.cos( Util.toRadians( angles[ i ] ) );
       yPos = radius * Math.sin( Util.toRadians( angles[ i ] ) );

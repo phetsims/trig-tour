@@ -147,11 +147,11 @@ define( function( require ) {
     tickMarkLabelsInRadians.visible = false;
 
     // Axes labels
-    var maxThetaWidth = xAxis.right - xTics.children[ xTics.children.length - 1 ].right; // restrict width for i18n
+    var maxThetaWidth = ticLength * 3; // restrict for i18n
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
     var thetaLabel = new Text( thetaString, fontInfo );
-    thetaLabel.left = this.right - 8;
-    thetaLabel.centerY = xAxis.centerY - 15;
+    thetaLabel.left = this.right + 5;
+    thetaLabel.centerY = xAxis.centerY;
     var maxTrigLabelWidth = xAxis.width / 4;
     var trigLabelOptions = { font: DISPLAY_FONT, maxWidth: maxTrigLabelWidth };
     var cosThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, cosString, thetaString ), trigLabelOptions );

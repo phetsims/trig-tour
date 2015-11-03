@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Util = require( 'DOT/Util' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var Bounds2 = require( 'DOT/Bounds2' );
 
   /**
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction
@@ -43,6 +44,11 @@ define( function( require ) {
       headWidth: 15,
       lineWidth: 0
     }, options ) );
+
+    var emptyBounds = new Bounds2( 0, 0, 0, 0 );
+    this.computeShapeBounds = function() {
+      return emptyBounds;
+    }
   }
 
   return inherit( ArrowNode, TrigIndicatorArrowNode, {

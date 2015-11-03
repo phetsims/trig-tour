@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
+  var TrigTourSpiralNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourSpiralNode' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -179,22 +180,6 @@ define( function( require ) {
 
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-    // add the children to parent node
-    thisView.children = [
-      this.backgroundRectangle,
-      this.grid,
-      circleGraphic,
-      xAxis,
-      yAxis,
-      this.horizontalIndicatorArrow,
-      this.horizontalLine,
-      this.verticalIndicatorArrow,
-      this.verticalLine,
-      this.specialAnglesNode,
-      rotorGraphic,
-      labelCanvas
-    ];
-
     rotorGraphic.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
@@ -227,71 +212,16 @@ define( function( require ) {
         }
       } ) );
 
-    // draw angle arc on unit circle
-    arcRadius = 0.2 * radius;   //initial arc radius = 0.2 of rotor radius
-    var arcShape = new Shape();
-    var angleArcPath = new Path( arcShape, { stroke: LINE_COLOR, lineWidth: 2 } );
+    // create the spiral nodes
+    var initialSpiralRadius = 0.2 * radius;
+    var counterClockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, TrigTourModel.MAX_ANGLE_LIMIT );
+    var clockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, -TrigTourModel.MAX_ANGLE_LIMIT );
 
-    // following code is to speed up drawing
-    var emptyBounds = new Bounds2( 0, 0, 0, 0 );
-    angleArcPath.computeShapeBounds = function() {
-      return emptyBounds;
-    };
 
-    // draw Arrow Head on Angle Arc
-    var arrowHeadShape = new Shape();
-    var arrowHeadWidth = 7;
-    var arrowHeadLength = 12;    //arrow head length
-    arrowHeadShape.moveTo( 0, 0 )
-      .lineTo( -arrowHeadWidth / 2, arrowHeadLength )
-      .lineTo( arrowHeadWidth / 2, arrowHeadLength )
-      .close();
-    var angleArcArrowHead = new Path( arrowHeadShape, { lineWidth: 1, fill: LINE_COLOR } );
-    angleArcPath.addChild( angleArcArrowHead );
-    circleGraphic.addChild( angleArcPath );
-
-    // draw angle arc with gradually increasing radius
-    var drawAngleArc = function() {
-      var arcShape = new Shape(); // This seems wasteful, but there is no Shape.clear() function
-      arcRadius = 0.2 * radius;
-      arcShape.moveTo( arcRadius, 0 );
-      var totalAngle = trigTourModel.getFullAngleInRadians();
-      var deltaAngle = 0.1;  // delta-angle in radians
-      if ( Math.abs( totalAngle ) < 0.5 ) {
-        deltaAngle = 0.02;
-      }
-      var angle = 0;
-      if ( totalAngle > 0 ) {
-        for ( angle = 0; angle <= totalAngle; angle += deltaAngle ) {
-          arcRadius += deltaAngle;
-          arcShape.lineTo( arcRadius * Math.cos( angle ), -arcRadius * Math.sin( angle ) );
-        }
-      }
-      else {
-        for ( angle = 0; angle >= totalAngle; angle -= deltaAngle ) {
-          arcRadius += deltaAngle;
-          arcShape.lineTo( arcRadius * Math.cos( angle ), -arcRadius * Math.sin( angle ) );
-        }
-      }
-
-      angleArcPath.setShape( arcShape );
-
-      // show arrow head on angle arc if angle is > 45 degrees
-      if ( Math.abs( totalAngle ) < Util.toRadians( 45 ) ) {
-        angleArcArrowHead.visible = false;
-      }
-      else {
-        angleArcArrowHead.visible = true;
-      }
-      angleArcArrowHead.x = arcRadius * Math.cos( totalAngle );
-      angleArcArrowHead.y = -arcRadius * Math.sin( totalAngle );
-      // orient arrow head on angle arc correctly
-      if ( totalAngle < 0 ) {
-        angleArcArrowHead.rotation = Math.PI - totalAngle - ( 6 / arcRadius );
-      }
-      else {
-        angleArcArrowHead.rotation = -totalAngle + ( 6 / arcRadius );
-      }
+    // function to update which spiral is visible
+    var updateVisibleSpiral = function( angle ) {
+      counterClockWiseSpiralNode.visible = angle > 0;
+      clockWiseSpiralNode.visible = !counterClockWiseSpiralNode.visible;
     };
 
     // visibility of x,y, and '1' labels on xyR triangle.  This function is added in the constructor so that
@@ -349,6 +279,24 @@ define( function( require ) {
       thetaText.centerY = yPos;
     };
 
+    // add the children to parent node
+    thisView.children = [
+      this.backgroundRectangle,
+      this.grid,
+      circleGraphic,
+      xAxis,
+      yAxis,
+      counterClockWiseSpiralNode,
+      clockWiseSpiralNode,
+      this.horizontalIndicatorArrow,
+      this.horizontalLine,
+      this.verticalIndicatorArrow,
+      this.verticalLine,
+      this.specialAnglesNode,
+      rotorGraphic,
+      labelCanvas
+    ];
+
     // Register for synchronization with model.
     trigTourModel.fullAngleProperty.link( function( angle ) {
       rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
@@ -360,7 +308,7 @@ define( function( require ) {
       thisView.verticalIndicatorArrow.x = radius * cos;
       thisView.verticalIndicatorArrow.setEndPoint( radius * sin );
       thisView.horizontalIndicatorArrow.setEndPoint( radius * cos );
-      drawAngleArc();
+      updateVisibleSpiral( angle );
       positionLabels();
     } );
   }

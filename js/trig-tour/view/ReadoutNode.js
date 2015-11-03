@@ -254,20 +254,20 @@ define( function( require ) {
     thisReadoutNode.addChild( contentVBox );
 
     // Register for synchronization with model.
-    model.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
-      var sinText = Util.toFixed( model.sin(), 3 );
-      var cosText = Util.toFixed( model.cos(), 3 );
-      thisReadoutNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
-      thisReadoutNode.setAngleReadout();
-      thisReadoutNode.setTrigReadout();
-    } );
-
-    model.singularityProperty.link( function( singularity ) {
-      thisReadoutNode.plusMinusInfinityNode.visible = singularity;
-      if ( !thisReadoutNode.viewProperties.specialAnglesVisible ) {
-        thisReadoutNode.tanReadoutText.visible = !singularity;
-      }
-    } );
+    //model.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
+    //  var sinText = Util.toFixed( model.sin(), 3 );
+    //  var cosText = Util.toFixed( model.cos(), 3 );
+    //  thisReadoutNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
+    //  thisReadoutNode.setAngleReadout();
+    //  thisReadoutNode.setTrigReadout();
+    //} );
+    //
+    //model.singularityProperty.link( function( singularity ) {
+    //  thisReadoutNode.plusMinusInfinityNode.visible = singularity;
+    //  if ( !thisReadoutNode.viewProperties.specialAnglesVisible ) {
+    //    thisReadoutNode.tanReadoutText.visible = !singularity;
+    //  }
+    //} );
   }
 
   return inherit( Node, ReadoutNode, {

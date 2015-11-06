@@ -48,7 +48,7 @@ define( function( require ) {
     var emptyBounds = new Bounds2( 0, 0, 0, 0 );
     this.computeShapeBounds = function() {
       return emptyBounds;
-    }
+    };
   }
 
   return inherit( ArrowNode, TrigIndicatorArrowNode, {

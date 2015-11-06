@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   // strings
-  var pi = require( 'string!TRIG_TOUR/pi' );
+  var piString = require( 'string!TRIG_TOUR/pi' );
 
   return {
 
@@ -36,67 +36,67 @@ define( function( require ) {
         denominator: ''
       },
       30: {
-        numerator: pi,
+        numerator: piString,
         denominator: 6
       },
       45: {
-        numerator: pi,
+        numerator: piString,
         denominator: 4
       },
       60: {
-        numerator: pi,
+        numerator: piString,
         denominator: 3
       },
       90: {
-        numerator: pi,
+        numerator: piString,
         denominator: 2
       },
       120: {
-        numerator: 2 + pi,
+        numerator: 2 + piString,
         denominator: 3
       },
       135: {
-        numerator: 3 + pi,
+        numerator: 3 + piString,
         denominator: 4
       },
       150: {
-        numerator: 5 + pi,
+        numerator: 5 + piString,
         denominator: 6
       },
       180: {
-        numerator: pi,
+        numerator: piString,
         denominator: ''
       },
       210: {
-        numerator: 7 + pi,
+        numerator: 7 + piString,
         denominator: 6
       },
       225: {
-        numerator: 5 + pi,
+        numerator: 5 + piString,
         denominator: 4
       },
       240: {
-        numerator: 4 + pi,
+        numerator: 4 + piString,
         denominator: 3
       },
       270: {
-        numerator: 3 + pi,
+        numerator: 3 + piString,
         denominator: 2
       },
       300: {
-        numerator: 5 + pi,
+        numerator: 5 + piString,
         denominator: 3
       },
       315: {
-        numerator: 7 + pi,
+        numerator: 7 + piString,
         denominator: 4
       },
       330: {
-        numerator: 11 + pi,
+        numerator: 11 + piString,
         denominator: 6
       },
       360: {
-        numerator: 2 + pi,
+        numerator: 2 + piString,
         denominator: ''
       }
     },

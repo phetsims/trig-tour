@@ -14,7 +14,7 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var simTitle = require( 'string!TRIG_TOUR/trig-tour.title' );
+  var trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
   var simOptions = {
     credits: {
@@ -33,7 +33,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new TrigTourScreen() ], simOptions );
+    var sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
     sim.start();
   } );
 } );

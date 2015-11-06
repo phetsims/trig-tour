@@ -15,7 +15,7 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   // strings
-  var trigLabSimString = require( 'string!TRIG_TOUR/trig-tour.title' );
+  var trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
@@ -28,7 +28,7 @@ define( function( require ) {
     // If this is a single-screen sim, no icon is necessary.
     var icon = null;
 
-    Screen.call( this, trigLabSimString, icon,
+    Screen.call( this, trigTourTitleString, icon,
       function() { return new TrigTourModel(); },
       function( model ) { return new TrigTourScreenView( model ); },
       { backgroundColor: BACKGROUND_COLOR }

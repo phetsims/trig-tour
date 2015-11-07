@@ -1,4 +1,4 @@
-// Copyright 2002-2015, University of Colorado Boulder
+// Copyright 2015, University of Colorado Boulder
 
 /**
  * Axes and labels for the GraphView in trig-tour.  The axes and labels are broken into two nodes which are publicly

@@ -18,7 +18,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -129,7 +128,7 @@ define( function( require ) {
     //  value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabelText = new Text( angleString, fontBoldInfo );
     var angleLabelEqualsText = new Text( equalString, fontBoldInfo );
-    this.angleReadoutDecimal = new SubSupText( fullAngleValue, fontInfo ); // angle readout as decimal number
+    this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
     this.fullAngleFractionNode = new FractionNode( 'A', '', fontInfo );  // node representing fractional form of full angle
 
     // used to display angle as FractionNode in Special angles mode
@@ -283,7 +282,7 @@ define( function( require ) {
       }
       else {
         var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision );
-        this.angleReadoutDecimal.text = roundedAngle + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = roundedAngle + '\u00B0';
       }
     },
 
@@ -315,7 +314,7 @@ define( function( require ) {
       var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
       var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
       if ( !radiansDisplayed ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision ) + '<sup>o</sup>';
+        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsString;

@@ -18,7 +18,6 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
@@ -111,7 +110,7 @@ define( function( require ) {
     for ( var j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
       var degrees = Util.toFixed( 180 * j, 0 );
       degrees = degrees.toString();
-      label = new SubSupText( degrees + '<sup>o</sup>', { font: DISPLAY_FONT_SMALL } );
+      label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;
       label.top = xAxis.bottom;
       if ( j !== 0 ) {

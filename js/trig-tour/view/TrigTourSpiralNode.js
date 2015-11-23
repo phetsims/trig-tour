@@ -145,7 +145,10 @@ define( function( require ) {
     },
 
     /**
-     * Draws a single loop of the spiral in order
+     * The clip area is a single loop of the spiral offset by a small amount to include the largest rotation of the full
+     * spiral shape for the given angle.  Updating the clip area shape is a performance enhancement for redrawing
+     * the entire spiral shape every frame.
+     *
      * @param fullAngle
      */
     updateClipArea: function( fullAngle ) {

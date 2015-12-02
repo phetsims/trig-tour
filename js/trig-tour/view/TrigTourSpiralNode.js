@@ -155,26 +155,53 @@ define( function( require ) {
 
       var clipShape = new Shape();
 
-      var clipAngle = fullAngle; // the current model angle
-      var finalAngle; // the current model angle plus or minus 2 pi depending on direction of rotation
-      var clipRadius = this.endPointRadius - 2; // the current end point radius minus a small offset
-      var deltaAngle = 0.2; // delta for the shape angle.  Smaller results in more precise spiral shape.
+      // We'll build the clip shape with two arc segments. We need to compute the radius on each to be the average of
+      // the equivalent spiral's starting and ending radii. We'll start at r0 and end at r1, so by drawing two arcs,
+      // we'll have a radius in the middle of rHalf.
+      var r0 = this.endPointRadius - 2;
+      var r1 = r0 + Math.PI * 2;
+      var rHalf = ( r0 + r1 ) / 2;
 
-      clipShape.moveTo( clipRadius * Math.cos( clipAngle ), -clipRadius * Math.sin( clipAngle ) ); // initial position of the clipping spiral
-      if ( fullAngle > 0 ) {
-        finalAngle = clipAngle + 2 * Math.PI;
-        for ( clipAngle; clipAngle <= finalAngle; clipAngle += deltaAngle ) {
-          clipRadius += deltaAngle;
-          clipShape.lineTo( clipRadius * Math.cos( clipAngle ), -clipRadius * Math.sin( clipAngle ) );
-        }
+      // The first arc's radius should be the average of its starting radius (r0) and ending radius (rHalf).
+      var firstRadius = ( r0 + rHalf ) / 2;
+
+      // The offset of the arc's center from the spiral's center, in the direction of fullAngle, such that our first
+      // arc will go from magnitude-angle pairs of (r0,fullAngle) to (rHalf,fullAngle+pi).
+      var firstOffset = ( r0 - rHalf ) / 2;
+
+      // The second arc's radius should be the average of its starting radius (rHalf) and ending radius (r1).
+      var secondRadius = ( rHalf + r1 ) / 2;
+
+      // The offset of the arc's center from the spiral's center, in the direction of fullAngle, such that our first
+      // arc will go from magnitude-angle pairs of (rHalf,fullAngle+pi) to (r1,fullAngle+2pi).
+      var secondOffset = ( r1 - rHalf ) / 2;
+
+      // Because the angle is in the mathematical coordinate frame, we need to negate it so that it represents the angle
+      // in our graphical coordinate frame, where the Y axis is flipped in direction (thus requiring the opposite angle).
+      fullAngle = -fullAngle;
+
+      // Based on the direction of the spiral, we need to modify the angles and whether the arcs are anticlockwise.
+      var angle0;
+      var angleHalf;
+      var angle1;
+      var anticlockwise;
+      if ( fullAngle < 0 ) {
+        angle0 = fullAngle;
+        angleHalf = fullAngle + Math.PI;
+        angle1 = fullAngle + 2 * Math.PI;
+        anticlockwise = true;
       }
       else {
-        finalAngle = clipAngle - 2 * Math.PI;
-        for ( clipAngle; clipAngle >= finalAngle; clipAngle -= deltaAngle ) {
-          clipRadius += deltaAngle;
-          clipShape.lineTo( clipRadius * Math.cos( clipAngle ), -clipRadius * Math.sin( clipAngle ) );
-        }
+        angle0 = fullAngle + 2 * Math.PI;
+        angleHalf = fullAngle + Math.PI;
+        angle1 = fullAngle;
+        anticlockwise = false;
       }
+
+      clipShape.arc( firstOffset * Math.cos( fullAngle ), firstOffset * Math.sin( fullAngle ),
+                     firstRadius, angle0, angleHalf, anticlockwise );
+      clipShape.arc( secondOffset * Math.cos( fullAngle ), secondOffset * Math.sin( fullAngle ),
+                     secondRadius, angleHalf, angle1, anticlockwise );
 
       clipShape.close();
       this.clipArea = clipShape;

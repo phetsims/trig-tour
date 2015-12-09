@@ -30,7 +30,8 @@ define( function( require ) {
       stroke: 'black',
       arrowHeadColor: 'black',
       arrowHeadLineWidth: 1,
-      lineWidth: 2
+      lineWidth: 2,
+      preventFit: true
     }, options );
 
     Path.call( this, null, options );

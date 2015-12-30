@@ -204,8 +204,8 @@ define( function( require ) {
             }
           }
           else {
-            // maxAngleExceeded, update only if user decreases angle
-            if ( Math.abs( smallAngle ) < TrigTourModel.MAX_SMALL_ANGLE_LIMIT ) {
+            // maximum angle exceeded, only update full angle if abs val of small angle is deacreasing
+            if( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
               trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
           }
@@ -214,8 +214,8 @@ define( function( require ) {
 
     // create the spiral nodes
     var initialSpiralRadius = 0.2 * radius;
-    var counterClockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, TrigTourModel.MAX_ANGLE_LIMIT );
-    var clockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, -TrigTourModel.MAX_ANGLE_LIMIT );
+    var counterClockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, TrigTourModel.MAX_ANGLE_LIMIT + Math.PI );
+    var clockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, -TrigTourModel.MAX_ANGLE_LIMIT - Math.PI );
 
 
     // function to update which spiral is visible

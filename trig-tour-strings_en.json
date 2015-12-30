@@ -14,9 +14,6 @@
   "grid": {
     "value": "Grid"
   },
-  "infinityWord": {
-    "value": "infinity"
-  },
   "infinitySymbol": {
     "value": "\u221E"
   },
@@ -40,9 +37,6 @@
   },
   "specialAngles": {
     "value": "Special angles"
-  },
-  "squareRoot": {
-    "value": "\u221A"
   },
   "tan": {
     "value": "tan"

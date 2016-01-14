@@ -36,19 +36,17 @@ define( function( require ) {
    */
   function ReadoutDisplay( model, viewProperties, maxPanelWidth ) {
 
-    var thisNode = this;
-
     this.model = model;
     this.viewProperties = viewProperties;
 
     // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
     var maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
-    this.readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
+    var readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
 
     this.expandedProperty = new Property( true );
 
     // Call the super constructor
-    AccordionBox.call( this, this.readoutNode, {
+    AccordionBox.call( this, readoutNode, {
       lineWidth: 1,
       cornerRadius: 10,
       buttonXMargin: BUTTON_X_MARGIN, // horizontal space between button and left|right edge of box
@@ -66,48 +64,48 @@ define( function( require ) {
 
     // link visibility of trig row readout
     viewProperties.graphProperty.link( function( graph ) {
-      thisNode.readoutNode.setTrigRowVisibility( graph );
+      readoutNode.setTrigRowVisibility( graph );
     } );
 
     viewProperties.angleUnitsProperty.link( function( units ) {
-      thisNode.readoutNode.radiansDisplayed = ( units === 'radians');
-      thisNode.readoutNode.setUnits( units );
-      if ( units === 'radians' && thisNode.readoutNode.specialAnglesOnly ) {
-        thisNode.readoutNode.fullAngleFractionNode.visible = true;
-        thisNode.readoutNode.angleReadoutFraction.visible = true;
-        thisNode.readoutNode.angleReadoutDecimal.visible = false;
+      readoutNode.radiansDisplayed = ( units === 'radians');
+      readoutNode.setUnits( units );
+      if ( units === 'radians' && readoutNode.specialAnglesOnly ) {
+        readoutNode.fullAngleFractionNode.visible = true;
+        readoutNode.angleReadoutFraction.visible = true;
+        readoutNode.angleReadoutDecimal.visible = false;
       }
       else {
-        thisNode.readoutNode.fullAngleFractionNode.visible = false;
-        thisNode.readoutNode.angleReadoutFraction.visible = false;
-        thisNode.readoutNode.angleReadoutDecimal.visible = true;
+        readoutNode.fullAngleFractionNode.visible = false;
+        readoutNode.angleReadoutFraction.visible = false;
+        readoutNode.angleReadoutDecimal.visible = true;
       }
-      thisNode.readoutNode.setAngleReadout();
+      readoutNode.setAngleReadout();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      thisNode.readoutNode.specialAnglesOnly = specialAnglesVisible;
+      readoutNode.specialAnglesOnly = specialAnglesVisible;
 
       //select correct trig readouts
-      thisNode.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
-      thisNode.readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
-      thisNode.readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
-      thisNode.readoutNode.cosFractionHolder2.visible = specialAnglesVisible;
-      thisNode.readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
-      thisNode.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
-      thisNode.readoutNode.cosReadoutText.visible = !specialAnglesVisible;
-      thisNode.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
+      readoutNode.coordinatesHBox.visible = specialAnglesVisible;
+      readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
+      readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
+      readoutNode.cosFractionHolder2.visible = specialAnglesVisible;
+      readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
+      readoutNode.sinReadoutText.visible = !specialAnglesVisible;
+      readoutNode.cosReadoutText.visible = !specialAnglesVisible;
+      readoutNode.tanReadoutText.visible = !specialAnglesVisible;
 
       //select correct angle readout
-      if ( specialAnglesVisible && thisNode.readoutNode.radiansDisplayed ) {
-        thisNode.readoutNode.fullAngleFractionNode.visible = true;
-        thisNode.readoutNode.angleReadoutFraction.visible = true;
-        thisNode.readoutNode.angleReadoutDecimal.visible = false;
+      if ( specialAnglesVisible && readoutNode.radiansDisplayed ) {
+        readoutNode.fullAngleFractionNode.visible = true;
+        readoutNode.angleReadoutFraction.visible = true;
+        readoutNode.angleReadoutDecimal.visible = false;
       }
       else {
-        thisNode.readoutNode.fullAngleFractionNode.visible = false;
-        thisNode.readoutNode.angleReadoutFraction.visible = false;
-        thisNode.readoutNode.angleReadoutDecimal.visible = true;
+        readoutNode.fullAngleFractionNode.visible = false;
+        readoutNode.angleReadoutFraction.visible = false;
+        readoutNode.angleReadoutDecimal.visible = true;
       }
 
       // set precision of angle readout in degrees:
@@ -115,14 +113,14 @@ define( function( require ) {
       if ( specialAnglesVisible ) {
         var currentSmallAngle = model.getSmallAngleInRadians();
         model.setSpecialAngleWithSmallAngle( currentSmallAngle );
-        thisNode.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
+        readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
       }
       else {
         // 1 decimal place precision for continuous angles
-        thisNode.readoutNode.setAngleReadoutPrecision( 1 );
+        readoutNode.setAngleReadoutPrecision( 1 );
       }
-      thisNode.readoutNode.setAngleReadout();
-      thisNode.readoutNode.setTrigReadout();
+      readoutNode.setAngleReadout();
+      readoutNode.setTrigReadout();
     } );
   }
 

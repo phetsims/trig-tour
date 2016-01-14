@@ -52,10 +52,10 @@ define( function( require ) {
    * Constructor for the UnitCircleView.
    *
    * @param {TrigTourModel} trigTourModel - the main model of the sim
-   * @param {Property} specialAnglesVisibleProperty - property tracking visibility of special angles.
+   * @param {PropertySet} viewProperties - propertyset handling visibility of elements on screen
    * @constructor
    */
-  function UnitCircleView( trigTourModel, specialAnglesVisibleProperty ) {
+  function UnitCircleView( trigTourModel, viewProperties ) {
 
     var thisView = this;
 
@@ -196,7 +196,7 @@ define( function( require ) {
           trigTourModel.checkMaxAngleExceeded();
 
           if ( !trigTourModel.maxAngleExceeded ) {
-            if ( !specialAnglesVisibleProperty.value ) {
+            if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
             else {
@@ -224,10 +224,7 @@ define( function( require ) {
       clockWiseSpiralNode.visible = !counterClockWiseSpiralNode.visible;
     };
 
-    // visibility of x,y, and '1' labels on xyR triangle.  This function is added in the constructor so that
-    // positionLabels() below can remain private.
-    // @public
-    this.setLabelVisibility = function( isVisible ) {
+    var setLabelVisibility = function( isVisible ) {
       positionLabels();
       labelCanvas.visible = isVisible;
     };
@@ -311,6 +308,26 @@ define( function( require ) {
       updateVisibleSpiral( angle );
       positionLabels();
     } );
+
+    viewProperties.graphProperty.link( function( graph ) {
+      thisView.horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
+      thisView.horizontalLine.visible = ( graph === 'sin' );
+      thisView.verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
+      thisView.verticalLine.visible = ( graph === 'cos' );
+    } );
+
+    viewProperties.labelsVisibleProperty.link( function( isVisible ) {
+      setLabelVisibility( isVisible );
+    } );
+
+    viewProperties.gridVisibleProperty.link( function( isVisible ) {
+      thisView.grid.visible = isVisible;
+    } );
+
+    viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
+      thisView.specialAnglesNode.visible = specialAnglesVisible;
+    } );
+
   }
 
   return inherit( Node, UnitCircleView );

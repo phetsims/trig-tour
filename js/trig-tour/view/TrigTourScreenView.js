@@ -36,7 +36,7 @@ define( function( require ) {
 
     var viewProperties = new ViewProperties();
 
-    var unitCircleView = new UnitCircleView( trigTourModel, viewProperties.specialAnglesVisibleProperty );
+    var unitCircleView = new UnitCircleView( trigTourModel, viewProperties );
     unitCircleView.x = this.layoutBounds.centerX;
     unitCircleView.top = this.layoutBounds.top + 20;
 
@@ -74,84 +74,6 @@ define( function( require ) {
     this.addChild( readoutDisplay );
     this.addChild( controlPanel );
     this.addChild( this.dizzyPhetGirlImage );
-
-    // Set up callbacks
-    viewProperties.graphProperty.link( function( graph ) {
-
-      // set visibility of horizontal and vertical arrows on x-y-R triangle in UnitCircleView
-      unitCircleView.horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
-      unitCircleView.horizontalLine.visible = ( graph === 'sin' );
-      unitCircleView.verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
-      unitCircleView.verticalLine.visible = ( graph === 'cos' );
-
-      // visibility of trig function readout
-      readoutDisplay.readoutNode.setTrigRowVisibility( graph );
-    } );
-
-    viewProperties.labelsVisibleProperty.link( function( isVisible ) {
-      unitCircleView.setLabelVisibility( isVisible );
-    } );
-
-    viewProperties.gridVisibleProperty.link( function( isVisible ) {
-      unitCircleView.grid.visible = isVisible;
-    } );
-
-    viewProperties.angleUnitsProperty.link( function( units ) {
-      readoutDisplay.readoutNode.radiansDisplayed = ( units === 'radians');
-      readoutDisplay.readoutNode.setUnits( units );
-      if ( units === 'radians' && readoutDisplay.readoutNode.specialAnglesOnly ) {
-        readoutDisplay.readoutNode.fullAngleFractionNode.visible = true;
-        readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
-        readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
-      }
-      else {
-        readoutDisplay.readoutNode.fullAngleFractionNode.visible = false;
-        readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
-        readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
-      }
-      readoutDisplay.readoutNode.setAngleReadout();
-    } );
-
-    viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      unitCircleView.specialAnglesNode.visible = specialAnglesVisible;
-      readoutDisplay.readoutNode.specialAnglesOnly = specialAnglesVisible;
-
-      //select correct trig readouts
-      readoutDisplay.readoutNode.coordinatesHBox.visible = specialAnglesVisible;
-      readoutDisplay.readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
-      readoutDisplay.readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
-      readoutDisplay.readoutNode.cosFractionHolder2.visible = specialAnglesVisible;
-      readoutDisplay.readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
-      readoutDisplay.readoutNode.sinReadoutText.visible = !specialAnglesVisible;
-      readoutDisplay.readoutNode.cosReadoutText.visible = !specialAnglesVisible;
-      readoutDisplay.readoutNode.tanReadoutText.visible = !specialAnglesVisible;
-
-      //select correct angle readout
-      if ( specialAnglesVisible && readoutDisplay.readoutNode.radiansDisplayed ) {
-        readoutDisplay.readoutNode.fullAngleFractionNode.visible = true;
-        readoutDisplay.readoutNode.angleReadoutFraction.visible = true;
-        readoutDisplay.readoutNode.angleReadoutDecimal.visible = false;
-      }
-      else {
-        readoutDisplay.readoutNode.fullAngleFractionNode.visible = false;
-        readoutDisplay.readoutNode.angleReadoutFraction.visible = false;
-        readoutDisplay.readoutNode.angleReadoutDecimal.visible = true;
-      }
-
-      // set precision of angle readout in degrees:
-      // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
-      if ( specialAnglesVisible ) {
-        var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
-        trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
-        readoutDisplay.readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
-      }
-      else {
-        // 1 decimal place precision for continuous angles
-        readoutDisplay.readoutNode.setAngleReadoutPrecision( 1 );
-      }
-      readoutDisplay.readoutNode.setAngleReadout();
-      readoutDisplay.readoutNode.setTrigReadout();
-    } );
 
     // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
     trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {

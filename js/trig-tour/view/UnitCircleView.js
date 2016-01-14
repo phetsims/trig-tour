@@ -69,7 +69,7 @@ define( function( require ) {
 
     // Draw 'special angle' locations on unit circle
     // special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
-    this.specialAnglesNode = new Node();
+    var specialAnglesNode = new Node();
     var angles = SpecialAngles.SPECIAL_ANGLES;
 
     //x and y coordinates of special angle on unit circle
@@ -78,7 +78,7 @@ define( function( require ) {
     for ( var i = 0; i < angles.length; i++ ) {
       xPos = radius * Math.cos( Util.toRadians( angles[ i ] ) );
       yPos = radius * Math.sin( Util.toRadians( angles[ i ] ) );
-      this.specialAnglesNode.addChild( new Circle(
+      specialAnglesNode.addChild( new Circle(
         5,
         { stroke: LINE_COLOR, fill: 'white', lineWidth: 1, x: xPos, y: yPos }
       ) );
@@ -88,7 +88,7 @@ define( function( require ) {
     var backgroundWidth = 2.4 * radius;
     var bHeight = 2.4 * radius;
     var arcRadius = 8;
-    this.backgroundRectangle = new Rectangle(
+    var backgroundRectangle = new Rectangle(
       -backgroundWidth / 2,
       -bHeight / 2,
       backgroundWidth,
@@ -127,17 +127,17 @@ define( function( require ) {
     gridShape.lineTo( radius, -radius ).lineTo( radius, radius ).lineTo( -radius, radius ).lineTo( -radius, -radius );
     gridShape.moveTo( -radius, -radius / 2 ).lineTo( radius, -radius / 2 ).moveTo( -radius, radius / 2 ).lineTo( radius, radius / 2 );
     gridShape.moveTo( -radius / 2, -radius ).lineTo( -radius / 2, radius ).moveTo( radius / 2, -radius ).lineTo( radius / 2, radius );
-    this.grid = new Path( gridShape, { lineWidth: 2, stroke: TEXT_COLOR_GRAY } );
-    this.grid.visible = false;
+    var grid = new Path( gridShape, { lineWidth: 2, stroke: TEXT_COLOR_GRAY } );
+    grid.visible = false;
 
     // draw vertical (sine) line on rotor triangle
     // displayed line is either simple Line (no arrow head) or TrigIndicatorArrowNode (with arrow head)
-    this.verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
-    this.verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { tailWidth: 6, fill: SIN_COLOR } );
+    var verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
+    var verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { tailWidth: 6, fill: SIN_COLOR } );
 
     // draw horizontal (cosine) line on rotor triangle
-    this.horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
-    this.horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', {
+    var horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
+    var horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', {
       tailWidth: 6,
       fill: COS_COLOR
     } );
@@ -169,13 +169,13 @@ define( function( require ) {
     var minusOneYText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
 
     // position +1/-1 labels on xy axes
-    oneXText.left = this.grid.right + 5;
+    oneXText.left = grid.right + 5;
     oneXText.top = 7;
-    minusOneXText.right = this.grid.left - 5;
+    minusOneXText.right = grid.left - 5;
     minusOneXText.top = 7;
-    oneYText.bottom = this.grid.top;
+    oneYText.bottom = grid.top;
     oneYText.left = 5;
-    minusOneYText.top = this.grid.bottom;
+    minusOneYText.top = grid.bottom;
     minusOneYText.right = -5;
 
     labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
@@ -278,18 +278,18 @@ define( function( require ) {
 
     // add the children to parent node
     thisView.children = [
-      this.backgroundRectangle,
-      this.grid,
+      backgroundRectangle,
+      grid,
       circleGraphic,
       xAxis,
       yAxis,
       counterClockWiseSpiralNode,
       clockWiseSpiralNode,
-      this.horizontalIndicatorArrow,
-      this.horizontalLine,
-      this.verticalIndicatorArrow,
-      this.verticalLine,
-      this.specialAnglesNode,
+      horizontalIndicatorArrow,
+      horizontalLine,
+      verticalIndicatorArrow,
+      verticalLine,
+      specialAnglesNode,
       rotorGraphic,
       labelCanvas
     ];
@@ -299,21 +299,21 @@ define( function( require ) {
       rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
       var cos = Math.cos( angle );
       var sin = Math.sin( angle );
-      thisView.verticalLine.x = radius * cos;
-      thisView.verticalLine.setPoint2( 0, -radius * sin );
-      thisView.horizontalLine.setPoint2( radius * cos, 0 );
-      thisView.verticalIndicatorArrow.x = radius * cos;
-      thisView.verticalIndicatorArrow.setEndPoint( radius * sin );
-      thisView.horizontalIndicatorArrow.setEndPoint( radius * cos );
+      verticalLine.x = radius * cos;
+      verticalLine.setPoint2( 0, -radius * sin );
+      horizontalLine.setPoint2( radius * cos, 0 );
+      verticalIndicatorArrow.x = radius * cos;
+      verticalIndicatorArrow.setEndPoint( radius * sin );
+      horizontalIndicatorArrow.setEndPoint( radius * cos );
       updateVisibleSpiral( angle );
       positionLabels();
     } );
 
     viewProperties.graphProperty.link( function( graph ) {
-      thisView.horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
-      thisView.horizontalLine.visible = ( graph === 'sin' );
-      thisView.verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
-      thisView.verticalLine.visible = ( graph === 'cos' );
+      horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );
+      horizontalLine.visible = ( graph === 'sin' );
+      verticalIndicatorArrow.visible = ( graph === 'sin' || graph === 'tan' );
+      verticalLine.visible = ( graph === 'cos' );
     } );
 
     viewProperties.labelsVisibleProperty.link( function( isVisible ) {
@@ -321,11 +321,11 @@ define( function( require ) {
     } );
 
     viewProperties.gridVisibleProperty.link( function( isVisible ) {
-      thisView.grid.visible = isVisible;
+      grid.visible = isVisible;
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      thisView.specialAnglesNode.visible = specialAnglesVisible;
+      specialAnglesNode.visible = specialAnglesVisible;
     } );
 
   }

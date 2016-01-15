@@ -54,67 +54,6 @@ define( function( require ) {
       contentYMargin: 15,
       contentYSpacing: 8
     } );
-
-    // link visibility of trig row readout
-    viewProperties.graphProperty.link( function( graph ) {
-      readoutNode.setTrigRowVisibility( graph );
-    } );
-
-    viewProperties.angleUnitsProperty.link( function( units ) {
-      readoutNode.radiansDisplayed = ( units === 'radians');
-      readoutNode.setUnits( units );
-      if ( units === 'radians' && readoutNode.specialAnglesOnly ) {
-        readoutNode.fullAngleFractionNode.visible = true;
-        readoutNode.angleReadoutFraction.visible = true;
-        readoutNode.angleReadoutDecimal.visible = false;
-      }
-      else {
-        readoutNode.fullAngleFractionNode.visible = false;
-        readoutNode.angleReadoutFraction.visible = false;
-        readoutNode.angleReadoutDecimal.visible = true;
-      }
-      readoutNode.setAngleReadout();
-    } );
-
-    viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      readoutNode.specialAnglesOnly = specialAnglesVisible;
-
-      //select correct trig readouts
-      readoutNode.coordinatesHBox.visible = specialAnglesVisible;
-      readoutNode.coordinatesReadout.visible = !specialAnglesVisible;
-      readoutNode.sinFractionHolder2.visible = specialAnglesVisible;
-      readoutNode.cosFractionHolder2.visible = specialAnglesVisible;
-      readoutNode.tanReadoutFraction.visible = specialAnglesVisible;
-      readoutNode.sinReadoutText.visible = !specialAnglesVisible;
-      readoutNode.cosReadoutText.visible = !specialAnglesVisible;
-      readoutNode.tanReadoutText.visible = !specialAnglesVisible;
-
-      //select correct angle readout
-      if ( specialAnglesVisible && readoutNode.radiansDisplayed ) {
-        readoutNode.fullAngleFractionNode.visible = true;
-        readoutNode.angleReadoutFraction.visible = true;
-        readoutNode.angleReadoutDecimal.visible = false;
-      }
-      else {
-        readoutNode.fullAngleFractionNode.visible = false;
-        readoutNode.angleReadoutFraction.visible = false;
-        readoutNode.angleReadoutDecimal.visible = true;
-      }
-
-      // set precision of angle readout in degrees:
-      // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
-      if ( specialAnglesVisible ) {
-        var currentSmallAngle = model.getSmallAngleInRadians();
-        model.setSpecialAngleWithSmallAngle( currentSmallAngle );
-        readoutNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
-      }
-      else {
-        // 1 decimal place precision for continuous angles
-        readoutNode.setAngleReadoutPrecision( 1 );
-      }
-      readoutNode.setAngleReadout();
-      readoutNode.setTrigReadout();
-    } );
   }
 
   return inherit( AccordionBox, ReadoutDisplay );

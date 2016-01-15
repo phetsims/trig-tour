@@ -13,7 +13,7 @@ define( function( require ) {
   var GraphView = require( 'TRIG_TOUR/trig-tour/view/GraphView' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/ReadoutDisplay' );
+  var ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutDisplay' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );

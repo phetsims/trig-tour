@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Displays a built-up fraction
+ * Displays a built-up fraction, used in the ReadoutNode of Trig Tour.
  *
  * @author Michael Dubson (PhET developer) on 6/10/2015.
  */

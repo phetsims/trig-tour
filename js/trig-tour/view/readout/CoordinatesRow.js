@@ -61,9 +61,11 @@ define( function( require ) {
     var XYEqualsPattern = '(' + '{0}' + ',' + '{1}' + ')' + equalString;
     var XYEqualString = StringUtils.format( XYEqualsPattern, xString, yString );
     var coordinatesLabel = new Text( XYEqualString, fontBoldInfo );
-    this.sinReadoutFraction = new FractionNode( '-A', 'B', fontInfo );  // dummy arguments to set bounds
-    this.cosReadoutFraction = new FractionNode( '-c', 'd', fontInfo );
-    this.coordinatesReadout = new Text( '', fontInfo );     // text provided by model.fullAngleProperty.link, below
+
+    // fraction values set below
+    this.sinReadoutFraction = new FractionNode( '', '', fontInfo );
+    this.cosReadoutFraction = new FractionNode( '', '', fontInfo );
+    this.coordinatesReadout = new Text( '', fontInfo ); // text provided by model.fullAngleProperty.link, below
 
     // create the text for the parentheses.  Comma uses different font options, so a pattern cannot be used.
     var leftParensText = new Text( '( ', largeFontInfo );

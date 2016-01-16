@@ -1,11 +1,8 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Creates the second row for the ReadoutNode of Trig Tour.  This row contains a label for the trig function, 
- * a fraction representation of the value, and the numeric value.  This row is organized, separated by the equality 
- * sign.  It looks like this:
- *
- * trig function label = trig fraction = trig value
+ * Creates the second row for the ReadoutNode of Trig Tour.  This row contains a label for the angle and the value
+ * of the model angle, in degrees or radians.
  *
  * @author Michael Dubson (PhET developer) on 6/10/2015
  * @author Jesse Greenberg
@@ -37,15 +34,14 @@ define( function( require ) {
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
   /**
-   * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
-   * This node is the content of AccordionBox ReadoutDisplay
+   * Constructor.
    *
-   * @param {TrigTourModel} model is the main model of the sim
+   * @param {TrigTourModel} trigTourModel is the main model of the sim
    * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
+   * @param {object} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
    * @constructor
    */
-  function AngleReadoutRow( model, viewProperties, options ) {
+  function AngleReadoutRow( trigTourModel, viewProperties, options ) {
 
     Node.call( this, options );
     var thisNode = this;
@@ -54,13 +50,14 @@ define( function( require ) {
     this.decimalPrecision = 1; // number of decimal places for display of fullAngle, = 0 for special angles
     this.units = 'degrees'; // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
     this.viewProperties = viewProperties;
-    this.model = model;
+    this.trigTourModel = trigTourModel;
 
     // initialize font styles
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
-    var fullAngleValue = Util.toFixed( model.fullAngle, 1 );
+    // full angle for the trigTourModel
+    var fullAngleValue = Util.toFixed( trigTourModel.fullAngle, 1 );
 
     //  value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabelText = new Text( angleString, fontBoldInfo );
@@ -83,7 +80,7 @@ define( function( require ) {
     this.fullAngleFractionNode.left = angleLabelEqualsText.right;
     this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
     
-    model.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
+    trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
       thisNode.setAngleReadout();
     } );
 
@@ -119,8 +116,8 @@ define( function( require ) {
       // set precision of angle readout in degrees:
       // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
       if ( specialAnglesVisible ) {
-        var currentSmallAngle = model.getSmallAngleInRadians();
-        model.setSpecialAngleWithSmallAngle( currentSmallAngle );
+        var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
+        trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
         thisNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
       }
       else {
@@ -129,7 +126,6 @@ define( function( require ) {
       }
       thisNode.setAngleReadout();
     } );
-
   }
 
   return inherit( Node, AngleReadoutRow, {
@@ -142,10 +138,10 @@ define( function( require ) {
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInRadians(), 3 ) + ' ' + radsString;
+        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 ) + ' ' + radsString;
       }
       else {
-        var roundedAngle = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision );
+        var roundedAngle = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
         this.angleReadoutDecimal.text = roundedAngle + '\u00B0';
       }
     },
@@ -166,10 +162,10 @@ define( function( require ) {
       var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
       var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
       if ( !radiansDisplayed ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
+        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.model.fullAngle, 3 ) + ' ' + radsString;
+        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.fullAngle, 3 ) + ' ' + radsString;
       }
       if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();
@@ -185,13 +181,13 @@ define( function( require ) {
       this.angleReadoutFraction.visible = true;
 
       // need integer value of angle, since internal arithmetic often not-quite integer
-      var angleInDegs = Util.roundSymmetric( this.model.getFullAngleInDegrees() );
+      var angleInDegs = Util.roundSymmetric( this.trigTourModel.getFullAngleInDegrees() );
       if ( Math.abs( angleInDegs ) > 360 ) {
         angleInDegs = angleInDegs % 360;
       }
 
       // number of full turns around unit circle, incremented at theta = 0
-      var fullTurnCount = this.model.fullTurnCount;
+      var fullTurnCount = this.trigTourModel.fullTurnCount;
       var piRadiansCount = 2 * fullTurnCount; // number of half turns around unit circle; half-turn = pi radians
       var fullTurnString = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnString + small angle
       if ( piRadiansCount !== 0 ) {
@@ -226,9 +222,9 @@ define( function( require ) {
       }
 
       // Must handle smallAngle = 0 or pi as special cases
-      var roundedAngle = Util.roundSymmetric( this.model.getSmallAngleInDegrees() );
+      var roundedAngle = Util.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
-        var nbrPiRads = this.model.halfTurnCount;
+        var nbrPiRads = this.trigTourModel.halfTurnCount;
         var angleRadianString = nbrPiRads + piString;
         if ( nbrPiRads === 0 ) {
           angleRadianString = '0';

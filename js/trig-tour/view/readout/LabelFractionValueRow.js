@@ -61,7 +61,7 @@ define( function( require ) {
     this.trigLabelString = trigLabelString; // @private
 
     // pattern string for tanslation, with an equality to the right
-    var trigLabelPattern = trigThetaPatternString + '{2}'; // TODO: This should be reassessed
+    var trigLabelPattern = trigThetaPatternString + '{2}';
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
@@ -72,8 +72,8 @@ define( function( require ) {
     var denominatorString;
     this.trigModelFunction; // @private - trig function for this value
     this.specialAngles; // @private - collection of special angles for this trig function
-    
-    // get the values needed to represent the special angle as a fraction.
+
+    // get the values needed to represent the special angle as a fraction, dependent on trig function type
     switch( trigLabelString ) {
       case 'sin': {
         trigString = sinString;
@@ -106,12 +106,12 @@ define( function( require ) {
     var trigFraction = new FractionNode( numeratorString, denominatorString, fontBoldInfo );
 
     // value presented by this row as a number, updates with the model and depends on the angle
-    // var trigModelValue = Util.toFixed( this.trigModelFunction( trigTourModel.fullAngle ), 3 );
     var trigValueNumberText = new Text( 'trigModelValue', fontInfo );
 
     // value presented by this row as a fraction, updates with the model and depends on the angle
     var trigValueFraction = new FractionNode( '', '', fontInfo );
 
+    // create an text representation of the equal sign
     var equalText = new Text( equalString, fontBoldInfo );
 
     this.children = [ trigLabelText, trigFraction, equalText, trigValueNumberText, trigValueFraction ];
@@ -123,7 +123,7 @@ define( function( require ) {
     trigValueNumberText.left = equalText.right + space;
     trigValueFraction.left = equalText.right + space;
 
-    // if this row is for 'tan', create and add an infinity symbol to represent singularity
+    // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if( trigLabelString === 'tan' ) {
       var plusMinusInfinityNode = new Node();
       var plusMinusText = new Text( plusMinusString, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
@@ -137,7 +137,7 @@ define( function( require ) {
     }
 
     // synchronize row values with model
-    trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
+    trigTourModel.fullAngleProperty.link( function( fullAngle ) {
       thisNode.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
 
@@ -157,7 +157,6 @@ define( function( require ) {
       trigValueNumberText.visible = !specialAnglesVisible;
       thisNode.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
-
   }
 
   return inherit( Node, LabelFractionValueRow, {

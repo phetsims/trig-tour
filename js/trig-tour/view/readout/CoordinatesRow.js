@@ -1,3 +1,4 @@
+
 // Copyright 2015, University of Colorado Boulder
 
 /**
@@ -82,7 +83,8 @@ define( function( require ) {
         rightParensText
       ],
       align: 'center',
-      spacing: 0
+      spacing: 0,
+      resize: false
     } );
 
     // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise

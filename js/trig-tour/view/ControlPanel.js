@@ -94,7 +94,8 @@ define( function( require ) {
         gridCheckBox
       ],
       align: 'left',
-      spacing: spacing
+      spacing: spacing,
+      resize: false
     } );
 
     Panel.call( this, content, options );

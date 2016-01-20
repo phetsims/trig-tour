@@ -16,7 +16,6 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
 
-  // NOTE: initialRadius  should be 0.2 times rotor radius.
   /**
    * Constructor.
    * @param {TrigTourModel} trigTourModel

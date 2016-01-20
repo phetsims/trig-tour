@@ -95,7 +95,7 @@ define( function( require ) {
       bHeight,
       arcRadius,
       arcRadius,
-      { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
+      { fill: VIEW_BACKGROUND_COLOR, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
     );
 
     // Draw x-, y-axes with x and y labels
@@ -112,14 +112,12 @@ define( function( require ) {
 
     // Draw and position x-, y-axis labels
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
-    var xText = new Text( xString, fontInfo );
-    var yText = new Text( yString, fontInfo );
-    xAxis.addChild( xText );
-    yAxis.addChild( yText );
-    xText.left = 1.2 * radius + 5;
-    xText.centerY = yAxis.centerY;
-    yText.right = -12;
-    yText.top = -1.2 * radius - 2;
+    var xAxisText = new Text( xString, fontInfo );
+    var yAxisText = new Text( yString, fontInfo );
+    xAxisText.left = 1.2 * radius + 5;
+    xAxisText.centerY = yAxis.centerY;
+    yAxisText.right = -12;
+    yAxisText.top = -1.2 * radius - 2;
 
     // Draw Grid, simple square grid, visibility set by Control Panel;
     var gridShape = new Shape();
@@ -157,8 +155,8 @@ define( function( require ) {
     var labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    xText = new Text( xString, fontInfo );            //xText, yText already defined above
-    yText = new Text( yString, fontInfo );
+    var xLabelText = new Text( xString, fontInfo );            //xLabelText, yLabelText already defined above
+    var yLabelText = new Text( yString, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var thetaText = new Text( thetaString, fontInfo );
     // +1, -1 labels on axes
@@ -178,7 +176,7 @@ define( function( require ) {
     minusOneYText.top = grid.bottom;
     minusOneYText.right = -5;
 
-    labelCanvas.children = [ oneText, xText, yText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
+    labelCanvas.children = [ oneText, xLabelText, yLabelText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
     rotorGraphic.addInputListener( new SimpleDragHandler(
       {
@@ -238,8 +236,8 @@ define( function( require ) {
       // set visibility of the labels, dependent on angle magnitude to avoid occlusion
       thetaText.visible = !( Math.abs( totalAngle ) < Util.toRadians( 40 ) );
       var sAngle = Math.abs( Util.toDegrees( smallAngle ) );  //small angle in degrees
-      yText.visible = !( sAngle < 10 || (180 - sAngle) < 10 );
-      xText.visible = !( Math.abs( 90 - sAngle ) < 5 );
+      yLabelText.visible = !( sAngle < 10 || (180 - sAngle) < 10 );
+      xLabelText.visible = !( Math.abs( 90 - sAngle ) < 5 );
 
       // position one-label
       var angleOffset = Util.toRadians( 9 );
@@ -253,25 +251,26 @@ define( function( require ) {
       oneText.centerY = -0.6 * yInPix;
 
       // position x-label
-      var xPos = 0.5 * radius * Math.cos( smallAngle );
-      var yPos = 0.6 * xText.height;
-      if ( smallAngle < 0 ) { yPos = -0.6 * xText.height; }
-      xText.centerX = xPos;
-      xText.centerY = yPos;
+      var xPos = 0.5 * radius * Math.cos( totalAngle );
+      var yPos = 0.6 * xLabelText.height;
+      if ( smallAngle < 0 ) { yPos = -0.6 * xLabelText.height; }
+      xLabelText.centerX = xPos;
+      xLabelText.centerY = yPos;
 
       // position y-label
       sign = 1;
       if ( ( smallAngle > pi / 2 && smallAngle < pi ) || ( smallAngle > -pi && smallAngle < -pi / 2 ) ) {
         sign = -1;
       }
-      xPos = radius * Math.cos( smallAngle ) + sign * xText.width;
-      yPos = -0.5 * radius * Math.sin( smallAngle );
-      yText.centerX = xPos;
-      yText.centerY = yPos;
+      xPos = radius * Math.cos( totalAngle ) + sign * xLabelText.width;
+      yPos = -0.5 * radius * Math.sin( totalAngle );
+      yLabelText.centerX = xPos;
+      yLabelText.centerY = yPos;
 
       // show and position theta-label on angle arc if arc is greater than 20 degs
-      xPos = ( arcRadius + 10 ) * Math.cos( totalAngle / 2 );
-      yPos = -( arcRadius + 10 ) * Math.sin( totalAngle / 2 );
+      var thetaPositionRadius = counterClockWiseSpiralNode.endPointRadius;
+      xPos = ( thetaPositionRadius + 10 ) * Math.cos( totalAngle / 2 );
+      yPos = -( thetaPositionRadius + 10 ) * Math.sin( totalAngle / 2 );
       thetaText.centerX = xPos;
       thetaText.centerY = yPos;
     };
@@ -283,6 +282,8 @@ define( function( require ) {
       circleGraphic,
       xAxis,
       yAxis,
+      xAxisText,
+      yAxisText,
       counterClockWiseSpiralNode,
       clockWiseSpiralNode,
       horizontalIndicatorArrow,

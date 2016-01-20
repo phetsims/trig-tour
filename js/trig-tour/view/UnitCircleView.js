@@ -12,7 +12,6 @@ define( function( require ) {
   var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
   var TrigTourSpiralNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourSpiralNode' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -64,7 +63,6 @@ define( function( require ) {
 
     // Draw Unit Circle
     var radius = 160; //radius of unit circle in pixels
-    //provides parent node and origin for rotorGraphic
     var circleGraphic = new Circle( radius, { stroke: LINE_COLOR, lineWidth: 3 } );
 
     // Draw 'special angle' locations on unit circle
@@ -140,16 +138,12 @@ define( function( require ) {
       fill: COS_COLOR
     } );
 
-    // Draw rotor arm with draggable red dot at end
-    var rotorGraphic = new Node();
-    rotorGraphic.addChild( new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } ) );
-    rotorGraphic.addChild( new Circle(
-      7,
-      { stroke: LINE_COLOR, fill: 'red', x: radius, y: 0, cursor: 'pointer' }
-    ) );
-    var hitBound = 30;
-    rotorGraphic.mouseArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
-    rotorGraphic.touchArea = new Bounds2( radius - hitBound, -hitBound, radius + hitBound, hitBound );
+    // Draw rotor arm with draggable red pin at end
+    var rotorArm = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } );
+    var rotorPin = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } ); 
+    var hitBound = 25;
+    rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
+    rotorPin.touchArea = rotorPin.mouseArea;
 
     // Draw x, y, and '1' labels on the xyR triangle
     var labelCanvas = new Node();
@@ -178,16 +172,17 @@ define( function( require ) {
 
     labelCanvas.children = [ oneText, xLabelText, yLabelText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-    rotorGraphic.addInputListener( new SimpleDragHandler(
+    rotorPin.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
         // start function for testing only
         start: function( e ) {
+          // debugger;
         },
 
         drag: function( e ) {
-          var v1 = rotorGraphic.globalToParentPoint( e.pointer.point );
+          var v1 = rotorPin.globalToParentPoint( e.pointer.point );
           var smallAngle = -v1.angle(); // model angle is negative of xy screen coordinates angle
 
           // make sure the full angle does not exceed max allowed angle
@@ -291,23 +286,35 @@ define( function( require ) {
       verticalIndicatorArrow,
       verticalLine,
       specialAnglesNode,
-      rotorGraphic,
+      rotorArm,
+      rotorPin,
       labelCanvas
     ];
 
     // Register for synchronization with model.
     trigTourModel.fullAngleProperty.link( function( angle ) {
-      rotorGraphic.rotation = -angle;  // model angle is negative of xy screen coords angle
-      var cos = Math.cos( angle );
-      var sin = Math.sin( angle );
-      verticalLine.x = radius * cos;
-      verticalLine.setPoint2( 0, -radius * sin );
-      horizontalLine.setPoint2( radius * cos, 0 );
-      verticalIndicatorArrow.x = radius * cos;
-      verticalIndicatorArrow.setEndPoint( radius * sin );
-      horizontalIndicatorArrow.setEndPoint( radius * cos );
+
+      // convenience refactor
+      var newX = radius * Math.cos( angle );
+      var newY = -radius * Math.sin( angle );
+
+      // transform the rotor, model angle is negative of xy screen coords angle
+      rotorPin.resetTransform();
+      rotorPin.translate( newX, newY );
+      rotorArm.rotation = -angle;
+
+      // transform the vertical and horizontal lines
+      verticalLine.x = newX;
+      verticalLine.setPoint2( 0, newY );
+      horizontalLine.setPoint2( newX, 0 );
+      verticalIndicatorArrow.x = newX;
+      verticalIndicatorArrow.setEndPoint( -newY );
+      horizontalIndicatorArrow.setEndPoint( newX );
+
+      // update the visible spiral and set position of the labels
       updateVisibleSpiral( angle );
       positionLabels();
+
     } );
 
     viewProperties.graphProperty.link( function( graph ) {

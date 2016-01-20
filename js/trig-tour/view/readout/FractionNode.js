@@ -43,7 +43,7 @@ define( function( require ) {
     }, options );
 
     // call the super constructor
-    Node.call( this );
+    Node.call( this, options );
 
     this.numerator = numerator; // @public (read-only)
     this.denominator = denominator; // @public (read-only)

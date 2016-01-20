@@ -56,6 +56,10 @@ define( function( require ) {
 
     Node.call( this, options );
     var thisNode = this;
+
+    // prevent block fitting of this row as a performance optimization
+    this.preventFit = true;
+
     this.trigTourModel = trigTourModel; // @private
     this.viewProperties = viewProperties; // @private
     this.trigLabelString = trigLabelString; // @private

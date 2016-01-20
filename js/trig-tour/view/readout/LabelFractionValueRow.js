@@ -16,9 +16,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Util = require( 'DOT/Util' );
   var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
@@ -27,7 +26,6 @@ define( function( require ) {
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
 
   // strings
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var infinitySymbolString = require( 'string!TRIG_TOUR/infinitySymbol' );
   var plusMinusString = require( 'string!TRIG_TOUR/plusMinus' );
@@ -35,7 +33,6 @@ define( function( require ) {
   var tanString = require( 'string!TRIG_TOUR/tan' );
   var xString = require( 'string!TRIG_TOUR/x' );
   var yString = require( 'string!TRIG_TOUR/y' );
-  var trigThetaPatternString = require( 'string!TRIG_TOUR/trigThetaPattern' );
 
   // non translatable string
   var equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -43,6 +40,8 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_LARGE = new PhetFont( 30 );
+  var DISPLAY_FONT_LARGE_BOLD = new PhetFont( { size: 20, weight: 'bold' } );
+  var DISPLAY_FONT_LARGE_BOLD_ITALIC = new PhetFont( { size: 20, weight: 'bold', style: 'italic' } );
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
   /**
@@ -64,11 +63,7 @@ define( function( require ) {
     this.viewProperties = viewProperties; // @private
     this.trigLabelString = trigLabelString; // @private
 
-    // pattern string for tanslation, with an equality to the right
-    var trigLabelPattern = trigThetaPatternString + '{2}';
-
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
+    var fontOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR };
 
     // initialize strings and variables for the row, depending on trigLabelString
     var trigString;
@@ -103,29 +98,34 @@ define( function( require ) {
     }
     assert && assert( trigString && numeratorString && denominatorString, 'trigLabel must be one of "cos", "sin", or "tan"' );
 
-    // label section of the row, something like 'Cos θ'
-    var trigLabelText = new HTMLText( StringUtils.format( trigLabelPattern, trigString, thetaString, equalString ), fontBoldInfo );
+    // label section of the row, something like 'Cos θ ='
+    var trigLabelText = new TrigFunctionLabelText( trigString, { 
+      trigFunctionLabelFont: DISPLAY_FONT_LARGE_BOLD,
+      thetaLabelFont: DISPLAY_FONT_LARGE_BOLD_ITALIC
+    } );
+    var leftEqualText = new Text( equalString, DISPLAY_FONT_LARGE_BOLD );
 
     // label fraction for the row defining the shown value, something like 'x/1'
-    var trigFraction = new FractionNode( numeratorString, denominatorString, fontBoldInfo );
+    var trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
 
     // value presented by this row as a number, updates with the model and depends on the angle
-    var trigValueNumberText = new Text( 'trigModelValue', fontInfo );
+    var trigValueNumberText = new Text( 'trigModelValue', fontOptions );
 
     // value presented by this row as a fraction, updates with the model and depends on the angle
-    var trigValueFraction = new FractionNode( '', '', fontInfo );
+    var trigValueFraction = new FractionNode( '', '', fontOptions );
 
     // create an text representation of the equal sign
-    var equalText = new Text( equalString, fontBoldInfo );
+    var rightEqualText = new Text( equalString, DISPLAY_FONT_LARGE_BOLD );
 
-    this.children = [ trigLabelText, trigFraction, equalText, trigValueNumberText, trigValueFraction ];
+    this.children = [ trigLabelText, leftEqualText, trigFraction, rightEqualText, trigValueNumberText, trigValueFraction ];
 
     // layout
     var space = 4;
-    trigFraction.left = trigLabelText.right;
-    equalText.left = trigFraction.right + space;
-    trigValueNumberText.left = equalText.right + space;
-    trigValueFraction.left = equalText.right + space;
+    leftEqualText.left = trigLabelText.right; 
+    trigFraction.left = leftEqualText.right;
+    rightEqualText.left = trigFraction.right + space;
+    trigValueNumberText.left = rightEqualText.right + space;
+    trigValueFraction.left = rightEqualText.right + space;
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if( trigLabelString === 'tan' ) {
@@ -136,7 +136,7 @@ define( function( require ) {
       plusMinusText.left = 0;
       infinityText.left = plusMinusText.right;
       infinityText.centerY = -5;
-      plusMinusInfinityNode.left = equalText.right;
+      plusMinusInfinityNode.left = rightEqualText.right;
       this.addChild( plusMinusInfinityNode );
     }
 
@@ -167,6 +167,9 @@ define( function( require ) {
 
     /**
      * Set the value of the trig value.
+     * 
+     * @param {Text} trigValueNumberText
+     * @param {FractionNode} trigValueFraction 
      */
     setTrigReadout: function( trigValueNumberText, trigValueFraction ){
       if( this.viewProperties.specialAnglesVisibleProperty.value ) {
@@ -190,7 +193,8 @@ define( function( require ) {
 
     /**
      * Set the special angle readout display.
-     * 
+     *
+     * @param {FractionNode} trigValueFraction
      * @private
      */
     setSpecialAngleTrigReadout: function( trigValueFraction ) {

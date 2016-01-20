@@ -21,7 +21,8 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -35,7 +36,6 @@ define( function( require ) {
   var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
   var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
   var HSeparator = require( 'SUN/HSeparator' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   //strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
@@ -53,6 +53,7 @@ define( function( require ) {
   var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
   var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
   var DISPLAY_FONT = new PhetFont( 20 );
+  var ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
 
   /**
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
@@ -81,15 +82,10 @@ define( function( require ) {
     var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
-    var graphTitlePattern = '{0}' + '<i>' + '{1}' + '</i>' + ' ' + '{2}' + '<i>' + ' ' + '{3}' + '</i>';
-    // @private
-    this.cosThetaVsThetaString = StringUtils.format( graphTitlePattern, cosString, thetaString, vsString, thetaString );
-    this.sinThetaVsThetaString = StringUtils.format( graphTitlePattern, sinString, thetaString, vsString, thetaString );
-    this.tanThetaVsThetaString = StringUtils.format( graphTitlePattern, tanString, thetaString, vsString, thetaString );
 
     // @private
-    this.graphTitle = new HTMLText( this.tanThetaVsThetaString, { font: DISPLAY_FONT, maxWidth: width / 3 } );
-    var titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
+    this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );
+    this.titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
 
     var panelOptions = {
       fill: 'white',
@@ -98,14 +94,14 @@ define( function( require ) {
       xMargin: 12,
       yMargin: 5,
       cornerRadius: 5, // radius of the rounded corners on the background
-      resize: false, // dynamically resize when content bounds change
+      // resize: false, // dynamically resize when content bounds change
       backgroundPickable: false,
       align: 'left', // {string} horizontal of content in the pane, left|center|right
       minWidth: 0 // minimum width of the panel
     };
 
     // @private when graph is collapsed/hidden, a title is displayed
-    this.titleDisplayPanel = new Panel( titleDisplayHBox, panelOptions );
+    this.titleDisplayPanel = new Panel( this.titleDisplayHBox, panelOptions );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
       sideLength: 15,
       cursor: 'pointer'
@@ -260,7 +256,7 @@ define( function( require ) {
       setIndicatorTailWidth();
 
       // set title bar in GraphView
-      thisGraphView.setTitleBar( graph );
+      thisGraphView.setTitleBarText( graph );
       if ( trigTourModel.singularity ) {
         if ( graph === 'cos' || graph === 'sin' ) {
           thisGraphView.trigIndicatorArrowNode.opacity = 1;
@@ -322,20 +318,41 @@ define( function( require ) {
     },
 
     /**
-     * Set the title bar text.
+     * Set the title bar text.  Different strings in the title require different font styles.  HTML text should be 
+     * avoided because it causes issues in performance.  So the text is built up here.
      *
-     * @param {string} trigString
+     * @param {string} trigString - the label for the trig function
+     *
      */
-    setTitleBar: function( trigString ) {
-      if ( trigString === 'cos' ) {
-        this.graphTitle.text = this.cosThetaVsThetaString;
+    setTitleBarText: function( trigString ) {
+
+      // determine the appropriate trig function string for the title.
+      var trigTitleString;
+      if( trigString === 'cos' ) {
+        trigTitleString = cosString;
       }
-      else if ( trigString === 'sin' ) {
-        this.graphTitle.text = this.sinThetaVsThetaString;
+      if( trigString === 'sin' ) {
+        trigTitleString = sinString;
       }
-      else if ( trigString === 'tan' ) {
-        this.graphTitle.text = this.tanThetaVsThetaString;
+      else if( trigString === 'tan' ) {
+        trigTitleString = tanString;
       }
+
+      // create each text component
+      var variableThetaText = new Text( thetaString, ITALIC_DISPLAY_FONT );
+      var vsText = new Text( vsString, DISPLAY_FONT );
+
+      // build up and format the title
+      var trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );
+
+      // everything formatted in an HBox
+      var titleTextHBox = new HBox( { children: [ trigFunctionLabelText, vsText, variableThetaText ], spacing: 6, resize: false } );
+
+      // update the content of the title HBox, removing the title child, and inserting it back after update
+      this.titleDisplayHBox.removeChildWithIndex( this.graphTitle, this.titleDisplayHBox.children.indexOf( this.graphTitle ) );
+      this.graphTitle = titleTextHBox;
+      this.titleDisplayHBox.insertChild( this.titleDisplayHBox.children.length, this.graphTitle );
+
     }
   } );
 } );

@@ -55,9 +55,6 @@
   },
   "vs": {
     "value": "vs"
-  },
-  "trigThetaPattern": {
-    "value": "{0}<i>{1}</i>"
   }
 }
 

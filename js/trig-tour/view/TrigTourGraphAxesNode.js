@@ -13,7 +13,7 @@ define( function( require ) {
 
   // modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -22,11 +22,9 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
-  var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_FONT_SMALL = new PhetFont( 18 );
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
   var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
@@ -38,7 +36,6 @@ define( function( require ) {
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
-  var trigThetaPatternString = require( 'string!TRIG_TOUR/trigThetaPattern' );
 
   /**
    * Constructor.
@@ -152,10 +149,9 @@ define( function( require ) {
     thetaLabel.left = this.right + 5;
     thetaLabel.centerY = xAxis.centerY;
     var maxTrigLabelWidth = xAxis.width / 4;
-    var trigLabelOptions = { font: DISPLAY_FONT, maxWidth: maxTrigLabelWidth };
-    var cosThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, cosString, thetaString ), trigLabelOptions );
-    var sinThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, sinString, thetaString ), trigLabelOptions );
-    var tanThetaLabel = new HTMLText( StringUtils.format( trigThetaPatternString, tanString, thetaString ), trigLabelOptions );
+    var cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
+    var sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
+    var tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
 

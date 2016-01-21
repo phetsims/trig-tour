@@ -10,11 +10,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
 
   /**
    * Constructor.
@@ -33,7 +34,8 @@ define( function( require ) {
       preventFit: true
     }, options );
 
-    Path.call( this, null, options );
+    Node.call( this, options );
+    // Path.call( this, null, options );
     var thisNode = this;
 
     // watch the current radius which points to the end point of the spiral
@@ -41,10 +43,10 @@ define( function( require ) {
     this.initialRadius = initialRadius; // @private
 
     // override computeShapeBounds function to speed drawing of the shape
-    var emptyBounds = new Bounds2( 0, 0, 0, 0 );
-    this.computeShapeBounds = function() {
-      return emptyBounds;
-    };
+    // var emptyBounds = new Bounds2( 0, 0, 0, 0 );
+    // this.computeShapeBounds = function() {
+    //   return emptyBounds;
+    // };
 
     // draw an arrow head which will be placed at the outer end of the spiral
     var arrowHeadShape = new Shape();
@@ -58,7 +60,6 @@ define( function( require ) {
       lineWidth: options.arrowHeadLineWidth,
       fill: options.arrowHeadColor
     } );
-    this.addChild( this.angleArcArrowHead );
 
     // draw the spiral with gradually increasing radius
     var arcShape = new Shape();
@@ -93,8 +94,16 @@ define( function( require ) {
       }
     }
 
-    // set the spiral shape to this path
-    this.setShape( arcShape );
+    var scale = 5;
+    var spiralPath = new Path( arcShape, _.extend( { scale: scale }, options ) );
+    console.log( spiralPath.bounds );
+
+    // convert the path to an image as a performance optimization
+    spiralPath.toImage( function( image, x, y ) {
+      var spiralImage = new Image( image, { x: -x, y: -y } );
+      spiralImage.scale( 1 / scale, 1 / scale, true );
+      thisNode.children = [ spiralImage, thisNode.angleArcArrowHead ];
+    } );
 
     // update the position of the arrow node whenever the full model angle changes
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
@@ -104,7 +113,7 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Path, TrigTourSpiralNode, {
+  return inherit( Node, TrigTourSpiralNode, {
 
     updateArrowHead: function( fullAngle ) {
       // show arrow head on angle arc if angle is > 45 degrees

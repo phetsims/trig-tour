@@ -96,7 +96,6 @@ define( function( require ) {
 
     var scale = 5;
     var spiralPath = new Path( arcShape, _.extend( { scale: scale }, options ) );
-    console.log( spiralPath.bounds );
 
     // convert the path to an image as a performance optimization
     spiralPath.toImage( function( image, x, y ) {

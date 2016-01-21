@@ -94,13 +94,11 @@ define( function( require ) {
       }
     }
 
-    var scale = 5;
-    var spiralPath = new Path( arcShape, _.extend( { scale: scale }, options ) );
+    var spiralPath = new Path( arcShape, options );
 
     // convert the path to an image as a performance optimization
     spiralPath.toImage( function( image, x, y ) {
       var spiralImage = new Image( image, { x: -x, y: -y } );
-      spiralImage.scale( 1 / scale, 1 / scale, true );
       thisNode.children = [ spiralImage, thisNode.angleArcArrowHead ];
     } );
 

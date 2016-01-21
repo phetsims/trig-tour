@@ -36,18 +36,11 @@ define( function( require ) {
     }, options );
 
     Node.call( this, options );
-    // Path.call( this, null, options );
     var thisNode = this;
 
     // watch the current radius which points to the end point of the spiral
     this.endPointRadius = initialRadius; // @private
     this.initialRadius = initialRadius; // @private
-
-    // override computeShapeBounds function to speed drawing of the shape
-    // var emptyBounds = new Bounds2( 0, 0, 0, 0 );
-    // this.computeShapeBounds = function() {
-    //   return emptyBounds;
-    // };
 
     // draw an arrow head which will be placed at the outer end of the spiral
     var arrowHeadShape = new Shape();
@@ -95,11 +88,14 @@ define( function( require ) {
       }
     }
 
-    var spiralPath = new Path( arcShape, options );
+    // apply the shape to a path, scaling it up for good resolution in the following image conversion
+    var imageScale = 3;
+    var spiralPath = new Path( arcShape, _.extend( { scale: imageScale }, options ) );
 
     // convert the path to an image as a performance optimization
     spiralPath.toImage( function( image, x, y ) {
       var spiralImage = new Image( image, { x: -x, y: -y } );
+      spiralImage.scale( 1 / imageScale, 1 / imageScale, true );
       thisNode.children = [ spiralImage, thisNode.angleArcArrowHead ];
     } );
 

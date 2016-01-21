@@ -17,6 +17,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
@@ -56,6 +57,8 @@ define( function( require ) {
     this.mutate( options );
   }
 
+  trigTour.register( 'FractionNode', FractionNode );
+  
   return inherit( Node, FractionNode, {
 
     /**

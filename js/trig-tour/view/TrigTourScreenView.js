@@ -19,6 +19,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
   var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   //images
   var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
@@ -95,6 +96,8 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
   }
+
+  trigTour.register( 'TrigTourScreenView', TrigTourScreenView );
 
   return inherit( ScreenView, TrigTourScreenView, {} );
 } );

@@ -24,6 +24,7 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // strings
   var cosString = require( 'string!TRIG_TOUR/cos' );
@@ -162,6 +163,8 @@ define( function( require ) {
       thisNode.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
   }
+
+  trigTour.register( 'LabelFractionValueRow', LabelFractionValueRow );
 
   return inherit( Node, LabelFractionValueRow, {
 

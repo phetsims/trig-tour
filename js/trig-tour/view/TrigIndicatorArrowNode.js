@@ -14,6 +14,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   /**
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction
@@ -51,6 +52,8 @@ define( function( require ) {
     };
   }
 
+  trigTour.register( 'TrigIndicatorArrowNode', TrigIndicatorArrowNode );
+  
   return inherit( ArrowNode, TrigIndicatorArrowNode, {
 
     /**

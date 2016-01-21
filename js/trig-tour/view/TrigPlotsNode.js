@@ -18,6 +18,7 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var COS_COLOR = TrigTourColors.COS_COLOR;
@@ -174,6 +175,8 @@ define( function( require ) {
     } );
   }
 
+  trigTour.register( 'TrigPlotsNode', TrigPlotsNode );
+  
   return inherit( Node, TrigPlotsNode );
 
 } );

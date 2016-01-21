@@ -13,6 +13,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
@@ -40,6 +41,8 @@ define( function( require ) {
     this.fullTurnCount = 0; // @public, number of turns around unit circle, incremented at fullAngle = 0 deg
     this.halfTurnCount = 0; // @public, number of half turns around unit circle, incremented at smallAngle = 0 and 180
   }
+
+  trigTour.register( 'TrigTourModel', TrigTourModel );
 
   return inherit( PropertySet, TrigTourModel, {
 

@@ -22,6 +22,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   //strings
   var degreesString = require( 'string!TRIG_TOUR/degrees' );
@@ -110,5 +111,7 @@ define( function( require ) {
     } );
   }
 
+  trigTour.register( 'ReadoutNode', ReadoutNode );
+  
   return inherit( Node, ReadoutNode );
 } );

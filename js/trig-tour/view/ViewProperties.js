@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   /**
    * Constructor for trig-tour ViewProperties.
@@ -27,6 +28,8 @@ define( function( require ) {
       specialAnglesVisible: false
     } );
   }
+
+  trigTour.register( 'ViewProperties', ViewProperties );
 
   return inherit( PropertySet, ViewProperties );
 } );

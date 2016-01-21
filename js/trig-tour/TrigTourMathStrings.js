@@ -10,11 +10,17 @@
 define( function( require ) {
   'use strict';
 
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
+
   // strings
-  return {
+  var TrigTourMathStrings = {
     ONE_STRING: '1',
     MINUS_ONE_STRING: '-1',
     MINUS_STRING: '-',
     EQUALS_STRING: ' = '
   };
+
+  trigTour.register( 'TrigTourMathStrings', TrigTourMathStrings );
+
+  return TrigTourMathStrings;
 } );

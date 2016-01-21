@@ -27,6 +27,7 @@ define( function( require ) {
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
@@ -338,5 +339,6 @@ define( function( require ) {
 
   }
 
+  trigTour.register( 'UnitCircleView', UnitCircleView );
   return inherit( Node, UnitCircleView );
 } );

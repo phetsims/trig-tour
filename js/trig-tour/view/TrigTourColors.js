@@ -11,8 +11,9 @@ define( function( require ) {
 
   // modules
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
-  return {
+  var TrigTourColors = {
     BACKGROUND_COLOR: '#fff6cc',
     VIEW_BACKGROUND_COLOR: '#FFF',
     TEXT_COLOR: '#000',
@@ -23,4 +24,8 @@ define( function( require ) {
     COS_COLOR: '#00D',     // normal blue
     TAN_COLOR: PhetColorScheme.RED_COLORBLIND
   };
+
+  trigTour.register( 'TrigTourColors', TrigTourColors );
+
+  return TrigTourColors;
 } );

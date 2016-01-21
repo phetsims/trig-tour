@@ -16,6 +16,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   /**
    * Constructor.
@@ -109,6 +110,8 @@ define( function( require ) {
       thisNode.updateArrowHead( fullAngle );
     } );
   }
+
+  trigTour.register( 'TrigTourSpiralNode', TrigTourSpiralNode );
 
   return inherit( Node, TrigTourSpiralNode, {
 

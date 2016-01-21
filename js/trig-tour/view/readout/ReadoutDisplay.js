@@ -16,6 +16,7 @@ define( function( require ) {
   var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -56,5 +57,7 @@ define( function( require ) {
     } );
   }
 
+  trigTour.register( 'ReadoutDisplay', ReadoutDisplay );
+   
   return inherit( AccordionBox, ReadoutDisplay );
 } );

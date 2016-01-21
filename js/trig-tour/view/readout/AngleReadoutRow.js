@@ -20,6 +20,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   //strings
   var angleString = require( 'string!TRIG_TOUR/angle' );
@@ -127,6 +128,8 @@ define( function( require ) {
       thisNode.setAngleReadout();
     } );
   }
+
+  trigTour.register( 'AngleReadoutRow', AngleReadoutRow );
 
   return inherit( Node, AngleReadoutRow, {
 

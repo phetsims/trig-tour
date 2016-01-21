@@ -18,6 +18,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -102,5 +103,7 @@ define( function( require ) {
 
   }
 
+  trigTour.register( 'ControlPanel', ControlPanel );
+  
   return inherit( Panel, ControlPanel );
 } );

@@ -16,6 +16,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( {size: 20 } );
@@ -47,6 +48,8 @@ define( function( require ) {
     HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
 
   }
+
+  trigTour.register( 'TrigFunctionLabelText', TrigFunctionLabelText );
 
   return inherit( HBox, TrigFunctionLabelText );
 

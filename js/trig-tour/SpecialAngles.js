@@ -10,10 +10,12 @@
 define( function( require ) {
   'use strict';
 
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
+
   // strings
   var piString = require( 'string!TRIG_TOUR/pi' );
 
-  return {
+  var SpecialAngles = {
 
     // an array containing the 'special' angles around the unit circle
     SPECIAL_ANGLES: [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ],
@@ -371,4 +373,9 @@ define( function( require ) {
       }
     }
   };
+
+  trigTour.register( 'SpecialAngles', SpecialAngles );
+
+  return SpecialAngles;
+
 } );

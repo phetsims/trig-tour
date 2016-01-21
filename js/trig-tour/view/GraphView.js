@@ -36,6 +36,7 @@ define( function( require ) {
   var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
   var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
   var HSeparator = require( 'SUN/HSeparator' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   //strings
   var thetaString = require( 'string!TRIG_TOUR/theta' );
@@ -284,6 +285,8 @@ define( function( require ) {
       }
     } );
   }
+
+  trigTour.register( 'GraphView', GraphView );
 
   return inherit( Node, GraphView, {
 

@@ -15,6 +15,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
@@ -41,6 +42,8 @@ define( function( require ) {
     trianglePath.x = -1; // reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 
   }
+
+  trigTour.register( 'TriangleNode', TriangleNode );
 
   return inherit( Node, TriangleNode );
 } );

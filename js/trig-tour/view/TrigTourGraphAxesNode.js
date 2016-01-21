@@ -22,6 +22,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -186,6 +187,7 @@ define( function( require ) {
 
   }
 
+  trigTour.register( 'TrigTourGraphAxesNode', TrigTourGraphAxesNode );
   return inherit( Node, TrigTourGraphAxesNode );
 
 } );

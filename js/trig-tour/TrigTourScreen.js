@@ -13,6 +13,7 @@ define( function( require ) {
   var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // strings
   var trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
@@ -35,5 +36,6 @@ define( function( require ) {
     );
   }
 
+  trigTour.register( 'TrigTourScreen', TrigTourScreen );
   return inherit( Screen, TrigTourScreen );
 } );

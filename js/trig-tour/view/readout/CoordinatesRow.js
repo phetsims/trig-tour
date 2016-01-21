@@ -22,6 +22,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // strings
   var xString = require( 'string!TRIG_TOUR/x' );
@@ -45,7 +46,7 @@ define( function( require ) {
    * @param {number} trigModelValue - the value of the trig function for the model
    * @constructor
    */
-  function CoordinatesReadoutRow( trigTourModel, viewProperties, options  ) {
+  function CoordinatesRow( trigTourModel, viewProperties, options  ) {
 
     Node.call( this, options );
     var thisNode = this;
@@ -109,7 +110,9 @@ define( function( require ) {
 
   }
 
-  return inherit( Node, CoordinatesReadoutRow, {
+  trigTour.register( 'CoordinatesRow', CoordinatesRow );
+
+  return inherit( Node, CoordinatesRow, {
 
     /**
      * Set the special angle readout display.

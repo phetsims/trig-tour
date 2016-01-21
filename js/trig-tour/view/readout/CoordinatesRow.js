@@ -84,8 +84,8 @@ define( function( require ) {
         rightParensText
       ],
       align: 'center',
-      spacing: 0,
-      resize: false
+      spacing: 0
+      // resize: false
     } );
 
     // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise

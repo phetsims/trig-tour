@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.0-dev.19 Fri Jan 22 2016 16:04:06 GMT-0700 (Mountain Standard Time)",
+  "comment": "# trig-tour 1.0.0-dev.19 Fri Jan 22 2016 16:12:10 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "master"
@@ -57,7 +57,7 @@
     "branch": "master"
   },
   "trig-tour": {
-    "sha": "01c2870d1e77c74490c253be98c7946119503cc1",
+    "sha": "53c8d262c851e787d1a73c859acbaaa91d7049e9",
     "branch": "master"
   }
 }

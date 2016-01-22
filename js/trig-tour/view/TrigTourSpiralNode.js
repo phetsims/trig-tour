@@ -205,7 +205,7 @@ define( function( require ) {
       // We'll build the clip shape with two arc segments. We need to compute the radius on each to be the average of
       // the equivalent spiral's starting and ending radii. We'll start at r0 and end at r1, so by drawing two arcs,
       // we'll have a radius in the middle of rHalf.
-      var r0 = this.endPointRadius - 2;
+      var r0 = this.endPointRadius - 2.5;
       var r1 = r0 + Math.PI * 2;
       var rHalf = ( r0 + r1 ) / 2;
 

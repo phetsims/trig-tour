@@ -85,13 +85,13 @@ define( function( require ) {
       ],
       align: 'center',
       spacing: 0
-      // resize: false
     } );
 
     // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
     this.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
-    this.coordinatesReadout.left = coordinatesLabel.right;
-    this.coordinatesHBox.left = coordinatesLabel.right;
+    var spacing = 4;
+    this.coordinatesReadout.left = coordinatesLabel.right + spacing;
+    this.coordinatesHBox.left = coordinatesLabel.right + spacing;
     this.coordinatesHBox.centerY = coordinatesLabel.centerY;
 
     // Register for synchronization with model.

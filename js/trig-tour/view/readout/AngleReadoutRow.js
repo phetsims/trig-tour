@@ -76,10 +76,11 @@ define( function( require ) {
     this.children = [ angleLabelText, angleLabelEqualsText, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
 
     // row 2 layout
-    angleLabelEqualsText.left = angleLabelText.right;
-    this.angleReadoutDecimal.left = angleLabelEqualsText.right;
-    this.fullAngleFractionNode.left = angleLabelEqualsText.right;
-    this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
+    var spacing = 4;
+    angleLabelEqualsText.left = angleLabelText.right + spacing;
+    this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
+    this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
+    this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
     
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
       thisNode.setAngleReadout();

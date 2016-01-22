@@ -82,13 +82,13 @@ define( function( require ) {
 
     // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
     var spacing = 10;
-    var rowSpacing = 4;
+    var rowSpacing = 5;
     var separatorOptions = { lineWidth: 0 };
     var contentVBox = new VBox( {
       children: [
         new VSeparator( rowSpacing, separatorOptions ),
         row1,
-        new VSeparator( rowSpacing, separatorOptions ),
+        new VSeparator( rowSpacing + 5, separatorOptions ),
         row2,
         new VSeparator( rowSpacing, separatorOptions ),
         row3,

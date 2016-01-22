@@ -122,8 +122,8 @@ define( function( require ) {
 
     // layout
     var space = 4;
-    leftEqualText.left = trigLabelText.right; 
-    trigFraction.left = leftEqualText.right;
+    leftEqualText.left = trigLabelText.right + space; 
+    trigFraction.left = leftEqualText.right + space;
     rightEqualText.left = trigFraction.right + space;
     trigValueNumberText.left = rightEqualText.right + space;
     trigValueFraction.left = rightEqualText.right + space;

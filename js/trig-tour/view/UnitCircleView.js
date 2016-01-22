@@ -211,7 +211,6 @@ define( function( require ) {
     var counterClockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, TrigTourModel.MAX_ANGLE_LIMIT + Math.PI );
     var clockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, -TrigTourModel.MAX_ANGLE_LIMIT - Math.PI );
 
-
     // function to update which spiral is visible
     var updateVisibleSpiral = function( angle ) {
       counterClockWiseSpiralNode.visible = angle > 0;

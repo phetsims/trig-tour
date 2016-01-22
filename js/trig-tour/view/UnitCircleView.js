@@ -94,7 +94,7 @@ define( function( require ) {
       bHeight,
       arcRadius,
       arcRadius,
-      { fill: VIEW_BACKGROUND_COLOR, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
+      { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
     );
 
     // Draw x-, y-axes with x and y labels

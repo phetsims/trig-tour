@@ -189,18 +189,27 @@ define( function( require ) {
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
-          if ( !trigTourModel.maxAngleExceeded ) {
+          var setFullAngle = function( dragAngle ) {
             if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
             else {
               trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
             }
+          };
+
+          if ( !trigTourModel.maxAngleExceeded ) {
+            setFullAngle( smallAngle );
           }
           else {
             // maximum angle exceeded, only update full angle if abs val of small angle is deacreasing
             if( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
-              trigTourModel.setFullAngleWithSmallAngle( smallAngle );
+              // if the difference between angles is too large, rotor was dragged accross Math.PI and small angle
+              // changed signs. Immediately return because this can allow the user to drag to far. 
+              if( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
+                return;
+              }
+              setFullAngle( smallAngle );
             }
           }
         }

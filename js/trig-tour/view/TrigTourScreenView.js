@@ -48,13 +48,16 @@ define( function( require ) {
     // for i18n, calculate the maximum width for the readoutNode and the control panel.
     var maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
 
+    // small buffer between edges of the layout and panels on the screen view, for layout calculations
+    var layoutBuffer = this.layoutBounds.width * 0.015;
+
     var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties, maxPanelWidth );
-    readoutDisplay.left = this.layoutBounds.left + 30;
-    readoutDisplay.top = 30;
+    readoutDisplay.left = layoutBuffer;
+    readoutDisplay.top = unitCircleView.top;
 
     var controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
-    controlPanel.centerX = 0.5 * ( unitCircleView.right + this.layoutBounds.right );
-    controlPanel.top = this.layoutBounds.top + 30;
+    controlPanel.right = this.layoutBounds.right - layoutBuffer;
+    controlPanel.top = unitCircleView.top;
 
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
     this.dizzyPhetGirlImage.right = this.layoutBounds.right;
@@ -90,9 +93,9 @@ define( function( require ) {
         trigTourModel.setFullAngleInRadians( 0 );
         thisScreenView.dizzyPhetGirlImage.visible = false;
       },
-      right: this.layoutBounds.maxX - 60,
-      top: controlPanel.bottom + 10,
-      radius: 18   // Dubson prefers button smaller than default
+      right: controlPanel.right,
+      top: controlPanel.bottom + 10
+      // radius: 18   // Dubson prefers button smaller than default
     } );
     this.addChild( resetAllButton );
   }

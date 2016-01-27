@@ -53,10 +53,11 @@ define( function( require ) {
    *
    * @param {TrigTourModel} trigTourModel - the main model of the sim
    * @param {Rectangle} - Bounds for the background rectangle of the unit circle
+   * @param {number} - Offset of the background rectangle behind the unit circle view
    * @param {PropertySet} viewProperties - propertyset handling visibility of elements on screen
    * @constructor
    */
-  function UnitCircleView( trigTourModel, backgroundRectangle, viewProperties ) {
+  function UnitCircleView( trigTourModel, backgroundRectangle, backgroundOffset, viewProperties ) {
 
     var thisView = this;
 
@@ -91,7 +92,7 @@ define( function( require ) {
     var bHeight = backgroundRectangle.height;
     var arcRadius = backgroundRectangle.cornerRadius;
     this.backgroundRectangle = new Rectangle(
-      -backgroundWidth / 2 + backgroundLineWidth,
+      -backgroundWidth / 2 + backgroundLineWidth + backgroundOffset / 2,
       -bHeight / 2 + backgroundLineWidth,
       backgroundWidth - 2 * backgroundLineWidth,
       bHeight - 2 * backgroundLineWidth,

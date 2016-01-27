@@ -46,7 +46,8 @@ define( function( require ) {
     var width = 2.4 * 175;
     var height = 2.4 * 160;
     var arcRadius = 8;
-    var whiteSheet = new Rectangle( -width / 2, -height / 2, width, height, arcRadius, arcRadius, { 
+    var xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
+    var whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, { 
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2 
@@ -54,9 +55,8 @@ define( function( require ) {
     whiteSheet.x = this.layoutBounds.centerX;
     whiteSheet.top = this.layoutBounds.top + 20;
 
-    var unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, viewProperties );
+    var unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
     unitCircleView.center = whiteSheet.center;
-    // unitCircleView.top = whiteSheet.y;
 
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
     graphView.x = this.layoutBounds.centerX;
@@ -102,7 +102,11 @@ define( function( require ) {
         thisScreenView.dizzyPhetGirlImage.visible = false;
       },
       right: controlPanel.right,
-      top: controlPanel.bottom + 10
+      top: controlPanel.bottom + 10,
+      radius: 18,
+      touchAreaDilation: 10,
+      mouseAreaDilation: 10
+
       // radius: 18   // Dubson prefers button smaller than default
     } );
     this.addChild( resetAllButton );

@@ -20,9 +20,13 @@ define( function( require ) {
   var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
   var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   //images
   var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
+
+  // constants
+  var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 
   /**
    * Constructor for TrigTourScreenView.
@@ -37,9 +41,22 @@ define( function( require ) {
 
     var viewProperties = new ViewProperties();
 
-    var unitCircleView = new UnitCircleView( trigTourModel, viewProperties );
-    unitCircleView.x = this.layoutBounds.centerX;
-    unitCircleView.top = this.layoutBounds.top + 20;
+    // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
+    // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
+    var width = 2.4 * 175;
+    var height = 2.4 * 160;
+    var arcRadius = 8;
+    var whiteSheet = new Rectangle( -width / 2, -height / 2, width, height, arcRadius, arcRadius, { 
+      fill: 'white',
+      stroke: TEXT_COLOR_GRAY,
+      lineWidth: 2 
+    } );
+    whiteSheet.x = this.layoutBounds.centerX;
+    whiteSheet.top = this.layoutBounds.top + 20;
+
+    var unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, viewProperties );
+    unitCircleView.center = whiteSheet.center;
+    // unitCircleView.top = whiteSheet.y;
 
     var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
     graphView.x = this.layoutBounds.centerX;
@@ -62,15 +79,6 @@ define( function( require ) {
     this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
     this.dizzyPhetGirlImage.right = this.layoutBounds.right;
     this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
-
-    // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
-    // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
-    var width = 2.4 * 160;
-    var height = 2.4 * 160;
-    var arcRadius = 8;
-    var whiteSheet = new Rectangle( -width / 2, -height / 2, width, height, arcRadius, arcRadius, { fill: 'white' } );
-    whiteSheet.x = unitCircleView.x;
-    whiteSheet.y = unitCircleView.y;
 
     this.addChild( whiteSheet );
     this.addChild( graphView );

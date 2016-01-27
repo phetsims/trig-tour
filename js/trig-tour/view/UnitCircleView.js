@@ -52,10 +52,11 @@ define( function( require ) {
    * Constructor for the UnitCircleView.
    *
    * @param {TrigTourModel} trigTourModel - the main model of the sim
+   * @param {Rectangle} - Bounds for the background rectangle of the unit circle
    * @param {PropertySet} viewProperties - propertyset handling visibility of elements on screen
    * @constructor
    */
-  function UnitCircleView( trigTourModel, viewProperties ) {
+  function UnitCircleView( trigTourModel, backgroundRectangle, viewProperties ) {
 
     var thisView = this;
 
@@ -83,18 +84,20 @@ define( function( require ) {
       ) );
     }
 
-    // draw background
-    var backgroundWidth = 2.4 * radius;
-    var bHeight = 2.4 * radius;
-    var arcRadius = 8;
-    var backgroundRectangle = new Rectangle(
-      -backgroundWidth / 2,
-      -bHeight / 2,
-      backgroundWidth,
-      bHeight,
+    // draw background, a slightly transparent rectangle placed over the unit circle so that the tangent 
+    // curves do not occlude this node.
+    var backgroundLineWidth = backgroundRectangle.lineWidth;
+    var backgroundWidth = backgroundRectangle.width;
+    var bHeight = backgroundRectangle.height;
+    var arcRadius = backgroundRectangle.cornerRadius;
+    this.backgroundRectangle = new Rectangle(
+      -backgroundWidth / 2 + backgroundLineWidth,
+      -bHeight / 2 + backgroundLineWidth,
+      backgroundWidth - 2 * backgroundLineWidth,
+      bHeight - 2 * backgroundLineWidth,
       arcRadius,
       arcRadius,
-      { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7, stroke: TEXT_COLOR_GRAY, lineWidth: 2 }
+      { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7 }
     );
 
     // Draw x-, y-axes with x and y labels
@@ -103,7 +106,7 @@ define( function( require ) {
       headHeight: 12,
       headWidth: ARROW_HEAD_WIDTH
     } );
-    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, {
+    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2* radius, 0, {
       tailWidth: 0.3,
       headHeight: 12,
       headWidth: ARROW_HEAD_WIDTH
@@ -281,7 +284,7 @@ define( function( require ) {
 
     // add the children to parent node
     thisView.children = [
-      backgroundRectangle,
+      this.backgroundRectangle,
       grid,
       circleGraphic,
       xAxis,

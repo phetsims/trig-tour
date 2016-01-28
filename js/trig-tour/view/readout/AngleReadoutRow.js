@@ -21,11 +21,13 @@ define( function( require ) {
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   //strings
   var angleString = require( 'string!TRIG_TOUR/angle' );
   var piString = require( 'string!TRIG_TOUR/pi' );
   var radsString = require( 'string!TRIG_TOUR/rads' );
+  var valueUnitPatternString = require( 'string!TRIG_TOUR/valueUnitPattern' );
 
   // non-translatable string
   var equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -142,7 +144,10 @@ define( function( require ) {
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 ) + ' ' + radsString;
+        var radiansValue = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
+        var unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );
+        this.angleReadoutDecimal.text = unitsString;
+        // this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 ) + ' ' + radsString;
       }
       else {
         var roundedAngle = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );

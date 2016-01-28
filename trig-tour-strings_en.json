@@ -55,6 +55,9 @@
   },
   "vs": {
     "value": "vs"
+  },
+  "valueUnitPattern": {
+    "value": "{0} {1}"
   }
 }
 

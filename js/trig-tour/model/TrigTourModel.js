@@ -284,7 +284,7 @@ define( function( require ) {
 
     // statics
     MAX_SMALL_ANGLE_LIMIT: MAX_SMALL_ANGLE_LIMIT,
-      MAX_ANGLE_LIMIT: MAX_ANGLE_LIMIT
+    MAX_ANGLE_LIMIT: MAX_ANGLE_LIMIT
 
   } );
 } );

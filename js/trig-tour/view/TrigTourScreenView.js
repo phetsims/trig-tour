@@ -103,11 +103,9 @@ define( function( require ) {
       },
       right: controlPanel.right,
       top: controlPanel.bottom + 10,
-      radius: 18,
-      touchAreaDilation: 10,
-      mouseAreaDilation: 10
-
-      // radius: 18   // Dubson prefers button smaller than default
+      radius: 21,
+      touchAreaDilation: 3,
+      mouseAreaDilation: 3
     } );
     this.addChild( resetAllButton );
   }

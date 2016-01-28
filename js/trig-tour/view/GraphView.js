@@ -147,7 +147,8 @@ define( function( require ) {
     );
 
     // @public (read-only) axes node for displaying axes on the graph
-    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
+    var amplitudeOffset = 4;  // the graph y-axis needs a small extension beyond the amplitude of the curve 
+    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude + amplitudeOffset, viewProperties );
 
     // @public (read-only) node containing paths of the trig curves sin, cos, and tan
     this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );

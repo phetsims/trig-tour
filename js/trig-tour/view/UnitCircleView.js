@@ -134,13 +134,20 @@ define( function( require ) {
     // draw vertical (sine) line on rotor triangle
     // displayed line is either simple Line (no arrow head) or TrigIndicatorArrowNode (with arrow head)
     var verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
-    var verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { tailWidth: 6, fill: SIN_COLOR } );
+    var verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { 
+      tailWidth: 5,
+      lineWidth: 1,
+      fill: SIN_COLOR,
+      stroke: SIN_COLOR
+    } );
 
     // draw horizontal (cosine) line on rotor triangle
     var horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
     var horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', {
-      tailWidth: 6,
-      fill: COS_COLOR
+      tailWidth: 5,
+      lineWidth: 1,
+      fill: COS_COLOR,
+      stroke: COS_COLOR
     } );
 
     // Draw rotor arm with draggable red pin at end

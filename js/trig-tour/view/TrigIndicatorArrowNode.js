@@ -62,6 +62,7 @@ define( function( require ) {
      */
     setColor: function( color ) {
       this.fill = color;
+      this.stroke = color;
     },
 
     /**

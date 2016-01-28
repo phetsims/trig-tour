@@ -167,7 +167,8 @@ define( function( require ) {
     // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and
     // trigFunction(angle) a red dot on top of the indicator line echoes red dot on unit circle
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
-      tailWidth: 5,
+      tailWidth: 4,
+      lineWidth: 1,
       headWidth: 12,
       headHeight: 20,
       cursor: 'pointer'

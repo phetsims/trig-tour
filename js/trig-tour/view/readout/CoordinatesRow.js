@@ -89,10 +89,14 @@ define( function( require ) {
 
     // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
     this.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
-    var spacing = 4;
-    this.coordinatesReadout.left = coordinatesLabel.right + spacing;
-    this.coordinatesHBox.left = coordinatesLabel.right + spacing;
-    this.coordinatesHBox.centerY = coordinatesLabel.centerY;
+
+    // set the row layout.  Needs to be called every update so that pieces of the row do not wander.
+    var setRowLayout = function() {
+      var spacing = 4;
+      thisNode.coordinatesReadout.left = coordinatesLabel.right + spacing;
+      thisNode.coordinatesHBox.left = coordinatesLabel.right + spacing;
+      thisNode.coordinatesHBox.centerY = coordinatesLabel.centerY;
+    };
 
     // Register for synchronization with model.
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
@@ -101,6 +105,9 @@ define( function( require ) {
       thisNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
       thisNode.setSpecialAngleTrigReadout( thisNode.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
       thisNode.setSpecialAngleTrigReadout( thisNode.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
+
+      // update the layout accordingly
+      setRowLayout();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {

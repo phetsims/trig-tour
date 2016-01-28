@@ -31,6 +31,7 @@ define( function( require ) {
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
   var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   /**
    * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
@@ -83,7 +84,7 @@ define( function( require ) {
     // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
     var spacing = 10;
     var rowSpacing = 5;
-    var separatorOptions = { lineWidth: 0 };
+    var separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };
     var contentVBox = new VBox( {
       children: [
         new VSeparator( rowSpacing, separatorOptions ),

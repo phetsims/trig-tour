@@ -64,7 +64,7 @@ define( function( require ) {
       headHeight: 12,
       headWidth: 8
     } );
-    var yAxis = new ArrowNode( 0, 1.2 * amplitude, 0, -1.3 * amplitude, {
+    var yAxis = new ArrowNode( 0, 1.18 * amplitude, 0, -1.3 * amplitude, {
       tailWidth: 0.3,
       fill: LINE_COLOR,
       headHeight: 12,

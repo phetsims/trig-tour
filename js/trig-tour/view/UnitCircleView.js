@@ -94,15 +94,15 @@ define( function( require ) {
     this.backgroundRectangle = new Rectangle(
       -backgroundWidth / 2 + backgroundLineWidth + backgroundOffset / 2,
       -bHeight / 2 + backgroundLineWidth,
-      backgroundWidth - 2 * backgroundLineWidth,
-      bHeight - 2 * backgroundLineWidth,
+      backgroundWidth - 3 * backgroundLineWidth,
+      bHeight - 3 * backgroundLineWidth,
       arcRadius,
       arcRadius,
       { fill: VIEW_BACKGROUND_COLOR, opacity: 0.7 }
     );
 
     // Draw x-, y-axes with x and y labels
-    var yAxis = new ArrowNode( 0, 1.2 * radius, 0, -1.2 * radius, {
+    var yAxis = new ArrowNode( 0, 1.18 * radius, 0, -1.2 * radius, {
       tailWidth: 0.3,
       headHeight: 12,
       headWidth: ARROW_HEAD_WIDTH

@@ -1,11 +1,11 @@
 {
-  "comment": "# trig-tour 1.0.0-dev.20 Thu Jan 28 2016 11:37:59 GMT-0700 (Mountain Standard Time)",
+  "comment": "# trig-tour 1.0.0-rc.1 Fri Jan 29 2016 11:52:43 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "master"
   },
   "axon": {
-    "sha": "f527eaf1915908e0da3ecaee15d48b76a8539dcf",
+    "sha": "3729b0d83fd2d84d180a0c8c49b18a7a651d6140",
     "branch": "master"
   },
   "brand": {
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "57c99807c0b8747ad05cf1f5faa87459ade78c1d",
+    "sha": "0e7f348d0fa75d4cc610a71a3bc2a4b898d57eaa",
     "branch": "master"
   },
   "dot": {
@@ -37,11 +37,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "0f5a6f9c426c91327bf2855f2e18473abdc9e83e",
-    "branch": "accessible-instance"
+    "sha": "d0753b38f4d2500602e9a70ac6e1d1fcf2bb03af",
+    "branch": "master"
   },
   "scenery-phet": {
-    "sha": "e903fad21de1daea73dc854965e6f8c50d72ac6f",
+    "sha": "2a28aee5309e67c69c33b2e2c9398e821419263f",
     "branch": "master"
   },
   "sherpa": {
@@ -49,7 +49,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "45c7d334c5417ec96dcf6e43b9735c4064a44a8c",
+    "sha": "163252c0248502542bb89d57b9518b6dc0408451",
     "branch": "master"
   },
   "tandem": {
@@ -57,7 +57,7 @@
     "branch": "master"
   },
   "trig-tour": {
-    "sha": "dbfde426b9d8368933e06780bd1c9fa6b9292e67",
-    "branch": "master"
+    "sha": "d35d7306495a2744a5cf6a7775ae6fe2cd1d50d2",
+    "branch": "1.0"
   }
 }

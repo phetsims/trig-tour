@@ -79,7 +79,7 @@ define( function( require ) {
 
     var marginWidth = 25;   // distance in pixels between edge of Node and edge of nearest full wavelength
     var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
-    this.amplitude = 0.45 * height;  // @private amplitude of sinusoidal curve in pixels
+    this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in pixels
     var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
@@ -117,7 +117,7 @@ define( function( require ) {
     var backgroundHeight = 1.2 * height;
     var backgroundWidth = 1.05 * width;
     var arcRadius = 10;
-    var backgroundRectangle = new Rectangle( -backgroundWidth / 2, -(backgroundHeight / 2) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
+    var backgroundRectangle = new Rectangle( -backgroundWidth / 2, -( backgroundHeight / 2 ) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
       fill: VIEW_BACKGROUND_COLOR,
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
@@ -147,22 +147,37 @@ define( function( require ) {
     );
 
     // @public (read-only) axes node for displaying axes on the graph
-    var amplitudeOffset = 4;  // the graph y-axis needs a small extension beyond the amplitude of the curve 
-    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude + amplitudeOffset, viewProperties );
+    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
 
     // @public (read-only) node containing paths of the trig curves sin, cos, and tan
     this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );
 
     // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
-    this.singularityIndicator = new Line( 0, -800, 0, 400, { stroke: TAN_COLOR, lineWidth: 2, lineDash: [ 10, 5 ] } );
+    this.singularityIndicator = new Line( 0, -800, 0, 400, { 
+      stroke: TAN_COLOR,
+      lineWidth: 2,
+      lineDash: [ 10, 5 ],
+      cursor: 'pointer'
+    } );
+
+    // Lines are not draggable.  An invisible rectangle needs to cover the singularity indicator so that the user
+    // can  drag it once it appears.
     hitBound = 20;
-    midX = this.singularityIndicator.centerX;
     var minY = this.singularityIndicator.bottom;
     var maxY = this.singularityIndicator.top;
-    this.singularityIndicator.mouseArea = new Bounds2( midX - hitBound, minY, midX + hitBound, maxY );
-    this.singularityIndicator.touchArea = new Bounds2( midX - hitBound, minY, midX + hitBound, maxY );
+    midX = this.singularityIndicator.centerX;
+
+    // debugger;
+    this.singularityRectangle =  new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
+      cursor: 'pointer',
+      visible: false,
+      opacity: 0, // this needs to be completely invisible
+      center: this.singularityIndicator.center
+    } );
+  
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );
+    this.trigPlotsNode.addChild( this.singularityRectangle );
 
     // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and
     // trigFunction(angle) a red dot on top of the indicator line echoes red dot on unit circle
@@ -173,6 +188,10 @@ define( function( require ) {
       headHeight: 20,
       cursor: 'pointer'
     } );
+
+    var interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
+    this.trigIndicatorArrowNode.mouseArea = interactionArea;
+    this.trigIndicatorArrowNode.touchArea = interactionArea;
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
 
@@ -204,8 +223,7 @@ define( function( require ) {
       thisGraphView.titleDisplayPanel.visible = !expanded;
     } );
 
-    // add a drag handler to the indicatorArrowNode
-    this.trigIndicatorArrowNode.addInputListener( new SimpleDragHandler(
+    var dragHandler = new SimpleDragHandler(
       {
         allowTouchSnag: true,
 
@@ -232,7 +250,11 @@ define( function( require ) {
           }
 
         }
-      } ) );
+      } );
+
+    // add a drag handler to the indicatorArrowNode
+    this.trigIndicatorArrowNode.addInputListener( dragHandler );
+    this.singularityRectangle.addInputListener( dragHandler );
 
     // Register for synchronization with model
     // function that reduces the indicator arrow tail width around the tan function singularity
@@ -250,6 +272,7 @@ define( function( require ) {
       var xPos = fullAngle / (2 * Math.PI) * wavelength;
       thisGraphView.trigIndicatorArrowNode.x = xPos;
       thisGraphView.singularityIndicator.x = xPos;
+      thisGraphView.singularityRectangle.x = xPos;
       setIndicatorTailWidth();
       thisGraphView.setTrigIndicatorArrowNode();
     } );
@@ -264,11 +287,13 @@ define( function( require ) {
         if ( graph === 'cos' || graph === 'sin' ) {
           thisGraphView.trigIndicatorArrowNode.opacity = 1;
           thisGraphView.singularityIndicator.visible = false;
+          thisGraphView.singularityRectangle.visible = false;
         }
         else {
           // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
           thisGraphView.trigIndicatorArrowNode.opacity = 0;
           thisGraphView.singularityIndicator.visible = true;
+          thisGraphView.singularityRectangle.visible = true;
         }
       }
       thisGraphView.setTrigIndicatorArrowNode();
@@ -277,6 +302,7 @@ define( function( require ) {
     trigTourModel.singularityProperty.link( function( singularity ) {
       if ( thisGraphView.viewProperties.graphProperty.value === 'tan' ) {
         thisGraphView.singularityIndicator.visible = singularity;
+        thisGraphView.singularityRectangle.visible = singularity;
         // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
         if ( singularity ) {
           thisGraphView.trigIndicatorArrowNode.opacity = 0;

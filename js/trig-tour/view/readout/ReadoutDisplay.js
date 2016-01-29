@@ -1,8 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * AccordionBox container of ReadoutNode,
- * ReadoutNode contains all the user-viewed content.
+ * AccordionBox container of ReadoutNode.  ReadoutNode contains all viewable values for the simulation.
  *
  * @author Michael Dubson on 6/10/2015.
  */

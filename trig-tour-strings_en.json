@@ -58,6 +58,9 @@
   },
   "valueUnitPattern": {
     "value": "{0} {1}"
+  },
+  "numberPiPattern": {
+    "value": "{0}{1}"
   }
 }
 

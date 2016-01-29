@@ -22,6 +22,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
@@ -37,6 +38,7 @@ define( function( require ) {
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
+  var numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
 
   /**
    * Constructor.
@@ -120,14 +122,14 @@ define( function( require ) {
     var tickMarkLabelsInRadians = new Node();
     var labelString = '';
     var labelStrings = [
-      '-4' + piString,
-      '-3' + piString,
-      '-2' + piString,
-      '-' + piString,
+      StringUtils.format( numberPiPatternString, '-4', piString ),
+      StringUtils.format( numberPiPatternString, '-3', piString ),
+      StringUtils.format( numberPiPatternString, '-2', piString ),
+      StringUtils.format( numberPiPatternString, '-', piString ),
       piString,
-      '2' + piString,
-      '3' + piString,
-      '4' + piString
+      StringUtils.format( numberPiPatternString, '2', piString ),
+      StringUtils.format( numberPiPatternString, '3', piString ),
+      StringUtils.format( numberPiPatternString, '4', piString )
     ];
     var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
     for ( i = 0; i < xPositions.length; i++ ) {

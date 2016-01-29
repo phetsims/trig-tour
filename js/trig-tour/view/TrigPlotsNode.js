@@ -65,7 +65,7 @@ define( function( require ) {
 
     dx = wavelength / 600;  //x-distance between points on curve
     numberOfPoints = ( numberOfWavelengths + 0.08 ) * wavelength / dx;
-    var maxTanValue = 1.2;
+    var maxTanValue = 1.15;
     var minTanValue = -1.0;
     var yPos;
     for ( i = 0; i < numberOfPoints; i++ ) {

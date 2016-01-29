@@ -147,7 +147,6 @@ define( function( require ) {
         var radiansValue = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
         var unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );
         this.angleReadoutDecimal.text = unitsString;
-        // this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 ) + ' ' + radsString;
       }
       else {
         var roundedAngle = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );

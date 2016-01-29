@@ -102,16 +102,9 @@ define( function( require ) {
     );
 
     // Draw x-, y-axes with x and y labels
-    var yAxis = new ArrowNode( 0, 1.18 * radius, 0, -1.2 * radius, {
-      tailWidth: 0.3,
-      headHeight: 12,
-      headWidth: ARROW_HEAD_WIDTH
-    } );
-    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2* radius, 0, {
-      tailWidth: 0.3,
-      headHeight: 12,
-      headWidth: ARROW_HEAD_WIDTH
-    } );
+    var arrowOptions = { tailWidth: 0.3, headHeight: 12, headWidth: ARROW_HEAD_WIDTH };
+    var yAxis = new ArrowNode( 0, 1.18 * radius, 0, -1.2 * radius, arrowOptions );
+    var xAxis = new ArrowNode( -1.2 * radius, 0, 1.2* radius, 0, arrowOptions );
 
     // Draw and position x-, y-axis labels
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
@@ -161,7 +154,7 @@ define( function( require ) {
     var labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    var xLabelText = new Text( xString, fontInfo );            //xLabelText, yLabelText already defined above
+    var xLabelText = new Text( xString, fontInfo );
     var yLabelText = new Text( yString, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     var thetaText = new Text( thetaString, fontInfo );
@@ -173,14 +166,16 @@ define( function( require ) {
     var minusOneYText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
 
     // position +1/-1 labels on xy axes
-    oneXText.left = grid.right + 5;
-    oneXText.top = 7;
-    minusOneXText.right = grid.left - 5;
-    minusOneXText.top = 7;
+    var xOffset = 5;
+    var yOffset = 7;
+    oneXText.left = grid.right + xOffset;
+    oneXText.top = yOffset;
+    minusOneXText.right = grid.left - xOffset;
+    minusOneXText.top = yOffset;
     oneYText.bottom = grid.top;
-    oneYText.left = 5;
+    oneYText.left = xOffset;
     minusOneYText.top = grid.bottom;
-    minusOneYText.right = -5;
+    minusOneYText.right = -xOffset;
 
     labelCanvas.children = [ oneText, xLabelText, yLabelText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 

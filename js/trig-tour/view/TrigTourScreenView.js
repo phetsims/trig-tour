@@ -3,6 +3,9 @@
 /**
  * Main screen view, master layout of view on stage
  *
+ * Layout calculations are done empirically, numbers used in all layout calculations were chosen because
+ * they 'look good'.
+ *
  * @author Michael Dubson (PhET)
  */
 define( function( require ) {

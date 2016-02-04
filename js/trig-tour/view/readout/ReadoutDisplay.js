@@ -23,6 +23,7 @@ define( function( require ) {
   var BUTTON_X_MARGIN = 12;
   var TITLE_X_SPACING = 10.5;
   var CONTENT_X_MARGIN = 20;
+  var CLOSE_BUTTON_WIDTH = 16;
 
   //strings
   var valuesString = require( 'string!TRIG_TOUR/values' );
@@ -39,6 +40,9 @@ define( function( require ) {
     var maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
     var readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
 
+    // dilation for the close button touch/click areas
+    var buttonDilation = 30 - CLOSE_BUTTON_WIDTH / 2;
+
     // Call the super constructor
     AccordionBox.call( this, readoutNode, {
       lineWidth: 1,
@@ -52,7 +56,11 @@ define( function( require ) {
       showTitleWhenExpanded: true,
       contentXMargin: CONTENT_X_MARGIN,
       contentYMargin: 15,
-      contentYSpacing: 8
+      contentYSpacing: 8,
+      buttonTouchAreaXDilation: buttonDilation,
+      buttonTouchAreaYDilation: buttonDilation,
+      buttonMouseAreaXDilation: buttonDilation,
+      buttonMouseAreaYDilation: buttonDilation
     } );
   }
 

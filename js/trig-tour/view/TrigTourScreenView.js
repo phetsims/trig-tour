@@ -107,8 +107,8 @@ define( function( require ) {
       right: controlPanel.right,
       top: controlPanel.bottom + 10,
       radius: 21,
-      touchAreaDilation: 5,
-      mouseAreaDilation: 5
+      touchAreaDilation: 8,
+      mouseAreaDilation: 8
     } );
     this.addChild( resetAllButton );
   }

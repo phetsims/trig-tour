@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.0 Fri Feb 05 2016 19:45:39 GMT-0700 (Mountain Standard Time)",
+  "comment": "# trig-tour 1.0.0 Mon Feb 22 2016 15:42:42 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -21,8 +21,8 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "4c228a327558f18681a136f64c23a28006f16b9f",
-    "branch": "HEAD"
+    "sha": "2731ae1c0df1ff7f3c3750819ada2c3e27085441",
+    "branch": "trig-tour-1.0"
   },
   "kite": {
     "sha": "4a947119f6e57cb6a6d9d1bf4596502ca721464c",
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "935b5076cd9b980a113ed6eafbe263d745f69b6c",
+    "sha": "d6b93dcd7d48d1b9b54fe933be03409f5c6ac9d7",
     "branch": "1.0"
   }
 }

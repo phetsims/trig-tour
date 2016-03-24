@@ -32,7 +32,7 @@ define( function( require ) {
    * Constructor for
    * @param {TrigTourModel} model is the main model of the sim
    * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - max widht for the panel, determined by layout of the screen view
+   * @param {number} maxPanelWidth - max width for the panel, determined by layout of the screen view
    * @constructor
    */
   function ReadoutDisplay( model, viewProperties, maxPanelWidth ) {

@@ -96,8 +96,9 @@ define( function( require ) {
         this.specialAngles = SpecialAngles.SPECIAL_TAN_FRACTIONS;
         break;
       }
+      default:
+        throw new Error( 'invalid trigLabelString: ' + trigLabelString );
     }
-    assert && assert( trigString && numeratorString && denominatorString, 'trigLabel must be one of "cos", "sin", or "tan"' );
 
     // label section of the row, something like 'Cos θ ='
     var trigLabelText = new TrigFunctionLabelText( trigString, { 

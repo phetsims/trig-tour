@@ -49,7 +49,7 @@ define( function( require ) {
   function CoordinatesRow( trigTourModel, viewProperties, options  ) {
 
     Node.call( this, options );
-    var thisNode = this;
+    var self = this;
 
     this.trigTourModel = trigTourModel; // @private
     this.viewProperties = viewProperties; // @private
@@ -93,26 +93,26 @@ define( function( require ) {
     // set the row layout.  Needs to be called every update so that pieces of the row do not wander.
     var setRowLayout = function() {
       var spacing = 4;
-      thisNode.coordinatesReadout.left = coordinatesLabel.right + spacing;
-      thisNode.coordinatesHBox.left = coordinatesLabel.right + spacing;
-      thisNode.coordinatesHBox.centerY = coordinatesLabel.centerY;
+      self.coordinatesReadout.left = coordinatesLabel.right + spacing;
+      self.coordinatesHBox.left = coordinatesLabel.right + spacing;
+      self.coordinatesHBox.centerY = coordinatesLabel.centerY;
     };
 
     // Register for synchronization with model.
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
       var sinText = Util.toFixed( trigTourModel.sin(), 3 );
       var cosText = Util.toFixed( trigTourModel.cos(), 3 );
-      thisNode.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
-      thisNode.setSpecialAngleTrigReadout( thisNode.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
-      thisNode.setSpecialAngleTrigReadout( thisNode.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
+      self.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
+      self.setSpecialAngleTrigReadout( self.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
+      self.setSpecialAngleTrigReadout( self.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
 
       // update the layout accordingly
       setRowLayout();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      thisNode.coordinatesHBox.visible = specialAnglesVisible;
-      thisNode.coordinatesReadout.visible = !specialAnglesVisible;
+      self.coordinatesHBox.visible = specialAnglesVisible;
+      self.coordinatesReadout.visible = !specialAnglesVisible;
     } );
 
   }

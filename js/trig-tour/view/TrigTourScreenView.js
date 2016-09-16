@@ -40,7 +40,7 @@ define( function( require ) {
   function TrigTourScreenView( trigTourModel ) {
 
     ScreenView.call( this );
-    var thisScreenView = this;
+    var self = this;
 
     var viewProperties = new ViewProperties();
 
@@ -92,7 +92,7 @@ define( function( require ) {
 
     // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
     trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
-      thisScreenView.dizzyPhetGirlImage.visible = maxAngleExceeded;
+      self.dizzyPhetGirlImage.visible = maxAngleExceeded;
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
@@ -102,7 +102,7 @@ define( function( require ) {
         graphView.expandedProperty.value = true;
         readoutDisplay.expandedProperty.value = true;
         trigTourModel.setFullAngleInRadians( 0 );
-        thisScreenView.dizzyPhetGirlImage.visible = false;
+        self.dizzyPhetGirlImage.visible = false;
       },
       right: controlPanel.right,
       top: controlPanel.bottom + 10,

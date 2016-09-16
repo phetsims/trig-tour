@@ -55,7 +55,7 @@ define( function( require ) {
   function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, options  ) {
 
     Node.call( this, options );
-    var thisNode = this;
+    var self = this;
 
     // prevent block fitting of this row as a performance optimization
     this.preventFit = true;
@@ -144,7 +144,7 @@ define( function( require ) {
 
     // synchronize row values with model
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
-      thisNode.setTrigReadout( trigValueNumberText, trigValueFraction );
+      self.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
 
     // if this row has a node for infinity, link its visibility to the singularity
@@ -161,7 +161,7 @@ define( function( require ) {
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
       trigValueFraction.visible = specialAnglesVisible;
       trigValueNumberText.visible = !specialAnglesVisible;
-      thisNode.setTrigReadout( trigValueNumberText, trigValueFraction );
+      self.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
   }
 

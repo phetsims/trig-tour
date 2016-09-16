@@ -59,10 +59,10 @@ define( function( require ) {
    */
   function UnitCircleView( trigTourModel, backgroundRectangle, backgroundOffset, viewProperties ) {
 
-    var thisView = this;
+    var self = this;
 
     // Call the super constructor
-    Node.call( thisView );
+    Node.call( self );
 
     // Draw Unit Circle
     var radius = 160; //radius of unit circle in pixels
@@ -286,7 +286,7 @@ define( function( require ) {
     };
 
     // add the children to parent node
-    thisView.children = [
+    self.children = [
       this.backgroundRectangle,
       grid,
       circleGraphic,

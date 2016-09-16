@@ -69,8 +69,8 @@ define( function( require ) {
   function GraphView( trigTourModel, height, width, viewProperties ) {
 
     // Call the super constructor
-    var thisGraphView = this;
-    Node.call( thisGraphView );
+    var self = this;
+    Node.call( self );
 
     // @private
     this.trigTourModel = trigTourModel;
@@ -210,7 +210,7 @@ define( function( require ) {
       leftBorder
     ];
 
-    thisGraphView.children = [
+    self.children = [
       backgroundRectangle,
       this.titleDisplayPanel,
       this.expandCollapseButton,
@@ -221,7 +221,7 @@ define( function( require ) {
     this.expandCollapseButton.expandedProperty.link( function( expanded ) {
       backgroundRectangle.visible = expanded;
       displayNode.visible = expanded;
-      thisGraphView.titleDisplayPanel.visible = !expanded;
+      self.titleDisplayPanel.visible = !expanded;
     } );
 
     var dragHandler = new SimpleDragHandler(
@@ -229,7 +229,7 @@ define( function( require ) {
         allowTouchSnag: true,
 
         drag: function( e ) {
-          var position = thisGraphView.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
+          var position = self.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
           var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           // make sure the full angle does not exceed max allowed angle
@@ -261,21 +261,21 @@ define( function( require ) {
     // function that reduces the indicator arrow tail width around the tan function singularity
     var setIndicatorTailWidth = function() {
       var tanSize = Math.abs( trigTourModel.tan() );
-      if ( thisGraphView.viewProperties.graphProperty.value === 'tan' && tanSize > 1.5 ) {
-        thisGraphView.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
+      if ( self.viewProperties.graphProperty.value === 'tan' && tanSize > 1.5 ) {
+        self.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
       else {
-        thisGraphView.trigIndicatorArrowNode.setTailWidth( 5 );
+        self.trigIndicatorArrowNode.setTailWidth( 5 );
       }
     };
 
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
       var xPos = fullAngle / (2 * Math.PI) * wavelength;
-      thisGraphView.trigIndicatorArrowNode.x = xPos;
-      thisGraphView.singularityIndicator.x = xPos;
-      thisGraphView.singularityRectangle.x = xPos;
+      self.trigIndicatorArrowNode.x = xPos;
+      self.singularityIndicator.x = xPos;
+      self.singularityRectangle.x = xPos;
       setIndicatorTailWidth();
-      thisGraphView.setTrigIndicatorArrowNode();
+      self.setTrigIndicatorArrowNode();
     } );
 
     viewProperties.graphProperty.link( function( graph ) {
@@ -283,33 +283,33 @@ define( function( require ) {
       setIndicatorTailWidth();
 
       // set title bar in GraphView
-      thisGraphView.setTitleBarText( graph );
+      self.setTitleBarText( graph );
       if ( trigTourModel.singularity ) {
         if ( graph === 'cos' || graph === 'sin' ) {
-          thisGraphView.trigIndicatorArrowNode.opacity = 1;
-          thisGraphView.singularityIndicator.visible = false;
-          thisGraphView.singularityRectangle.visible = false;
+          self.trigIndicatorArrowNode.opacity = 1;
+          self.singularityIndicator.visible = false;
+          self.singularityRectangle.visible = false;
         }
         else {
           // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
-          thisGraphView.trigIndicatorArrowNode.opacity = 0;
-          thisGraphView.singularityIndicator.visible = true;
-          thisGraphView.singularityRectangle.visible = true;
+          self.trigIndicatorArrowNode.opacity = 0;
+          self.singularityIndicator.visible = true;
+          self.singularityRectangle.visible = true;
         }
       }
-      thisGraphView.setTrigIndicatorArrowNode();
+      self.setTrigIndicatorArrowNode();
     } );
 
     trigTourModel.singularityProperty.link( function( singularity ) {
-      if ( thisGraphView.viewProperties.graphProperty.value === 'tan' ) {
-        thisGraphView.singularityIndicator.visible = singularity;
-        thisGraphView.singularityRectangle.visible = singularity;
+      if ( self.viewProperties.graphProperty.value === 'tan' ) {
+        self.singularityIndicator.visible = singularity;
+        self.singularityRectangle.visible = singularity;
         // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
         if ( singularity ) {
-          thisGraphView.trigIndicatorArrowNode.opacity = 0;
+          self.trigIndicatorArrowNode.opacity = 0;
         }
         else {
-          thisGraphView.trigIndicatorArrowNode.opacity = 1;
+          self.trigIndicatorArrowNode.opacity = 1;
         }
       }
     } );
@@ -323,16 +323,16 @@ define( function( require ) {
      * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
      */
     setTrigIndicatorArrowNode: function() {
-      var thisGraphView = this;
+      var self = this;
 
       var cosNow = this.trigTourModel.cos();
       var sinNow = this.trigTourModel.sin();
       var tanNow = this.trigTourModel.tan();
 
       var setIndicatorAndHandle = function( trigValue, indicatorColor ) {
-        thisGraphView.trigIndicatorArrowNode.setEndPoint( trigValue * thisGraphView.amplitude );
-        thisGraphView.trigIndicatorArrowNode.setColor( indicatorColor );
-        thisGraphView.redDotHandle.y = -trigValue * thisGraphView.amplitude;
+        self.trigIndicatorArrowNode.setEndPoint( trigValue * self.amplitude );
+        self.trigIndicatorArrowNode.setColor( indicatorColor );
+        self.redDotHandle.y = -trigValue * self.amplitude;
       };
       if ( this.viewProperties.graphProperty.value === 'cos' ) {
         setIndicatorAndHandle( cosNow, COS_COLOR );

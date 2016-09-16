@@ -40,7 +40,7 @@ define( function( require ) {
     }, options );
 
     Node.call( this, options );
-    var thisNode = this;
+    var self = this;
 
     // watch the current radius which points to the end point of the spiral
     this.endPointRadius = initialRadius; // @private
@@ -139,13 +139,13 @@ define( function( require ) {
     spiralImageNode.x = -spiralImageNode.width / 2 + xImageOffset;
     spiralImageNode.y = -spiralImageNode.height / 2 + yImageOffset;
 
-    this.children = [ spiralImageNode, thisNode.angleArcArrowHead ];
+    this.children = [ spiralImageNode, self.angleArcArrowHead ];
 
     // update the position of the arrow node whenever the full model angle changes
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
-      thisNode.updateEndPointRadius( fullAngle );
-      thisNode.updateClipArea( fullAngle );
-      thisNode.updateArrowHead( fullAngle );
+      self.updateEndPointRadius( fullAngle );
+      self.updateClipArea( fullAngle );
+      self.updateArrowHead( fullAngle );
     } );
   }
 

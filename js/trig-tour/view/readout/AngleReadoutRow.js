@@ -47,7 +47,7 @@ define( function( require ) {
   function AngleReadoutRow( trigTourModel, viewProperties, options ) {
 
     Node.call( this, options );
-    var thisNode = this;
+    var self = this;
 
     // @private
     this.decimalPrecision = 1; // number of decimal places for display of fullAngle, = 0 for special angles
@@ -85,36 +85,36 @@ define( function( require ) {
     this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
     
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
-      thisNode.setAngleReadout();
+      self.setAngleReadout();
     } );
 
     viewProperties.angleUnitsProperty.link( function( units ) {
-      thisNode.setUnits( units );
+      self.setUnits( units );
       if ( units === 'radians' && viewProperties.specialAnglesVisibleProperty.value ) {
-        thisNode.fullAngleFractionNode.visible = true;
-        thisNode.angleReadoutFraction.visible = true;
-        thisNode.angleReadoutDecimal.visible = false;
+        self.fullAngleFractionNode.visible = true;
+        self.angleReadoutFraction.visible = true;
+        self.angleReadoutDecimal.visible = false;
       }
       else {
-        thisNode.fullAngleFractionNode.visible = false;
-        thisNode.angleReadoutFraction.visible = false;
-        thisNode.angleReadoutDecimal.visible = true;
+        self.fullAngleFractionNode.visible = false;
+        self.angleReadoutFraction.visible = false;
+        self.angleReadoutDecimal.visible = true;
       }
-      thisNode.setAngleReadout();
+      self.setAngleReadout();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
 
       //select correct angle readout
       if ( specialAnglesVisible && viewProperties.angleUnitsProperty.value === 'radians' ) {
-        thisNode.fullAngleFractionNode.visible = true;
-        thisNode.angleReadoutFraction.visible = true;
-        thisNode.angleReadoutDecimal.visible = false;
+        self.fullAngleFractionNode.visible = true;
+        self.angleReadoutFraction.visible = true;
+        self.angleReadoutDecimal.visible = false;
       }
       else {
-        thisNode.fullAngleFractionNode.visible = false;
-        thisNode.angleReadoutFraction.visible = false;
-        thisNode.angleReadoutDecimal.visible = true;
+        self.fullAngleFractionNode.visible = false;
+        self.angleReadoutFraction.visible = false;
+        self.angleReadoutDecimal.visible = true;
       }
 
       // set precision of angle readout in degrees:
@@ -122,13 +122,13 @@ define( function( require ) {
       if ( specialAnglesVisible ) {
         var currentSmallAngle = trigTourModel.getSmallAngleInRadians();
         trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
-        thisNode.setAngleReadoutPrecision( 0 );   //integer display of special angles
+        self.setAngleReadoutPrecision( 0 );   //integer display of special angles
       }
       else {
         // 1 decimal place precision for continuous angles
-        thisNode.setAngleReadoutPrecision( 1 );
+        self.setAngleReadoutPrecision( 1 );
       }
-      thisNode.setAngleReadout();
+      self.setAngleReadout();
     } );
   }
 
@@ -184,7 +184,7 @@ define( function( require ) {
      * Set the special angle readout.
      */
     setSpecialAngleReadout: function() {
-      var thisNode = this;
+      var self = this;
 
       this.angleReadoutFraction.visible = true;
 
@@ -222,7 +222,7 @@ define( function( require ) {
         // this information
         var sign = angleInDegs >= 0 ? '' : '-';
         var coefficient = angleInDegs >= 0 ? +1 : -1;
-        thisNode.angleReadoutFraction.setValues(
+        self.angleReadoutFraction.setValues(
           sign + specialAngleFractions[ coefficient * angleInDegs ].numerator, // string concatenation
           specialAngleFractions[ coefficient * angleInDegs ].denominator,
           false /* no radicals for special angle fractions */

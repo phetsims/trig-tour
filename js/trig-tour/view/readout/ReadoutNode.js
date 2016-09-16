@@ -44,10 +44,10 @@ define( function( require ) {
    */
   function ReadoutNode( model, viewProperties, maxPanelWidth ) {
 
-    var thisReadoutNode = this;
+    var self = this;
 
     // Call the super constructor
-    Node.call( thisReadoutNode );
+    Node.call( self );
 
     // create the first two rows
     var row1 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
@@ -102,7 +102,7 @@ define( function( require ) {
       resize: false
     } );
 
-    thisReadoutNode.addChild( contentVBox );
+    self.addChild( contentVBox );
 
     // Synchronize visibility properties with the view
     viewProperties.graphProperty.link( function( graph ) {

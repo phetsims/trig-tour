@@ -39,7 +39,7 @@ define( function( require ) {
    *
    * @param {ViewProperties} viewProperties
    * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
   function ControlPanel( viewProperties, maxPanelWidth, options ) {
@@ -104,6 +104,6 @@ define( function( require ) {
   }
 
   trigTour.register( 'ControlPanel', ControlPanel );
-  
+
   return inherit( Panel, ControlPanel );
 } );

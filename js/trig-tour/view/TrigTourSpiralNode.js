@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {TrigTourModel} trigTourModel
    * @param {number} initialRadius - initial radius of the spiral
    * @param {number} spiralAngle - total angle of the spiral shape
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
   function TrigTourSpiralNode( trigTourModel, initialRadius, spiralAngle, options ) {
@@ -61,13 +61,13 @@ define( function( require ) {
 
     //------------------------------------------------------------------------------------------------------------------
     /**
-     * The following code is used to generate the spiral images used in this sim.  
+     * The following code is used to generate the spiral images used in this sim.
      *
-     * The spiral path causes the simulation to perform poorly on tablets.  The path is then converted to an image with 
-     * Node.toImage().  Rendering the image causes a very long load time, so the rendered image was saved under 
+     * The spiral path causes the simulation to perform poorly on tablets.  The path is then converted to an image with
+     * Node.toImage().  Rendering the image causes a very long load time, so the rendered image was saved under
      * trig-tour/images so that it could be pulled from the image plugin.
-     * 
-     * For more information, see https://github.com/phetsims/trig-tour/issues/62 
+     *
+     * For more information, see https://github.com/phetsims/trig-tour/issues/62
      */
 
     // // draw the spiral with gradually increasing radius

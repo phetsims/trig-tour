@@ -22,7 +22,7 @@ define( function( require ) {
    *
    * @param {number} defaultLength of arrow in pixels
    * @param {string} orientation =  one of 'vertical' or 'horizontal'
-   * @param {object} options passed to ArrowNode
+   * @param {Object} options passed to ArrowNode
    * @constructor
    */
   function TrigIndicatorArrowNode( defaultLength, orientation, options ) {
@@ -53,7 +53,7 @@ define( function( require ) {
   }
 
   trigTour.register( 'TrigIndicatorArrowNode', TrigIndicatorArrowNode );
-  
+
   return inherit( ArrowNode, TrigIndicatorArrowNode, {
 
     /**

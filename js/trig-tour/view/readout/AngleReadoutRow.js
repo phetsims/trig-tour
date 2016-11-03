@@ -41,7 +41,7 @@ define( function( require ) {
    *
    * @param {TrigTourModel} trigTourModel is the main model of the sim
    * @param {ViewProperties} viewProperties
-   * @param {object} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
+   * @param {Object} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
    * @constructor
    */
   function AngleReadoutRow( trigTourModel, viewProperties, options ) {
@@ -83,7 +83,7 @@ define( function( require ) {
     this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
     this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
     this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
-    
+
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
       self.setAngleReadout();
     } );
@@ -161,7 +161,7 @@ define( function( require ) {
      */
     setAngleReadoutPrecision: function( decimalPrecision ) {
       this.decimalPrecision = decimalPrecision;
-    },    
+    },
 
         /**
      * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.

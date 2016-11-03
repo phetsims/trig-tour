@@ -1,7 +1,7 @@
 // Copyright 2015, University of Colorado Boulder
 
 /**
- * Displays a built-up fraction, used in the ReadoutNode of Trig Tour.  This node is only ever used in the 
+ * Displays a built-up fraction, used in the ReadoutNode of Trig Tour.  This node is only ever used in the
  * readout panel.
  *
  * @author Michael Dubson (PhET developer) on 6/10/2015.
@@ -30,7 +30,7 @@ define( function( require ) {
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
    * @param {string|number} numerator
    * @param {string|number} denominator
-   * @param {object} options
+   * @param {Object} options
    * @constructor
    */
   function FractionNode( numerator, denominator, options ) {
@@ -59,7 +59,7 @@ define( function( require ) {
   }
 
   trigTour.register( 'FractionNode', FractionNode );
-  
+
   return inherit( Node, FractionNode, {
 
     /**

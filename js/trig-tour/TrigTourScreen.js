@@ -15,7 +15,6 @@ define( function( require ) {
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
@@ -27,7 +26,7 @@ define( function( require ) {
     Screen.call( this,
       function() { return new TrigTourModel(); },
       function( model ) { return new TrigTourScreenView( model ); },
-      { backgroundColorProperty: new Property( Color.toColor( BACKGROUND_COLOR ) ) }
+      { backgroundColorProperty: new Property( BACKGROUND_COLOR ) }
     );
   }
 

@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.7-rc.1 Thu Apr 06 2017 02:04:38 GMT-0600 (MDT)",
+  "comment": "# trig-tour 1.0.7 Fri Apr 07 2017 17:46:50 GMT-0600 (MDT)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "c53c7e07fc9f405b974addf919469a89c73545ec",
+    "sha": "e6b40b3add009ca782b38f3e62151adf3c88705c",
     "branch": "1.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.7 Thu Apr 13 2017 15:20:18 GMT-0600 (MDT)",
+  "comment": "# trig-tour 1.0.7 Thu Apr 13 2017 20:21:16 GMT-0600 (MDT)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -10,19 +10,19 @@
   },
   "brand": {
     "sha": "edec39d6be768452cc3b7b87246e409c89d04ac1",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "chipper": {
     "sha": "0e7f348d0fa75d4cc610a71a3bc2a4b898d57eaa",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "ddf82014392e9956043fab8608d5b8222e6134dc",
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "743017acb4e992de5fffac051c3009f59508a98b",
-    "branch": "HEAD"
+    "sha": "31bdc4dd03d870bf5d474c069fa111bf0bcaffe9",
+    "branch": "trig-tour-1.0"
   },
   "kite": {
     "sha": "4a947119f6e57cb6a6d9d1bf4596502ca721464c",
@@ -34,7 +34,7 @@
   },
   "phetcommon": {
     "sha": "f4028fb6ba3af586eb3797efcc927d42747832ca",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "scenery": {
     "sha": "d1cb4be65117f0db7ec536df50d7ba64f4f697a3",
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "c1d5afc33d5e38c0eec4aaff4e3c53efc75c2b72",
+    "sha": "83252f4e5ecb92fc270d1500d34be9960cb1e141",
     "branch": "1.0"
   }
 }

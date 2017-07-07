@@ -54,7 +54,7 @@ define( function( require ) {
    * @param {TrigTourModel} trigTourModel - the main model of the sim
    * @param {Rectangle} backgroundRectangle - Bounds for the background rectangle of the unit circle
    * @param {number} backgroundOffset - Offset of the background rectangle behind the unit circle view
-   * @param {ViewProperties} viewProperties - set of properties handling visibility of elements on screen
+   * @param {ViewProperties} viewProperties - collection of properties handling visibility of elements on screen
    * @constructor
    */
   function UnitCircleView( trigTourModel, backgroundRectangle, backgroundOffset, viewProperties ) {
@@ -204,13 +204,13 @@ define( function( require ) {
             }
           };
 
-          if ( !trigTourModel.maxAngleExceeded ) {
+          if ( !trigTourModel.maxAngleExceededProperty.value ) {
             setFullAngle( smallAngle );
           }
           else {
-            // maximum angle exceeded, only update full angle if abs val of small angle is deacreasing
+            // maximum angle exceeded, only update full angle if abs val of small angle is decreasing
             if( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
-              // if the difference between angles is too large, rotor was dragged accross Math.PI and small angle
+              // if the difference between angles is too large, rotor was dragged across Math.PI and small angle
               // changed signs. Immediately return because this can allow the user to drag to far. 
               if( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
                 return;

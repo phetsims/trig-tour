@@ -60,7 +60,7 @@ define( function( require ) {
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
     // full angle for the trigTourModel
-    var fullAngleValue = Util.toFixed( trigTourModel.fullAngle, 1 );
+    var fullAngleValue = Util.toFixed( trigTourModel.fullAngleProperty.value, 1 );
 
     //  value is decimal number or exact fraction of radians (in special angle mode)
     var angleLabelText = new Text( angleString, fontBoldInfo );
@@ -163,7 +163,7 @@ define( function( require ) {
       this.decimalPrecision = decimalPrecision;
     },
 
-        /**
+    /**
      * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
      */
     setAngleReadout: function() {
@@ -173,7 +173,7 @@ define( function( require ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.fullAngle, 3 ) + ' ' + radsString;
+        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.fullAngleProperty.value, 3 ) + ' ' + radsString;
       }
       if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();

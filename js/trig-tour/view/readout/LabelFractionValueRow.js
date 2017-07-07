@@ -153,7 +153,7 @@ define( function( require ) {
     if( plusMinusInfinityNode ) {
       trigTourModel.singularityProperty.link( function( singularity ) {
         plusMinusInfinityNode.visible = singularity;
-        if ( !viewProperties.specialAnglesVisible ) {
+        if ( !viewProperties.specialAnglesVisibleProperty.value ) {
           trigValueNumberText.visible = !singularity;
         }
       } );

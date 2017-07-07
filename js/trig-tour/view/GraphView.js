@@ -154,7 +154,7 @@ define( function( require ) {
     this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );
 
     // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
-    this.singularityIndicator = new Line( 0, -800, 0, 400, { 
+    this.singularityIndicator = new Line( 0, -800, 0, 400, {
       stroke: TAN_COLOR,
       lineWidth: 2,
       lineDash: [ 10, 5 ],
@@ -169,13 +169,13 @@ define( function( require ) {
     midX = this.singularityIndicator.centerX;
 
     // debugger;
-    this.singularityRectangle =  new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
+    this.singularityRectangle = new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
       cursor: 'pointer',
       visible: false,
       opacity: 0, // this needs to be completely invisible
       center: this.singularityIndicator.center
     } );
-  
+
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );
     this.trigPlotsNode.addChild( this.singularityRectangle );
@@ -235,7 +235,7 @@ define( function( require ) {
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
-          if ( !trigTourModel.maxAngleExceeded ) {
+          if ( !trigTourModel.maxAngleExceededProperty.value ) {
             if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
@@ -284,7 +284,7 @@ define( function( require ) {
 
       // set title bar in GraphView
       self.setTitleBarText( graph );
-      if ( trigTourModel.singularity ) {
+      if ( trigTourModel.singularityProperty.value ) {
         if ( graph === 'cos' || graph === 'sin' ) {
           self.trigIndicatorArrowNode.opacity = 1;
           self.singularityIndicator.visible = false;
@@ -350,7 +350,7 @@ define( function( require ) {
     },
 
     /**
-     * Set the title bar text.  Different strings in the title require different font styles.  HTML text should be 
+     * Set the title bar text.  Different strings in the title require different font styles.  HTML text should be
      * avoided because it causes issues in performance.  So the text is built up here.
      *
      * @param {string} trigString - the label for the trig function
@@ -360,13 +360,13 @@ define( function( require ) {
 
       // determine the appropriate trig function string for the title.
       var trigTitleString;
-      if( trigString === 'cos' ) {
+      if ( trigString === 'cos' ) {
         trigTitleString = cosString;
       }
-      if( trigString === 'sin' ) {
+      if ( trigString === 'sin' ) {
         trigTitleString = sinString;
       }
-      else if( trigString === 'tan' ) {
+      else if ( trigString === 'tan' ) {
         trigTitleString = tanString;
       }
 
@@ -378,7 +378,11 @@ define( function( require ) {
       var trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );
 
       // everything formatted in an HBox
-      var titleTextHBox = new HBox( { children: [ trigFunctionLabelText, vsText, variableThetaText ], spacing: 6, resize: false } );
+      var titleTextHBox = new HBox( {
+        children: [ trigFunctionLabelText, vsText, variableThetaText ],
+        spacing: 6,
+        resize: false
+      } );
 
       // update the content of the title HBox, removing the title child, and inserting it back after update
       this.titleDisplayHBox.removeChildWithIndex( this.graphTitle, this.titleDisplayHBox.children.indexOf( this.graphTitle ) );

@@ -10,7 +10,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Util = require( 'DOT/Util' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
@@ -26,13 +27,16 @@ define( function( require ) {
    */
   function TrigTourModel() {
 
-    // @public
-    PropertySet.call( this, {
-      fullAngle: 0,             // @public total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
-      singularity: false,       // @public indicates singularity in tan function at theta = +/- 90 degrees
-                                // @public true if fullAngle is close to +/-90 degrees
-      maxAngleExceeded: false   // @public (read-only) true if user exceeds maximum allowed angle
-    } );
+    // @public {Property.<Number>} total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
+    this.fullAngleProperty = new NumberProperty( 0 );
+
+    // @public {Property.<boolean>} indicates singularity in tan function at theta = +/- 90 degrees
+    // true if fullAngle is close to +/-90 degrees
+    this.singularityProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>} (read-only) true if user exceeds maximum allowed angle
+    this.maxAngleExceededProperty = new BooleanProperty( false );
+
 
     this.smallAngle = 0;    // @private, fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
     this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total fullAngle from smallAngle
@@ -44,7 +48,17 @@ define( function( require ) {
 
   trigTour.register( 'TrigTourModel', TrigTourModel );
 
-  return inherit( PropertySet, TrigTourModel, {
+  return inherit( Object, TrigTourModel, {
+
+    /**
+     * Resets the properties of the model
+     * @public
+     */
+    reset: function() {
+      this.fullAngleProperty.reset();
+      this.singularityProperty.reset();
+      this.maxAngleExceededProperty.reset();
+    },
 
     /**
      * Returns cos of the total model fullAngle in radians.
@@ -52,7 +66,7 @@ define( function( require ) {
      * @returns {number}
      */
     cos: function() {
-      return Math.cos( this.fullAngle );
+      return Math.cos( this.fullAngleProperty.value );
     },
 
     /**
@@ -61,7 +75,7 @@ define( function( require ) {
      * @returns {number}
      */
     sin: function() {
-      return Math.sin( this.fullAngle );
+      return Math.sin( this.fullAngleProperty.value );
     },
 
     /**
@@ -71,17 +85,17 @@ define( function( require ) {
      * @returns {number}
      */
     tan: function() {
-      var tanValue = Math.tan( this.fullAngle );
+      var tanValue = Math.tan( this.fullAngleProperty.value );
       var maxValue = 350;
-      this.singularity = false;
+      this.singularityProperty.value = false;
       var returnValue;
       if ( tanValue > maxValue ) {
         returnValue = maxValue;
-        this.singularity = true;
+        this.singularityProperty.value = true;
       }
       else if ( tanValue < -maxValue ) {
         returnValue = -maxValue;
-        this.singularity = true;
+        this.singularityProperty.value = true;
       }
       else {
         returnValue = tanValue;
@@ -95,7 +109,7 @@ define( function( require ) {
      * @returns {number}
      */
     getFullAngleInRadians: function() {
-      return this.fullAngle;
+      return this.fullAngleProperty.value;
     },
 
     /**
@@ -104,7 +118,7 @@ define( function( require ) {
      * @returns {number}
      */
     getFullAngleInDegrees: function() {
-      return Util.toDegrees( this.fullAngle );
+      return Util.toDegrees( this.fullAngleProperty.value );
     },
 
     /**
@@ -162,7 +176,7 @@ define( function( require ) {
       this.smallAngle = fullAngleInRads - this.rotationNumberFromPi * 2 * Math.PI;
       remainderAngle = fullAngleInRads % ( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
-      this.fullAngle = fullAngleInRads;
+      this.fullAngleProperty.value = fullAngleInRads;
     },
 
     /**
@@ -197,7 +211,7 @@ define( function( require ) {
       this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
       remainderAngle = targetAngle % ( Math.PI );
       this.halfTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
-      this.fullAngle = targetAngle;  // now can trigger angle update
+      this.fullAngleProperty.value = targetAngle;  // now can trigger angle update
       this.previousAngle = smallAngle;
     },
 
@@ -278,7 +292,7 @@ define( function( require ) {
      */
     checkMaxAngleExceeded: function() {
       // determine if max angle is exceeded and set the property.
-      this.maxAngleExceeded = ( Math.abs( this.getFullAngleInRadians() ) > MAX_ANGLE_LIMIT );
+      this.maxAngleExceededProperty.value = ( Math.abs( this.getFullAngleInRadians() ) > MAX_ANGLE_LIMIT );
     }
   }, {
 

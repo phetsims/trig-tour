@@ -171,8 +171,8 @@ define( function( require ) {
     viewProperties.labelsVisibleProperty.link( function( isVisible ) {
       onesNode.visible = isVisible;
       if ( isVisible ) {
-        tickMarkLabelsInRadians.visible = viewProperties.angleUnits === 'radians';
-        tickMarkLabelsInDegrees.visible = viewProperties.angleUnits === 'degrees';
+        tickMarkLabelsInRadians.visible = viewProperties.angleUnitsProperty.value === 'radians';
+        tickMarkLabelsInDegrees.visible = viewProperties.angleUnitsProperty.value === 'degrees';
       }
       else {
         tickMarkLabelsInRadians.visible = false;
@@ -181,7 +181,7 @@ define( function( require ) {
     } );
 
     viewProperties.angleUnitsProperty.link( function( angleUnits ) {
-      if ( viewProperties.labelsVisible ) {
+      if ( viewProperties.labelsVisibleProperty.value ) {
         tickMarkLabelsInRadians.visible = ( angleUnits === 'radians');
         tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians');
       }

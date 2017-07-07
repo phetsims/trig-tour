@@ -29,7 +29,7 @@ define( function( require ) {
    * Constructor.
    *
    * @param {string} trigFunctionString - label for the trig function
-   * @param {Object] [options]
+   * @param {Object} [options]
    * @constructor
    */
   function TrigFunctionLabelText( trigFunctionString, options ) {

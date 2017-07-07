@@ -125,11 +125,11 @@ define( function( require ) {
 
     // layout
     var space = 4;
-    leftEqualText.left = trigLabelText.right + space; 
-    trigFraction.left = leftEqualText.right + space;
-    rightEqualText.left = trigFraction.right + space;
-    trigValueNumberText.left = rightEqualText.right + space;
-    trigValueFraction.left = rightEqualText.right + space;
+    leftEqualText.leftCenter = trigLabelText.rightCenter.plusXY( space, 0 );
+    trigFraction.leftCenter = leftEqualText.rightCenter.plusXY( space, 0 );
+    rightEqualText.leftCenter = trigFraction.rightCenter.plusXY( space, 0 );
+    trigValueNumberText.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
+    trigValueFraction.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if( trigLabelString === 'tan' ) {

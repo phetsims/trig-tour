@@ -3,7 +3,7 @@
 /**
  * A convenience type that builds up a trig function as a label.  Normal text cannot be used because the desired look
  * of the label is a trig function and a theta symbol, where the theta symbol has a unique font style.  HTMLText
- * cannot be used for this because it is performance intensive for stings that are meant ot be dynamic.  The trig 
+ * cannot be used for this because it is performance intensive for stings that are meant ot be dynamic.  The trig
  * function label should look something like 'cos θ' .
  *
  * @author Jesse Greenberg
@@ -19,7 +19,7 @@ define( function( require ) {
   var trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( {size: 20 } );
+  var DISPLAY_FONT = new PhetFont( { size: 20 } );
   var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 
   // strings
@@ -28,7 +28,8 @@ define( function( require ) {
   /**
    * Constructor.
    *
-   * @param {string} trigFunction, label for the trig function
+   * @param {string} trigFunctionString - label for the trig function
+   * @param {Object] [options]
    * @constructor
    */
   function TrigFunctionLabelText( trigFunctionString, options ) {

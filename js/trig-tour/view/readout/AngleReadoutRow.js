@@ -167,8 +167,8 @@ define( function( require ) {
      * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
      */
     setAngleReadout: function() {
-      var radiansDisplayed = this.viewProperties.angleUnits === 'radians';
-      var specialAnglesVisible = this.viewProperties.specialAnglesVisible === true;
+      var radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
+      var specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
       if ( !radiansDisplayed ) {
         this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
       }

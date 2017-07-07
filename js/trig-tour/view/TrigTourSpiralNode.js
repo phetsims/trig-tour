@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {TrigTourModel} trigTourModel
    * @param {number} initialRadius - initial radius of the spiral
    * @param {number} spiralAngle - total angle of the spiral shape
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function TrigTourSpiralNode( trigTourModel, initialRadius, spiralAngle, options ) {

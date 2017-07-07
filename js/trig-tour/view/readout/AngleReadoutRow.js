@@ -41,7 +41,7 @@ define( function( require ) {
    *
    * @param {TrigTourModel} trigTourModel is the main model of the sim
    * @param {ViewProperties} viewProperties
-   * @param {Object} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
+   * @param {Object} [options] to pass the maximum width of content in the ReadoutNode panel in the screen view.
    * @constructor
    */
   function AngleReadoutRow( trigTourModel, viewProperties, options ) {

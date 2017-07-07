@@ -1,4 +1,3 @@
-
 // Copyright 2015, University of Colorado Boulder
 
 /**
@@ -42,11 +41,12 @@ define( function( require ) {
   /**
    * Constructor.
    *
-   * @param {string} trigLabelString - string representing the trig function for this row
-   * @param {number} trigModelValue - the value of the trig function for the model
+   * @param {TrigTourModel} trigTourModel
+   * @param {ViewProperties} viewProperties
+   * @param {Object} [options]
    * @constructor
    */
-  function CoordinatesRow( trigTourModel, viewProperties, options  ) {
+  function CoordinatesRow( trigTourModel, viewProperties, options ) {
 
     Node.call( this, options );
     var self = this;
@@ -123,7 +123,7 @@ define( function( require ) {
 
     /**
      * Set the special angle readout display.
-     * 
+     *
      * @private
      */
     setSpecialAngleTrigReadout: function( trigValueFraction, specialFractions ) {

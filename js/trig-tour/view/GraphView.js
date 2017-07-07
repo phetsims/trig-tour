@@ -78,9 +78,9 @@ define( function( require ) {
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
     // Graph drawing code is determined empirically, numbers are chosen based on what 'looks good'.
-    var marginWidth = 25;   // distance in pixels between edge of Node and edge of nearest full wavelength
-    var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in pixels
-    this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in pixels
+    var marginWidth = 25;   // distance between edge of Node and edge of nearest full wavelength
+    var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in view coordinates
+    this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in view coordinates
     var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
     var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );

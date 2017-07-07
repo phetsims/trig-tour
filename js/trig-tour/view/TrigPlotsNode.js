@@ -120,7 +120,7 @@ define( function( require ) {
     //Place arrow heads on ends of all tan curve segments. This is pretty tricky
     var arrowHeads = []; //array of arrow heads
 
-    // x and y coordinates of ends of the 'central' tan segment, in pixels.
+    // x and y coordinates of ends of the 'central' tan segment, in view coordinates.
     // 'Central' segment is the one centered on the origin.
     var xTanMax = Math.atan( maxTanValue ) * wavelength / ( 2 * pi );
     var xTanMin = Math.atan( minTanValue ) * wavelength / ( 2 * pi );

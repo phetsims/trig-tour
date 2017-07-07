@@ -49,7 +49,9 @@ define( function( require ) {
    * Constructor.
    *
    * @param {string} trigLabelString - string representing the trig function for this row
-   * @param {number} trigModelValue - the value of the trig function for the model
+   * @param {TrigTourModel} trigTourModel
+   * @param {ViewProperties} viewProperties
+   * @param {Object} [options]
    * @constructor
    */
   function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, options  ) {

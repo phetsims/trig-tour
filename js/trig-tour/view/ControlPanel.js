@@ -39,7 +39,7 @@ define( function( require ) {
    *
    * @param {ViewProperties} viewProperties
    * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ControlPanel( viewProperties, maxPanelWidth, options ) {

@@ -21,10 +21,10 @@ define( function( require ) {
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
    * Used as arrow heads on ends of curves in GraphView
    *
-   * @param {number} length of triangle in pixels
-   * @param {number} width of triangle in pixels
-   * @param {string} color string, e.g. '#0F0'
-   * @param {number} rotationInDegrees = rotation of node about (0,0)
+   * @param {number} length - length triangle in view coordinates
+   * @param {number} width - width of triangle in view coordinates
+   * @param {string} color - string, e.g. '#0F0'
+   * @param {number} rotationInDegrees - rotation of node about (0,0)
    * @constructor
    */
   function TriangleNode( length, width, color, rotationInDegrees ) {

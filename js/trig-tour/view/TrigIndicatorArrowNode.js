@@ -20,9 +20,9 @@ define( function( require ) {
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction
    * of the tail length.
    *
-   * @param {number} defaultLength of arrow in pixels
-   * @param {string} orientation =  one of 'vertical' or 'horizontal'
-   * @param {Object} options passed to ArrowNode
+   * @param {number} defaultLength - arrow in view coordinates
+   * @param {string} orientation -  one of 'vertical' or 'horizontal'
+   * @param {Object} [options] - passed to ArrowNode
    * @constructor
    */
   function TrigIndicatorArrowNode( defaultLength, orientation, options ) {

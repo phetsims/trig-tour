@@ -52,9 +52,9 @@ define( function( require ) {
    * Constructor for the UnitCircleView.
    *
    * @param {TrigTourModel} trigTourModel - the main model of the sim
-   * @param {Rectangle} - Bounds for the background rectangle of the unit circle
-   * @param {number} - Offset of the background rectangle behind the unit circle view
-   * @param {PropertySet} viewProperties - propertyset handling visibility of elements on screen
+   * @param {Rectangle} backgroundRectangle - Bounds for the background rectangle of the unit circle
+   * @param {number} backgroundOffset - Offset of the background rectangle behind the unit circle view
+   * @param {ViewProperties} viewProperties - set of properties handling visibility of elements on screen
    * @constructor
    */
   function UnitCircleView( trigTourModel, backgroundRectangle, backgroundOffset, viewProperties ) {
@@ -65,7 +65,7 @@ define( function( require ) {
     Node.call( self );
 
     // Draw Unit Circle
-    var radius = 160; //radius of unit circle in pixels
+    var radius = 160; //radius of unit circle in view coordinates
     var circleGraphic = new Circle( radius, { stroke: LINE_COLOR, lineWidth: 3 } );
 
     // Draw 'special angle' locations on unit circle

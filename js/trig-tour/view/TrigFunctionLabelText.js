@@ -40,10 +40,10 @@ define( function( require ) {
     }, options );
 
     // build the text for the trig function label
-    var trigTitleText = new Text( trigFunctionString, options.trigFunctionLabelFont );
+    var trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
 
     // create the text for the mathematical symbol theta
-    var trigThetaText = new Text( thetaString, options.thetaLabelFont );
+    var trigThetaText = new Text( thetaString, { font: options.thetaLabelFont } );
 
     // build the text, placing both function and theta labels in an HBox
     HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );

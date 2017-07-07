@@ -371,8 +371,8 @@ define( function( require ) {
       }
 
       // create each text component
-      var variableThetaText = new Text( thetaString, ITALIC_DISPLAY_FONT );
-      var vsText = new Text( vsString, DISPLAY_FONT );
+      var variableThetaText = new Text( thetaString, { font: ITALIC_DISPLAY_FONT } );
+      var vsText = new Text( vsString, { font: DISPLAY_FONT } );
 
       // build up and format the title
       var trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );

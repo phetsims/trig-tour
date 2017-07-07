@@ -105,7 +105,7 @@ define( function( require ) {
       trigFunctionLabelFont: DISPLAY_FONT_LARGE_BOLD,
       thetaLabelFont: DISPLAY_FONT_LARGE_BOLD_ITALIC
     } );
-    var leftEqualText = new Text( equalString, DISPLAY_FONT_LARGE_BOLD );
+    var leftEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
 
     // label fraction for the row defining the shown value, something like 'x/1'
     var trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
@@ -117,7 +117,7 @@ define( function( require ) {
     var trigValueFraction = new FractionNode( '', '', fontOptions );
 
     // create an text representation of the equal sign
-    var rightEqualText = new Text( equalString, DISPLAY_FONT_LARGE_BOLD );
+    var rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
 
     this.children = [ trigLabelText, leftEqualText, trigFraction, rightEqualText, trigValueNumberText, trigValueFraction ];
 

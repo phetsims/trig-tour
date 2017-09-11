@@ -10,11 +10,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Util = require( 'DOT/Util' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction

@@ -11,14 +11,14 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Util = require( 'DOT/Util' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  var Vector2 = require( 'DOT/Vector2' );
+  var TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var COS_COLOR = TrigTourColors.COS_COLOR;

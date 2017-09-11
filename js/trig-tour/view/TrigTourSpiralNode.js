@@ -10,13 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  var Util = require( 'DOT/Util' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var Util = require( 'DOT/Util' );
 
   //images
   var clockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/clockwise-spiral.png' );

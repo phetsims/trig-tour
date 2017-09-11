@@ -14,17 +14,17 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
-  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var cosString = require( 'string!TRIG_TOUR/cos' );

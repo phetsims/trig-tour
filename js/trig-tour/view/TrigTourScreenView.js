@@ -14,16 +14,16 @@ define( function( require ) {
   // modules
   var ControlPanel = require( 'TRIG_TOUR/trig-tour/view/ControlPanel' );
   var GraphView = require( 'TRIG_TOUR/trig-tour/view/GraphView' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutDisplay' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
-  var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
+  var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
   //images
   var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );

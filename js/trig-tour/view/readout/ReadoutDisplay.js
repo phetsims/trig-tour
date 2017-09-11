@@ -14,8 +14,8 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );

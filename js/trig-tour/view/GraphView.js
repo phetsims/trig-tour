@@ -16,13 +16,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -31,18 +29,20 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
-  var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
   var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
-  var HSeparator = require( 'SUN/HSeparator' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
+  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
 
   //strings
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
+  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var vsString = require( 'string!TRIG_TOUR/vs' );
 
   //constants

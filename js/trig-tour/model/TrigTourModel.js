@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Util = require( 'DOT/Util' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;

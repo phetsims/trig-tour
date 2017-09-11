@@ -13,17 +13,17 @@ define( function( require ) {
 
   // modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
+  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -33,12 +33,12 @@ define( function( require ) {
   var DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
   // strings
-  var piString = require( 'string!TRIG_TOUR/pi' );
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var cosString = require( 'string!TRIG_TOUR/cos' );
+  var numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
+  var piString = require( 'string!TRIG_TOUR/pi' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
-  var numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
+  var thetaString = require( 'string!TRIG_TOUR/theta' );
 
   /**
    * Constructor.

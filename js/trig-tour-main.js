@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
+  var TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
 
   // strings
   var trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );

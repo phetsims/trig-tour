@@ -10,18 +10,18 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
-  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var xString = require( 'string!TRIG_TOUR/x' );

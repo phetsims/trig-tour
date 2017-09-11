@@ -16,9 +16,9 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -28,11 +28,11 @@ define( function( require ) {
 
   //strings
   var cosString = require( 'string!TRIG_TOUR/cos' );
-  var sinString = require( 'string!TRIG_TOUR/sin' );
-  var tanString = require( 'string!TRIG_TOUR/tan' );
-  var labelsString = require( 'string!TRIG_TOUR/labels' );
   var gridString = require( 'string!TRIG_TOUR/grid' );
+  var labelsString = require( 'string!TRIG_TOUR/labels' );
+  var sinString = require( 'string!TRIG_TOUR/sin' );
   var specialAnglesString = require( 'string!TRIG_TOUR/specialAngles' );
+  var tanString = require( 'string!TRIG_TOUR/tan' );
 
   /**
    * Constructor for the control panel

@@ -10,19 +10,19 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var LabelFractionValueRow = require( 'TRIG_TOUR/trig-tour/view/readout/LabelFractionValueRow' );
-  var CoordinatesRow = require( 'TRIG_TOUR/trig-tour/view/readout/CoordinatesRow' );
   var AngleReadoutRow = require( 'TRIG_TOUR/trig-tour/view/readout/AngleReadoutRow' );
+  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  var CoordinatesRow = require( 'TRIG_TOUR/trig-tour/view/readout/CoordinatesRow' );
   var HSeparator = require( 'SUN/HSeparator' );
-  var VSeparator = require( 'SUN/VSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LabelFractionValueRow = require( 'TRIG_TOUR/trig-tour/view/readout/LabelFractionValueRow' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var trigTour = require( 'TRIG_TOUR/trigTour' );
   var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var VSeparator = require( 'SUN/VSeparator' );
 
   //strings
   var degreesString = require( 'string!TRIG_TOUR/degrees' );

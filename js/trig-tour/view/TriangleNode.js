@@ -14,8 +14,8 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  var Util = require( 'DOT/Util' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)

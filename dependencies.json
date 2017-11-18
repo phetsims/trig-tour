@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.8 Fri Nov 17 2017 15:12:36 GMT-0700 (MST)",
+  "comment": "# trig-tour 1.0.9-rc.1 Fri Nov 17 2017 19:09:57 GMT-0700 (MST)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -14,7 +14,7 @@
   },
   "chipper": {
     "sha": "984fde9c179afacfa26a049154ce0be0cd4d79f1",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "ddf82014392e9956043fab8608d5b8222e6134dc",
@@ -22,7 +22,7 @@
   },
   "joist": {
     "sha": "ab7a3d030c758edc450cd18c29aac0dd95e7d787",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "4a947119f6e57cb6a6d9d1bf4596502ca721464c",
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "d538c12ee44595f76fe0a1f486678044fe2e83d9",
+    "sha": "9a46738d2c90bc64673ad9451e02f86f8aca9483",
     "branch": "1.0"
   }
 }

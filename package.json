@@ -13,7 +13,8 @@
     "requirejsNamespace": "TRIG_TOUR",
     "runnable": true,
     "supportedBrands": [
-      "phet"
+      "phet",
+      "adapted-from-phet"
     ],
     "simulation": true
   }

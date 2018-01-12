@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
@@ -72,27 +72,27 @@ define( function( require ) {
     var tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
 
     // 3 checkboxes: Labels, Grid, Special Angles
-    var checkBoxOptions = { checkBoxColorBackground: 'white' };
-    var labelsCheckBox = new CheckBox( labelsText, viewProperties.labelsVisibleProperty, checkBoxOptions );
-    var gridCheckBox = new CheckBox( gridText, viewProperties.gridVisibleProperty, checkBoxOptions );
-    var specialAnglesCheckBox = new CheckBox(
+    var checkboxOptions = { checkboxColorBackground: 'white' };
+    var labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
+    var gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
+    var specialAnglesCheckbox = new Checkbox(
       specialAnglesText,
       viewProperties.specialAnglesVisibleProperty,
-      checkBoxOptions
+      checkboxOptions
     );
 
     // Adjust touch areas
     var spacing = 15;
-    var separatorWidth = specialAnglesCheckBox.width + 10;
+    var separatorWidth = specialAnglesCheckbox.width + 10;
     var content = new VBox( {
       children: [
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
         new HSeparator( separatorWidth ),
-        specialAnglesCheckBox,
-        labelsCheckBox,
-        gridCheckBox
+        specialAnglesCheckbox,
+        labelsCheckbox,
+        gridCheckbox
       ],
       align: 'left',
       spacing: spacing,

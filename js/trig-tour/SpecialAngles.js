@@ -10,10 +10,11 @@
 define( function( require ) {
   'use strict';
 
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
 
-  // strings
-  var piString = require( 'string!TRIG_TOUR/pi' );
+  // constants
+  var PI = MathSymbols.PI;
 
   var SpecialAngles = {
 
@@ -38,67 +39,67 @@ define( function( require ) {
         denominator: ''
       },
       30: {
-        numerator: piString,
+        numerator: PI,
         denominator: 6
       },
       45: {
-        numerator: piString,
+        numerator: PI,
         denominator: 4
       },
       60: {
-        numerator: piString,
+        numerator: PI,
         denominator: 3
       },
       90: {
-        numerator: piString,
+        numerator: PI,
         denominator: 2
       },
       120: {
-        numerator: 2 + piString,
+        numerator: 2 + PI,
         denominator: 3
       },
       135: {
-        numerator: 3 + piString,
+        numerator: 3 + PI,
         denominator: 4
       },
       150: {
-        numerator: 5 + piString,
+        numerator: 5 + PI,
         denominator: 6
       },
       180: {
-        numerator: piString,
+        numerator: PI,
         denominator: ''
       },
       210: {
-        numerator: 7 + piString,
+        numerator: 7 + PI,
         denominator: 6
       },
       225: {
-        numerator: 5 + piString,
+        numerator: 5 + PI,
         denominator: 4
       },
       240: {
-        numerator: 4 + piString,
+        numerator: 4 + PI,
         denominator: 3
       },
       270: {
-        numerator: 3 + piString,
+        numerator: 3 + PI,
         denominator: 2
       },
       300: {
-        numerator: 5 + piString,
+        numerator: 5 + PI,
         denominator: 3
       },
       315: {
-        numerator: 7 + piString,
+        numerator: 7 + PI,
         denominator: 4
       },
       330: {
-        numerator: 11 + piString,
+        numerator: 11 + PI,
         denominator: 6
       },
       360: {
-        numerator: 2 + piString,
+        numerator: 2 + PI,
         denominator: ''
       }
     },

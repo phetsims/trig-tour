@@ -14,6 +14,7 @@ define( function( require ) {
   // modules
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var trigTour = require( 'TRIG_TOUR/trigTour' );
@@ -21,9 +22,6 @@ define( function( require ) {
   // constants
   var DISPLAY_FONT = new PhetFont( { size: 20 } );
   var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
-
-  // strings
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
 
   /**
    * Constructor.
@@ -43,7 +41,7 @@ define( function( require ) {
     var trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
 
     // create the text for the mathematical symbol theta
-    var trigThetaText = new Text( thetaString, { font: options.thetaLabelFont } );
+    var trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
 
     // build the text, placing both function and theta labels in an HBox
     HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );

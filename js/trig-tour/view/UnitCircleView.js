@@ -13,6 +13,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -30,7 +31,6 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var xString = require( 'string!TRIG_TOUR/x' );
   var yString = require( 'string!TRIG_TOUR/y' );
 
@@ -157,7 +157,7 @@ define( function( require ) {
     var xLabelText = new Text( xString, fontInfo );
     var yLabelText = new Text( yString, fontInfo );
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
-    var thetaText = new Text( thetaString, fontInfo );
+    var thetaText = new Text( MathSymbols.THETA, fontInfo );
     // +1, -1 labels on axes
     fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY, maxWidth: MAX_LABEL_WIDTH };
     var oneXText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );

@@ -16,6 +16,7 @@ define( function( require ) {
   // modules
   var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
@@ -28,8 +29,6 @@ define( function( require ) {
 
   // strings
   var cosString = require( 'string!TRIG_TOUR/cos' );
-  var infinitySymbolString = require( 'string!TRIG_TOUR/infinitySymbol' );
-  var plusMinusString = require( 'string!TRIG_TOUR/plusMinus' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
   var xString = require( 'string!TRIG_TOUR/x' );
@@ -134,8 +133,8 @@ define( function( require ) {
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if( trigLabelString === 'tan' ) {
       var plusMinusInfinityNode = new Node();
-      var plusMinusText = new Text( plusMinusString, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
-      var infinityText = new Text( infinitySymbolString, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
+      var plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
+      var infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
       plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
       plusMinusText.left = 0;
       infinityText.left = plusMinusText.right;

@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
@@ -25,7 +26,6 @@ define( function( require ) {
 
   //strings
   var angleString = require( 'string!TRIG_TOUR/angle' );
-  var piString = require( 'string!TRIG_TOUR/pi' );
   var radsString = require( 'string!TRIG_TOUR/rads' );
   var valueUnitPatternString = require( 'string!TRIG_TOUR/valueUnitPattern' );
 
@@ -200,11 +200,11 @@ define( function( require ) {
       var fullTurnString = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnString + small angle
       if ( piRadiansCount !== 0 ) {
         if ( fullTurnCount > 0 ) {
-          fullTurnString = piRadiansCount + piString + ' + ';
+          fullTurnString = piRadiansCount + MathSymbols.PI + ' + ';
         }
         else {
           // if angle negative, minus sign is constructed in FractionNode
-          fullTurnString = piRadiansCount + piString + ' ';
+          fullTurnString = piRadiansCount + MathSymbols.PI + ' ';
         }
       }
       else {
@@ -233,15 +233,15 @@ define( function( require ) {
       var roundedAngle = Util.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
         var nbrPiRads = this.trigTourModel.halfTurnCount;
-        var angleRadianString = nbrPiRads + piString;
+        var angleRadianString = nbrPiRads + MathSymbols.PI;
         if ( nbrPiRads === 0 ) {
           angleRadianString = '0';
         }
         else if ( nbrPiRads === 1 ) {
-          angleRadianString = piString;
+          angleRadianString = MathSymbols.PI;
         }
         else if ( nbrPiRads === -1 ) {
-          angleRadianString = '-' + piString;
+          angleRadianString = '-' + MathSymbols.PI;
         }
         this.fullAngleFractionNode.setValues( angleRadianString, '' );
 

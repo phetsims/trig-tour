@@ -23,6 +23,7 @@ define( function( require ) {
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -42,7 +43,6 @@ define( function( require ) {
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
   var vsString = require( 'string!TRIG_TOUR/vs' );
 
   //constants
@@ -371,7 +371,7 @@ define( function( require ) {
       }
 
       // create each text component
-      var variableThetaText = new Text( thetaString, { font: ITALIC_DISPLAY_FONT } );
+      var variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT } );
       var vsText = new Text( vsString, { font: DISPLAY_FONT } );
 
       // build up and format the title

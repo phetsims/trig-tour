@@ -15,6 +15,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -35,10 +36,8 @@ define( function( require ) {
   // strings
   var cosString = require( 'string!TRIG_TOUR/cos' );
   var numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
-  var piString = require( 'string!TRIG_TOUR/pi' );
   var sinString = require( 'string!TRIG_TOUR/sin' );
   var tanString = require( 'string!TRIG_TOUR/tan' );
-  var thetaString = require( 'string!TRIG_TOUR/theta' );
 
   /**
    * Constructor.
@@ -121,15 +120,16 @@ define( function( require ) {
     // tic mark labels in radians
     var tickMarkLabelsInRadians = new Node();
     var labelString = '';
+    var pi = MathSymbols.PI; 
     var labelStrings = [
-      StringUtils.format( numberPiPatternString, '-4', piString ),
-      StringUtils.format( numberPiPatternString, '-3', piString ),
-      StringUtils.format( numberPiPatternString, '-2', piString ),
-      StringUtils.format( numberPiPatternString, '-', piString ),
-      piString,
-      StringUtils.format( numberPiPatternString, '2', piString ),
-      StringUtils.format( numberPiPatternString, '3', piString ),
-      StringUtils.format( numberPiPatternString, '4', piString )
+      StringUtils.format( numberPiPatternString, '-4', pi ),
+      StringUtils.format( numberPiPatternString, '-3', pi ),
+      StringUtils.format( numberPiPatternString, '-2', pi ),
+      StringUtils.format( numberPiPatternString, '-', pi ),
+      pi,
+      StringUtils.format( numberPiPatternString, '2', pi ),
+      StringUtils.format( numberPiPatternString, '3', pi ),
+      StringUtils.format( numberPiPatternString, '4', pi )
     ];
     var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
     for ( i = 0; i < xPositions.length; i++ ) {
@@ -148,7 +148,7 @@ define( function( require ) {
     // Axes labels
     var maxThetaWidth = ticLength * 3; // restrict for i18n
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
-    var thetaLabel = new Text( thetaString, fontInfo );
+    var thetaLabel = new Text( MathSymbols.THETA, fontInfo );
     thetaLabel.left = this.right + 5;
     thetaLabel.centerY = xAxis.centerY;
     var maxTrigLabelWidth = xAxis.width / 4;

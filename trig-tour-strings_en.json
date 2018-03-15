@@ -14,17 +14,8 @@
   "grid": {
     "value": "Grid"
   },
-  "infinitySymbol": {
-    "value": "\u221E"
-  },
   "labels": {
     "value": "Labels"
-  },
-  "pi": {
-    "value": "\u03c0"
-  },
-  "plusMinus": {
-    "value": "\u00B1"
   },
   "rads": {
     "value": "rads"
@@ -40,9 +31,6 @@
   },
   "tan": {
     "value": "tan"
-  },
-  "theta": {
-    "value": "\u03b8"
   },
   "x": {
     "value": "x"

@@ -59,6 +59,7 @@ define( function( require ) {
     var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
     var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
+    //TODO #92 replace StringUtils.format with string concatenation or ES6 template string.
     // string pattern for the axis readout
     var XYEqualsPattern = '(' + '{0}' + ',' + '{1}' + ')' + equalString;
     var XYEqualString = StringUtils.format( XYEqualsPattern, xString, yString );

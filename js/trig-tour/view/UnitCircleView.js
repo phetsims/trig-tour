@@ -190,7 +190,7 @@ define( function( require ) {
 
         drag: function( e ) {
           var v1 = rotorPin.globalToParentPoint( e.pointer.point );
-          var smallAngle = -v1.angle(); // model angle is negative of xy screen coordinates angle
+          var smallAngle = -v1.angle; // model angle is negative of xy screen coordinates angle
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();

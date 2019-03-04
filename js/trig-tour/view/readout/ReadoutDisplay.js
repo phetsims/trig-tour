@@ -58,10 +58,12 @@ define( function( require ) {
       contentXMargin: CONTENT_X_MARGIN,
       contentYMargin: 15,
       contentYSpacing: 8,
-      buttonTouchAreaXDilation: buttonDilation,
-      buttonTouchAreaYDilation: buttonDilation,
-      buttonMouseAreaXDilation: buttonDilation,
-      buttonMouseAreaYDilation: buttonDilation
+      expandCollapseButtonOptions: {
+        touchAreaXDilation: buttonDilation,
+        touchAreaYDilation: buttonDilation,
+        mouseAreaXDilation: buttonDilation,
+        mouseAreaYDilation: buttonDilation
+      }
     } );
   }
 

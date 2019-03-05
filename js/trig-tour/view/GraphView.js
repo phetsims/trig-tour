@@ -218,7 +218,7 @@ define( function( require ) {
     ];
 
     // link visibility to the expandCollapseButton
-    this.expandCollapseButton.expandedProperty.link( function( expanded ) {
+    this.expandedProperty.link( function( expanded ) {
       backgroundRectangle.visible = expanded;
       displayNode.visible = expanded;
       self.titleDisplayPanel.visible = !expanded;

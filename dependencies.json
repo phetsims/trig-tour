@@ -59,5 +59,9 @@
   "trig-tour": {
     "sha": "a4151018dfce8e989645edbf716cca686759425f",
     "branch": "1.0"
+  },
+  "phetmarks": {
+    "branch": "master",
+    "sha": "401c40af550fac7610e66a5c2eeea037180ea0c3"
   }
 }

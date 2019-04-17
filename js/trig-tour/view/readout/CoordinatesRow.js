@@ -6,37 +6,38 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var Util = require( 'DOT/Util' );
+  const FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var xString = require( 'string!TRIG_TOUR/x' );
-  var yString = require( 'string!TRIG_TOUR/y' );
+  const xString = require( 'string!TRIG_TOUR/x' );
+  const yString = require( 'string!TRIG_TOUR/y' );
 
   // non translatable string
-  var equalString = TrigTourMathStrings.EQUALS_STRING;
+  const equalString = TrigTourMathStrings.EQUALS_STRING;
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var DISPLAY_FONT_LARGE = new PhetFont( 30 );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const DISPLAY_FONT_LARGE = new PhetFont( 30 );
+  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
-  var SPECIAL_COS_FRACTIONS = SpecialAngles.SPECIAL_COS_FRACTIONS;
-  var SPECIAL_SIN_FRACTIONS = SpecialAngles.SPECIAL_SIN_FRACTIONS;
+  const SPECIAL_COS_FRACTIONS = SpecialAngles.SPECIAL_COS_FRACTIONS;
+  const SPECIAL_SIN_FRACTIONS = SpecialAngles.SPECIAL_SIN_FRACTIONS;
+
+  class CoordinatesRow extends Node {
 
   /**
    * Constructor.
@@ -46,93 +47,86 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function CoordinatesRow( trigTourModel, viewProperties, options ) {
+    constructor( trigTourModel, viewProperties, options ) {
+      super( options );
 
-    Node.call( this, options );
-    var self = this;
+      this.trigTourModel = trigTourModel; // @private
+      this.viewProperties = viewProperties; // @private
 
-    this.trigTourModel = trigTourModel; // @private
-    this.viewProperties = viewProperties; // @private
+      // initialize fonts for this row
+      const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+      const largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
+      const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
-    // initialize fonts for this row
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
-    var fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
+      //TODO #92 replace StringUtils.format with string concatenation or ES6 template string.
+      // string pattern for the axis readout
+      const XYEqualsPattern = '(' + '{0}' + ',' + '{1}' + ')' + equalString;
+      const XYEqualString = StringUtils.format( XYEqualsPattern, xString, yString );
+      const coordinatesLabel = new Text( XYEqualString, fontBoldInfo );
 
-    //TODO #92 replace StringUtils.format with string concatenation or ES6 template string.
-    // string pattern for the axis readout
-    var XYEqualsPattern = '(' + '{0}' + ',' + '{1}' + ')' + equalString;
-    var XYEqualString = StringUtils.format( XYEqualsPattern, xString, yString );
-    var coordinatesLabel = new Text( XYEqualString, fontBoldInfo );
+      // fraction values set below
+      this.sinReadoutFraction = new FractionNode( '', '', fontInfo );
+      this.cosReadoutFraction = new FractionNode( '', '', fontInfo );
+      this.coordinatesReadout = new Text( '', fontInfo ); // text provided by model.fullAngleProperty.link, below
 
-    // fraction values set below
-    this.sinReadoutFraction = new FractionNode( '', '', fontInfo );
-    this.cosReadoutFraction = new FractionNode( '', '', fontInfo );
-    this.coordinatesReadout = new Text( '', fontInfo ); // text provided by model.fullAngleProperty.link, below
+      // create the text for the parentheses.  Comma uses different font options, so a pattern cannot be used.
+      const leftParensText = new Text( '( ', largeFontInfo );
+      const commaText = new Text( ' ,  ', fontInfo );
+      const rightParensText = new Text( ' )', largeFontInfo );
 
-    // create the text for the parentheses.  Comma uses different font options, so a pattern cannot be used.
-    var leftParensText = new Text( '( ', largeFontInfo );
-    var commaText = new Text( ' ,  ', fontInfo );
-    var rightParensText = new Text( ' )', largeFontInfo );
+      // Assemble pieces into '( cos fraction value, sin fraction value )'
+      this.coordinatesHBox = new HBox( {
+        children: [
+          leftParensText,
+          this.cosReadoutFraction,
+          commaText,
+          this.sinReadoutFraction,
+          rightParensText
+        ],
+        align: 'center',
+        spacing: 0
+      } );
 
-    // Assemble pieces into '( cos fraction value, sin fraction value )'
-    this.coordinatesHBox = new HBox( {
-      children: [
-        leftParensText,
-        this.cosReadoutFraction,
-        commaText,
-        this.sinReadoutFraction,
-        rightParensText
-      ],
-      align: 'center',
-      spacing: 0
-    } );
+      // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
+      this.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
 
-    // coordinatesHBox is visible in Special Angles mode, coordinatesReadout visible otherwise
-    this.children = [ coordinatesLabel, this.coordinatesReadout, this.coordinatesHBox ];
+      // set the row layout.  Needs to be called every update so that pieces of the row do not wander.
+      const setRowLayout = () => {
+        const spacing = 4;
+        this.coordinatesReadout.left = coordinatesLabel.right + spacing;
+        this.coordinatesHBox.left = coordinatesLabel.right + spacing;
+        this.coordinatesHBox.centerY = coordinatesLabel.centerY;
+      };
 
-    // set the row layout.  Needs to be called every update so that pieces of the row do not wander.
-    var setRowLayout = function() {
-      var spacing = 4;
-      self.coordinatesReadout.left = coordinatesLabel.right + spacing;
-      self.coordinatesHBox.left = coordinatesLabel.right + spacing;
-      self.coordinatesHBox.centerY = coordinatesLabel.centerY;
-    };
+      // Register for synchronization with model.
+      trigTourModel.fullAngleProperty.link( fullAngle => {
+        const sinText = Util.toFixed( trigTourModel.sin(), 3 );
+        const cosText = Util.toFixed( trigTourModel.cos(), 3 );
+        this.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
+        this.setSpecialAngleTrigReadout( this.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
+        this.setSpecialAngleTrigReadout( this.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
 
-    // Register for synchronization with model.
-    trigTourModel.fullAngleProperty.link( function( fullAngle ) {
-      var sinText = Util.toFixed( trigTourModel.sin(), 3 );
-      var cosText = Util.toFixed( trigTourModel.cos(), 3 );
-      self.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
-      self.setSpecialAngleTrigReadout( self.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
-      self.setSpecialAngleTrigReadout( self.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
+        // update the layout accordingly
+        setRowLayout();
+      } );
 
-      // update the layout accordingly
-      setRowLayout();
-    } );
-
-    viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-      self.coordinatesHBox.visible = specialAnglesVisible;
-      self.coordinatesReadout.visible = !specialAnglesVisible;
-    } );
-
-  }
-
-  trigTour.register( 'CoordinatesRow', CoordinatesRow );
-
-  return inherit( Node, CoordinatesRow, {
+      viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
+        this.coordinatesHBox.visible = specialAnglesVisible;
+        this.coordinatesReadout.visible = !specialAnglesVisible;
+      } );
+    }
 
     /**
      * Set the special angle readout display.
      *
      * @private
      */
-    setSpecialAngleTrigReadout: function( trigValueFraction, specialFractions ) {
-      var smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+    setSpecialAngleTrigReadout( trigValueFraction, specialFractions ) {
+      const smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+      const specialFraction = specialFractions[ smallAngleInDegrees ];
 
-      var specialFraction = specialFractions[ smallAngleInDegrees ];
+      const setFractionValues = ( readoutFraction, specialFraction ) => {
 
-      var setFractionValues = function( readoutFraction, specialFraction ) {
         // sanity check to make sure that the special fraction is defined in the special fractions objects above
         if ( specialFraction ) {
           readoutFraction.setValues(
@@ -145,5 +139,8 @@ define( function( require ) {
       };
       setFractionValues( trigValueFraction, specialFraction );
     }
-  } );
+  }
+
+  return trigTour.register( 'CoordinatesRow', CoordinatesRow );
+
 } );

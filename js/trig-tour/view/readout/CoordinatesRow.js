@@ -15,7 +15,6 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
@@ -58,11 +57,9 @@ define( require => {
       const largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
       const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
-      //TODO #92 replace StringUtils.format with string concatenation or ES6 template string.
       // string pattern for the axis readout
-      const XYEqualsPattern = '(' + '{0}' + ',' + '{1}' + ')' + equalString;
-      const XYEqualString = StringUtils.format( XYEqualsPattern, xString, yString );
-      const coordinatesLabel = new Text( XYEqualString, fontBoldInfo );
+      const xyEqualString = `(${xString},${yString})${equalString}`;
+      const coordinatesLabel = new Text( xyEqualString, fontBoldInfo );
 
       // fraction values set below
       this.sinReadoutFraction = new FractionNode( '', '', fontInfo );

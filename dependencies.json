@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.15 Wed Apr 17 2019 16:16:56 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.16-rc.1 Thu Apr 18 2019 11:09:59 GMT-0800 (Alaskan Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -14,7 +14,7 @@
   },
   "chipper": {
     "sha": "4ad7794ce0eb734d6b35d2895e8758013bf00af3",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "ddf82014392e9956043fab8608d5b8222e6134dc",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "0155cb460c1444d487df6ca7f8f323b4a7ee1923",
+    "sha": "c3284a04590f9b97496fb8d345cde6a27f4fa0f7",
     "branch": "1.0"
   }
 }

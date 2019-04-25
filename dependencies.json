@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.16-rc.1 Thu Apr 18 2019 11:09:59 GMT-0800 (Alaskan Daylight Time)",
+  "comment": "# trig-tour 1.0.16 Wed Apr 24 2019 17:08:42 GMT-0800 (Alaskan Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "c3284a04590f9b97496fb8d345cde6a27f4fa0f7",
+    "sha": "1cd2e7d4154de02e61643a2fbb2b9d3a5dddf38f",
     "branch": "1.0"
   }
 }

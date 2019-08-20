@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.18 Mon Aug 19 2019 14:48:41 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.19-rc.1 Tue Aug 20 2019 01:32:10 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -22,7 +22,7 @@
   },
   "joist": {
     "sha": "47fcd2e6269cd8637bfa207d78f553c9dc90bb5b",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "4a947119f6e57cb6a6d9d1bf4596502ca721464c",
@@ -46,7 +46,7 @@
   },
   "scenery-phet": {
     "sha": "e9189404f9019b07a782c93e072e9418c6769ddc",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "sherpa": {
     "sha": "bf82eb95d808250f7191328b3b30179ec1f44090",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "f08ead0a1b5f935d652324cabbfafb8c98ef9365",
+    "sha": "cdaa28367cfe7b1f49f1866e0b5b9eff29a97269",
     "branch": "1.0"
   }
 }

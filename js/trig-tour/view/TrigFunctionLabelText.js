@@ -8,16 +8,16 @@
  *
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( { size: 20 } );

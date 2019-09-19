@@ -6,12 +6,12 @@
  * Created by Michael Dubson (PhET developer) on 6/16/2015.
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   var TrigTourColors = {
     BACKGROUND_COLOR: '#fff6cc',

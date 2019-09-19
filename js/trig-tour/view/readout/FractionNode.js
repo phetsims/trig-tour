@@ -6,19 +6,19 @@
  *
  * @author Michael Dubson (PhET developer) on 6/10/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Shape = require( 'KITE/Shape' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:

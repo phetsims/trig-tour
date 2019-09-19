@@ -6,16 +6,16 @@
  *
  * @author Michael Dubson (PhET developer) on 6/23/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var Util = require( 'DOT/Util' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const Shape = require( 'KITE/Shape' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)

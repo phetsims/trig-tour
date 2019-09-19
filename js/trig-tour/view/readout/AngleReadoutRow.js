@@ -7,27 +7,27 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var Util = require( 'DOT/Util' );
+  const FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  const Util = require( 'DOT/Util' );
 
   //strings
-  var angleString = require( 'string!TRIG_TOUR/angle' );
-  var radsString = require( 'string!TRIG_TOUR/rads' );
-  var valueUnitPatternString = require( 'string!TRIG_TOUR/valueUnitPattern' );
+  const angleString = require( 'string!TRIG_TOUR/angle' );
+  const radsString = require( 'string!TRIG_TOUR/rads' );
+  const valueUnitPatternString = require( 'string!TRIG_TOUR/valueUnitPattern' );
 
   // non-translatable string
   var equalString = TrigTourMathStrings.EQUALS_STRING;

@@ -5,16 +5,16 @@
  *
  * @author Michael Dubson (PhET)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
-  var TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
+  const TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
 
   // strings
-  var trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
+  const trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
   var simOptions = {
     credits: {

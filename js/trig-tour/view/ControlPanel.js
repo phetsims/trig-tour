@@ -5,20 +5,20 @@
  *
  * @author Michael Dubson (PhET developer) on 6/4/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var Checkbox = require( 'SUN/Checkbox' );
-  var HSeparator = require( 'SUN/HSeparator' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  const Checkbox = require( 'SUN/Checkbox' );
+  const HSeparator = require( 'SUN/HSeparator' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -27,12 +27,12 @@ define( function( require ) {
   var RADIO_BUTTON_RADIUS = 10;
 
   //strings
-  var cosString = require( 'string!TRIG_TOUR/cos' );
-  var gridString = require( 'string!TRIG_TOUR/grid' );
-  var labelsString = require( 'string!TRIG_TOUR/labels' );
-  var sinString = require( 'string!TRIG_TOUR/sin' );
-  var specialAnglesString = require( 'string!TRIG_TOUR/specialAngles' );
-  var tanString = require( 'string!TRIG_TOUR/tan' );
+  const cosString = require( 'string!TRIG_TOUR/cos' );
+  const gridString = require( 'string!TRIG_TOUR/grid' );
+  const labelsString = require( 'string!TRIG_TOUR/labels' );
+  const sinString = require( 'string!TRIG_TOUR/sin' );
+  const specialAnglesString = require( 'string!TRIG_TOUR/specialAngles' );
+  const tanString = require( 'string!TRIG_TOUR/tan' );
 
   /**
    * Constructor for the control panel

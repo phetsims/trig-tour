@@ -5,16 +5,16 @@
  *
  * @author Michael Dubson (PhET)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var Util = require( 'DOT/Util' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const Util = require( 'DOT/Util' );
 
   // constants
   var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;

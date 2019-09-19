@@ -6,19 +6,19 @@
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
-  var TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const Shape = require( 'KITE/Shape' );
+  const TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const Util = require( 'DOT/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var COS_COLOR = TrigTourColors.COS_COLOR;

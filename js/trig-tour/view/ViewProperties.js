@@ -6,14 +6,14 @@
  * @author Michael Dubson (PhET developer) on 6/5/2015.
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var VALID_ANGLE_UNITS = [ 'degrees', 'radians' ];

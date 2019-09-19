@@ -6,15 +6,15 @@
  * @author Michael Dubson (PhET developer) on 6/16/2015.
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var Util = require( 'DOT/Util' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction

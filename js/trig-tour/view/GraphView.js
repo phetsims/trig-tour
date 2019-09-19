@@ -12,38 +12,38 @@
  *
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HSeparator = require( 'SUN/HSeparator' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
-  var TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
-  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const HSeparator = require( 'SUN/HSeparator' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  const TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
+  const TrigPlotsNode = require( 'TRIG_TOUR/trig-tour/view/TrigPlotsNode' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourGraphAxesNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourGraphAxesNode' );
+  const TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
 
   //strings
-  var cosString = require( 'string!TRIG_TOUR/cos' );
-  var sinString = require( 'string!TRIG_TOUR/sin' );
-  var tanString = require( 'string!TRIG_TOUR/tan' );
-  var vsString = require( 'string!TRIG_TOUR/vs' );
+  const cosString = require( 'string!TRIG_TOUR/cos' );
+  const sinString = require( 'string!TRIG_TOUR/sin' );
+  const tanString = require( 'string!TRIG_TOUR/tan' );
+  const vsString = require( 'string!TRIG_TOUR/vs' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;

@@ -6,21 +6,21 @@
  * @author Jesse Greenberg
  * @author Michael Dubson (PhET developer) on 6/2/2015
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var Util = require( 'DOT/Util' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const Shape = require( 'KITE/Shape' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const Util = require( 'DOT/Util' );
 
   //images
-  var clockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/clockwise-spiral.png' );
-  var counterClockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/counter-clockwise-spiral.png' );
+  const clockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/clockwise-spiral.png' );
+  const counterClockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/counter-clockwise-spiral.png' );
 
   /**
    * Constructor.

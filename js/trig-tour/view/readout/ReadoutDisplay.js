@@ -5,17 +5,17 @@
  *
  * @author Michael Dubson on 6/10/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutNode' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const ReadoutNode = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );
@@ -26,7 +26,7 @@ define( function( require ) {
   var CLOSE_BUTTON_WIDTH = 16;
 
   //strings
-  var valuesString = require( 'string!TRIG_TOUR/values' );
+  const valuesString = require( 'string!TRIG_TOUR/values' );
 
   /**
    * Constructor for

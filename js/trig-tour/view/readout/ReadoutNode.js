@@ -6,27 +6,27 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015.\
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AngleReadoutRow = require( 'TRIG_TOUR/trig-tour/view/readout/AngleReadoutRow' );
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var CoordinatesRow = require( 'TRIG_TOUR/trig-tour/view/readout/CoordinatesRow' );
-  var HSeparator = require( 'SUN/HSeparator' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LabelFractionValueRow = require( 'TRIG_TOUR/trig-tour/view/readout/LabelFractionValueRow' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var VSeparator = require( 'SUN/VSeparator' );
+  const AngleReadoutRow = require( 'TRIG_TOUR/trig-tour/view/readout/AngleReadoutRow' );
+  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  const CoordinatesRow = require( 'TRIG_TOUR/trig-tour/view/readout/CoordinatesRow' );
+  const HSeparator = require( 'SUN/HSeparator' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LabelFractionValueRow = require( 'TRIG_TOUR/trig-tour/view/readout/LabelFractionValueRow' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
+  const VSeparator = require( 'SUN/VSeparator' );
 
   //strings
-  var degreesString = require( 'string!TRIG_TOUR/degrees' );
-  var radiansString = require( 'string!TRIG_TOUR/radians' );
+  const degreesString = require( 'string!TRIG_TOUR/degrees' );
+  const radiansString = require( 'string!TRIG_TOUR/radians' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 20 );

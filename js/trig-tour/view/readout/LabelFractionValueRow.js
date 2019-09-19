@@ -10,29 +10,29 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var Util = require( 'DOT/Util' );
+  const FractionNode = require( 'TRIG_TOUR/trig-tour/view/readout/FractionNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var cosString = require( 'string!TRIG_TOUR/cos' );
-  var sinString = require( 'string!TRIG_TOUR/sin' );
-  var tanString = require( 'string!TRIG_TOUR/tan' );
-  var xString = require( 'string!TRIG_TOUR/x' );
-  var yString = require( 'string!TRIG_TOUR/y' );
+  const cosString = require( 'string!TRIG_TOUR/cos' );
+  const sinString = require( 'string!TRIG_TOUR/sin' );
+  const tanString = require( 'string!TRIG_TOUR/tan' );
+  const xString = require( 'string!TRIG_TOUR/x' );
+  const yString = require( 'string!TRIG_TOUR/y' );
 
   // non translatable string
   var equalString = TrigTourMathStrings.EQUALS_STRING;

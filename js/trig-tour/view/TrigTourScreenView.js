@@ -8,25 +8,25 @@
  *
  * @author Michael Dubson (PhET)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ControlPanel = require( 'TRIG_TOUR/trig-tour/view/ControlPanel' );
-  var GraphView = require( 'TRIG_TOUR/trig-tour/view/GraphView' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutDisplay' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
-  var ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
+  const ControlPanel = require( 'TRIG_TOUR/trig-tour/view/ControlPanel' );
+  const GraphView = require( 'TRIG_TOUR/trig-tour/view/GraphView' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ReadoutDisplay = require( 'TRIG_TOUR/trig-tour/view/readout/ReadoutDisplay' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const UnitCircleView = require( 'TRIG_TOUR/trig-tour/view/UnitCircleView' );
+  const ViewProperties = require( 'TRIG_TOUR/trig-tour/view/ViewProperties' );
 
   //images
-  var dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
+  const dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
 
   // constants
   var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;

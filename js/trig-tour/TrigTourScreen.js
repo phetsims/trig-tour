@@ -4,17 +4,17 @@
  *
  * @author Michael Dubson (PhET)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
-  var TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  const TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
 
   //constants
   var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;

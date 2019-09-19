@@ -8,23 +8,23 @@
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var Util = require( 'DOT/Util' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  const Util = require( 'DOT/Util' );
 
   // constants
   var LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -34,10 +34,10 @@ define( function( require ) {
   var DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
   // strings
-  var cosString = require( 'string!TRIG_TOUR/cos' );
-  var numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
-  var sinString = require( 'string!TRIG_TOUR/sin' );
-  var tanString = require( 'string!TRIG_TOUR/tan' );
+  const cosString = require( 'string!TRIG_TOUR/cos' );
+  const numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
+  const sinString = require( 'string!TRIG_TOUR/sin' );
+  const tanString = require( 'string!TRIG_TOUR/tan' );
 
   /**
    * Constructor.

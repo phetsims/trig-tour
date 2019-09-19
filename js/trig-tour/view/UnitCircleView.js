@@ -5,34 +5,34 @@
  *
  * @author Michael Dubson (PhET developer) on 6/2/2015.
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
-  var TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  var TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  var TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
-  var TrigTourSpiralNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourSpiralNode' );
-  var Util = require( 'DOT/Util' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const SpecialAngles = require( 'TRIG_TOUR/trig-tour/SpecialAngles' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TrigIndicatorArrowNode = require( 'TRIG_TOUR/trig-tour/view/TrigIndicatorArrowNode' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
+  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
+  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
+  const TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
+  const TrigTourSpiralNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourSpiralNode' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var xString = require( 'string!TRIG_TOUR/x' );
-  var yString = require( 'string!TRIG_TOUR/y' );
+  const xString = require( 'string!TRIG_TOUR/x' );
+  const yString = require( 'string!TRIG_TOUR/y' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 20 );

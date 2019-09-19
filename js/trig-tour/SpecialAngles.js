@@ -7,11 +7,11 @@
  *
  * @author Jesse Greenberg
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var trigTour = require( 'TRIG_TOUR/trigTour' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
   var PI = MathSymbols.PI;

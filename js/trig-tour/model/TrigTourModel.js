@@ -17,8 +17,8 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // constants
-  var MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
-  var MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
+  const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
+  const MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
 
   /**
    * Constructor for TrigTourModel.
@@ -85,10 +85,10 @@ define( require => {
      * @returns {number}
      */
     tan: function() {
-      var tanValue = Math.tan( this.fullAngleProperty.value );
-      var maxValue = 350;
+      const tanValue = Math.tan( this.fullAngleProperty.value );
+      const maxValue = 350;
       this.singularityProperty.value = false;
-      var returnValue;
+      let returnValue;
       if ( tanValue > maxValue ) {
         returnValue = maxValue;
         this.singularityProperty.value = true;
@@ -159,7 +159,7 @@ define( require => {
      * @param {number} fullAngleInRads - requested new angle
      */
     setFullAngleInRadians: function( fullAngleInRads ) {
-      var remainderAngle = fullAngleInRads % ( 2 * Math.PI );
+      let remainderAngle = fullAngleInRads % ( 2 * Math.PI );
       this.fullTurnCount = Util.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( 2 * Math.PI ) );
 
       if ( Math.abs( remainderAngle ) <= Math.PI ) {
@@ -188,7 +188,7 @@ define( require => {
       this.smallAngle = smallAngle;
 
       // must be less than (180-30)deg in order to handle special angle correctly
-      var comparisonAngle = Util.toRadians( 149 );
+      const comparisonAngle = Util.toRadians( 149 );
       if ( ( this.smallAngle < 0 ) && (this.previousAngle > comparisonAngle) ) {
         this.rotationNumberFromPi += 1;
       }
@@ -197,15 +197,15 @@ define( require => {
       }
 
       // don't want to trigger angle update yet
-      var targetAngle = this.rotationNumberFromPi * 2 * Math.PI + this.smallAngle;
+      let targetAngle = this.rotationNumberFromPi * 2 * Math.PI + this.smallAngle;
 
       // round to nearest half-degree; to do this, must convert to degrees and then back to rads
-      var roundedTargetAngle = Util.toDegrees( targetAngle );
-      var deltaDeg = 0.5;
-      var roundFactor = Util.roundSymmetric( 1 / deltaDeg );
+      let roundedTargetAngle = Util.toDegrees( targetAngle );
+      const deltaDeg = 0.5;
+      const roundFactor = Util.roundSymmetric( 1 / deltaDeg );
       roundedTargetAngle = Util.roundSymmetric( roundedTargetAngle * roundFactor ) / roundFactor;
       targetAngle = Util.toRadians( roundedTargetAngle );
-      var remainderAngle = targetAngle % ( 2 * Math.PI );
+      let remainderAngle = targetAngle % ( 2 * Math.PI );
 
       // set turn counts and angles
       this.fullTurnCount = Util.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
@@ -223,13 +223,13 @@ define( require => {
      * @param {number} smallAngle - small angle in radians
      */
     setSpecialAngleWithSmallAngle: function( smallAngle ) {
-      var smallAngleInDegrees = Util.toDegrees( smallAngle );
-      var nearestSpecialAngleInRads = 0;
-      var specialAnglesFromPi = SpecialAngles.SPECIAL_ANGLES_FROM_PI;
+      const smallAngleInDegrees = Util.toDegrees( smallAngle );
+      let nearestSpecialAngleInRads = 0;
+      const specialAnglesFromPi = SpecialAngles.SPECIAL_ANGLES_FROM_PI;
 
       // borders are angles half-way between special angles
-      var borderAnglesFromPi = SpecialAngles.BORDER_ANGLES_FROM_PI;
-      for ( var i = 0; i < specialAnglesFromPi.length; i++ ) {
+      const borderAnglesFromPi = SpecialAngles.BORDER_ANGLES_FROM_PI;
+      for ( let i = 0; i < specialAnglesFromPi.length; i++ ) {
         if ( smallAngleInDegrees >= borderAnglesFromPi[ i ] && smallAngleInDegrees < borderAnglesFromPi[ i + 1 ] ) {
           nearestSpecialAngleInRads = Util.toRadians( specialAnglesFromPi[ i ] );
         }
@@ -247,18 +247,18 @@ define( require => {
      * @param {number} fullAngle - full angle in radians
      */
     setSpecialAngleWithFullAngle: function( fullAngle ) {
-      var remainderAngle = fullAngle % ( 2 * Math.PI );
-      var fullTurnsAngle = fullAngle - remainderAngle;
-      var remainderInDegrees = Util.toDegrees( remainderAngle );
-      var nearestSpecialAngleInDegrees = 0;
+      const remainderAngle = fullAngle % ( 2 * Math.PI );
+      const fullTurnsAngle = fullAngle - remainderAngle;
+      const remainderInDegrees = Util.toDegrees( remainderAngle );
+      let nearestSpecialAngleInDegrees = 0;
 
       // Notice these are not the same special angles as in setSpecialAngle() above
-      var specialAngles = SpecialAngles.SPECIAL_ANGLES;
+      const specialAngles = SpecialAngles.SPECIAL_ANGLES;
 
       // borders are angles half-way between special angles
-      var borderAngles = SpecialAngles.BORDER_ANGLES;
+      const borderAngles = SpecialAngles.BORDER_ANGLES;
 
-      for ( var i = 0; i <= specialAngles.length - 1; i++ ) {
+      for ( let i = 0; i <= specialAngles.length - 1; i++ ) {
         if ( remainderInDegrees >= borderAngles[ i ] && remainderInDegrees < borderAngles[ i + 1 ] ) {
           nearestSpecialAngleInDegrees = specialAngles[ i + 1 ];
         }
@@ -278,8 +278,8 @@ define( require => {
         nearestSpecialAngleInDegrees = -360;
       }
 
-      var nearestSpecialAngleInRadians = Util.toRadians( nearestSpecialAngleInDegrees );
-      var nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
+      const nearestSpecialAngleInRadians = Util.toRadians( nearestSpecialAngleInDegrees );
+      const nearestFullAngle = fullTurnsAngle + nearestSpecialAngleInRadians;
       this.setFullAngleInRadians( nearestFullAngle );
     },
 

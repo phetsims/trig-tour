@@ -29,7 +29,7 @@ define( require => {
   const dizzyPhetGirlImage = require( 'mipmap!TRIG_TOUR/dizzy-phet-girl.png' );
 
   // constants
-  var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
+  const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 
   /**
    * Constructor for TrigTourScreenView.
@@ -40,17 +40,17 @@ define( require => {
   function TrigTourScreenView( trigTourModel ) {
 
     ScreenView.call( this );
-    var self = this;
+    const self = this;
 
-    var viewProperties = new ViewProperties();
+    const viewProperties = new ViewProperties();
 
     // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
     // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
-    var width = 2.4 * 175;
-    var height = 2.4 * 160;
-    var arcRadius = 8;
-    var xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
-    var whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, { 
+    const width = 2.4 * 175;
+    const height = 2.4 * 160;
+    const arcRadius = 8;
+    const xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
+    const whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, { 
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2 
@@ -58,24 +58,24 @@ define( require => {
     whiteSheet.x = this.layoutBounds.centerX;
     whiteSheet.top = this.layoutBounds.top + 20;
 
-    var unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
+    const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
     unitCircleView.center = whiteSheet.center;
 
-    var graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
+    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
     graphView.x = this.layoutBounds.centerX;
     graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
 
     // for i18n, calculate the maximum width for the readoutNode and the control panel.
-    var maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
+    const maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
 
     // small buffer between edges of the layout and panels on the screen view, for layout calculations
-    var layoutBuffer = this.layoutBounds.width * 0.015;
+    const layoutBuffer = this.layoutBounds.width * 0.015;
 
-    var readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties, maxPanelWidth );
+    const readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties, maxPanelWidth );
     readoutDisplay.left = layoutBuffer;
     readoutDisplay.top = unitCircleView.top;
 
-    var controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
+    const controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
     controlPanel.right = this.layoutBounds.right - layoutBuffer;
     controlPanel.top = unitCircleView.top;
 
@@ -96,7 +96,7 @@ define( require => {
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         viewProperties.reset();
         graphView.expandedProperty.value = true;

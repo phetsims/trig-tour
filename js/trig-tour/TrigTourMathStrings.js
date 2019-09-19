@@ -13,7 +13,7 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // strings
-  var TrigTourMathStrings = {
+  const TrigTourMathStrings = {
     ONE_STRING: '1',
     MINUS_ONE_STRING: '-1',
     MINUS_STRING: '-',

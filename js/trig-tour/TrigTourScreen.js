@@ -17,7 +17,7 @@ define( require => {
   const TrigTourScreenView = require( 'TRIG_TOUR/trig-tour/view/TrigTourScreenView' );
 
   //constants
-  var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
+  const BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
 
   /**
    * @constructor

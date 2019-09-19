@@ -35,14 +35,14 @@ define( require => {
   const yString = require( 'string!TRIG_TOUR/y' );
 
   // non translatable string
-  var equalString = TrigTourMathStrings.EQUALS_STRING;
+  const equalString = TrigTourMathStrings.EQUALS_STRING;
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var DISPLAY_FONT_LARGE = new PhetFont( 30 );
-  var DISPLAY_FONT_LARGE_BOLD = new PhetFont( { size: 20, weight: 'bold' } );
-  var DISPLAY_FONT_LARGE_BOLD_ITALIC = new PhetFont( { size: 20, weight: 'bold', style: 'italic' } );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const DISPLAY_FONT_LARGE = new PhetFont( 30 );
+  const DISPLAY_FONT_LARGE_BOLD = new PhetFont( { size: 20, weight: 'bold' } );
+  const DISPLAY_FONT_LARGE_BOLD_ITALIC = new PhetFont( { size: 20, weight: 'bold', style: 'italic' } );
+  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
   /**
    * Constructor.
@@ -56,7 +56,7 @@ define( require => {
   function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, options  ) {
 
     Node.call( this, options );
-    var self = this;
+    const self = this;
 
     // prevent block fitting of this row as a performance optimization
     this.preventFit = true;
@@ -65,12 +65,12 @@ define( require => {
     this.viewProperties = viewProperties; // @private
     this.trigLabelString = trigLabelString; // @private
 
-    var fontOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    const fontOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR };
 
     // initialize strings and variables for the row, depending on trigLabelString
-    var trigString;
-    var numeratorString;
-    var denominatorString;
+    let trigString;
+    let numeratorString;
+    let denominatorString;
     this.trigModelFunction; // @private - trig function for this value
     this.specialAngles; // @private - collection of special angles for this trig function
 
@@ -102,28 +102,28 @@ define( require => {
     }
 
     // label section of the row, something like 'Cos θ ='
-    var trigLabelText = new TrigFunctionLabelText( trigString, { 
+    const trigLabelText = new TrigFunctionLabelText( trigString, { 
       trigFunctionLabelFont: DISPLAY_FONT_LARGE_BOLD,
       thetaLabelFont: DISPLAY_FONT_LARGE_BOLD_ITALIC
     } );
-    var leftEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
+    const leftEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
 
     // label fraction for the row defining the shown value, something like 'x/1'
-    var trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
+    const trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
 
     // value presented by this row as a number, updates with the model and depends on the angle
-    var trigValueNumberText = new Text( 'trigModelValue', fontOptions );
+    const trigValueNumberText = new Text( 'trigModelValue', fontOptions );
 
     // value presented by this row as a fraction, updates with the model and depends on the angle
-    var trigValueFraction = new FractionNode( '', '', fontOptions );
+    const trigValueFraction = new FractionNode( '', '', fontOptions );
 
     // create an text representation of the equal sign
-    var rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
+    const rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
 
     this.children = [ trigLabelText, leftEqualText, trigFraction, rightEqualText, trigValueNumberText, trigValueFraction ];
 
     // layout
-    var space = 4;
+    const space = 4;
     leftEqualText.leftCenter = trigLabelText.rightCenter.plusXY( space, 0 );
     trigFraction.leftCenter = leftEqualText.rightCenter.plusXY( space, 0 );
     rightEqualText.leftCenter = trigFraction.rightCenter.plusXY( space, 0 );
@@ -133,8 +133,8 @@ define( require => {
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if( trigLabelString === 'tan' ) {
       var plusMinusInfinityNode = new Node();
-      var plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
-      var infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
+      const plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
+      const infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
       plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
       plusMinusText.left = 0;
       infinityText.left = plusMinusText.right;
@@ -180,7 +180,7 @@ define( require => {
       if( this.viewProperties.specialAnglesVisibleProperty.value ) {
         this.setSpecialAngleTrigReadout( trigValueFraction );
       }
-      var trigValue;
+      let trigValue;
       if( this.trigLabelString === 'sin' ) {
         trigValue = this.trigTourModel.sin();
       }
@@ -192,7 +192,7 @@ define( require => {
       }
       assert && assert( typeof trigValue !== 'undefined', 'trigLabelString must be one of cos, tan, or sin' );
 
-      var trigValueString = Util.toFixed( trigValue, 3 );
+      const trigValueString = Util.toFixed( trigValue, 3 );
       trigValueNumberText.text = trigValueString;
     },
 
@@ -203,12 +203,12 @@ define( require => {
      * @private
      */
     setSpecialAngleTrigReadout: function( trigValueFraction ) {
-      var smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+      const smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
 
       // get the values needed to represent the special angle as a fraction.
-      var specialFraction = this.specialAngles[ smallAngleInDegrees ];
+      const specialFraction = this.specialAngles[ smallAngleInDegrees ];
 
-      var setFractionValues = function( readoutFraction, specialFraction ) {
+      const setFractionValues = function( readoutFraction, specialFraction ) {
         // sanity check to make sure that the special fraction is defined in the special fractions objects above
         if ( specialFraction ) {
           readoutFraction.setValues(

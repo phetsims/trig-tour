@@ -29,9 +29,9 @@ define( require => {
   const radiansString = require( 'string!TRIG_TOUR/radians' );
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
   /**
    * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
@@ -44,37 +44,37 @@ define( require => {
    */
   function ReadoutNode( model, viewProperties, maxPanelWidth ) {
 
-    var self = this;
+    const self = this;
 
     // Call the super constructor
     Node.call( self );
 
     // create the first two rows
-    var row1 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
-    var row2 = new AngleReadoutRow( model, viewProperties, { maxWidth: maxPanelWidth } );
+    const row1 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
+    const row2 = new AngleReadoutRow( model, viewProperties, { maxWidth: maxPanelWidth } );
 
     // Row 3: trig function label = trig fraction = trig value
-    var sinLabelFractionValueRow = new LabelFractionValueRow( 'sin', model, viewProperties );
-    var cosLabelFractionValueRow = new LabelFractionValueRow( 'cos', model, viewProperties );
-    var tanLabelFractionValueRow = new LabelFractionValueRow( 'tan', model, viewProperties );
+    const sinLabelFractionValueRow = new LabelFractionValueRow( 'sin', model, viewProperties );
+    const cosLabelFractionValueRow = new LabelFractionValueRow( 'cos', model, viewProperties );
+    const tanLabelFractionValueRow = new LabelFractionValueRow( 'tan', model, viewProperties );
 
-    var row3 = new Node( { 
+    const row3 = new Node( { 
       children: [ sinLabelFractionValueRow, cosLabelFractionValueRow, tanLabelFractionValueRow ],
       maxWidth: maxPanelWidth
     } );
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white', maxWidth: maxPanelWidth };
-    var degreeText = new Text( degreesString, fontInfo );
-    var radiansText = new Text( radiansString, fontInfo );
-    var degreesRadioButton = new AquaRadioButton(
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    const myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white', maxWidth: maxPanelWidth };
+    const degreeText = new Text( degreesString, fontInfo );
+    const radiansText = new Text( radiansString, fontInfo );
+    const degreesRadioButton = new AquaRadioButton(
       viewProperties.angleUnitsProperty,
       'degrees',
       degreeText,
       myRadioButtonOptions
     );
-    var radiansRadioButton = new AquaRadioButton(
+    const radiansRadioButton = new AquaRadioButton(
       viewProperties.angleUnitsProperty,
       'radians',
       radiansText,
@@ -82,10 +82,10 @@ define( require => {
     );
 
     // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
-    var spacing = 10;
-    var rowSpacing = 5;
-    var separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };
-    var contentVBox = new VBox( {
+    const spacing = 10;
+    const rowSpacing = 5;
+    const separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };
+    const contentVBox = new VBox( {
       children: [
         new VSeparator( rowSpacing, separatorOptions ),
         row1,

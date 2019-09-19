@@ -20,8 +20,8 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( { size: 20 } );
-  var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
+  const DISPLAY_FONT = new PhetFont( { size: 20 } );
+  const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 
   /**
    * Constructor.
@@ -38,10 +38,10 @@ define( require => {
     }, options );
 
     // build the text for the trig function label
-    var trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
+    const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
 
     // create the text for the mathematical symbol theta
-    var trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
+    const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
 
     // build the text, placing both function and theta labels in an HBox
     HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );

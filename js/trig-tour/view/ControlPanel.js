@@ -21,10 +21,10 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
-  var RADIO_BUTTON_RADIUS = 10;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+  const RADIO_BUTTON_RADIUS = 10;
 
   //strings
   const cosString = require( 'string!TRIG_TOUR/cos' );
@@ -55,36 +55,36 @@ define( require => {
     this.viewProperties = viewProperties;
 
     // create the text nodes, determining their max width from the panel width and the width of the buttons
-    var maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
-    var cosText = new Text( cosString, fontInfo );
-    var sinText = new Text( sinString, fontInfo );
-    var tanText = new Text( tanString, fontInfo );
-    var labelsText = new Text( labelsString, fontInfo );
-    var gridText = new Text( gridString, fontInfo );
-    var specialAnglesText = new Text( specialAnglesString, fontInfo );
+    const maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
+    const cosText = new Text( cosString, fontInfo );
+    const sinText = new Text( sinString, fontInfo );
+    const tanText = new Text( tanString, fontInfo );
+    const labelsText = new Text( labelsString, fontInfo );
+    const gridText = new Text( gridString, fontInfo );
+    const specialAnglesText = new Text( specialAnglesString, fontInfo );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     // viewProperties.graph = 'cos'|'sin'|'tan'
-    var radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
-    var cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
-    var sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
-    var tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
+    const radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
+    const cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
+    const sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
+    const tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
 
     // 3 checkboxes: Labels, Grid, Special Angles
-    var checkboxOptions = { checkboxColorBackground: 'white' };
-    var labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
-    var gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
-    var specialAnglesCheckbox = new Checkbox(
+    const checkboxOptions = { checkboxColorBackground: 'white' };
+    const labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
+    const gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
+    const specialAnglesCheckbox = new Checkbox(
       specialAnglesText,
       viewProperties.specialAnglesVisibleProperty,
       checkboxOptions
     );
 
     // Adjust touch areas
-    var spacing = 15;
-    var separatorWidth = specialAnglesCheckbox.width + 10;
-    var content = new VBox( {
+    const spacing = 15;
+    const separatorWidth = specialAnglesCheckbox.width + 10;
+    const content = new VBox( {
       children: [
         cosRadioButton,
         sinRadioButton,

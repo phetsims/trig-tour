@@ -35,9 +35,9 @@ define( require => {
     this.rotation = Util.toRadians( rotationInDegrees ); // Node.rotation is in radians
 
     // draw horizontal arrow pointing right
-    var triangleShape = new Shape();
+    const triangleShape = new Shape();
     triangleShape.moveTo( 0, 0 ).lineTo( 0, width / 2 ).lineTo( length, 0 ).lineTo( 0, -width / 2 ).close();
-    var trianglePath = new Path( triangleShape, { lineWidth: 1, fill: color } );
+    const trianglePath = new Path( triangleShape, { lineWidth: 1, fill: color } );
     this.addChild( trianglePath );
     trianglePath.x = -1; // reference point is 1 pixel inside the arrow head, to guarantee connection with adjacent line
 

@@ -85,12 +85,12 @@ define( require => {
      * Set the fraction node and draw its various parts.
      */
     setFraction: function() {
-      var minusSign;                            // short horizontal line for minus sign, in front of divisor bar
-      var numeratorNegative = false;            // true if numerator is negative
-      var denominatorNegative = false;          // true if denominator is negative
-      var minusSignNeeded = false;              // true if sign of over-all fraction is negative
-      var squareRootSignNeeded = this.radical;  // true if square root symbol is needed over the numerator
-      var denominatorNeeded = true;             // true if only the numerator is displayed as a fractional number
+      let minusSign;                            // short horizontal line for minus sign, in front of divisor bar
+      let numeratorNegative = false;            // true if numerator is negative
+      let denominatorNegative = false;          // true if denominator is negative
+      let minusSignNeeded = false;              // true if sign of over-all fraction is negative
+      const squareRootSignNeeded = this.radical;  // true if square root symbol is needed over the numerator
+      let denominatorNeeded = true;             // true if only the numerator is displayed as a fractional number
 
       // Check that arguments are strings
       if ( typeof this.numerator !== 'string' ) { this.numerator = this.numerator.toString(); }
@@ -110,13 +110,13 @@ define( require => {
       // JavaScript does not have an xor operator
       minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
-      var fontOptions = this.fontOptions;
-      var numeratorText = new Text( this.numerator, fontOptions );
-      var denominatorText = new Text( this.denominator, fontOptions );
+      const fontOptions = this.fontOptions;
+      const numeratorText = new Text( this.numerator, fontOptions );
+      const denominatorText = new Text( this.denominator, fontOptions );
 
       // Draw minus sign to go in front of fraction, if needed.
-      var length = 8;
-      var midHeight = 7;
+      let length = 8;
+      const midHeight = 7;
       if ( minusSignNeeded ) {
         minusSign = new Line( 0, -midHeight, length, -midHeight, {
           stroke: TrigTourColors.LINE_COLOR,
@@ -138,27 +138,27 @@ define( require => {
       }
 
       // dividing bar
-      var bar = new Line( 0, -midHeight, length, -midHeight, {
+      const bar = new Line( 0, -midHeight, length, -midHeight, {
         stroke: TrigTourColors.LINE_COLOR,
         lineWidth: 2,
         lineCap: 'round'
       } );
 
       // draw square root symbol
-      var sqRtShape = new Shape();
+      const sqRtShape = new Shape();
       if ( squareRootSignNeeded ) {
-        var W = 1.2 * numeratorText.width;
-        var h = 0.8 * numeratorText.height;
-        var w = h / 4;
+        const W = 1.2 * numeratorText.width;
+        const h = 0.8 * numeratorText.height;
+        const w = h / 4;
         sqRtShape.moveTo( -3 * w / 2, -h / 2 ).lineTo( -w, 0 ).lineTo( 0, -h ).lineTo( W, -h );
       }
-      var sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
+      const sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
 
       // if no denominator argument is passed in, then display the numerator as a non-fraction number
       if ( typeof this.denominator === 'undefined' || this.denominator === '' ) {
         // make current children invisible so numerator is not obscured
         denominatorNeeded = false;
-        for ( var i = 0; i < this.children.length; i++ ) {
+        for ( let i = 0; i < this.children.length; i++ ) {
           this.children[ i ].visible = false;
         }
 
@@ -185,7 +185,7 @@ define( require => {
       }
       bar.left = 0;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;
-      var offset = 2;
+      let offset = 2;
       numeratorText.bottom = bar.top - offset;
       denominatorText.top = bar.bottom + offset;
       offset = 4;

@@ -18,12 +18,12 @@ define( require => {
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var PANEL_COLOR = TrigTourColors.PANEL_COLOR;
-  var BUTTON_X_MARGIN = 12;
-  var TITLE_X_SPACING = 10.5;
-  var CONTENT_X_MARGIN = 20;
-  var CLOSE_BUTTON_WIDTH = 16;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+  const BUTTON_X_MARGIN = 12;
+  const TITLE_X_SPACING = 10.5;
+  const CONTENT_X_MARGIN = 20;
+  const CLOSE_BUTTON_WIDTH = 16;
 
   //strings
   const valuesString = require( 'string!TRIG_TOUR/values' );
@@ -38,11 +38,11 @@ define( require => {
   function ReadoutDisplay( model, viewProperties, maxPanelWidth ) {
 
     // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
-    var maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
-    var readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
+    const maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
+    const readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
 
     // dilation for the close button touch/click areas
-    var buttonDilation = 30 - CLOSE_BUTTON_WIDTH / 2;
+    const buttonDilation = 30 - CLOSE_BUTTON_WIDTH / 2;
 
     // Call the super constructor
     AccordionBox.call( this, readoutNode, {

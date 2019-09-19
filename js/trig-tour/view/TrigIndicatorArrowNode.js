@@ -27,8 +27,8 @@ define( require => {
    */
   function TrigIndicatorArrowNode( defaultLength, orientation, options ) {
 
-    var tipX = 0;
-    var tipY = 0;
+    let tipX = 0;
+    let tipY = 0;
     this.orientation = orientation; // @private, 'horizontal' or 'vertical' orientation
 
     if ( orientation === 'vertical' ) {
@@ -46,7 +46,7 @@ define( require => {
       lineWidth: 0
     }, options ) );
 
-    var emptyBounds = new Bounds2( 0, 0, 0, 0 );
+    const emptyBounds = new Bounds2( 0, 0, 0, 0 );
     this.computeShapeBounds = function() {
       return emptyBounds;
     };
@@ -72,9 +72,9 @@ define( require => {
     setEndPoint: function( displacement ) {
       // determine the sign of displacement if displacement is non zero
       // sign is positive if arrow is pointing up or right, negative if pointing down or left
-      var sign = displacement === 0 ? 0 : Util.roundSymmetric( displacement / Math.abs( displacement ) );
+      const sign = displacement === 0 ? 0 : Util.roundSymmetric( displacement / Math.abs( displacement ) );
 
-      var arrowLength = Math.abs( displacement );
+      const arrowLength = Math.abs( displacement );
       if ( this.orientation === 'vertical' ) {
         this.setTailAndTip( this.tailX, this.tailY, this.tipX, -sign * arrowLength );
       }

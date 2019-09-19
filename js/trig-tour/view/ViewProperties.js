@@ -16,8 +16,8 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
-  var VALID_ANGLE_UNITS = [ 'degrees', 'radians' ];
-  var VALID_GRAPH = [ 'cos', 'sin', 'tan' ];
+  const VALID_ANGLE_UNITS = [ 'degrees', 'radians' ];
+  const VALID_GRAPH = [ 'cos', 'sin', 'tan' ];
 
   /**
    * Constructor for trig-tour ViewProperties.

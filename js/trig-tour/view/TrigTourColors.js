@@ -13,7 +13,7 @@ define( require => {
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
 
-  var TrigTourColors = {
+  const TrigTourColors = {
     BACKGROUND_COLOR: '#fff6cc',
     VIEW_BACKGROUND_COLOR: '#FFF',
     TEXT_COLOR: '#000',

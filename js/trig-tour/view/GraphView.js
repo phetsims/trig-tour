@@ -46,15 +46,15 @@ define( require => {
   const vsString = require( 'string!TRIG_TOUR/vs' );
 
   //constants
-  var BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
-  var COS_COLOR = TrigTourColors.COS_COLOR;
-  var SIN_COLOR = TrigTourColors.SIN_COLOR;
-  var TAN_COLOR = TrigTourColors.TAN_COLOR;
-  var LINE_COLOR = TrigTourColors.LINE_COLOR;
-  var TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
-  var VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
-  var DISPLAY_FONT = new PhetFont( 20 );
-  var ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
+  const BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
+  const COS_COLOR = TrigTourColors.COS_COLOR;
+  const SIN_COLOR = TrigTourColors.SIN_COLOR;
+  const TAN_COLOR = TrigTourColors.TAN_COLOR;
+  const LINE_COLOR = TrigTourColors.LINE_COLOR;
+  const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
+  const VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
+  const DISPLAY_FONT = new PhetFont( 20 );
+  const ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
 
   /**
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
@@ -69,7 +69,7 @@ define( require => {
   function GraphView( trigTourModel, height, width, viewProperties ) {
 
     // Call the super constructor
-    var self = this;
+    const self = this;
     Node.call( self );
 
     // @private
@@ -78,18 +78,18 @@ define( require => {
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
 
     // Graph drawing code is determined empirically, numbers are chosen based on what 'looks good'.
-    var marginWidth = 25;   // distance between edge of Node and edge of nearest full wavelength
-    var wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in view coordinates
+    const marginWidth = 25;   // distance between edge of Node and edge of nearest full wavelength
+    const wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in view coordinates
     this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in view coordinates
-    var numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
+    const numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
-    var buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
+    const buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
 
     // @private
     this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );
     this.titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
 
-    var panelOptions = {
+    const panelOptions = {
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2, // width of the background border
@@ -108,17 +108,17 @@ define( require => {
       sideLength: 15,
       cursor: 'pointer'
     } );
-    var hitBound = 30;
-    var midX = this.expandCollapseButton.centerX;
-    var midY = this.expandCollapseButton.centerY;
+    let hitBound = 30;
+    let midX = this.expandCollapseButton.centerX;
+    const midY = this.expandCollapseButton.centerY;
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
     this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
 
     // draw white background
-    var backgroundHeight = 1.2 * height;
-    var backgroundWidth = 1.05 * width;
-    var arcRadius = 10;
-    var backgroundRectangle = new Rectangle( -backgroundWidth / 2, -( backgroundHeight / 2 ) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
+    const backgroundHeight = 1.2 * height;
+    const backgroundWidth = 1.05 * width;
+    const arcRadius = 10;
+    const backgroundRectangle = new Rectangle( -backgroundWidth / 2, -( backgroundHeight / 2 ) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
       fill: VIEW_BACKGROUND_COLOR,
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
@@ -131,15 +131,15 @@ define( require => {
     this.titleDisplayPanel.top = backgroundRectangle.top;
 
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
-    var borderWidth = 400;
-    var borderHeight = 1000;
-    var rightBorder = new Rectangle(
+    const borderWidth = 400;
+    const borderHeight = 1000;
+    const rightBorder = new Rectangle(
       -backgroundWidth / 2 - borderWidth - 1,
       -0.8 * borderHeight, borderWidth,
       borderHeight,
       { fill: BACKGROUND_COLOR }
     );
-    var leftBorder = new Rectangle(
+    const leftBorder = new Rectangle(
       backgroundWidth / 2 + 1,
       -0.8 * borderHeight,
       borderWidth,
@@ -164,8 +164,8 @@ define( require => {
     // Lines are not draggable.  An invisible rectangle needs to cover the singularity indicator so that the user
     // can  drag it once it appears.
     hitBound = 20;
-    var minY = this.singularityIndicator.bottom;
-    var maxY = this.singularityIndicator.top;
+    const minY = this.singularityIndicator.bottom;
+    const maxY = this.singularityIndicator.top;
     midX = this.singularityIndicator.centerX;
 
     // debugger;
@@ -190,7 +190,7 @@ define( require => {
       cursor: 'pointer'
     } );
 
-    var interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
+    const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
     this.trigIndicatorArrowNode.mouseArea = interactionArea;
     this.trigIndicatorArrowNode.touchArea = interactionArea;
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
@@ -198,7 +198,7 @@ define( require => {
 
     // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by
     // expandCollapseButton
-    var displayNode = new Node();
+    const displayNode = new Node();
 
     // Rendering order for display children.
     displayNode.children = [
@@ -224,13 +224,13 @@ define( require => {
       self.titleDisplayPanel.visible = !expanded;
     } );
 
-    var dragHandler = new SimpleDragHandler(
+    const dragHandler = new SimpleDragHandler(
       {
         allowTouchSnag: true,
 
         drag: function( e ) {
-          var position = self.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
-          var fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
+          const position = self.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
+          const fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
@@ -259,8 +259,8 @@ define( require => {
 
     // Register for synchronization with model
     // function that reduces the indicator arrow tail width around the tan function singularity
-    var setIndicatorTailWidth = function() {
-      var tanSize = Math.abs( trigTourModel.tan() );
+    const setIndicatorTailWidth = function() {
+      const tanSize = Math.abs( trigTourModel.tan() );
       if ( self.viewProperties.graphProperty.value === 'tan' && tanSize > 1.5 ) {
         self.trigIndicatorArrowNode.setTailWidth( Math.max( 2, 5 - 0.1 * tanSize ) );
       }
@@ -270,7 +270,7 @@ define( require => {
     };
 
     trigTourModel.fullAngleProperty.link( function( fullAngle ) {
-      var xPos = fullAngle / (2 * Math.PI) * wavelength;
+      const xPos = fullAngle / (2 * Math.PI) * wavelength;
       self.trigIndicatorArrowNode.x = xPos;
       self.singularityIndicator.x = xPos;
       self.singularityRectangle.x = xPos;
@@ -323,13 +323,13 @@ define( require => {
      * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
      */
     setTrigIndicatorArrowNode: function() {
-      var self = this;
+      const self = this;
 
-      var cosNow = this.trigTourModel.cos();
-      var sinNow = this.trigTourModel.sin();
-      var tanNow = this.trigTourModel.tan();
+      const cosNow = this.trigTourModel.cos();
+      const sinNow = this.trigTourModel.sin();
+      const tanNow = this.trigTourModel.tan();
 
-      var setIndicatorAndHandle = function( trigValue, indicatorColor ) {
+      const setIndicatorAndHandle = function( trigValue, indicatorColor ) {
         self.trigIndicatorArrowNode.setEndPoint( trigValue * self.amplitude );
         self.trigIndicatorArrowNode.setColor( indicatorColor );
         self.redDotHandle.y = -trigValue * self.amplitude;
@@ -359,7 +359,7 @@ define( require => {
     setTitleBarText: function( trigString ) {
 
       // determine the appropriate trig function string for the title.
-      var trigTitleString;
+      let trigTitleString;
       if ( trigString === 'cos' ) {
         trigTitleString = cosString;
       }
@@ -371,14 +371,14 @@ define( require => {
       }
 
       // create each text component
-      var variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT } );
-      var vsText = new Text( vsString, { font: DISPLAY_FONT } );
+      const variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT } );
+      const vsText = new Text( vsString, { font: DISPLAY_FONT } );
 
       // build up and format the title
-      var trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );
+      const trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );
 
       // everything formatted in an HBox
-      var titleTextHBox = new HBox( {
+      const titleTextHBox = new HBox( {
         children: [ trigFunctionLabelText, vsText, variableThetaText ],
         spacing: 6,
         resize: false

@@ -27,11 +27,11 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // constants
-  var LINE_COLOR = TrigTourColors.LINE_COLOR;
-  var DISPLAY_FONT_SMALL = new PhetFont( 18 );
-  var TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  var DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
-  var DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
+  const LINE_COLOR = TrigTourColors.LINE_COLOR;
+  const DISPLAY_FONT_SMALL = new PhetFont( 18 );
+  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+  const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
+  const DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
   // strings
   const cosString = require( 'string!TRIG_TOUR/cos' );
@@ -58,14 +58,14 @@ define( require => {
     this.labelsNode = new Node(); // @public (read-only)
 
     // draw x-axis and y-axis, represented by ArrowNodes
-    var xAxisLength = width;
-    var xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, {
+    const xAxisLength = width;
+    const xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, {
       tailWidth: 0.3,
       fill: LINE_COLOR,
       headHeight: 12,
       headWidth: 8
     } );
-    var yAxis = new ArrowNode( 0, 1.18 * amplitude, 0, -1.3 * amplitude, {
+    const yAxis = new ArrowNode( 0, 1.18 * amplitude, 0, -1.3 * amplitude, {
       tailWidth: 0.3,
       fill: LINE_COLOR,
       headHeight: 12,
@@ -73,11 +73,11 @@ define( require => {
     } );
 
     // draw tic marks for x and y axes
-    var ticLength = 5;
-    var xTics = new Node();
-    var yTics = new Node();
-    var xTic;
-    var yTic;
+    const ticLength = 5;
+    const xTics = new Node();
+    const yTics = new Node();
+    let xTic;
+    let yTic;
     for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
       xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
       xTic.x = i * wavelength / 4;
@@ -92,22 +92,22 @@ define( require => {
     this.children = [ xAxis, yAxis ];
 
     // draw 1/-1 labels on y-axis
-    var onesNode = new Node(); // @public (read-only)
-    var fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-    var oneLabel = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    var minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
+    const onesNode = new Node(); // @public (read-only)
+    let fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+    const oneLabel = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
+    const minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
     onesNode.children = [ oneLabel, minusOneLabel ];
-    var xOffset = 8;
+    const xOffset = 8;
     oneLabel.left = xOffset;
     minusOneLabel.right = -xOffset;
     oneLabel.centerY = -amplitude - 5;
     minusOneLabel.centerY = amplitude + 5;
 
     // draw tic mark labels in degrees
-    var tickMarkLabelsInDegrees = new Node();
-    var label;
-    for ( var j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
-      var degrees = Util.toFixed( 180 * j, 0 );
+    const tickMarkLabelsInDegrees = new Node();
+    let label;
+    for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
+      let degrees = Util.toFixed( 180 * j, 0 );
       degrees = degrees.toString();
       label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;
@@ -118,10 +118,10 @@ define( require => {
     }
 
     // tic mark labels in radians
-    var tickMarkLabelsInRadians = new Node();
-    var labelString = '';
-    var pi = MathSymbols.PI; 
-    var labelStrings = [
+    const tickMarkLabelsInRadians = new Node();
+    let labelString = '';
+    const pi = MathSymbols.PI; 
+    const labelStrings = [
       StringUtils.format( numberPiPatternString, '-4', pi ),
       StringUtils.format( numberPiPatternString, '-3', pi ),
       StringUtils.format( numberPiPatternString, '-2', pi ),
@@ -131,7 +131,7 @@ define( require => {
       StringUtils.format( numberPiPatternString, '3', pi ),
       StringUtils.format( numberPiPatternString, '4', pi )
     ];
-    var xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
+    const xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
     for ( i = 0; i < xPositions.length; i++ ) {
       labelString = labelStrings[ i ];
       label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
@@ -146,15 +146,15 @@ define( require => {
     tickMarkLabelsInRadians.visible = false;
 
     // Axes labels
-    var maxThetaWidth = ticLength * 3; // restrict for i18n
+    const maxThetaWidth = ticLength * 3; // restrict for i18n
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
-    var thetaLabel = new Text( MathSymbols.THETA, fontInfo );
+    const thetaLabel = new Text( MathSymbols.THETA, fontInfo );
     thetaLabel.left = this.right + 5;
     thetaLabel.centerY = xAxis.centerY;
-    var maxTrigLabelWidth = xAxis.width / 4;
-    var cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
-    var sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
-    var tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
+    const maxTrigLabelWidth = xAxis.width / 4;
+    const cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
+    const sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
+    const tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
 

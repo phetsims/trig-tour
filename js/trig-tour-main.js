@@ -16,7 +16,7 @@ define( require => {
   // strings
   const trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'Michael Dubson, Amanda McGarry',
       softwareDevelopment: 'Michael Dubson, Jesse Greenberg',
@@ -26,7 +26,7 @@ define( require => {
   };
 
   SimLauncher.launch( function() {
-    var sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
+    const sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
     sim.start();
   } );
 } );

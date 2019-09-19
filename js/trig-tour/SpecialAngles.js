@@ -14,9 +14,9 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
 
   // constants
-  var PI = MathSymbols.PI;
+  const PI = MathSymbols.PI;
 
-  var SpecialAngles = {
+  const SpecialAngles = {
 
     // an array containing the 'special' angles around the unit circle
     SPECIAL_ANGLES: [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ],

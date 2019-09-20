@@ -1,4 +1,4 @@
-// Copyright 2016-2018, University of Colorado Boulder
+// Copyright 2016-2019, University of Colorado Boulder
 
 /**
  * Creates the second row for the ReadoutNode of Trig Tour.  This row contains a label for the angle and the value

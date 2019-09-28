@@ -50,10 +50,10 @@ define( require => {
     const height = 2.4 * 160;
     const arcRadius = 8;
     const xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
-    const whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, { 
+    const whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, {
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
-      lineWidth: 2 
+      lineWidth: 2
     } );
     whiteSheet.x = this.layoutBounds.centerX;
     whiteSheet.top = this.layoutBounds.top + 20;

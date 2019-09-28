@@ -1,8 +1,8 @@
 // Copyright 2016-2019, University of Colorado Boulder
 
 /**
- * Creates the third row for the ReadoutNode of Trig Tour.  This row contains a label for the trig function, 
- * a fraction representation of the value, and the numeric value.  This row is organized, separated by the equality 
+ * Creates the third row for the ReadoutNode of Trig Tour.  This row contains a label for the trig function,
+ * a fraction representation of the value, and the numeric value.  This row is organized, separated by the equality
  * sign.  It looks like this:
  *
  * trig function label = trig fraction = trig value
@@ -53,7 +53,7 @@ define( require => {
    * @param {Object} [options]
    * @constructor
    */
-  function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, options  ) {
+  function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, options ) {
 
     Node.call( this, options );
     const self = this;
@@ -102,7 +102,7 @@ define( require => {
     }
 
     // label section of the row, something like 'Cos θ ='
-    const trigLabelText = new TrigFunctionLabelText( trigString, { 
+    const trigLabelText = new TrigFunctionLabelText( trigString, {
       trigFunctionLabelFont: DISPLAY_FONT_LARGE_BOLD,
       thetaLabelFont: DISPLAY_FONT_LARGE_BOLD_ITALIC
     } );
@@ -131,7 +131,7 @@ define( require => {
     trigValueFraction.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
-    if( trigLabelString === 'tan' ) {
+    if ( trigLabelString === 'tan' ) {
       var plusMinusInfinityNode = new Node();
       const plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
       const infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
@@ -149,7 +149,7 @@ define( require => {
     } );
 
     // if this row has a node for infinity, link its visibility to the singularity
-    if( plusMinusInfinityNode ) {
+    if ( plusMinusInfinityNode ) {
       trigTourModel.singularityProperty.link( function( singularity ) {
         plusMinusInfinityNode.visible = singularity;
         if ( !viewProperties.specialAnglesVisibleProperty.value ) {
@@ -172,22 +172,22 @@ define( require => {
 
     /**
      * Set the value of the trig value.
-     * 
+     *
      * @param {Text} trigValueNumberText
-     * @param {FractionNode} trigValueFraction 
+     * @param {FractionNode} trigValueFraction
      */
-    setTrigReadout: function( trigValueNumberText, trigValueFraction ){
-      if( this.viewProperties.specialAnglesVisibleProperty.value ) {
+    setTrigReadout: function( trigValueNumberText, trigValueFraction ) {
+      if ( this.viewProperties.specialAnglesVisibleProperty.value ) {
         this.setSpecialAngleTrigReadout( trigValueFraction );
       }
       let trigValue;
-      if( this.trigLabelString === 'sin' ) {
+      if ( this.trigLabelString === 'sin' ) {
         trigValue = this.trigTourModel.sin();
       }
-      else if( this.trigLabelString === 'cos' ) {
+      else if ( this.trigLabelString === 'cos' ) {
         trigValue = this.trigTourModel.cos();
       }
-      else if( this.trigLabelString === 'tan' ) {
+      else if ( this.trigLabelString === 'tan' ) {
         trigValue = this.trigTourModel.tan();
       }
       assert && assert( typeof trigValue !== 'undefined', 'trigLabelString must be one of cos, tan, or sin' );

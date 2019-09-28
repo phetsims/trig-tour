@@ -104,7 +104,7 @@ define( require => {
     // Draw x-, y-axes with x and y labels
     const arrowOptions = { tailWidth: 0.3, headHeight: 12, headWidth: ARROW_HEAD_WIDTH };
     const yAxis = new ArrowNode( 0, 1.18 * radius, 0, -1.2 * radius, arrowOptions );
-    const xAxis = new ArrowNode( -1.2 * radius, 0, 1.2* radius, 0, arrowOptions );
+    const xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, arrowOptions );
 
     // Draw and position x-, y-axis labels
     let fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
@@ -127,7 +127,7 @@ define( require => {
     // draw vertical (sine) line on rotor triangle
     // displayed line is either simple Line (no arrow head) or TrigIndicatorArrowNode (with arrow head)
     const verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
-    const verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', { 
+    const verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', {
       tailWidth: 5,
       lineWidth: 1,
       fill: SIN_COLOR,
@@ -145,7 +145,7 @@ define( require => {
 
     // Draw rotor arm with draggable red pin at end
     const rotorArm = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } );
-    const rotorPin = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } ); 
+    const rotorPin = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;
@@ -209,10 +209,10 @@ define( require => {
           }
           else {
             // maximum angle exceeded, only update full angle if abs val of small angle is decreasing
-            if( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
+            if ( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
               // if the difference between angles is too large, rotor was dragged across Math.PI and small angle
               // changed signs. Immediately return because this can allow the user to drag to far. 
-              if( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
+              if ( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
                 return;
               }
               setFullAngle( smallAngle );
@@ -246,7 +246,7 @@ define( require => {
       // set visibility of the labels, dependent on angle magnitude to avoid occlusion
       thetaText.visible = !( Math.abs( totalAngle ) < Util.toRadians( 40 ) );
       const sAngle = Math.abs( Util.toDegrees( smallAngle ) );  //small angle in degrees
-      yLabelText.visible = !( sAngle < 10 || (180 - sAngle) < 10 );
+      yLabelText.visible = !( sAngle < 10 || ( 180 - sAngle ) < 10 );
       xLabelText.visible = !( Math.abs( 90 - sAngle ) < 5 );
 
       // position one-label

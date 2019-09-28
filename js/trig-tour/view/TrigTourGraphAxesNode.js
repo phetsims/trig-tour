@@ -120,7 +120,7 @@ define( require => {
     // tic mark labels in radians
     const tickMarkLabelsInRadians = new Node();
     let labelString = '';
-    const pi = MathSymbols.PI; 
+    const pi = MathSymbols.PI;
     const labelStrings = [
       StringUtils.format( numberPiPatternString, '-4', pi ),
       StringUtils.format( numberPiPatternString, '-3', pi ),
@@ -182,8 +182,8 @@ define( require => {
 
     viewProperties.angleUnitsProperty.link( function( angleUnits ) {
       if ( viewProperties.labelsVisibleProperty.value ) {
-        tickMarkLabelsInRadians.visible = ( angleUnits === 'radians');
-        tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians');
+        tickMarkLabelsInRadians.visible = ( angleUnits === 'radians' );
+        tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians' );
       }
     } );
 

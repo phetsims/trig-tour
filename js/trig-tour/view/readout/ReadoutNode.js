@@ -58,7 +58,7 @@ define( require => {
     const cosLabelFractionValueRow = new LabelFractionValueRow( 'cos', model, viewProperties );
     const tanLabelFractionValueRow = new LabelFractionValueRow( 'tan', model, viewProperties );
 
-    const row3 = new Node( { 
+    const row3 = new Node( {
       children: [ sinLabelFractionValueRow, cosLabelFractionValueRow, tanLabelFractionValueRow ],
       maxWidth: maxPanelWidth
     } );
@@ -113,6 +113,6 @@ define( require => {
   }
 
   trigTour.register( 'ReadoutNode', ReadoutNode );
-  
+
   return inherit( Node, ReadoutNode );
 } );

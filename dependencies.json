@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.21 Tue Oct 15 2019 16:14:10 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.22-rc.1 Tue Oct 15 2019 19:39:03 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -30,7 +30,7 @@
   },
   "phet-core": {
     "sha": "353173258eca1c7323c8008de040e45d60649aa6",
-    "branch": "trig-tour-1.0"
+    "branch": "HEAD"
   },
   "phetcommon": {
     "sha": "09d5ab7947d3835d493270ce9c31a37dc1d25535",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "31467d4f39c6d5e4cacdcad1c9da16703b7ad6b9",
+    "sha": "2c1daa1e696c747dbf05f677c5e5b0b8cd822ef7",
     "branch": "1.0"
   }
 }

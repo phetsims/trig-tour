@@ -12,6 +12,7 @@ define( require => {
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -35,7 +36,7 @@ define( require => {
    */
   function FractionNode( numerator, denominator, options ) {
 
-    options = _.extend( {
+    options = merge( {
       radical: false, // does this fraction contain a radical in the numerator?
 
       // fonts for numerator and denominator text

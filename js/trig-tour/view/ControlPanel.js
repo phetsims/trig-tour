@@ -13,6 +13,7 @@ define( require => {
   const Checkbox = require( 'SUN/Checkbox' );
   const HSeparator = require( 'SUN/HSeparator' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -44,7 +45,7 @@ define( require => {
    */
   function ControlPanel( viewProperties, maxPanelWidth, options ) {
 
-    options = _.extend( {
+    options = merge( {
       xMargin: 15,
       yMargin: 15,
       lineWidth: 1,

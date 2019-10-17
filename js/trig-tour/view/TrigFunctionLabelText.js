@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
@@ -32,7 +33,7 @@ define( require => {
    */
   function TrigFunctionLabelText( trigFunctionString, options ) {
 
-    options = _.extend( {
+    options = merge( {
       trigFunctionLabelFont: DISPLAY_FONT,
       thetaLabelFont: DISPLAY_FONT_ITALIC
     }, options );

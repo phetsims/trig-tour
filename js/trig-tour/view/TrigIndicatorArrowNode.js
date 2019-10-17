@@ -13,6 +13,7 @@ define( require => {
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const Util = require( 'DOT/Util' );
 
@@ -38,7 +39,7 @@ define( require => {
       tipX = defaultLength;
     }
 
-    ArrowNode.call( this, 0, 0, tipX, tipY, _.extend( {
+    ArrowNode.call( this, 0, 0, tipX, tipY, merge( {
       isHeadDynamic: true,
       fractionalHeadHeight: 3 / 5,
       headHeight: 25,

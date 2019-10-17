@@ -12,6 +12,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
@@ -31,7 +32,7 @@ define( require => {
    * @constructor
    */
   function TrigTourSpiralNode( trigTourModel, initialRadius, spiralAngle, options ) {
-    options = _.extend( {
+    options = merge( {
       stroke: 'black',
       arrowHeadColor: 'black',
       arrowHeadLineWidth: 1,

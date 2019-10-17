@@ -106,7 +106,7 @@ define( require => {
 
     // // apply the shape to a path, scaling it up for good resolution in the following image conversion
     // var imageScale = 3;
-    // var spiralPath = new Path( arcShape, _.extend( { scale: imageScale }, options ) );
+    // var spiralPath = new Path( arcShape, merge( { scale: imageScale }, options ) );
 
     // // convert the path to an image as a performance optimization
     // spiralPath.toImage( function( image, x, y ) {

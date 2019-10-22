@@ -40,7 +40,8 @@ require.config( {
     SUN: '../../sun/js',
     TAMBO: '../../tambo/js',
     TANDEM: '../../tandem/js',
-    TRIG_TOUR: '.'
+    TRIG_TOUR: '.',
+    UTTERANCE_QUEUE: '../../utterance-queue/js'
   },
 
   // Cache busting is applied by default, but can be disabled via ?cacheBust=false, see initialize-globals.js

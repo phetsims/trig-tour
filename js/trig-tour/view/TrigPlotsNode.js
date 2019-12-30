@@ -17,7 +17,7 @@ define( require => {
   const TriangleNode = require( 'TRIG_TOUR/trig-tour/view/TriangleNode' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -94,8 +94,8 @@ define( require => {
     // Place arrow heads on left and right ends of sin curve
     let slopeLeft = ( amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * leftEnd / wavelength );
     let slopeRight = ( amplitude * 2 * pi / wavelength ) * Math.cos( 2 * pi * rightEnd / wavelength );
-    let angleLeft = Util.toDegrees( Math.atan( slopeLeft ) );
-    let angleRight = Util.toDegrees( Math.atan( slopeRight ) );
+    let angleLeft = Utils.toDegrees( Math.atan( slopeLeft ) );
+    let angleRight = Utils.toDegrees( Math.atan( slopeRight ) );
     const sinArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleLeft + 180 );
     const sinArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, SIN_COLOR, -angleRight );
     sinArrowLeft.x = leftEnd;
@@ -107,8 +107,8 @@ define( require => {
     // Place arrow heads on ends of cos curve
     slopeLeft = ( amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * leftEnd / wavelength );
     slopeRight = ( amplitude * 2 * pi / wavelength ) * Math.sin( 2 * pi * rightEnd / wavelength );
-    angleLeft = Util.toDegrees( Math.atan( slopeLeft ) );
-    angleRight = Util.toDegrees( Math.atan( slopeRight ) );
+    angleLeft = Utils.toDegrees( Math.atan( slopeLeft ) );
+    angleRight = Utils.toDegrees( Math.atan( slopeRight ) );
     const cosArrowLeft = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleLeft + 180 );
     const cosArrowRight = new TriangleNode( arrowHeadLength, arrowHeadWidth, COS_COLOR, angleRight );
     cosArrowLeft.x = leftEnd;
@@ -153,7 +153,7 @@ define( require => {
 
       // Derivative of tan is 1 + tan^2
       const tanSlope = ( amplitude * 2 * pi / wavelength ) * ( 1 + Math.tan( xTan ) * Math.tan( xTan ) );
-      rotationAngle = -Util.toDegrees( Math.atan( tanSlope ) );
+      rotationAngle = -Utils.toDegrees( Math.atan( tanSlope ) );
       if ( i % 2 !== 0 ) {
         rotationAngle += 180;
       }

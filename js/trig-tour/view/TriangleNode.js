@@ -15,7 +15,7 @@ define( require => {
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * Constructor for TriangleNode, which draws a simple triangle with center of base at (0, 0)
@@ -32,7 +32,7 @@ define( require => {
     // Call the super constructor
     Node.call( this );
 
-    this.rotation = Util.toRadians( rotationInDegrees ); // Node.rotation is in radians
+    this.rotation = Utils.toRadians( rotationInDegrees ); // Node.rotation is in radians
 
     // draw horizontal arrow pointing right
     const triangleShape = new Shape();

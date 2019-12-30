@@ -28,7 +28,7 @@ define( require => {
   const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
   const TrigTourModel = require( 'TRIG_TOUR/trig-tour/model/TrigTourModel' );
   const TrigTourSpiralNode = require( 'TRIG_TOUR/trig-tour/view/TrigTourSpiralNode' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const xString = require( 'string!TRIG_TOUR/x' );
@@ -77,8 +77,8 @@ define( require => {
     let xPos;
     let yPos;
     for ( let i = 0; i < angles.length; i++ ) {
-      xPos = radius * Math.cos( Util.toRadians( angles[ i ] ) );
-      yPos = radius * Math.sin( Util.toRadians( angles[ i ] ) );
+      xPos = radius * Math.cos( Utils.toRadians( angles[ i ] ) );
+      yPos = radius * Math.sin( Utils.toRadians( angles[ i ] ) );
       specialAnglesNode.addChild( new Circle(
         5,
         { stroke: LINE_COLOR, fill: 'white', lineWidth: 1, x: xPos, y: yPos }
@@ -244,13 +244,13 @@ define( require => {
       const pi = Math.PI;
 
       // set visibility of the labels, dependent on angle magnitude to avoid occlusion
-      thetaText.visible = !( Math.abs( totalAngle ) < Util.toRadians( 40 ) );
-      const sAngle = Math.abs( Util.toDegrees( smallAngle ) );  //small angle in degrees
+      thetaText.visible = !( Math.abs( totalAngle ) < Utils.toRadians( 40 ) );
+      const sAngle = Math.abs( Utils.toDegrees( smallAngle ) );  //small angle in degrees
       yLabelText.visible = !( sAngle < 10 || ( 180 - sAngle ) < 10 );
       xLabelText.visible = !( Math.abs( 90 - sAngle ) < 5 );
 
       // position one-label
-      const angleOffset = Util.toRadians( 9 );
+      const angleOffset = Utils.toRadians( 9 );
       let sign = 1; // if sign = +1, one-label is to right of radius, if sign = -1 then to the left
       if ( ( smallAngle > pi / 2 && smallAngle <= pi ) || ( smallAngle >= -pi / 2 && smallAngle < 0 ) ) {
         sign = -1;

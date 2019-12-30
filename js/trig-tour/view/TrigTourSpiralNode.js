@@ -17,7 +17,7 @@ define( require => {
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   //images
   const clockwiseSpiralImage = require( 'mipmap!TRIG_TOUR/clockwise-spiral.png' );
@@ -156,7 +156,7 @@ define( require => {
 
     updateArrowHead: function( fullAngle ) {
       // show arrow head on angle arc if angle is > 45 degrees
-      this.angleArcArrowHead.visible = Math.abs( fullAngle ) > Util.toRadians( 45 );
+      this.angleArcArrowHead.visible = Math.abs( fullAngle ) > Utils.toRadians( 45 );
 
       // position the arrow head
       this.angleArcArrowHead.x = this.endPointRadius * Math.cos( fullAngle );

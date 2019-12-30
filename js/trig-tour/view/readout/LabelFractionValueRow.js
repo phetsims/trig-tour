@@ -25,7 +25,7 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const cosString = require( 'string!TRIG_TOUR/cos' );
@@ -192,7 +192,7 @@ define( require => {
       }
       assert && assert( typeof trigValue !== 'undefined', 'trigLabelString must be one of cos, tan, or sin' );
 
-      const trigValueString = Util.toFixed( trigValue, 3 );
+      const trigValueString = Utils.toFixed( trigValue, 3 );
       trigValueNumberText.text = trigValueString;
     },
 
@@ -203,7 +203,7 @@ define( require => {
      * @private
      */
     setSpecialAngleTrigReadout: function( trigValueFraction ) {
-      const smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+      const smallAngleInDegrees = Utils.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
 
       // get the values needed to represent the special angle as a fraction.
       const specialFraction = this.specialAngles[ smallAngleInDegrees ];

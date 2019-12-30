@@ -15,7 +15,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const trigTour = require( 'TRIG_TOUR/trigTour' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * Constructor for TrigIndicatorArrowNode which is an arrow node with a head that dynamically resizes to a fraction
@@ -73,7 +73,7 @@ define( require => {
     setEndPoint: function( displacement ) {
       // determine the sign of displacement if displacement is non zero
       // sign is positive if arrow is pointing up or right, negative if pointing down or left
-      const sign = displacement === 0 ? 0 : Util.roundSymmetric( displacement / Math.abs( displacement ) );
+      const sign = displacement === 0 ? 0 : Utils.roundSymmetric( displacement / Math.abs( displacement ) );
 
       const arrowLength = Math.abs( displacement );
       if ( this.orientation === 'vertical' ) {

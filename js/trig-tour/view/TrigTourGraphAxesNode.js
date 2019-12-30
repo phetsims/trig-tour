@@ -24,7 +24,7 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -107,7 +107,7 @@ define( require => {
     const tickMarkLabelsInDegrees = new Node();
     let label;
     for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
-      let degrees = Util.toFixed( 180 * j, 0 );
+      let degrees = Utils.toFixed( 180 * j, 0 );
       degrees = degrees.toString();
       label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;

@@ -19,7 +19,7 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const xString = require( 'string!TRIG_TOUR/x' );
@@ -97,8 +97,8 @@ define( require => {
 
       // Register for synchronization with model.
       trigTourModel.fullAngleProperty.link( fullAngle => {
-        const sinText = Util.toFixed( trigTourModel.sin(), 3 );
-        const cosText = Util.toFixed( trigTourModel.cos(), 3 );
+        const sinText = Utils.toFixed( trigTourModel.sin(), 3 );
+        const cosText = Utils.toFixed( trigTourModel.cos(), 3 );
         this.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
         this.setSpecialAngleTrigReadout( this.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
         this.setSpecialAngleTrigReadout( this.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
@@ -119,7 +119,7 @@ define( require => {
      * @private
      */
     setSpecialAngleTrigReadout( trigValueFraction, specialFractions ) {
-      const smallAngleInDegrees = Util.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+      const smallAngleInDegrees = Utils.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
       const specialFraction = specialFractions[ smallAngleInDegrees ];
 
       const setFractionValues = ( readoutFraction, specialFraction ) => {

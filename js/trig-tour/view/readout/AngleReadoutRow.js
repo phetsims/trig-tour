@@ -22,7 +22,7 @@ define( require => {
   const trigTour = require( 'TRIG_TOUR/trigTour' );
   const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
   const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   //strings
   const angleString = require( 'string!TRIG_TOUR/angle' );
@@ -60,7 +60,7 @@ define( require => {
     const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
 
     // full angle for the trigTourModel
-    const fullAngleValue = Util.toFixed( trigTourModel.fullAngleProperty.value, 1 );
+    const fullAngleValue = Utils.toFixed( trigTourModel.fullAngleProperty.value, 1 );
 
     //  value is decimal number or exact fraction of radians (in special angle mode)
     const angleLabelText = new Text( angleString, fontBoldInfo );
@@ -144,12 +144,12 @@ define( require => {
     setUnits: function( units ) {
       this.units = units;
       if ( units === 'radians' ) {
-        const radiansValue = Util.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
+        const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
         const unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );
         this.angleReadoutDecimal.text = unitsString;
       }
       else {
-        const roundedAngle = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
+        const roundedAngle = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
         this.angleReadoutDecimal.text = roundedAngle + '\u00B0';
       }
     },
@@ -170,10 +170,10 @@ define( require => {
       const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
       const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
       if ( !radiansDisplayed ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
+        this.angleReadoutDecimal.text = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
       }
       if ( radiansDisplayed && !specialAnglesVisible ) {
-        this.angleReadoutDecimal.text = Util.toFixed( this.trigTourModel.fullAngleProperty.value, 3 ) + ' ' + radsString;
+        this.angleReadoutDecimal.text = Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 ) + ' ' + radsString;
       }
       if ( radiansDisplayed && specialAnglesVisible ) {
         this.setSpecialAngleReadout();
@@ -189,7 +189,7 @@ define( require => {
       this.angleReadoutFraction.visible = true;
 
       // need integer value of angle, since internal arithmetic often not-quite integer
-      let angleInDegs = Util.roundSymmetric( this.trigTourModel.getFullAngleInDegrees() );
+      let angleInDegs = Utils.roundSymmetric( this.trigTourModel.getFullAngleInDegrees() );
       if ( Math.abs( angleInDegs ) > 360 ) {
         angleInDegs = angleInDegs % 360;
       }
@@ -230,7 +230,7 @@ define( require => {
       }
 
       // Must handle smallAngle = 0 or pi as special cases
-      const roundedAngle = Util.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
+      const roundedAngle = Utils.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
       if ( roundedAngle === 0 || roundedAngle === 180 ) {
         const nbrPiRads = this.trigTourModel.halfTurnCount;
         let angleRadianString = nbrPiRads + MathSymbols.PI;

@@ -378,5 +378,4 @@ define( require => {
   trigTour.register( 'SpecialAngles', SpecialAngles );
 
   return SpecialAngles;
-
 } );

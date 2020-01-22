@@ -1,4 +1,4 @@
-// Copyright 2015-2019, University of Colorado Boulder
+// Copyright 2015-2020, University of Colorado Boulder
 
 /**
  * Special angles use throughout trig-tour.  The special angles can be represented in radians and degrees.  The first

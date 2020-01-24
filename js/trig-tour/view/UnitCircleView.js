@@ -183,10 +183,6 @@ define( require => {
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
-        // start function for testing only
-        start: function( e ) {
-          // debugger;
-        },
 
         drag: function( e ) {
           const v1 = rotorPin.globalToParentPoint( e.pointer.point );

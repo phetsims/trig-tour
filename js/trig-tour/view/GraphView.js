@@ -168,7 +168,6 @@ define( require => {
     const maxY = this.singularityIndicator.top;
     midX = this.singularityIndicator.centerX;
 
-    // debugger;
     this.singularityRectangle = new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
       cursor: 'pointer',
       visible: false,

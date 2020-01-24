@@ -1,4 +1,4 @@
-// Copyright 2015-2019, University of Colorado Boulder
+// Copyright 2015-2020, University of Colorado Boulder
 
 /**
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle

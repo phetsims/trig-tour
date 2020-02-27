@@ -8,188 +8,184 @@
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  * @author Jesse Greenberg
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Line = require( 'SCENERY/nodes/Line' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const TrigFunctionLabelText = require( 'TRIG_TOUR/trig-tour/view/TrigFunctionLabelText' );
-  const trigTour = require( 'TRIG_TOUR/trigTour' );
-  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  const TrigTourMathStrings = require( 'TRIG_TOUR/trig-tour/TrigTourMathStrings' );
-  const Utils = require( 'DOT/Utils' );
+import Utils from '../../../../dot/js/Utils.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import trigTourStrings from '../../trig-tour-strings.js';
+import trigTour from '../../trigTour.js';
+import TrigTourMathStrings from '../TrigTourMathStrings.js';
+import TrigFunctionLabelText from './TrigFunctionLabelText.js';
+import TrigTourColors from './TrigTourColors.js';
 
-  // constants
-  const LINE_COLOR = TrigTourColors.LINE_COLOR;
-  const DISPLAY_FONT_SMALL = new PhetFont( 18 );
-  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
-  const DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
+// constants
+const LINE_COLOR = TrigTourColors.LINE_COLOR;
+const DISPLAY_FONT_SMALL = new PhetFont( 18 );
+const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
+const DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
-  // strings
-  const cosString = require( 'string!TRIG_TOUR/cos' );
-  const numberPiPatternString = require( 'string!TRIG_TOUR/numberPiPattern' );
-  const sinString = require( 'string!TRIG_TOUR/sin' );
-  const tanString = require( 'string!TRIG_TOUR/tan' );
+const cosString = trigTourStrings.cos;
+const numberPiPatternString = trigTourStrings.numberPiPattern;
+const sinString = trigTourStrings.sin;
+const tanString = trigTourStrings.tan;
 
-  /**
-   * Constructor.
-   *
-   * @param {number} width
-   * @param {number} wavelength
-   * @param {number} numberOfWavelengths
-   * @param {number} amplitude
-   * @param {ViewProperties} viewProperties
-   * @constructor
-   */
-  function TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, amplitude, viewProperties ) {
+/**
+ * Constructor.
+ *
+ * @param {number} width
+ * @param {number} wavelength
+ * @param {number} numberOfWavelengths
+ * @param {number} amplitude
+ * @param {ViewProperties} viewProperties
+ * @constructor
+ */
+function TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, amplitude, viewProperties ) {
 
-    Node.call( this );
+  Node.call( this );
 
-    // Break into layers because we need to to layer things on the graph view in order: Axis, plots, labels
-    this.axisNode = new Node(); // @public (read-only)
-    this.labelsNode = new Node(); // @public (read-only)
+  // Break into layers because we need to to layer things on the graph view in order: Axis, plots, labels
+  this.axisNode = new Node(); // @public (read-only)
+  this.labelsNode = new Node(); // @public (read-only)
 
-    // draw x-axis and y-axis, represented by ArrowNodes
-    const xAxisLength = width;
-    const xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, {
-      tailWidth: 0.3,
-      fill: LINE_COLOR,
-      headHeight: 12,
-      headWidth: 8
-    } );
-    const yAxis = new ArrowNode( 0, 1.18 * amplitude, 0, -1.3 * amplitude, {
-      tailWidth: 0.3,
-      fill: LINE_COLOR,
-      headHeight: 12,
-      headWidth: 8
-    } );
+  // draw x-axis and y-axis, represented by ArrowNodes
+  const xAxisLength = width;
+  const xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, {
+    tailWidth: 0.3,
+    fill: LINE_COLOR,
+    headHeight: 12,
+    headWidth: 8
+  } );
+  const yAxis = new ArrowNode( 0, 1.18 * amplitude, 0, -1.3 * amplitude, {
+    tailWidth: 0.3,
+    fill: LINE_COLOR,
+    headHeight: 12,
+    headWidth: 8
+  } );
 
-    // draw tic marks for x and y axes
-    const ticLength = 5;
-    const xTics = new Node();
-    const yTics = new Node();
-    let xTic;
-    let yTic;
-    for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
-      xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
-      xTic.x = i * wavelength / 4;
-      xTics.addChild( xTic );
-    }
-    for ( i = -1; i <= 1; i += 2 ) {
-      yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR } );
-      yTic.y = i * amplitude;
-      yTics.addChild( yTic );
-    }
-
-    this.children = [ xAxis, yAxis ];
-
-    // draw 1/-1 labels on y-axis
-    const onesNode = new Node(); // @public (read-only)
-    let fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-    const oneLabel = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    const minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
-    onesNode.children = [ oneLabel, minusOneLabel ];
-    const xOffset = 8;
-    oneLabel.left = xOffset;
-    minusOneLabel.right = -xOffset;
-    oneLabel.centerY = -amplitude - 5;
-    minusOneLabel.centerY = amplitude + 5;
-
-    // draw tic mark labels in degrees
-    const tickMarkLabelsInDegrees = new Node();
-    let label;
-    for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
-      let degrees = Utils.toFixed( 180 * j, 0 );
-      degrees = degrees.toString();
-      label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
-      label.centerX = j * wavelength / 2;
-      label.top = xAxis.bottom;
-      if ( j !== 0 ) {
-        tickMarkLabelsInDegrees.addChild( label );
-      }
-    }
-
-    // tic mark labels in radians
-    const tickMarkLabelsInRadians = new Node();
-    let labelString = '';
-    const pi = MathSymbols.PI;
-    const labelStrings = [
-      StringUtils.format( numberPiPatternString, '-4', pi ),
-      StringUtils.format( numberPiPatternString, '-3', pi ),
-      StringUtils.format( numberPiPatternString, '-2', pi ),
-      StringUtils.format( numberPiPatternString, '-', pi ),
-      pi,
-      StringUtils.format( numberPiPatternString, '2', pi ),
-      StringUtils.format( numberPiPatternString, '3', pi ),
-      StringUtils.format( numberPiPatternString, '4', pi )
-    ];
-    const xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
-    for ( i = 0; i < xPositions.length; i++ ) {
-      labelString = labelStrings[ i ];
-      label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
-      label.centerX = xPositions[ i ] * wavelength / 2;
-      label.top = xAxis.bottom;
-      tickMarkLabelsInRadians.addChild( label );
-    }
-
-    // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
-    onesNode.visible = false;
-    tickMarkLabelsInDegrees.visible = false;
-    tickMarkLabelsInRadians.visible = false;
-
-    // Axes labels
-    const maxThetaWidth = ticLength * 3; // restrict for i18n
-    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
-    const thetaLabel = new Text( MathSymbols.THETA, fontInfo );
-    thetaLabel.left = this.right + 5;
-    thetaLabel.centerY = xAxis.centerY;
-    const maxTrigLabelWidth = xAxis.width / 4;
-    const cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
-    const sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
-    const tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
-    cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
-    cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
-
-    this.axisNode.children = [ xAxis, yAxis, thetaLabel, cosThetaLabel, sinThetaLabel, tanThetaLabel ];
-    this.labelsNode.children = [ onesNode, tickMarkLabelsInDegrees, tickMarkLabelsInRadians, xTics, yTics ];
-
-    // sync visibility with view properties
-    viewProperties.graphProperty.link( function( graph ) {
-      sinThetaLabel.visible = ( graph === 'sin' );
-      cosThetaLabel.visible = ( graph === 'cos' );
-      tanThetaLabel.visible = ( graph === 'tan' );
-    } );
-
-    viewProperties.labelsVisibleProperty.link( function( isVisible ) {
-      onesNode.visible = isVisible;
-      if ( isVisible ) {
-        tickMarkLabelsInRadians.visible = viewProperties.angleUnitsProperty.value === 'radians';
-        tickMarkLabelsInDegrees.visible = viewProperties.angleUnitsProperty.value === 'degrees';
-      }
-      else {
-        tickMarkLabelsInRadians.visible = false;
-        tickMarkLabelsInDegrees.visible = false;
-      }
-    } );
-
-    viewProperties.angleUnitsProperty.link( function( angleUnits ) {
-      if ( viewProperties.labelsVisibleProperty.value ) {
-        tickMarkLabelsInRadians.visible = ( angleUnits === 'radians' );
-        tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians' );
-      }
-    } );
-
+  // draw tic marks for x and y axes
+  const ticLength = 5;
+  const xTics = new Node();
+  const yTics = new Node();
+  let xTic;
+  let yTic;
+  for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
+    xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
+    xTic.x = i * wavelength / 4;
+    xTics.addChild( xTic );
+  }
+  for ( i = -1; i <= 1; i += 2 ) {
+    yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR } );
+    yTic.y = i * amplitude;
+    yTics.addChild( yTic );
   }
 
-  trigTour.register( 'TrigTourGraphAxesNode', TrigTourGraphAxesNode );
-  return inherit( Node, TrigTourGraphAxesNode );
+  this.children = [ xAxis, yAxis ];
 
-} );
+  // draw 1/-1 labels on y-axis
+  const onesNode = new Node(); // @public (read-only)
+  let fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+  const oneLabel = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
+  const minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
+  onesNode.children = [ oneLabel, minusOneLabel ];
+  const xOffset = 8;
+  oneLabel.left = xOffset;
+  minusOneLabel.right = -xOffset;
+  oneLabel.centerY = -amplitude - 5;
+  minusOneLabel.centerY = amplitude + 5;
+
+  // draw tic mark labels in degrees
+  const tickMarkLabelsInDegrees = new Node();
+  let label;
+  for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
+    let degrees = Utils.toFixed( 180 * j, 0 );
+    degrees = degrees.toString();
+    label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
+    label.centerX = j * wavelength / 2;
+    label.top = xAxis.bottom;
+    if ( j !== 0 ) {
+      tickMarkLabelsInDegrees.addChild( label );
+    }
+  }
+
+  // tic mark labels in radians
+  const tickMarkLabelsInRadians = new Node();
+  let labelString = '';
+  const pi = MathSymbols.PI;
+  const labelStrings = [
+    StringUtils.format( numberPiPatternString, '-4', pi ),
+    StringUtils.format( numberPiPatternString, '-3', pi ),
+    StringUtils.format( numberPiPatternString, '-2', pi ),
+    StringUtils.format( numberPiPatternString, '-', pi ),
+    pi,
+    StringUtils.format( numberPiPatternString, '2', pi ),
+    StringUtils.format( numberPiPatternString, '3', pi ),
+    StringUtils.format( numberPiPatternString, '4', pi )
+  ];
+  const xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
+  for ( i = 0; i < xPositions.length; i++ ) {
+    labelString = labelStrings[ i ];
+    label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
+    label.centerX = xPositions[ i ] * wavelength / 2;
+    label.top = xAxis.bottom;
+    tickMarkLabelsInRadians.addChild( label );
+  }
+
+  // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
+  onesNode.visible = false;
+  tickMarkLabelsInDegrees.visible = false;
+  tickMarkLabelsInRadians.visible = false;
+
+  // Axes labels
+  const maxThetaWidth = ticLength * 3; // restrict for i18n
+  fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
+  const thetaLabel = new Text( MathSymbols.THETA, fontInfo );
+  thetaLabel.left = this.right + 5;
+  thetaLabel.centerY = xAxis.centerY;
+  const maxTrigLabelWidth = xAxis.width / 4;
+  const cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
+  const sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
+  const tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
+  cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
+  cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
+
+  this.axisNode.children = [ xAxis, yAxis, thetaLabel, cosThetaLabel, sinThetaLabel, tanThetaLabel ];
+  this.labelsNode.children = [ onesNode, tickMarkLabelsInDegrees, tickMarkLabelsInRadians, xTics, yTics ];
+
+  // sync visibility with view properties
+  viewProperties.graphProperty.link( function( graph ) {
+    sinThetaLabel.visible = ( graph === 'sin' );
+    cosThetaLabel.visible = ( graph === 'cos' );
+    tanThetaLabel.visible = ( graph === 'tan' );
+  } );
+
+  viewProperties.labelsVisibleProperty.link( function( isVisible ) {
+    onesNode.visible = isVisible;
+    if ( isVisible ) {
+      tickMarkLabelsInRadians.visible = viewProperties.angleUnitsProperty.value === 'radians';
+      tickMarkLabelsInDegrees.visible = viewProperties.angleUnitsProperty.value === 'degrees';
+    }
+    else {
+      tickMarkLabelsInRadians.visible = false;
+      tickMarkLabelsInDegrees.visible = false;
+    }
+  } );
+
+  viewProperties.angleUnitsProperty.link( function( angleUnits ) {
+    if ( viewProperties.labelsVisibleProperty.value ) {
+      tickMarkLabelsInRadians.visible = ( angleUnits === 'radians' );
+      tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians' );
+    }
+  } );
+
+}
+
+trigTour.register( 'TrigTourGraphAxesNode', TrigTourGraphAxesNode );
+inherit( Node, TrigTourGraphAxesNode );
+export default TrigTourGraphAxesNode;

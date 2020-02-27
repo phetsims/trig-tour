@@ -5,106 +5,104 @@
  *
  * @author Michael Dubson (PhET developer) on 6/4/2015.
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  const Checkbox = require( 'SUN/Checkbox' );
-  const HSeparator = require( 'SUN/HSeparator' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Panel = require( 'SUN/Panel' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const trigTour = require( 'TRIG_TOUR/trigTour' );
-  const TrigTourColors = require( 'TRIG_TOUR/trig-tour/view/TrigTourColors' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import VBox from '../../../../scenery/js/nodes/VBox.js';
+import AquaRadioButton from '../../../../sun/js/AquaRadioButton.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import HSeparator from '../../../../sun/js/HSeparator.js';
+import Panel from '../../../../sun/js/Panel.js';
+import trigTourStrings from '../../trig-tour-strings.js';
+import trigTour from '../../trigTour.js';
+import TrigTourColors from './TrigTourColors.js';
 
-  // constants
-  const DISPLAY_FONT = new PhetFont( 20 );
-  const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-  const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
-  const RADIO_BUTTON_RADIUS = 10;
+// constants
+const DISPLAY_FONT = new PhetFont( 20 );
+const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
+const RADIO_BUTTON_RADIUS = 10;
 
-  //strings
-  const cosString = require( 'string!TRIG_TOUR/cos' );
-  const gridString = require( 'string!TRIG_TOUR/grid' );
-  const labelsString = require( 'string!TRIG_TOUR/labels' );
-  const sinString = require( 'string!TRIG_TOUR/sin' );
-  const specialAnglesString = require( 'string!TRIG_TOUR/specialAngles' );
-  const tanString = require( 'string!TRIG_TOUR/tan' );
+//strings
+const cosString = trigTourStrings.cos;
+const gridString = trigTourStrings.grid;
+const labelsString = trigTourStrings.labels;
+const sinString = trigTourStrings.sin;
+const specialAnglesString = trigTourStrings.specialAngles;
+const tanString = trigTourStrings.tan;
 
-  /**
-   * Constructor for the control panel
-   *
-   * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ControlPanel( viewProperties, maxPanelWidth, options ) {
+/**
+ * Constructor for the control panel
+ *
+ * @param {ViewProperties} viewProperties
+ * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
+ * @param {Object} [options]
+ * @constructor
+ */
+function ControlPanel( viewProperties, maxPanelWidth, options ) {
 
-    options = merge( {
-      xMargin: 15,
-      yMargin: 15,
-      lineWidth: 1,
-      fill: PANEL_COLOR,
-      resize: false
-    }, options );
+  options = merge( {
+    xMargin: 15,
+    yMargin: 15,
+    lineWidth: 1,
+    fill: PANEL_COLOR,
+    resize: false
+  }, options );
 
-    this.viewProperties = viewProperties;
+  this.viewProperties = viewProperties;
 
-    // create the text nodes, determining their max width from the panel width and the width of the buttons
-    const maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
-    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
-    const cosText = new Text( cosString, fontInfo );
-    const sinText = new Text( sinString, fontInfo );
-    const tanText = new Text( tanString, fontInfo );
-    const labelsText = new Text( labelsString, fontInfo );
-    const gridText = new Text( gridString, fontInfo );
-    const specialAnglesText = new Text( specialAnglesString, fontInfo );
+  // create the text nodes, determining their max width from the panel width and the width of the buttons
+  const maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
+  const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
+  const cosText = new Text( cosString, fontInfo );
+  const sinText = new Text( sinString, fontInfo );
+  const tanText = new Text( tanString, fontInfo );
+  const labelsText = new Text( labelsString, fontInfo );
+  const gridText = new Text( gridString, fontInfo );
+  const specialAnglesText = new Text( specialAnglesString, fontInfo );
 
-    // A cluster of 3 radio buttons for displaying either cos, sin or tan
-    // viewProperties.graph = 'cos'|'sin'|'tan'
-    const radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
-    const cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
-    const sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
-    const tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
+  // A cluster of 3 radio buttons for displaying either cos, sin or tan
+  // viewProperties.graph = 'cos'|'sin'|'tan'
+  const radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
+  const cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
+  const sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
+  const tanRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'tan', tanText, radioButtonOptions );
 
-    // 3 checkboxes: Labels, Grid, Special Angles
-    const checkboxOptions = { checkboxColorBackground: 'white' };
-    const labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
-    const gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
-    const specialAnglesCheckbox = new Checkbox(
-      specialAnglesText,
-      viewProperties.specialAnglesVisibleProperty,
-      checkboxOptions
-    );
+  // 3 checkboxes: Labels, Grid, Special Angles
+  const checkboxOptions = { checkboxColorBackground: 'white' };
+  const labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
+  const gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
+  const specialAnglesCheckbox = new Checkbox(
+    specialAnglesText,
+    viewProperties.specialAnglesVisibleProperty,
+    checkboxOptions
+  );
 
-    // Adjust touch areas
-    const spacing = 15;
-    const separatorWidth = specialAnglesCheckbox.width + 10;
-    const content = new VBox( {
-      children: [
-        cosRadioButton,
-        sinRadioButton,
-        tanRadioButton,
-        new HSeparator( separatorWidth ),
-        specialAnglesCheckbox,
-        labelsCheckbox,
-        gridCheckbox
-      ],
-      align: 'left',
-      spacing: spacing,
-      resize: false
-    } );
+  // Adjust touch areas
+  const spacing = 15;
+  const separatorWidth = specialAnglesCheckbox.width + 10;
+  const content = new VBox( {
+    children: [
+      cosRadioButton,
+      sinRadioButton,
+      tanRadioButton,
+      new HSeparator( separatorWidth ),
+      specialAnglesCheckbox,
+      labelsCheckbox,
+      gridCheckbox
+    ],
+    align: 'left',
+    spacing: spacing,
+    resize: false
+  } );
 
-    Panel.call( this, content, options );
+  Panel.call( this, content, options );
 
-  }
+}
 
-  trigTour.register( 'ControlPanel', ControlPanel );
+trigTour.register( 'ControlPanel', ControlPanel );
 
-  return inherit( Panel, ControlPanel );
-} );
+inherit( Panel, ControlPanel );
+export default ControlPanel;

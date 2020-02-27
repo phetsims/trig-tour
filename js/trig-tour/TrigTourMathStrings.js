@@ -7,20 +7,17 @@
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  * @author Jesse Greenberg
  */
-define( require => {
-  'use strict';
 
-  const trigTour = require( 'TRIG_TOUR/trigTour' );
+import trigTour from '../trigTour.js';
 
-  // strings
-  const TrigTourMathStrings = {
-    ONE_STRING: '1',
-    MINUS_ONE_STRING: '-1',
-    MINUS_STRING: '-',
-    EQUALS_STRING: ' = '
-  };
+// strings
+const TrigTourMathStrings = {
+  ONE_STRING: '1',
+  MINUS_ONE_STRING: '-1',
+  MINUS_STRING: '-',
+  EQUALS_STRING: ' = '
+};
 
-  trigTour.register( 'TrigTourMathStrings', TrigTourMathStrings );
+trigTour.register( 'TrigTourMathStrings', TrigTourMathStrings );
 
-  return TrigTourMathStrings;
-} );
+export default TrigTourMathStrings;

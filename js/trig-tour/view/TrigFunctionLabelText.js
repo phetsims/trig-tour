@@ -8,49 +8,45 @@
  *
  * @author Jesse Greenberg
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const merge = require( 'PHET_CORE/merge' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const trigTour = require( 'TRIG_TOUR/trigTour' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import trigTour from '../../trigTour.js';
 
-  // constants
-  const DISPLAY_FONT = new PhetFont( { size: 20 } );
-  const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
+// constants
+const DISPLAY_FONT = new PhetFont( { size: 20 } );
+const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 
-  /**
-   * Constructor.
-   *
-   * @param {string} trigFunctionString - label for the trig function
-   * @param {Object} [options]
-   * @constructor
-   */
-  function TrigFunctionLabelText( trigFunctionString, options ) {
+/**
+ * Constructor.
+ *
+ * @param {string} trigFunctionString - label for the trig function
+ * @param {Object} [options]
+ * @constructor
+ */
+function TrigFunctionLabelText( trigFunctionString, options ) {
 
-    options = merge( {
-      trigFunctionLabelFont: DISPLAY_FONT,
-      thetaLabelFont: DISPLAY_FONT_ITALIC
-    }, options );
+  options = merge( {
+    trigFunctionLabelFont: DISPLAY_FONT,
+    thetaLabelFont: DISPLAY_FONT_ITALIC
+  }, options );
 
-    // build the text for the trig function label
-    const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
+  // build the text for the trig function label
+  const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
 
-    // create the text for the mathematical symbol theta
-    const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
+  // create the text for the mathematical symbol theta
+  const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
 
-    // build the text, placing both function and theta labels in an HBox
-    HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
+  // build the text, placing both function and theta labels in an HBox
+  HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
 
-  }
+}
 
-  trigTour.register( 'TrigFunctionLabelText', TrigFunctionLabelText );
+trigTour.register( 'TrigFunctionLabelText', TrigFunctionLabelText );
 
-  return inherit( HBox, TrigFunctionLabelText );
-
-} );
+inherit( HBox, TrigFunctionLabelText );
+export default TrigFunctionLabelText;

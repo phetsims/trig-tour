@@ -5,28 +5,24 @@
  *
  * @author Michael Dubson (PhET)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
-  const TrigTourScreen = require( 'TRIG_TOUR/trig-tour/TrigTourScreen' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import trigTourStrings from './trig-tour-strings.js';
+import TrigTourScreen from './trig-tour/TrigTourScreen.js';
 
-  // strings
-  const trigTourTitleString = require( 'string!TRIG_TOUR/trig-tour.title' );
+const trigTourTitleString = trigTourStrings[ 'trig-tour' ].title;
 
-  const simOptions = {
-    credits: {
-      leadDesign: 'Michael Dubson, Amanda McGarry',
-      softwareDevelopment: 'Michael Dubson, Jesse Greenberg',
-      team: 'Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Elise Morgan, Oliver Orejola, Bryan Yoelin'
-    }
-  };
+const simOptions = {
+  credits: {
+    leadDesign: 'Michael Dubson, Amanda McGarry',
+    softwareDevelopment: 'Michael Dubson, Jesse Greenberg',
+    team: 'Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Steele Dalton, Elise Morgan, Oliver Orejola, Bryan Yoelin'
+  }
+};
 
-  SimLauncher.launch( function() {
-    const sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
-    sim.start();
-  } );
+SimLauncher.launch( function() {
+  const sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
+  sim.start();
 } );

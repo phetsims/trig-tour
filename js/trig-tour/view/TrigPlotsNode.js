@@ -1,4 +1,4 @@
-// Copyright 2015-2019, University of Colorado Boulder
+// Copyright 2015-2020, University of Colorado Boulder
 
 /**
  * Handles drawing the shapes and creating the paths for the trig plots on the graph of Trig Tour.

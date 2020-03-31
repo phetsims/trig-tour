@@ -28,7 +28,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import Panel from '../../../../sun/js/Panel.js';
-import trigTourStrings from '../../trig-tour-strings.js';
+import trigTourStrings from '../../trigTourStrings.js';
 import trigTour from '../../trigTour.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';

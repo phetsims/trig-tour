@@ -8,7 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
-import trigTourStrings from './trig-tour-strings.js';
+import trigTourStrings from './trigTourStrings.js';
 import TrigTourScreen from './trig-tour/TrigTourScreen.js';
 
 const trigTourTitleString = trigTourStrings[ 'trig-tour' ].title;

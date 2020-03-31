@@ -15,7 +15,7 @@ import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
 import HSeparator from '../../../../../sun/js/HSeparator.js';
 import VSeparator from '../../../../../sun/js/VSeparator.js';
-import trigTourStrings from '../../../trig-tour-strings.js';
+import trigTourStrings from '../../../trigTourStrings.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 import AngleReadoutRow from './AngleReadoutRow.js';

@@ -12,7 +12,7 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import trigTourStrings from '../../../trig-tour-strings.js';
+import trigTourStrings from '../../../trigTourStrings.js';
 import trigTour from '../../../trigTour.js';
 import SpecialAngles from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';

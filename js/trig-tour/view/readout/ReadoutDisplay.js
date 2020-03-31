@@ -10,7 +10,7 @@ import inherit from '../../../../../phet-core/js/inherit.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../../sun/js/AccordionBox.js';
-import trigTourStrings from '../../../trig-tour-strings.js';
+import trigTourStrings from '../../../trigTourStrings.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ReadoutNode from './ReadoutNode.js';

@@ -132,7 +132,7 @@ function AngleReadoutRow( trigTourModel, viewProperties, options ) {
 
 trigTour.register( 'AngleReadoutRow', AngleReadoutRow );
 
-export default inherit( Node, AngleReadoutRow, {
+inherit( Node, AngleReadoutRow, {
 
   /**
    * Set readout units to either degrees or radians.
@@ -249,3 +249,5 @@ export default inherit( Node, AngleReadoutRow, {
     }
   }
 } );
+
+export default AngleReadoutRow;

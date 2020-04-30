@@ -314,7 +314,7 @@ function GraphView( trigTourModel, height, width, viewProperties ) {
 
 trigTour.register( 'GraphView', GraphView );
 
-export default inherit( Node, GraphView, {
+inherit( Node, GraphView, {
 
   /**
    * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
@@ -388,3 +388,5 @@ export default inherit( Node, GraphView, {
 
   }
 } );
+
+export default GraphView;

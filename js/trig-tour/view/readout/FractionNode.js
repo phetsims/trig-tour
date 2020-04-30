@@ -58,7 +58,7 @@ function FractionNode( numerator, denominator, options ) {
 
 trigTour.register( 'FractionNode', FractionNode );
 
-export default inherit( Node, FractionNode, {
+inherit( Node, FractionNode, {
 
   /**
    * Set the numerator and denominator of this fractionNode.
@@ -201,3 +201,5 @@ export default inherit( Node, FractionNode, {
     }
   }
 } );
+
+export default FractionNode;

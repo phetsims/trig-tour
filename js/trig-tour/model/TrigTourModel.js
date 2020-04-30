@@ -45,7 +45,7 @@ function TrigTourModel() {
 
 trigTour.register( 'TrigTourModel', TrigTourModel );
 
-export default inherit( Object, TrigTourModel, {
+inherit( Object, TrigTourModel, {
 
   /**
    * Resets the properties of the model
@@ -298,3 +298,5 @@ export default inherit( Object, TrigTourModel, {
   MAX_ANGLE_LIMIT: MAX_ANGLE_LIMIT
 
 } );
+
+export default TrigTourModel;

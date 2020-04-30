@@ -149,7 +149,7 @@ function TrigTourSpiralNode( trigTourModel, initialRadius, spiralAngle, options 
 
 trigTour.register( 'TrigTourSpiralNode', TrigTourSpiralNode );
 
-export default inherit( Node, TrigTourSpiralNode, {
+inherit( Node, TrigTourSpiralNode, {
 
   updateArrowHead: function( fullAngle ) {
     // show arrow head on angle arc if angle is > 45 degrees
@@ -252,3 +252,5 @@ export default inherit( Node, TrigTourSpiralNode, {
     this.clipArea = clipShape;
   }
 } );
+
+export default TrigTourSpiralNode;

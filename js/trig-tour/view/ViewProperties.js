@@ -57,7 +57,5 @@ export default inherit( Object, ViewProperties, {
     this.labelsVisibleProperty.reset();
     this.gridVisibleProperty.reset();
     this.specialAnglesVisibleProperty.reset();
-
   }
-} )
-;
+} );

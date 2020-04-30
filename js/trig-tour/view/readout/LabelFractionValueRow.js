@@ -165,7 +165,7 @@ function LabelFractionValueRow( trigLabelString, trigTourModel, viewProperties, 
 
 trigTour.register( 'LabelFractionValueRow', LabelFractionValueRow );
 
-export default inherit( Node, LabelFractionValueRow, {
+inherit( Node, LabelFractionValueRow, {
 
   /**
    * Set the value of the trig value.
@@ -219,3 +219,5 @@ export default inherit( Node, LabelFractionValueRow, {
     setFractionValues( trigValueFraction, specialFraction );
   }
 } );
+
+export default LabelFractionValueRow;

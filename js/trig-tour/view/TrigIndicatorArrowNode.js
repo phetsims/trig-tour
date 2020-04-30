@@ -52,7 +52,7 @@ function TrigIndicatorArrowNode( defaultLength, orientation, options ) {
 
 trigTour.register( 'TrigIndicatorArrowNode', TrigIndicatorArrowNode );
 
-export default inherit( ArrowNode, TrigIndicatorArrowNode, {
+inherit( ArrowNode, TrigIndicatorArrowNode, {
 
   /**
    * @public Set the color of this arrow, with no stroke this is just the fill.
@@ -82,3 +82,5 @@ export default inherit( ArrowNode, TrigIndicatorArrowNode, {
   }
 
 } );
+
+export default TrigIndicatorArrowNode;

@@ -50,7 +50,7 @@ function ViewProperties() {
 
 trigTour.register( 'ViewProperties', ViewProperties );
 
-export default inherit( Object, ViewProperties, {
+inherit( Object, ViewProperties, {
   reset: function() {
     this.graphProperty.reset();
     this.angleUnitsProperty.reset();
@@ -59,3 +59,5 @@ export default inherit( Object, ViewProperties, {
     this.specialAnglesVisibleProperty.reset();
   }
 } );
+
+export default ViewProperties;

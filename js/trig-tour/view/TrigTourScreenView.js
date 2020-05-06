@@ -109,5 +109,5 @@ function TrigTourScreenView( trigTourModel ) {
 }
 
 trigTour.register( 'TrigTourScreenView', TrigTourScreenView );
-
-export default inherit( ScreenView, TrigTourScreenView, {} );
+inherit( ScreenView, TrigTourScreenView );
+export default TrigTourScreenView;

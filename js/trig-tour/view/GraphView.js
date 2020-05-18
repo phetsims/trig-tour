@@ -28,8 +28,8 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import Panel from '../../../../sun/js/Panel.js';
-import trigTourStrings from '../../trigTourStrings.js';
 import trigTour from '../../trigTour.js';
+import trigTourStrings from '../../trigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
@@ -317,7 +317,7 @@ trigTour.register( 'GraphView', GraphView );
 inherit( Node, GraphView, {
 
   /**
-   * Set the indicator line, which is a draggable, vertical arrow indicating current location on graph.
+   * Set the indicator line, which is a draggable, vertical arrow indicating current position on graph.
    */
   setTrigIndicatorArrowNode: function() {
     const self = this;

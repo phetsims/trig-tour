@@ -19,8 +19,8 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import trigTourStrings from '../../trigTourStrings.js';
 import trigTour from '../../trigTour.js';
+import trigTourStrings from '../../trigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
@@ -65,7 +65,7 @@ function UnitCircleView( trigTourModel, backgroundRectangle, backgroundOffset, v
   const radius = 160; //radius of unit circle in view coordinates
   const circleGraphic = new Circle( radius, { stroke: LINE_COLOR, lineWidth: 3 } );
 
-  // Draw 'special angle' locations on unit circle
+  // Draw 'special angle' positions on unit circle
   // special angles are at 0, 30, 45, 60, 90, 120, 135, 150, 180, -30, ...
   const specialAnglesNode = new Node();
   const angles = SpecialAngles.SPECIAL_ANGLES;

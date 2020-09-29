@@ -1,4 +1,4 @@
-// Copyright 2015-2020, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * AccordionBox container of ReadoutNode.  ReadoutNode contains all viewable values for the simulation.

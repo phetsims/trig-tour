@@ -18,7 +18,7 @@ import dizzyPhetGirlImage from '../../../mipmaps/dizzy-phet-girl_png.js';
 import trigTour from '../../trigTour.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
-import ReadoutDisplay from './readout/ReadoutDisplay.js';
+import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 import TrigTourColors from './TrigTourColors.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
@@ -68,7 +68,7 @@ function TrigTourScreenView( trigTourModel ) {
   // small buffer between edges of the layout and panels on the screen view, for layout calculations
   const layoutBuffer = this.layoutBounds.width * 0.015;
 
-  const readoutDisplay = new ReadoutDisplay( trigTourModel, viewProperties, maxPanelWidth );
+  const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties, maxPanelWidth );
   readoutDisplay.left = layoutBuffer;
   readoutDisplay.top = unitCircleView.top;
 

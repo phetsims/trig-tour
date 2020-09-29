@@ -33,7 +33,7 @@ const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
 /**
  * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
- * This node is the content of AccordionBox ReadoutDisplay
+ * This node is the content of ValuesAccordionBox.
  *
  * @param {TrigTourModel} model is the main model of the sim
  * @param {ViewProperties} viewProperties
@@ -79,7 +79,7 @@ function ReadoutNode( model, viewProperties, maxPanelWidth ) {
     myRadioButtonOptions
   );
 
-  // Layout rows of Readout Panel. Entire panel is content of ReadoutDisplay AccordionBox
+  // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox
   const spacing = 10;
   const rowSpacing = 5;
   const separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };

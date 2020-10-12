@@ -10,7 +10,6 @@
  */
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -28,86 +27,85 @@ import ViewProperties from './ViewProperties.js';
 // constants
 const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 
-/**
- * Constructor for TrigTourScreenView.
- *
- * @param {TrigTourModel} trigTourModel - main model for sim
- * @constructor
- */
-function TrigTourScreenView( trigTourModel ) {
+class TrigTourScreenView extends ScreenView {
 
-  ScreenView.call( this );
-  const self = this;
+  /**
+   * @param {TrigTourModel} trigTourModel - main model for sim
+   */
+  constructor( trigTourModel ) {
 
-  const viewProperties = new ViewProperties();
+    super();
+    const self = this;
 
-  // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
-  // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
-  const width = 2.4 * 175;
-  const height = 2.4 * 160;
-  const arcRadius = 8;
-  const xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
-  const whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, {
-    fill: 'white',
-    stroke: TEXT_COLOR_GRAY,
-    lineWidth: 2
-  } );
-  whiteSheet.x = this.layoutBounds.centerX;
-  whiteSheet.top = this.layoutBounds.top + 20;
+    const viewProperties = new ViewProperties();
 
-  const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
-  unitCircleView.center = whiteSheet.center;
+    // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
+    // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle
+    const width = 2.4 * 175;
+    const height = 2.4 * 160;
+    const arcRadius = 8;
+    const xOffset = 10; // we want the width in the x direction to be offset slightly to include the 'x' label
+    const whiteSheet = new Rectangle( -width / 2, -height / 2, width + xOffset, height, arcRadius, arcRadius, {
+      fill: 'white',
+      stroke: TEXT_COLOR_GRAY,
+      lineWidth: 2
+    } );
+    whiteSheet.x = this.layoutBounds.centerX;
+    whiteSheet.top = this.layoutBounds.top + 20;
 
-  const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
-  graphView.x = this.layoutBounds.centerX;
-  graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
+    const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
+    unitCircleView.center = whiteSheet.center;
 
-  // for i18n, calculate the maximum width for the readoutNode and the control panel.
-  const maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
+    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
+    graphView.x = this.layoutBounds.centerX;
+    graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
 
-  // small buffer between edges of the layout and panels on the screen view, for layout calculations
-  const layoutBuffer = this.layoutBounds.width * 0.015;
+    // for i18n, calculate the maximum width for the readoutNode and the control panel.
+    const maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
 
-  const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties, maxPanelWidth );
-  readoutDisplay.left = layoutBuffer;
-  readoutDisplay.top = unitCircleView.top;
+    // small buffer between edges of the layout and panels on the screen view, for layout calculations
+    const layoutBuffer = this.layoutBounds.width * 0.015;
 
-  const controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
-  controlPanel.right = this.layoutBounds.right - layoutBuffer;
-  controlPanel.top = unitCircleView.top;
+    const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties, maxPanelWidth );
+    readoutDisplay.left = layoutBuffer;
+    readoutDisplay.top = unitCircleView.top;
 
-  this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
-  this.dizzyPhetGirlImage.right = this.layoutBounds.right;
-  this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
+    const controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
+    controlPanel.right = this.layoutBounds.right - layoutBuffer;
+    controlPanel.top = unitCircleView.top;
 
-  this.addChild( whiteSheet );
-  this.addChild( graphView );
-  this.addChild( unitCircleView );
-  this.addChild( readoutDisplay );
-  this.addChild( controlPanel );
-  this.addChild( this.dizzyPhetGirlImage );
+    this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
+    this.dizzyPhetGirlImage.right = this.layoutBounds.right;
+    this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
 
-  // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
-  trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
-    self.dizzyPhetGirlImage.visible = maxAngleExceeded;
-  } );
+    this.addChild( whiteSheet );
+    this.addChild( graphView );
+    this.addChild( unitCircleView );
+    this.addChild( readoutDisplay );
+    this.addChild( controlPanel );
+    this.addChild( this.dizzyPhetGirlImage );
 
-  // Create and add the Reset All Button in the bottom right, which resets the model
-  const resetAllButton = new ResetAllButton( {
-    listener: function() {
-      viewProperties.reset();
-      graphView.expandedProperty.value = true;
-      readoutDisplay.expandedProperty.value = true;
-      trigTourModel.setFullAngleInRadians( 0 );
-      self.dizzyPhetGirlImage.visible = false;
-    },
-    right: controlPanel.right,
-    top: controlPanel.bottom + 10,
-    radius: 21
-  } );
-  this.addChild( resetAllButton );
+    // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
+    trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
+      self.dizzyPhetGirlImage.visible = maxAngleExceeded;
+    } );
+
+    // Create and add the Reset All Button in the bottom right, which resets the model
+    const resetAllButton = new ResetAllButton( {
+      listener: function() {
+        viewProperties.reset();
+        graphView.expandedProperty.value = true;
+        readoutDisplay.expandedProperty.value = true;
+        trigTourModel.setFullAngleInRadians( 0 );
+        self.dizzyPhetGirlImage.visible = false;
+      },
+      right: controlPanel.right,
+      top: controlPanel.bottom + 10,
+      radius: 21
+    } );
+    this.addChild( resetAllButton );
+  }
 }
 
 trigTour.register( 'TrigTourScreenView', TrigTourScreenView );
-inherit( ScreenView, TrigTourScreenView );
 export default TrigTourScreenView;

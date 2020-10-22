@@ -17,10 +17,10 @@ import dizzyPhetGirlImage from '../../../mipmaps/dizzy-phet-girl_png.js';
 import trigTour from '../../trigTour.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
-import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 import TrigTourColors from './TrigTourColors.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
+import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 
 //images
 
@@ -35,8 +35,6 @@ class TrigTourScreenView extends ScreenView {
   constructor( trigTourModel ) {
 
     super();
-    const self = this;
-
     const viewProperties = new ViewProperties();
 
     // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
@@ -86,18 +84,18 @@ class TrigTourScreenView extends ScreenView {
     this.addChild( this.dizzyPhetGirlImage );
 
     // if user exceeds max allowed angle in UnitCircleView, image of dizzy PhET girl appears
-    trigTourModel.maxAngleExceededProperty.link( function( maxAngleExceeded ) {
-      self.dizzyPhetGirlImage.visible = maxAngleExceeded;
+    trigTourModel.maxAngleExceededProperty.link( maxAngleExceeded => {
+      this.dizzyPhetGirlImage.visible = maxAngleExceeded;
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     const resetAllButton = new ResetAllButton( {
-      listener: function() {
+      listener: () => {
         viewProperties.reset();
         graphView.expandedProperty.value = true;
         readoutDisplay.expandedProperty.value = true;
         trigTourModel.setFullAngleInRadians( 0 );
-        self.dizzyPhetGirlImage.visible = false;
+        this.dizzyPhetGirlImage.visible = false;
       },
       right: controlPanel.right,
       top: controlPanel.bottom + 10,

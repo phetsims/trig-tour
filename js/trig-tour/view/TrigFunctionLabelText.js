@@ -9,7 +9,6 @@
  * @author Jesse Greenberg
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -21,32 +20,32 @@ import trigTour from '../../trigTour.js';
 const DISPLAY_FONT = new PhetFont( { size: 20 } );
 const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 
-/**
- * Constructor.
- *
- * @param {string} trigFunctionString - label for the trig function
- * @param {Object} [options]
- * @constructor
- */
-function TrigFunctionLabelText( trigFunctionString, options ) {
-
-  options = merge( {
-    trigFunctionLabelFont: DISPLAY_FONT,
-    thetaLabelFont: DISPLAY_FONT_ITALIC
-  }, options );
-
-  // build the text for the trig function label
-  const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
-
-  // create the text for the mathematical symbol theta
-  const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
-
-  // build the text, placing both function and theta labels in an HBox
-  HBox.call( this, { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
-
+class TrigFunctionLabelText extends HBox {
+  /**
+   * Constructor.
+   *
+   * @param {string} trigFunctionString - label for the trig function
+   * @param {Object} [options]
+   */
+  constructor( trigFunctionString, options ) {
+  
+    options = merge( {
+      trigFunctionLabelFont: DISPLAY_FONT,
+      thetaLabelFont: DISPLAY_FONT_ITALIC
+    }, options );
+  
+    // build the text for the trig function label
+    const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
+  
+    // create the text for the mathematical symbol theta
+    const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
+  
+    // build the text, placing both function and theta labels in an HBox
+    super( { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
+  
+  }
 }
 
 trigTour.register( 'TrigFunctionLabelText', TrigFunctionLabelText );
 
-inherit( HBox, TrigFunctionLabelText );
 export default TrigFunctionLabelText;

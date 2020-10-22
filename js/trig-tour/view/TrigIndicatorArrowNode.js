@@ -46,9 +46,7 @@ class TrigIndicatorArrowNode extends ArrowNode {
     this.orientation = orientation; // @private, 'horizontal' or 'vertical' orientation
 
     const emptyBounds = new Bounds2( 0, 0, 0, 0 );
-    this.computeShapeBounds = function() {
-      return emptyBounds;
-    };
+    this.computeShapeBounds = () => emptyBounds;
   }
 
   /**

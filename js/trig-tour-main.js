@@ -8,8 +8,8 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import trigTourStrings from './trigTourStrings.js';
 import TrigTourScreen from './trig-tour/TrigTourScreen.js';
+import trigTourStrings from './trigTourStrings.js';
 
 const trigTourTitleString = trigTourStrings[ 'trig-tour' ].title;
 
@@ -22,7 +22,7 @@ const simOptions = {
   }
 };
 
-simLauncher.launch( function() {
+simLauncher.launch( () => {
   const sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
   sim.start();
 } );

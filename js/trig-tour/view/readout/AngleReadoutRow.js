@@ -9,14 +9,13 @@
  */
 
 import Utils from '../../../../../dot/js/Utils.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import trigTourStrings from '../../../trigTourStrings.js';
 import trigTour from '../../../trigTour.js';
+import trigTourStrings from '../../../trigTourStrings.js';
 import SpecialAngles from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
@@ -34,112 +33,108 @@ const equalString = TrigTourMathStrings.EQUALS_STRING;
 const DISPLAY_FONT = new PhetFont( 20 );
 const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
-/**
- * Constructor.
- *
- * @param {TrigTourModel} trigTourModel is the main model of the sim
- * @param {ViewProperties} viewProperties
- * @param {Object} [options] to pass the maximum width of content in the ReadoutNode panel in the screen view.
- * @constructor
- */
-function AngleReadoutRow( trigTourModel, viewProperties, options ) {
+class AngleReadoutRow extends Node {
+  
+  /**
+   * @param {TrigTourModel} trigTourModel is the main model of the sim
+   * @param {ViewProperties} viewProperties
+   * @param {Object} [options] to pass the maximum width of content in the ReadoutNode panel in the screen view.
+   */
+  constructor( trigTourModel, viewProperties, options ) {
+  
+    super( options );
+  
+    // @private
+    this.decimalPrecision = 1; // number of decimal places for display of fullAngle, = 0 for special angles
+    this.units = 'degrees'; // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
+    this.viewProperties = viewProperties;
+    this.trigTourModel = trigTourModel;
+  
+    // initialize font styles
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
+  
+    // full angle for the trigTourModel
+    const fullAngleValue = Utils.toFixed( trigTourModel.fullAngleProperty.value, 1 );
+  
+    //  value is decimal number or exact fraction of radians (in special angle mode)
+    const angleLabelText = new Text( angleString, fontBoldInfo );
+    const angleLabelEqualsText = new Text( equalString, fontBoldInfo );
+    this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
+    this.fullAngleFractionNode = new FractionNode( '', '', fontInfo );  // node representing fractional form of full angle
+  
+    // used to display angle as FractionNode in Special angles mode
+    this.angleReadoutFraction = new FractionNode( '', '', fontInfo );
+    this.angleReadoutDecimal.visible = true;
+    this.angleReadoutFraction.visible = false;
+  
+    // Either angleReadoutDecimal visible (decimal number values)
+    // or (fullAngleFractionNode + angleReadoutFraction) visible in Special angles mode
+    this.children = [ angleLabelText, angleLabelEqualsText, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
+  
+    // row 2 layout
+    const spacing = 4;
+    angleLabelEqualsText.left = angleLabelText.right + spacing;
+    this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
+    this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
+    this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
+  
+    trigTourModel.fullAngleProperty.link( fullAngle => {    // fullAngle is in radians
+      this.setAngleReadout();
+    } );
+  
+    viewProperties.angleUnitsProperty.link( units => {
+      this.setUnits( units );
+      if ( units === 'radians' && viewProperties.specialAnglesVisibleProperty.value ) {
+        this.fullAngleFractionNode.visible = true;
+        this.angleReadoutFraction.visible = true;
+        this.angleReadoutDecimal.visible = false;
+      }
+      else {
+        this.fullAngleFractionNode.visible = false;
+        this.angleReadoutFraction.visible = false;
+        this.angleReadoutDecimal.visible = true;
+      }
+      this.setAngleReadout();
+    } );
+  
+    viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
+  
+      //select correct angle readout
+      if ( specialAnglesVisible && viewProperties.angleUnitsProperty.value === 'radians' ) {
+        this.fullAngleFractionNode.visible = true;
+        this.angleReadoutFraction.visible = true;
+        this.angleReadoutDecimal.visible = false;
+      }
+      else {
+        this.fullAngleFractionNode.visible = false;
+        this.angleReadoutFraction.visible = false;
+        this.angleReadoutDecimal.visible = true;
+      }
+  
+      // set precision of angle readout in degrees:
+      // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
+      if ( specialAnglesVisible ) {
+        const currentSmallAngle = trigTourModel.getSmallAngleInRadians();
+        trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
+        this.setAngleReadoutPrecision( 0 );   //integer display of special angles
+      }
+      else {
+        // 1 decimal place precision for continuous angles
+        this.setAngleReadoutPrecision( 1 );
+      }
+      this.setAngleReadout();
+    } );
+  }
 
-  Node.call( this, options );
-  const self = this;
-
-  // @private
-  this.decimalPrecision = 1; // number of decimal places for display of fullAngle, = 0 for special angles
-  this.units = 'degrees'; // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
-  this.viewProperties = viewProperties;
-  this.trigTourModel = trigTourModel;
-
-  // initialize font styles
-  const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-  const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
-
-  // full angle for the trigTourModel
-  const fullAngleValue = Utils.toFixed( trigTourModel.fullAngleProperty.value, 1 );
-
-  //  value is decimal number or exact fraction of radians (in special angle mode)
-  const angleLabelText = new Text( angleString, fontBoldInfo );
-  const angleLabelEqualsText = new Text( equalString, fontBoldInfo );
-  this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
-  this.fullAngleFractionNode = new FractionNode( '', '', fontInfo );  // node representing fractional form of full angle
-
-  // used to display angle as FractionNode in Special angles mode
-  this.angleReadoutFraction = new FractionNode( '', '', fontInfo );
-  this.angleReadoutDecimal.visible = true;
-  this.angleReadoutFraction.visible = false;
-
-  // Either angleReadoutDecimal visible (decimal number values)
-  // or (fullAngleFractionNode + angleReadoutFraction) visible in Special angles mode
-  this.children = [ angleLabelText, angleLabelEqualsText, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
-
-  // row 2 layout
-  const spacing = 4;
-  angleLabelEqualsText.left = angleLabelText.right + spacing;
-  this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
-  this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
-  this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
-
-  trigTourModel.fullAngleProperty.link( function( fullAngle ) {    // fullAngle is in radians
-    self.setAngleReadout();
-  } );
-
-  viewProperties.angleUnitsProperty.link( function( units ) {
-    self.setUnits( units );
-    if ( units === 'radians' && viewProperties.specialAnglesVisibleProperty.value ) {
-      self.fullAngleFractionNode.visible = true;
-      self.angleReadoutFraction.visible = true;
-      self.angleReadoutDecimal.visible = false;
-    }
-    else {
-      self.fullAngleFractionNode.visible = false;
-      self.angleReadoutFraction.visible = false;
-      self.angleReadoutDecimal.visible = true;
-    }
-    self.setAngleReadout();
-  } );
-
-  viewProperties.specialAnglesVisibleProperty.link( function( specialAnglesVisible ) {
-
-    //select correct angle readout
-    if ( specialAnglesVisible && viewProperties.angleUnitsProperty.value === 'radians' ) {
-      self.fullAngleFractionNode.visible = true;
-      self.angleReadoutFraction.visible = true;
-      self.angleReadoutDecimal.visible = false;
-    }
-    else {
-      self.fullAngleFractionNode.visible = false;
-      self.angleReadoutFraction.visible = false;
-      self.angleReadoutDecimal.visible = true;
-    }
-
-    // set precision of angle readout in degrees:
-    // in special angles mode, zero decimal places (e.g. 45 deg), otherwise 1 decimal place (e.g. 45.0 deg)
-    if ( specialAnglesVisible ) {
-      const currentSmallAngle = trigTourModel.getSmallAngleInRadians();
-      trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
-      self.setAngleReadoutPrecision( 0 );   //integer display of special angles
-    }
-    else {
-      // 1 decimal place precision for continuous angles
-      self.setAngleReadoutPrecision( 1 );
-    }
-    self.setAngleReadout();
-  } );
-}
-
-trigTour.register( 'AngleReadoutRow', AngleReadoutRow );
-
-inherit( Node, AngleReadoutRow, {
 
   /**
    * Set readout units to either degrees or radians.
+   * @private
    *
    * @param {string} units one of 'degrees' || 'radians'
    */
-  setUnits: function( units ) {
+  setUnits( units ) {
     this.units = units;
     if ( units === 'radians' ) {
       const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
@@ -150,21 +145,23 @@ inherit( Node, AngleReadoutRow, {
       const roundedAngle = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
       this.angleReadoutDecimal.text = roundedAngle + '\u00B0';
     }
-  },
+  }
 
   /**
    * Set the fullAngle readout precision.
+   * @private
    *
    * @param {number} decimalPrecision
    */
-  setAngleReadoutPrecision: function( decimalPrecision ) {
+  setAngleReadoutPrecision( decimalPrecision ) {
     this.decimalPrecision = decimalPrecision;
-  },
+  }
 
   /**
    * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
+   * @private
    */
-  setAngleReadout: function() {
+  setAngleReadout() {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
     if ( !radiansDisplayed ) {
@@ -176,14 +173,13 @@ inherit( Node, AngleReadoutRow, {
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }
-  },
+  }
 
   /**
    * Set the special angle readout.
+   * @private
    */
-  setSpecialAngleReadout: function() {
-    const self = this;
-
+  setSpecialAngleReadout() {
     this.angleReadoutFraction.visible = true;
 
     // need integer value of angle, since internal arithmetic often not-quite integer
@@ -220,7 +216,7 @@ inherit( Node, AngleReadoutRow, {
       // this information
       const sign = angleInDegs >= 0 ? '' : '-';
       const coefficient = angleInDegs >= 0 ? +1 : -1;
-      self.angleReadoutFraction.setValues(
+      this.angleReadoutFraction.setValues(
         sign + specialAngleFractions[ coefficient * angleInDegs ].numerator, // string concatenation
         specialAngleFractions[ coefficient * angleInDegs ].denominator,
         false /* no radicals for special angle fractions */
@@ -248,6 +244,8 @@ inherit( Node, AngleReadoutRow, {
       this.angleReadoutFraction.visible = false;
     }
   }
-} );
+}
+
+trigTour.register( 'AngleReadoutRow', AngleReadoutRow );
 
 export default AngleReadoutRow;

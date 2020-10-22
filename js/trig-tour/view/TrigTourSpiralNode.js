@@ -9,7 +9,6 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -18,140 +17,139 @@ import clockwiseSpiralImage from '../../../mipmaps/clockwise-spiral_png.js';
 import counterClockwiseSpiralImage from '../../../mipmaps/counter-clockwise-spiral_png.js';
 import trigTour from '../../trigTour.js';
 
-//images
-
-/**
- * Constructor.
- * @param {TrigTourModel} trigTourModel
- * @param {number} initialRadius - initial radius of the spiral
- * @param {number} spiralAngle - total angle of the spiral shape
- * @param {Object} [options]
- * @constructor
- */
-function TrigTourSpiralNode( trigTourModel, initialRadius, spiralAngle, options ) {
-  options = merge( {
-    stroke: 'black',
-    arrowHeadColor: 'black',
-    arrowHeadLineWidth: 1,
-    lineWidth: 2,
-    preventFit: true
-  }, options );
-
-  Node.call( this, options );
-  const self = this;
-
-  // watch the current radius which points to the end point of the spiral
-  this.endPointRadius = initialRadius; // @private
-  this.initialRadius = initialRadius; // @private
-
-  // draw an arrow head which will be placed at the outer end of the spiral
-  const arrowHeadShape = new Shape();
-  const arrowHeadWidth = 7;
-  const arrowHeadLength = 12;    //arrow head length
-  arrowHeadShape.moveTo( 0, 0 )
-    .lineTo( -arrowHeadWidth / 2, arrowHeadLength )
-    .lineTo( arrowHeadWidth / 2, arrowHeadLength )
-    .close();
-  this.angleArcArrowHead = new Path( arrowHeadShape, {
-    lineWidth: options.arrowHeadLineWidth,
-    fill: options.arrowHeadColor
-  } );
-
-  //------------------------------------------------------------------------------------------------------------------
+class TrigTourSpiralNode extends Node {
+  
   /**
-   * The following code is used to generate the spiral images used in this sim.
-   *
-   * The spiral path causes the simulation to perform poorly on tablets.  The path is then converted to an image with
-   * Node.toImage().  Rendering the image causes a very long load time, so the rendered image was saved under
-   * trig-tour/images so that it could be pulled from the image plugin.
-   *
-   * For more information, see https://github.com/phetsims/trig-tour/issues/62
+   * Constructor.
+   * @param {TrigTourModel} trigTourModel
+   * @param {number} initialRadius - initial radius of the spiral
+   * @param {number} spiralAngle - total angle of the spiral shape
+   * @param {Object} [options]
    */
-
-    // // draw the spiral with gradually increasing radius
-    // var arcShape = new Shape();
-    // arcShape.moveTo( this.endPointRadius, 0 ); // initial position of the spiral
-    // var totalAngle = trigTourModel.getFullAngleInRadians();
-
-    // // if the total angle is less than 0.5 radians, delta should be smaller for smoother lines
-    // var deltaAngle = 0.1;
-    // if ( Math.abs( totalAngle ) < 0.5 ) {
-    //   deltaAngle = 0.02;
-    // }
-
-    // // approximate the spiral shape with line segments
-    // var angle = 0;
-    // if ( spiralAngle > 0 ) {
-    //   for ( angle = 0; angle <= spiralAngle; angle += deltaAngle ) {
-    //     if ( Math.abs( totalAngle ) < 0.5 ) {
-    //       deltaAngle = 0.02;
-    //     }
-    //     this.endPointRadius += deltaAngle;
-    //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
-    //   }
-    // }
-    // else {
-    //   for ( angle = 0; angle >= spiralAngle; angle -= deltaAngle ) {
-    //     if ( Math.abs( totalAngle ) < 0.5 ) {
-    //       deltaAngle = 0.02;
-    //     }
-
-    //     this.endPointRadius += deltaAngle;
-    //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
-    //   }
-    // }
-
-    // // apply the shape to a path, scaling it up for good resolution in the following image conversion
-    // var imageScale = 3;
-    // var spiralPath = new Path( arcShape, merge( { scale: imageScale }, options ) );
-
-    // // convert the path to an image as a performance optimization
-    // spiralPath.toImage( function( image, x, y ) {
-    //   var spiralImage = new Image( image, { x: -x, y: -y } );
-    //   spiralImage.scale( 1 / imageScale, 1 / imageScale, true );
-    //   thisNode.children = [ spiralImage, thisNode.angleArcArrowHead ];
-    //   console.log( image );
-    // } );
+  constructor( trigTourModel, initialRadius, spiralAngle, options ) {
+    options = merge( {
+      stroke: 'black',
+      arrowHeadColor: 'black',
+      arrowHeadLineWidth: 1,
+      lineWidth: 2,
+      preventFit: true
+    }, options );
+  
+    super( options );
+  
+    // watch the current radius which points to the end point of the spiral
+    this.endPointRadius = initialRadius; // @private
+    this.initialRadius = initialRadius; // @private
+  
+    // draw an arrow head which will be placed at the outer end of the spiral
+    const arrowHeadShape = new Shape();
+    const arrowHeadWidth = 7;
+    const arrowHeadLength = 12;    //arrow head length
+    arrowHeadShape.moveTo( 0, 0 )
+      .lineTo( -arrowHeadWidth / 2, arrowHeadLength )
+      .lineTo( arrowHeadWidth / 2, arrowHeadLength )
+      .close();
+    this.angleArcArrowHead = new Path( arrowHeadShape, {
+      lineWidth: options.arrowHeadLineWidth,
+      fill: options.arrowHeadColor
+    } );
+  
     //------------------------------------------------------------------------------------------------------------------
-
-    // apply the correct dimage to the node, generated by the code above
-    // the image coordiniates are off after render, normalize and fix with offsets by visual inspection
-  const imageScale = 3; // image was scaled by 3 in node.toImage
-  const imageOffset = 1.6; // correct for small offset generated by saved image
-  let spiralImage;
-  let xImageOffset;
-  let yImageOffset;
-  if ( spiralAngle > 0 ) {
-    spiralImage = counterClockwiseSpiralImage;
-    xImageOffset = -imageOffset;
-    yImageOffset = imageOffset;
+    /**
+     * The following code is used to generate the spiral images used in this sim.
+     *
+     * The spiral path causes the simulation to perform poorly on tablets.  The path is then converted to an image with
+     * Node.toImage().  Rendering the image causes a very long load time, so the rendered image was saved under
+     * trig-tour/images so that it could be pulled from the image plugin.
+     *
+     * For more information, see https://github.com/phetsims/trig-tour/issues/62
+     */
+  
+      // // draw the spiral with gradually increasing radius
+      // var arcShape = new Shape();
+      // arcShape.moveTo( this.endPointRadius, 0 ); // initial position of the spiral
+      // var totalAngle = trigTourModel.getFullAngleInRadians();
+  
+      // // if the total angle is less than 0.5 radians, delta should be smaller for smoother lines
+      // var deltaAngle = 0.1;
+      // if ( Math.abs( totalAngle ) < 0.5 ) {
+      //   deltaAngle = 0.02;
+      // }
+  
+      // // approximate the spiral shape with line segments
+      // var angle = 0;
+      // if ( spiralAngle > 0 ) {
+      //   for ( angle = 0; angle <= spiralAngle; angle += deltaAngle ) {
+      //     if ( Math.abs( totalAngle ) < 0.5 ) {
+      //       deltaAngle = 0.02;
+      //     }
+      //     this.endPointRadius += deltaAngle;
+      //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
+      //   }
+      // }
+      // else {
+      //   for ( angle = 0; angle >= spiralAngle; angle -= deltaAngle ) {
+      //     if ( Math.abs( totalAngle ) < 0.5 ) {
+      //       deltaAngle = 0.02;
+      //     }
+  
+      //     this.endPointRadius += deltaAngle;
+      //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
+      //   }
+      // }
+  
+      // // apply the shape to a path, scaling it up for good resolution in the following image conversion
+      // var imageScale = 3;
+      // var spiralPath = new Path( arcShape, merge( { scale: imageScale }, options ) );
+  
+      // // convert the path to an image as a performance optimization
+      // spiralPath.toImage( function( image, x, y ) {
+      //   var spiralImage = new Image( image, { x: -x, y: -y } );
+      //   spiralImage.scale( 1 / imageScale, 1 / imageScale, true );
+      //   thisNode.children = [ spiralImage, thisNode.angleArcArrowHead ];
+      //   console.log( image );
+      // } );
+      //------------------------------------------------------------------------------------------------------------------
+  
+      // apply the correct dimage to the node, generated by the code above
+      // the image coordiniates are off after render, normalize and fix with offsets by visual inspection
+    const imageScale = 3; // image was scaled by 3 in node.toImage
+    const imageOffset = 1.6; // correct for small offset generated by saved image
+    let spiralImage;
+    let xImageOffset;
+    let yImageOffset;
+    if ( spiralAngle > 0 ) {
+      spiralImage = counterClockwiseSpiralImage;
+      xImageOffset = -imageOffset;
+      yImageOffset = imageOffset;
+    }
+    else {
+      spiralImage = clockwiseSpiralImage;
+      xImageOffset = -imageOffset;
+      yImageOffset = -imageOffset;
+    }
+    const spiralImageNode = new Image( spiralImage );
+    spiralImageNode.scale( 1 / imageScale, 1 / imageScale, true );
+  
+    spiralImageNode.x = -spiralImageNode.width / 2 + xImageOffset;
+    spiralImageNode.y = -spiralImageNode.height / 2 + yImageOffset;
+  
+    this.children = [ spiralImageNode, this.angleArcArrowHead ];
+  
+    // update the position of the arrow node whenever the full model angle changes
+    trigTourModel.fullAngleProperty.link( fullAngle => {
+      this.updateEndPointRadius( fullAngle );
+      this.updateClipArea( fullAngle );
+      this.updateArrowHead( fullAngle );
+    } );
   }
-  else {
-    spiralImage = clockwiseSpiralImage;
-    xImageOffset = -imageOffset;
-    yImageOffset = -imageOffset;
-  }
-  const spiralImageNode = new Image( spiralImage );
-  spiralImageNode.scale( 1 / imageScale, 1 / imageScale, true );
 
-  spiralImageNode.x = -spiralImageNode.width / 2 + xImageOffset;
-  spiralImageNode.y = -spiralImageNode.height / 2 + yImageOffset;
 
-  this.children = [ spiralImageNode, self.angleArcArrowHead ];
-
-  // update the position of the arrow node whenever the full model angle changes
-  trigTourModel.fullAngleProperty.link( function( fullAngle ) {
-    self.updateEndPointRadius( fullAngle );
-    self.updateClipArea( fullAngle );
-    self.updateArrowHead( fullAngle );
-  } );
-}
-
-trigTour.register( 'TrigTourSpiralNode', TrigTourSpiralNode );
-
-inherit( Node, TrigTourSpiralNode, {
-
-  updateArrowHead: function( fullAngle ) {
+  /**
+   * @private
+   * @param {number} fullAngle
+   */
+  updateArrowHead( fullAngle ) {
     // show arrow head on angle arc if angle is > 45 degrees
     this.angleArcArrowHead.visible = Math.abs( fullAngle ) > Utils.toRadians( 45 );
 
@@ -165,9 +163,13 @@ inherit( Node, TrigTourSpiralNode, {
     else {
       this.angleArcArrowHead.rotation = -fullAngle + ( 6 / this.endPointRadius );
     }
-  },
+  }
 
-  updateEndPointRadius: function( fullAngle ) {
+  /**
+   * @private
+   * @param {number} fullAngle
+   */
+  updateEndPointRadius( fullAngle ) {
     this.endPointRadius = this.initialRadius;
     let deltaAngle;
     let angle;
@@ -187,16 +189,17 @@ inherit( Node, TrigTourSpiralNode, {
         this.endPointRadius += deltaAngle;
       }
     }
-  },
+  }
 
   /**
    * The clip area is a single loop of the spiral offset by a small amount to include the largest rotation of the full
    * spiral shape for the given angle.  Updating the clip area shape is a performance enhancement for redrawing
    * the entire spiral shape every frame.
+   * @private
    *
-   * @param fullAngle
+   * @param {number} fullAngle
    */
-  updateClipArea: function( fullAngle ) {
+  updateClipArea( fullAngle ) {
 
     const clipShape = new Shape();
 
@@ -251,6 +254,8 @@ inherit( Node, TrigTourSpiralNode, {
     clipShape.close();
     this.clipArea = clipShape;
   }
-} );
+}
+
+trigTour.register( 'TrigTourSpiralNode', TrigTourSpiralNode );
 
 export default TrigTourSpiralNode;

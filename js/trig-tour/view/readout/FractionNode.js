@@ -8,7 +8,6 @@
  */
 
 import Shape from '../../../../../kite/js/Shape.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Line from '../../../../../scenery/js/nodes/Line.js';
@@ -18,56 +17,55 @@ import Text from '../../../../../scenery/js/nodes/Text.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 
-/**
- * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
- *    A
- *    -
- *    B
- *    If either A or B (but not both) is negative, a minus sign is displayed at the same level as the divider bar
- *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
- *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
- * @param {string|number} numerator
- * @param {string|number} denominator
- * @param {Object} [options]
- * @constructor
- */
-function FractionNode( numerator, denominator, options ) {
+class FractionNode extends Node {
+  
+  /**
+   * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
+   *    A
+   *    -
+   *    B
+   *    If either A or B (but not both) is negative, a minus sign is displayed at the same level as the divider bar
+   *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
+   *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
+   * @param {string|number} numerator
+   * @param {string|number} denominator
+   * @param {Object} [options]
+   */
+  constructor( numerator, denominator, options ) {
+  
+    options = merge( {
+      radical: false, // does this fraction contain a radical in the numerator?
+  
+      // fonts for numerator and denominator text
+      font: new PhetFont( 20 ),
+      fill: TrigTourColors.TEXT_COLOR,
+      fontWeight: 'normal'
+    }, options );
+  
+    // call the super constructor
+    super( options );
+  
+    this.numerator = numerator; // @public (read-only)
+    this.denominator = denominator; // @public (read-only)
+    this.radical = options.radical; // @public (read-only)
+    this.fontOptions = _.pick( options, 'font', 'fill', 'fontWeight' ); // @private options for text
+  
+    // create the fraction
+    this.setFraction();
+  
+    this.mutate( options );
+  }
 
-  options = merge( {
-    radical: false, // does this fraction contain a radical in the numerator?
-
-    // fonts for numerator and denominator text
-    font: new PhetFont( 20 ),
-    fill: TrigTourColors.TEXT_COLOR,
-    fontWeight: 'normal'
-  }, options );
-
-  // call the super constructor
-  Node.call( this, options );
-
-  this.numerator = numerator; // @public (read-only)
-  this.denominator = denominator; // @public (read-only)
-  this.radical = options.radical; // @public (read-only)
-  this.fontOptions = _.pick( options, 'font', 'fill', 'fontWeight' ); // @private options for text
-
-  // create the fraction
-  this.setFraction();
-
-  this.mutate( options );
-}
-
-trigTour.register( 'FractionNode', FractionNode );
-
-inherit( Node, FractionNode, {
 
   /**
    * Set the numerator and denominator of this fractionNode.
+   * @public
    *
    * @param {string|number} numerator
    * @param {string|number} denominator
    * @param {boolean} [radical] - optional parameter, does the numerator contain a radical?
    */
-  setValues: function( numerator, denominator, radical ) {
+  setValues( numerator, denominator, radical ) {
 
     this.numerator = numerator;
     this.denominator = denominator;
@@ -77,12 +75,13 @@ inherit( Node, FractionNode, {
     }
 
     this.setFraction();
-  },
+  }
 
   /**
    * Set the fraction node and draw its various parts.
+   * @private
    */
-  setFraction: function() {
+  setFraction() {
     let minusSign;                            // short horizontal line for minus sign, in front of divisor bar
     let numeratorNegative = false;            // true if numerator is negative
     let denominatorNegative = false;          // true if denominator is negative
@@ -200,6 +199,8 @@ inherit( Node, FractionNode, {
       sqRtPath.centerX = numeratorText.centerX - 3;
     }
   }
-} );
+}
+
+trigTour.register( 'FractionNode', FractionNode );
 
 export default FractionNode;

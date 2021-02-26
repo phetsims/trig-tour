@@ -33,7 +33,7 @@ const specialAnglesString = trigTourStrings.specialAngles;
 const tanString = trigTourStrings.tan;
 
 class ControlPanel extends Panel {
-  
+
   /**
    * Constructor for the control panel
    *

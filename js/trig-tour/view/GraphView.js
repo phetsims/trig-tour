@@ -64,27 +64,27 @@ class GraphView extends Node {
    * @param {ViewProperties} viewProperties - which graph is visible, one of 'cos', 'sin', or 'tan'
    */
   constructor( trigTourModel, height, width, viewProperties ) {
-  
+
     // Call the super constructor
     super();
-  
+
     // @private
     this.trigTourModel = trigTourModel;
     this.viewProperties = viewProperties;
     this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
-  
+
     // Graph drawing code is determined empirically, numbers are chosen based on what 'looks good'.
     const marginWidth = 25;   // distance between edge of Node and edge of nearest full wavelength
     const wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in view coordinates
     this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in view coordinates
     const numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
-  
+
     const buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
-  
+
     // @private
     this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );
     this.titleDisplayHBox = new HBox( { children: [ buttonSeparator, this.graphTitle ], spacing: 5 } );
-  
+
     const panelOptions = {
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
@@ -97,7 +97,7 @@ class GraphView extends Node {
       align: 'left', // {string} horizontal of content in the pane, left|center|right
       minWidth: 0 // minimum width of the panel
     };
-  
+
     // @private when graph is collapsed/hidden, a title is displayed
     this.titleDisplayPanel = new Panel( this.titleDisplayHBox, panelOptions );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
@@ -109,7 +109,7 @@ class GraphView extends Node {
     const midY = this.expandCollapseButton.centerY;
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
     this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
-  
+
     // draw white background
     const backgroundHeight = 1.2 * height;
     const backgroundWidth = 1.05 * width;
@@ -119,13 +119,13 @@ class GraphView extends Node {
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
     } );
-  
+
     // align expandCollapseButton and titleDisplayButton
     this.expandCollapseButton.left = backgroundRectangle.left + 7;
     this.expandCollapseButton.top = backgroundRectangle.top + 7;
     this.titleDisplayPanel.left = backgroundRectangle.left;
     this.titleDisplayPanel.top = backgroundRectangle.top;
-  
+
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
     const borderWidth = 400;
     const borderHeight = 1000;
@@ -142,13 +142,13 @@ class GraphView extends Node {
       borderHeight,
       { fill: BACKGROUND_COLOR }
     );
-  
+
     // @public (read-only) axes node for displaying axes on the graph
     this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
-  
+
     // @public (read-only) node containing paths of the trig curves sin, cos, and tan
     this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );
-  
+
     // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
     this.singularityIndicator = new Line( 0, -800, 0, 400, {
       stroke: TAN_COLOR,
@@ -156,25 +156,25 @@ class GraphView extends Node {
       lineDash: [ 10, 5 ],
       cursor: 'pointer'
     } );
-  
+
     // Lines are not draggable.  An invisible rectangle needs to cover the singularity indicator so that the user
     // can  drag it once it appears.
     hitBound = 20;
     const minY = this.singularityIndicator.bottom;
     const maxY = this.singularityIndicator.top;
     midX = this.singularityIndicator.centerX;
-  
+
     this.singularityRectangle = new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
       cursor: 'pointer',
       visible: false,
       opacity: 0, // this needs to be completely invisible
       center: this.singularityIndicator.center
     } );
-  
+
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );
     this.trigPlotsNode.addChild( this.singularityRectangle );
-  
+
     // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and
     // trigFunction(angle) a red dot on top of the indicator line echoes red dot on unit circle
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
@@ -184,17 +184,17 @@ class GraphView extends Node {
       headHeight: 20,
       cursor: 'pointer'
     } );
-  
+
     const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
     this.trigIndicatorArrowNode.mouseArea = interactionArea;
     this.trigIndicatorArrowNode.touchArea = interactionArea;
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
-  
+
     // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by
     // expandCollapseButton
     const displayNode = new Node();
-  
+
     // Rendering order for display children.
     displayNode.children = [
       this.graphAxesNode.axisNode,
@@ -204,32 +204,32 @@ class GraphView extends Node {
       rightBorder,
       leftBorder
     ];
-  
+
     this.children = [
       backgroundRectangle,
       this.titleDisplayPanel,
       this.expandCollapseButton,
       displayNode
     ];
-  
+
     // link visibility to the expandCollapseButton
     this.expandedProperty.link( expanded => {
       backgroundRectangle.visible = expanded;
       displayNode.visible = expanded;
       this.titleDisplayPanel.visible = !expanded;
     } );
-  
+
     const dragHandler = new SimpleDragHandler(
       {
         allowTouchSnag: true,
-  
+
         drag: e => {
           const position = this.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
           const fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
-  
+
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
-  
+
           if ( !trigTourModel.maxAngleExceededProperty.value ) {
             if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
@@ -244,14 +244,14 @@ class GraphView extends Node {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
           }
-  
+
         }
       } );
-  
+
     // add a drag handler to the indicatorArrowNode
     this.trigIndicatorArrowNode.addInputListener( dragHandler );
     this.singularityRectangle.addInputListener( dragHandler );
-  
+
     // Register for synchronization with model
     // function that reduces the indicator arrow tail width around the tan function singularity
     const setIndicatorTailWidth = () => {
@@ -263,7 +263,7 @@ class GraphView extends Node {
         this.trigIndicatorArrowNode.setTailWidth( 5 );
       }
     };
-  
+
     trigTourModel.fullAngleProperty.link( fullAngle => {
       const xPos = fullAngle / ( 2 * Math.PI ) * wavelength;
       this.trigIndicatorArrowNode.x = xPos;
@@ -272,11 +272,11 @@ class GraphView extends Node {
       setIndicatorTailWidth();
       this.setTrigIndicatorArrowNode();
     } );
-  
+
     viewProperties.graphProperty.link( graph => {
       // whenever the graph changes, make sure that the trigIndicatorArrowNode has a correctly sized tail width
       setIndicatorTailWidth();
-  
+
       // set title bar in GraphView
       this.setTitleBarText( graph );
       if ( trigTourModel.singularityProperty.value ) {
@@ -294,7 +294,7 @@ class GraphView extends Node {
       }
       this.setTrigIndicatorArrowNode();
     } );
-  
+
     trigTourModel.singularityProperty.link( singularity => {
       if ( this.viewProperties.graphProperty.value === 'tan' ) {
         this.singularityIndicator.visible = singularity;

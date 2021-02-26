@@ -31,7 +31,7 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
 class ReadoutNode extends Node {
-  
+
   /**
    * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
    * This node is the content of ValuesAccordionBox.
@@ -46,17 +46,17 @@ class ReadoutNode extends Node {
     // create the first two rows
     const row1 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
     const row2 = new AngleReadoutRow( model, viewProperties, { maxWidth: maxPanelWidth } );
-  
+
     // Row 3: trig function label = trig fraction = trig value
     const sinLabelFractionValueRow = new LabelFractionValueRow( 'sin', model, viewProperties );
     const cosLabelFractionValueRow = new LabelFractionValueRow( 'cos', model, viewProperties );
     const tanLabelFractionValueRow = new LabelFractionValueRow( 'tan', model, viewProperties );
-  
+
     const row3 = new Node( {
       children: [ sinLabelFractionValueRow, cosLabelFractionValueRow, tanLabelFractionValueRow ],
       maxWidth: maxPanelWidth
     } );
-  
+
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     const myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white', maxWidth: maxPanelWidth };
@@ -74,7 +74,7 @@ class ReadoutNode extends Node {
       radiansText,
       myRadioButtonOptions
     );
-  
+
     // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox
     const spacing = 10;
     const rowSpacing = 5;
@@ -95,9 +95,9 @@ class ReadoutNode extends Node {
       spacing: spacing,
       resize: false
     } );
-  
+
     this.addChild( contentVBox );
-  
+
     // Synchronize visibility properties with the view
     viewProperties.graphProperty.link( graph => {
       sinLabelFractionValueRow.visible = ( graph === 'sin' );

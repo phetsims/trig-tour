@@ -28,21 +28,21 @@ class TrigFunctionLabelText extends HBox {
    * @param {Object} [options]
    */
   constructor( trigFunctionString, options ) {
-  
+
     options = merge( {
       trigFunctionLabelFont: DISPLAY_FONT,
       thetaLabelFont: DISPLAY_FONT_ITALIC
     }, options );
-  
+
     // build the text for the trig function label
     const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
-  
+
     // create the text for the mathematical symbol theta
     const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
-  
+
     // build the text, placing both function and theta labels in an HBox
     super( { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
-  
+
   }
 }
 

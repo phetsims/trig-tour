@@ -16,27 +16,27 @@ const VALID_GRAPH = [ 'cos', 'sin', 'tan' ];
 
 class ViewProperties {
   constructor() {
-  
+
     // @public {Property.<string>} which graph is visible, 'cos'|'sin' |'tan'
     this.graphProperty = new Property( 'cos' );
-  
+
     // @public{Property.<string>} which angle units, 'degrees'|'radians'
     this.angleUnitsProperty = new Property( 'degrees' );
-  
+
     // @public {Property.<boolean>}
     this.labelsVisibleProperty = new BooleanProperty( false );
-  
+
     // @public {Property.<boolean>}
     this.gridVisibleProperty = new BooleanProperty( false );
-  
+
     // @public {Property.<boolean>}
     this.specialAnglesVisibleProperty = new BooleanProperty( false );
-  
+
     // validate the graph values
     this.graphProperty.link( graph => {
       assert && assert( _.includes( VALID_GRAPH, graph ), 'this graph is invalid:' + graph );
     } );
-  
+
     // validate the angle units
     this.angleUnitsProperty.link( angleUnit => {
       assert && assert( _.includes( VALID_ANGLE_UNITS, angleUnit ), 'this angleUnit is invalid:' + angleUnit );

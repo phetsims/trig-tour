@@ -18,18 +18,18 @@ const MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integ
 
 class TrigTourModel {
   constructor() {
-  
+
     // @public {Property.<Number>} total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
     this.fullAngleProperty = new NumberProperty( 0 );
-  
+
     // @public {Property.<boolean>} indicates singularity in tan function at theta = +/- 90 degrees
     // true if fullAngle is close to +/-90 degrees
     this.singularityProperty = new BooleanProperty( false );
-  
+
     // @public {Property.<boolean>} (read-only) true if user exceeds maximum allowed angle
     this.maxAngleExceededProperty = new BooleanProperty( false );
-  
-  
+
+
     this.smallAngle = 0;    // @private, fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
     this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total fullAngle from smallAngle
     this.rotationNumberFromPi = 0;  //@private, number of turns around the unit circle, incremented at +/-180 deg,

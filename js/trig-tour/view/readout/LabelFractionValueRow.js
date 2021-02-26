@@ -50,25 +50,25 @@ class LabelFractionValueRow extends Node {
    * @param {Object} [options]
    */
   constructor( trigLabelString, trigTourModel, viewProperties, options ) {
-  
+
     super( options );
-  
+
     // prevent block fitting of this row as a performance optimization
     this.preventFit = true;
-  
+
     this.trigTourModel = trigTourModel; // @private
     this.viewProperties = viewProperties; // @private
     this.trigLabelString = trigLabelString; // @private
-  
+
     const fontOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-  
+
     // initialize strings and variables for the row, depending on trigLabelString
     let trigString;
     let numeratorString;
     let denominatorString;
     this.trigModelFunction; // @private - trig function for this value
     this.specialAngles; // @private - collection of special angles for this trig function
-  
+
     // get the values needed to represent the special angle as a fraction, dependent on trig function type
     switch( trigLabelString ) {
       case 'sin': {
@@ -95,28 +95,28 @@ class LabelFractionValueRow extends Node {
       default:
         throw new Error( 'invalid trigLabelString: ' + trigLabelString );
     }
-  
+
     // label section of the row, something like 'Cos θ ='
     const trigLabelText = new TrigFunctionLabelText( trigString, {
       trigFunctionLabelFont: DISPLAY_FONT_LARGE_BOLD,
       thetaLabelFont: DISPLAY_FONT_LARGE_BOLD_ITALIC
     } );
     const leftEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
-  
+
     // label fraction for the row defining the shown value, something like 'x/1'
     const trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
-  
+
     // value presented by this row as a number, updates with the model and depends on the angle
     const trigValueNumberText = new Text( 'trigModelValue', fontOptions );
-  
+
     // value presented by this row as a fraction, updates with the model and depends on the angle
     const trigValueFraction = new FractionNode( '', '', fontOptions );
-  
+
     // create an text representation of the equal sign
     const rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
-  
+
     this.children = [ trigLabelText, leftEqualText, trigFraction, rightEqualText, trigValueNumberText, trigValueFraction ];
-  
+
     // layout
     const space = 4;
     leftEqualText.leftCenter = trigLabelText.rightCenter.plusXY( space, 0 );
@@ -124,7 +124,7 @@ class LabelFractionValueRow extends Node {
     rightEqualText.leftCenter = trigFraction.rightCenter.plusXY( space, 0 );
     trigValueNumberText.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
     trigValueFraction.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
-  
+
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if ( trigLabelString === 'tan' ) {
       var plusMinusInfinityNode = new Node();
@@ -137,12 +137,12 @@ class LabelFractionValueRow extends Node {
       plusMinusInfinityNode.left = rightEqualText.right;
       this.addChild( plusMinusInfinityNode );
     }
-  
+
     // synchronize row values with model
     trigTourModel.fullAngleProperty.link( fullAngle => {
       this.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
-  
+
     // if this row has a node for infinity, link its visibility to the singularity
     if ( plusMinusInfinityNode ) {
       trigTourModel.singularityProperty.link( singularity => {
@@ -152,7 +152,7 @@ class LabelFractionValueRow extends Node {
         }
       } );
     }
-  
+
     // synchronize component visibility with view properties
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
       trigValueFraction.visible = specialAnglesVisible;

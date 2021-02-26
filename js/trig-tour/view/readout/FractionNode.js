@@ -18,7 +18,7 @@ import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 
 class FractionNode extends Node {
-  
+
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
    *    A
@@ -32,27 +32,27 @@ class FractionNode extends Node {
    * @param {Object} [options]
    */
   constructor( numerator, denominator, options ) {
-  
+
     options = merge( {
       radical: false, // does this fraction contain a radical in the numerator?
-  
+
       // fonts for numerator and denominator text
       font: new PhetFont( 20 ),
       fill: TrigTourColors.TEXT_COLOR,
       fontWeight: 'normal'
     }, options );
-  
+
     // call the super constructor
     super( options );
-  
+
     this.numerator = numerator; // @public (read-only)
     this.denominator = denominator; // @public (read-only)
     this.radical = options.radical; // @public (read-only)
     this.fontOptions = _.pick( options, 'font', 'fill', 'fontWeight' ); // @private options for text
-  
+
     // create the fraction
     this.setFraction();
-  
+
     this.mutate( options );
   }
 

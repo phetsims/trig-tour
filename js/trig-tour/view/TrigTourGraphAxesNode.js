@@ -46,13 +46,13 @@ class TrigTourGraphAxesNode extends Node {
    * @param {ViewProperties} viewProperties
    */
   constructor( width, wavelength, numberOfWavelengths, amplitude, viewProperties ) {
-  
+
     super();
-  
+
     // Break into layers because we need to to layer things on the graph view in order: Axis, plots, labels
     this.axisNode = new Node(); // @public (read-only)
     this.labelsNode = new Node(); // @public (read-only)
-  
+
     // draw x-axis and y-axis, represented by ArrowNodes
     const xAxisLength = width;
     const xAxis = new ArrowNode( -xAxisLength / 2, 0, xAxisLength / 2, 0, {
@@ -67,7 +67,7 @@ class TrigTourGraphAxesNode extends Node {
       headHeight: 12,
       headWidth: 8
     } );
-  
+
     // draw tic marks for x and y axes
     const ticLength = 5;
     const xTics = new Node();
@@ -84,9 +84,9 @@ class TrigTourGraphAxesNode extends Node {
       yTic.y = i * amplitude;
       yTics.addChild( yTic );
     }
-  
+
     this.children = [ xAxis, yAxis ];
-  
+
     // draw 1/-1 labels on y-axis
     const onesNode = new Node(); // @public (read-only)
     let fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
@@ -98,7 +98,7 @@ class TrigTourGraphAxesNode extends Node {
     minusOneLabel.right = -xOffset;
     oneLabel.centerY = -amplitude - 5;
     minusOneLabel.centerY = amplitude + 5;
-  
+
     // draw tic mark labels in degrees
     const tickMarkLabelsInDegrees = new Node();
     let label;
@@ -112,7 +112,7 @@ class TrigTourGraphAxesNode extends Node {
         tickMarkLabelsInDegrees.addChild( label );
       }
     }
-  
+
     // tic mark labels in radians
     const tickMarkLabelsInRadians = new Node();
     let labelString = '';
@@ -135,12 +135,12 @@ class TrigTourGraphAxesNode extends Node {
       label.top = xAxis.bottom;
       tickMarkLabelsInRadians.addChild( label );
     }
-  
+
     // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
     onesNode.visible = false;
     tickMarkLabelsInDegrees.visible = false;
     tickMarkLabelsInRadians.visible = false;
-  
+
     // Axes labels
     const maxThetaWidth = ticLength * 3; // restrict for i18n
     fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
@@ -153,17 +153,17 @@ class TrigTourGraphAxesNode extends Node {
     const tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
-  
+
     this.axisNode.children = [ xAxis, yAxis, thetaLabel, cosThetaLabel, sinThetaLabel, tanThetaLabel ];
     this.labelsNode.children = [ onesNode, tickMarkLabelsInDegrees, tickMarkLabelsInRadians, xTics, yTics ];
-  
+
     // sync visibility with view properties
     viewProperties.graphProperty.link( graph => {
       sinThetaLabel.visible = ( graph === 'sin' );
       cosThetaLabel.visible = ( graph === 'cos' );
       tanThetaLabel.visible = ( graph === 'tan' );
     } );
-  
+
     viewProperties.labelsVisibleProperty.link( isVisible => {
       onesNode.visible = isVisible;
       if ( isVisible ) {
@@ -175,14 +175,14 @@ class TrigTourGraphAxesNode extends Node {
         tickMarkLabelsInDegrees.visible = false;
       }
     } );
-  
+
     viewProperties.angleUnitsProperty.link( angleUnits => {
       if ( viewProperties.labelsVisibleProperty.value ) {
         tickMarkLabelsInRadians.visible = ( angleUnits === 'radians' );
         tickMarkLabelsInDegrees.visible = ( angleUnits !== 'radians' );
       }
     } );
-  
+
   }
 }
 

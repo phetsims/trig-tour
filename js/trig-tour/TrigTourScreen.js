@@ -15,8 +15,8 @@ import TrigTourScreenView from './view/TrigTourScreenView.js';
 class TrigTourScreen extends Screen {
   constructor() {
     super(
-      function() { return new TrigTourModel(); },
-      function( model ) { return new TrigTourScreenView( model ); },
+      () => new TrigTourModel(),
+      model => new TrigTourScreenView( model ),
       { backgroundColorProperty: new Property( TrigTourColors.BACKGROUND_COLOR ) }
     );
   }

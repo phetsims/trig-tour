@@ -127,7 +127,7 @@ class LabelFractionValueRow extends Node {
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if ( trigLabelString === 'tan' ) {
-      var plusMinusInfinityNode = new Node();
+      var plusMinusInfinityNode = new Node(); // eslint-disable-line no-var
       const plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
       const infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
       plusMinusInfinityNode.children = [ plusMinusText, infinityText ];

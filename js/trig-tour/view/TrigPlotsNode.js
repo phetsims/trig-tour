@@ -50,7 +50,7 @@ class TrigPlotsNode extends Node {
     tanShape.moveTo( xPos, yOrigin - amplitude * Math.tan( 2 * Math.PI * ( xPos - xOrigin ) / wavelength ) );
 
     // draw sin and cos curves
-    for ( var i = 0; i < numberOfPoints; i++ ) {
+    for ( let i = 0; i < numberOfPoints; i++ ) {
       xPos += dx;
       sinShape.lineTo( xPos, yOrigin - amplitude * Math.sin( 2 * Math.PI * ( xPos - xOrigin ) / wavelength ) );
       cosShape.lineTo( xPos, yOrigin - amplitude * Math.cos( 2 * Math.PI * ( xPos - xOrigin ) / wavelength ) );
@@ -65,7 +65,7 @@ class TrigPlotsNode extends Node {
     const maxTanValue = 1.15;
     const minTanValue = -1.0;
     let yPos;
-    for ( i = 0; i < numberOfPoints; i++ ) {
+    for ( let i = 0; i < numberOfPoints; i++ ) {
       tanValue = Math.tan( 2 * Math.PI * ( xPos - xOrigin ) / wavelength );
       yPos = yOrigin - amplitude * tanValue;
       if ( ( tanValue <= maxTanValue ) && ( tanValue > minTanValue ) ) {
@@ -125,7 +125,7 @@ class TrigPlotsNode extends Node {
     let xPosMin;
     let yPosMax;
     let yPosMin;
-    for ( i = -numberOfWavelengths; i <= numberOfWavelengths; i++ ) {
+    for ( let i = -numberOfWavelengths; i <= numberOfWavelengths; i++ ) {
       xPosMax = i * wavelength / 2 + xTanMax;
       xPosMin = i * wavelength / 2 + xTanMin;
       yPosMax = -Math.tan( xPosMax * 2 * pi / wavelength ) * amplitude;
@@ -143,7 +143,7 @@ class TrigPlotsNode extends Node {
     arrowHeads.splice( 1, 1, new Vector2( leftEnd, yLeftEnd ) );
     let triangleNode;
     let rotationAngle;
-    for ( i = 0; i < arrowHeads.length; i++ ) {
+    for ( let i = 0; i < arrowHeads.length; i++ ) {
       const xPix = arrowHeads[ i ].x;
       const yPix = arrowHeads[ i ].y;
       const xTan = xPix * 2 * pi / wavelength;

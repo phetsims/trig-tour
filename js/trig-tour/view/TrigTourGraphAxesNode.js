@@ -74,12 +74,12 @@ class TrigTourGraphAxesNode extends Node {
     const yTics = new Node();
     let xTic;
     let yTic;
-    for ( var i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
+    for ( let i = -2 * numberOfWavelengths; i <= 2 * numberOfWavelengths; i++ ) {
       xTic = new Line( 0, ticLength, 0, -ticLength, { lineWidth: 2, stroke: LINE_COLOR } );
       xTic.x = i * wavelength / 4;
       xTics.addChild( xTic );
     }
-    for ( i = -1; i <= 1; i += 2 ) {
+    for ( let i = -1; i <= 1; i += 2 ) {
       yTic = new Line( -ticLength, 0, ticLength, 0, { lineWidth: 2, stroke: LINE_COLOR } );
       yTic.y = i * amplitude;
       yTics.addChild( yTic );
@@ -128,7 +128,7 @@ class TrigTourGraphAxesNode extends Node {
       StringUtils.format( numberPiPatternString, '4', pi )
     ];
     const xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
-    for ( i = 0; i < xPositions.length; i++ ) {
+    for ( let i = 0; i < xPositions.length; i++ ) {
       labelString = labelStrings[ i ];
       label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
       label.centerX = xPositions[ i ] * wavelength / 2;

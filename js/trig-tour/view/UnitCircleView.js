@@ -227,7 +227,7 @@ class UnitCircleView extends Node {
     };
 
     // position the x, y, '1', and theta labels on the xyR triangle of the unit circle
-    var positionLabels = () => {
+    const positionLabels = () => {
       const smallAngle = trigTourModel.getSmallAngleInRadians();
       const totalAngle = trigTourModel.getFullAngleInRadians();
       const pi = Math.PI;

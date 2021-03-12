@@ -93,7 +93,7 @@ class LabelFractionValueRow extends Node {
         break;
       }
       default:
-        throw new Error( 'invalid trigLabelString: ' + trigLabelString );
+        throw new Error( `invalid trigLabelString: ${trigLabelString}` );
     }
 
     // label section of the row, something like 'Cos θ ='

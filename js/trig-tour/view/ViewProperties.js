@@ -34,12 +34,12 @@ class ViewProperties {
 
     // validate the graph values
     this.graphProperty.link( graph => {
-      assert && assert( _.includes( VALID_GRAPH, graph ), 'this graph is invalid:' + graph );
+      assert && assert( _.includes( VALID_GRAPH, graph ), `this graph is invalid:${graph}` );
     } );
 
     // validate the angle units
     this.angleUnitsProperty.link( angleUnit => {
-      assert && assert( _.includes( VALID_ANGLE_UNITS, angleUnit ), 'this angleUnit is invalid:' + angleUnit );
+      assert && assert( _.includes( VALID_ANGLE_UNITS, angleUnit ), `this angleUnit is invalid:${angleUnit}` );
     } );
   }
 

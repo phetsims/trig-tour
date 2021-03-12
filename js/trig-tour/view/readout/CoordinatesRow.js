@@ -96,7 +96,7 @@ class CoordinatesRow extends Node {
     trigTourModel.fullAngleProperty.link( fullAngle => {
       const sinText = Utils.toFixed( trigTourModel.sin(), 3 );
       const cosText = Utils.toFixed( trigTourModel.cos(), 3 );
-      this.coordinatesReadout.text = '(' + cosText + ', ' + sinText + ')';
+      this.coordinatesReadout.text = `(${cosText}, ${sinText})`;
       this.setSpecialAngleTrigReadout( this.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
       this.setSpecialAngleTrigReadout( this.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
 

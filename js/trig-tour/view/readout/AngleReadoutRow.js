@@ -143,7 +143,7 @@ class AngleReadoutRow extends Node {
     }
     else {
       const roundedAngle = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
-      this.angleReadoutDecimal.text = roundedAngle + '\u00B0';
+      this.angleReadoutDecimal.text = `${roundedAngle}\u00B0`;
     }
   }
 
@@ -165,10 +165,10 @@ class AngleReadoutRow extends Node {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
     if ( !radiansDisplayed ) {
-      this.angleReadoutDecimal.text = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision ) + '\u00B0';
+      this.angleReadoutDecimal.text = `${Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision )}\u00B0`;
     }
     if ( radiansDisplayed && !specialAnglesVisible ) {
-      this.angleReadoutDecimal.text = Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 ) + ' ' + radsString;
+      this.angleReadoutDecimal.text = `${Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 )} ${radsString}`;
     }
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
@@ -194,11 +194,11 @@ class AngleReadoutRow extends Node {
     let fullTurnString = ''; // angle readout has format theta = 4pi + (1/2)pi = fullTurnString + small angle
     if ( piRadiansCount !== 0 ) {
       if ( fullTurnCount > 0 ) {
-        fullTurnString = piRadiansCount + MathSymbols.PI + ' + ';
+        fullTurnString = `${piRadiansCount + MathSymbols.PI} + `;
       }
       else {
         // if angle negative, minus sign is constructed in FractionNode
-        fullTurnString = piRadiansCount + MathSymbols.PI + ' ';
+        fullTurnString = `${piRadiansCount + MathSymbols.PI} `;
       }
     }
     else {
@@ -235,7 +235,7 @@ class AngleReadoutRow extends Node {
         angleRadianString = MathSymbols.PI;
       }
       else if ( nbrPiRads === -1 ) {
-        angleRadianString = '-' + MathSymbols.PI;
+        angleRadianString = `-${MathSymbols.PI}`;
       }
       this.fullAngleFractionNode.setValues( angleRadianString, '' );
 

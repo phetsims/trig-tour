@@ -105,7 +105,7 @@ class TrigTourGraphAxesNode extends Node {
     for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
       let degrees = Utils.toFixed( 180 * j, 0 );
       degrees = degrees.toString();
-      label = new Text( degrees + '\u00B0', { font: DISPLAY_FONT_SMALL } );
+      label = new Text( `${degrees}\u00B0`, { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;
       label.top = xAxis.bottom;
       if ( j !== 0 ) {

@@ -127,7 +127,7 @@ class LabelFractionValueRow extends Node {
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
     if ( trigLabelString === 'tan' ) {
-      var plusMinusInfinityNode = new Node(); // eslint-disable-line no-var
+      const plusMinusInfinityNode = new Node();
       const plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
       const infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
       plusMinusInfinityNode.children = [ plusMinusText, infinityText ];
@@ -136,15 +136,7 @@ class LabelFractionValueRow extends Node {
       infinityText.centerY = -5;
       plusMinusInfinityNode.left = rightEqualText.right;
       this.addChild( plusMinusInfinityNode );
-    }
 
-    // synchronize row values with model
-    trigTourModel.fullAngleProperty.link( fullAngle => {
-      this.setTrigReadout( trigValueNumberText, trigValueFraction );
-    } );
-
-    // if this row has a node for infinity, link its visibility to the singularity
-    if ( plusMinusInfinityNode ) {
       trigTourModel.singularityProperty.link( singularity => {
         plusMinusInfinityNode.visible = singularity;
         if ( !viewProperties.specialAnglesVisibleProperty.value ) {
@@ -152,6 +144,11 @@ class LabelFractionValueRow extends Node {
         }
       } );
     }
+
+    // synchronize row values with model
+    trigTourModel.fullAngleProperty.link( fullAngle => {
+      this.setTrigReadout( trigValueNumberText, trigValueFraction );
+    } );
 
     // synchronize component visibility with view properties
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {

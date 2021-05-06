@@ -134,7 +134,7 @@ class LabelFractionValueRow extends Node {
       plusMinusText.left = 0;
       infinityText.left = plusMinusText.right;
       infinityText.centerY = -5;
-      plusMinusInfinityNode.left = rightEqualText.right;
+      plusMinusInfinityNode.leftCenter = rightEqualText.rightCenter;
       this.addChild( plusMinusInfinityNode );
 
       trigTourModel.singularityProperty.link( singularity => {

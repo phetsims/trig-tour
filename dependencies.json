@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.22 Fri Oct 25 2019 17:54:30 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.22 Mon May 10 2021 16:47:26 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -41,8 +41,8 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "2604bdf417f8abbede44e07f460d30e5fb26a4e4",
-    "branch": "HEAD"
+    "sha": "8c8663487394f9d554af1c7ad7cb7735d2aba40b",
+    "branch": "trig-tour-1.0"
   },
   "scenery-phet": {
     "sha": "e9189404f9019b07a782c93e072e9418c6769ddc",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "8a201ba383ebfbca9555a0e330959e5f93501799",
+    "sha": "c79af817ad2f126f1e6e131b331c6ba5f4cbf539",
     "branch": "1.0"
   }
 }

@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "ac1f4ee09c3a3b9e44af19dbc33af9216b3b1d3a",
+    "sha": "d89276cfea73fc9bc835eadbbe8456f4b4f5edc9",
     "branch": "HEAD"
   },
   "kite": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "589530389a4a3384a2992373194630e38896f43a",
+    "sha": "65539702f2309c56388459d55aa361d762f9ed80",
     "branch": "1.0"
   }
 }

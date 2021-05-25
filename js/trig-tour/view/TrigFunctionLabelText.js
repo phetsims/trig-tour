@@ -1,4 +1,4 @@
-// Copyright 2016-2020, University of Colorado Boulder
+// Copyright 2016-2021, University of Colorado Boulder
 
 /**
  * A convenience type that builds up a trig function as a label.  Normal text cannot be used because the desired look

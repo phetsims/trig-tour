@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.24-rc.1 Tue Sep 14 2021 17:09:02 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# trig-tour 1.0.24 Thu Sep 23 2021 00:43:22 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "41609da94d58518855f7c20997c351d690c9fe56",
+    "sha": "c1c97ac8dd227ff438483c2de25a3b255639bfe4",
     "branch": "1.0"
   }
 }

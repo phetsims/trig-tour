@@ -9,9 +9,9 @@
 
 import Utils from '../../../../../dot/js/Utils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import HBox from '../../../../../scenery/js/nodes/HBox.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import { HBox } from '../../../../../scenery/js/imports.js';
+import { Node } from '../../../../../scenery/js/imports.js';
+import { Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import trigTourStrings from '../../../trigTourStrings.js';
 import SpecialAngles from '../../SpecialAngles.js';

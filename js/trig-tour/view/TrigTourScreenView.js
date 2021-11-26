@@ -11,8 +11,8 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Rectangle } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirlImage from '../../../mipmaps/dizzy-phet-girl_png.js';
 import trigTour from '../../trigTour.js';
 import ControlPanel from './ControlPanel.js';

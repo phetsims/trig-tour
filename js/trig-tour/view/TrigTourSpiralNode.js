@@ -10,9 +10,9 @@
 import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
 import merge from '../../../../phet-core/js/merge.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import { Path } from '../../../../scenery/js/imports.js';
 import clockwiseSpiralImage from '../../../mipmaps/clockwise-spiral_png.js';
 import counterClockwiseSpiralImage from '../../../mipmaps/counter-clockwise-spiral_png.js';
 import trigTour from '../../trigTour.js';

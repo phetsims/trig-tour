@@ -13,8 +13,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import { Image } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import { Path } from '../../../../scenery/js/imports.js';
-import clockwiseSpiralImage from '../../../mipmaps/clockwise-spiral_png.js';
-import counterClockwiseSpiralImage from '../../../mipmaps/counter-clockwise-spiral_png.js';
+import clockwiseSpiral_png from '../../../mipmaps/clockwiseSpiral_png.js';
+import counterClockwiseSpiral_png from '../../../mipmaps/counterClockwiseSpiral_png.js';
 import trigTour from '../../trigTour.js';
 
 class TrigTourSpiralNode extends Node {
@@ -119,12 +119,12 @@ class TrigTourSpiralNode extends Node {
     let xImageOffset;
     let yImageOffset;
     if ( spiralAngle > 0 ) {
-      spiralImage = counterClockwiseSpiralImage;
+      spiralImage = counterClockwiseSpiral_png;
       xImageOffset = -imageOffset;
       yImageOffset = imageOffset;
     }
     else {
-      spiralImage = clockwiseSpiralImage;
+      spiralImage = clockwiseSpiral_png;
       xImageOffset = -imageOffset;
       yImageOffset = -imageOffset;
     }

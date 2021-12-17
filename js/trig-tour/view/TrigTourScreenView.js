@@ -13,7 +13,7 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Image } from '../../../../scenery/js/imports.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
-import dizzyPhetGirlImage from '../../../mipmaps/dizzy-phet-girl_png.js';
+import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
@@ -72,7 +72,7 @@ class TrigTourScreenView extends ScreenView {
     controlPanel.right = this.layoutBounds.right - layoutBuffer;
     controlPanel.top = unitCircleView.top;
 
-    this.dizzyPhetGirlImage = new Image( dizzyPhetGirlImage, { scale: 0.6 } );
+    this.dizzyPhetGirlImage = new Image( dizzyPhetGirl_png, { scale: 0.6 } );
     this.dizzyPhetGirlImage.right = this.layoutBounds.right;
     this.dizzyPhetGirlImage.bottom = this.layoutBounds.bottom;
 

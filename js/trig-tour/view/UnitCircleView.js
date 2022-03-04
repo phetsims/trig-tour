@@ -7,7 +7,7 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import Shape from '../../../../kite/js/Shape.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';

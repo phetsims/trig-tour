@@ -7,7 +7,7 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015.
  */
 
-import Shape from '../../../../../kite/js/Shape.js';
+import { Shape } from '../../../../../kite/js/imports.js';
 import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Line } from '../../../../../scenery/js/imports.js';

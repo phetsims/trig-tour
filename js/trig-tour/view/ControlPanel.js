@@ -70,13 +70,9 @@ class ControlPanel extends Panel {
 
     // 3 checkboxes: Labels, Grid, Special Angles
     const checkboxOptions = { checkboxColorBackground: 'white' };
-    const labelsCheckbox = new Checkbox( labelsText, viewProperties.labelsVisibleProperty, checkboxOptions );
-    const gridCheckbox = new Checkbox( gridText, viewProperties.gridVisibleProperty, checkboxOptions );
-    const specialAnglesCheckbox = new Checkbox(
-      specialAnglesText,
-      viewProperties.specialAnglesVisibleProperty,
-      checkboxOptions
-    );
+    const labelsCheckbox = new Checkbox( viewProperties.labelsVisibleProperty, labelsText, checkboxOptions );
+    const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, checkboxOptions );
+    const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, checkboxOptions );
 
     // Adjust touch areas
     const spacing = 15;

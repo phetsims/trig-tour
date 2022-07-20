@@ -9,8 +9,7 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import { Node, Path } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 
 class TriangleNode extends Node {

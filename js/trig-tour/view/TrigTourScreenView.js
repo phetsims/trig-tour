@@ -11,16 +11,15 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Image, Rectangle } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
+import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 import TrigTourColors from './TrigTourColors.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
-import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 
 //images
 

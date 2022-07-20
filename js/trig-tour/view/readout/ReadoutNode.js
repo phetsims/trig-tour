@@ -8,9 +8,7 @@
  */
 
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node } from '../../../../../scenery/js/imports.js';
-import { Text } from '../../../../../scenery/js/imports.js';
-import { VBox } from '../../../../../scenery/js/imports.js';
+import { Node, Text, VBox } from '../../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
 import HSeparator from '../../../../../sun/js/HSeparator.js';
 import VSeparator from '../../../../../sun/js/VSeparator.js';

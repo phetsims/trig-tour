@@ -11,7 +11,7 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import TrigTourScreen from './trig-tour/TrigTourScreen.js';
 import trigTourStrings from './trigTourStrings.js';
 
-const trigTourTitleString = trigTourStrings[ 'trig-tour' ].title;
+const trigTourTitleStringProperty = trigTourStrings[ 'trig-tour' ].titleStringProperty;
 
 const simOptions = {
   credits: {
@@ -23,6 +23,6 @@ const simOptions = {
 };
 
 simLauncher.launch( () => {
-  const sim = new Sim( trigTourTitleString, [ new TrigTourScreen() ], simOptions );
+  const sim = new Sim( trigTourTitleStringProperty, [ new TrigTourScreen() ], simOptions );
   sim.start();
 } );

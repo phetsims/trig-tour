@@ -14,7 +14,7 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
-import trigTourStrings from '../../trigTourStrings.js';
+import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourColors from './TrigTourColors.js';
 
 // constants
@@ -24,12 +24,12 @@ const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 const RADIO_BUTTON_RADIUS = 10;
 
 //strings
-const cosString = trigTourStrings.cos;
-const gridString = trigTourStrings.grid;
-const labelsString = trigTourStrings.labels;
-const sinString = trigTourStrings.sin;
-const specialAnglesString = trigTourStrings.specialAngles;
-const tanString = trigTourStrings.tan;
+const cosString = TrigTourStrings.cos;
+const gridString = TrigTourStrings.grid;
+const labelsString = TrigTourStrings.labels;
+const sinString = TrigTourStrings.sin;
+const specialAnglesString = TrigTourStrings.specialAngles;
+const tanString = TrigTourStrings.tan;
 
 class ControlPanel extends Panel {
 

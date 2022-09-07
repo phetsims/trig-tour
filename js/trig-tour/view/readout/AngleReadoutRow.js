@@ -14,16 +14,16 @@ import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
-import trigTourStrings from '../../../trigTourStrings.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
 import SpecialAngles from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
 import FractionNode from './FractionNode.js';
 
 //strings
-const angleString = trigTourStrings.angle;
-const radsString = trigTourStrings.rads;
-const valueUnitPatternString = trigTourStrings.valueUnitPattern;
+const angleString = TrigTourStrings.angle;
+const radsString = TrigTourStrings.rads;
+const valueUnitPatternString = TrigTourStrings.valueUnitPattern;
 
 // non-translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;

@@ -16,18 +16,18 @@ import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
-import trigTourStrings from '../../../trigTourStrings.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
 import SpecialAngles from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigFunctionLabelText from '../TrigFunctionLabelText.js';
 import TrigTourColors from '../TrigTourColors.js';
 import FractionNode from './FractionNode.js';
 
-const cosString = trigTourStrings.cos;
-const sinString = trigTourStrings.sin;
-const tanString = trigTourStrings.tan;
-const xString = trigTourStrings.x;
-const yString = trigTourStrings.y;
+const cosString = TrigTourStrings.cos;
+const sinString = TrigTourStrings.sin;
+const tanString = TrigTourStrings.tan;
+const xString = TrigTourStrings.x;
+const yString = TrigTourStrings.y;
 
 // non translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;

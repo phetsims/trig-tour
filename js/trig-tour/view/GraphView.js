@@ -22,7 +22,7 @@ import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
-import trigTourStrings from '../../trigTourStrings.js';
+import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
@@ -31,10 +31,10 @@ import TrigTourColors from './TrigTourColors.js';
 import TrigTourGraphAxesNode from './TrigTourGraphAxesNode.js';
 
 //strings
-const cosString = trigTourStrings.cos;
-const sinString = trigTourStrings.sin;
-const tanString = trigTourStrings.tan;
-const vsString = trigTourStrings.vs;
+const cosString = TrigTourStrings.cos;
+const sinString = TrigTourStrings.sin;
+const tanString = TrigTourStrings.tan;
+const vsString = TrigTourStrings.vs;
 
 //constants
 const BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;

@@ -9,9 +9,9 @@
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import TrigTourScreen from './trig-tour/TrigTourScreen.js';
-import trigTourStrings from './trigTourStrings.js';
+import TrigTourStrings from './TrigTourStrings.js';
 
-const trigTourTitleStringProperty = trigTourStrings[ 'trig-tour' ].titleStringProperty;
+const trigTourTitleStringProperty = TrigTourStrings[ 'trig-tour' ].titleStringProperty;
 
 const simOptions = {
   credits: {

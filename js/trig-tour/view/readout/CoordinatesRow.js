@@ -11,14 +11,14 @@ import Utils from '../../../../../dot/js/Utils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
-import trigTourStrings from '../../../trigTourStrings.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
 import SpecialAngles from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
 import FractionNode from './FractionNode.js';
 
-const xString = trigTourStrings.x;
-const yString = trigTourStrings.y;
+const xString = TrigTourStrings.x;
+const yString = TrigTourStrings.y;
 
 // non translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;

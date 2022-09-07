@@ -13,15 +13,15 @@ import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
 import HSeparator from '../../../../../sun/js/HSeparator.js';
 import VSeparator from '../../../../../sun/js/VSeparator.js';
 import trigTour from '../../../trigTour.js';
-import trigTourStrings from '../../../trigTourStrings.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
 import AngleReadoutRow from './AngleReadoutRow.js';
 import CoordinatesRow from './CoordinatesRow.js';
 import LabelFractionValueRow from './LabelFractionValueRow.js';
 
 //strings
-const degreesString = trigTourStrings.degrees;
-const radiansString = trigTourStrings.radians;
+const degreesString = TrigTourStrings.degrees;
+const radiansString = TrigTourStrings.radians;
 
 //constants
 const DISPLAY_FONT = new PhetFont( 20 );

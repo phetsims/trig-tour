@@ -47,8 +47,8 @@ type StringsType = {
   'numberPiPatternStringProperty': TReadOnlyProperty<string>;
 };
 
-const trigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;
+const TrigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;
 
-trigTour.register( 'trigTourStrings', trigTourStrings );
+trigTour.register( 'TrigTourStrings', TrigTourStrings );
 
-export default trigTourStrings;
+export default TrigTourStrings;

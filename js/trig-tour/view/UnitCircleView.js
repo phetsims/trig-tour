@@ -13,7 +13,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Circle, Line, Node, Path, Rectangle, SimpleDragHandler, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
-import trigTourStrings from '../../trigTourStrings.js';
+import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
@@ -21,8 +21,8 @@ import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourSpiralNode from './TrigTourSpiralNode.js';
 
-const xString = trigTourStrings.x;
-const yString = trigTourStrings.y;
+const xString = TrigTourStrings.x;
+const yString = TrigTourStrings.y;
 
 // constants
 const DISPLAY_FONT = new PhetFont( 20 );

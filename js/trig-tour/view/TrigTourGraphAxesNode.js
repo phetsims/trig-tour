@@ -16,7 +16,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Line, Node, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
-import trigTourStrings from '../../trigTourStrings.js';
+import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigTourColors from './TrigTourColors.js';
@@ -28,10 +28,10 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 const DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
-const cosString = trigTourStrings.cos;
-const numberPiPatternString = trigTourStrings.numberPiPattern;
-const sinString = trigTourStrings.sin;
-const tanString = trigTourStrings.tan;
+const cosString = TrigTourStrings.cos;
+const numberPiPatternString = TrigTourStrings.numberPiPattern;
+const sinString = TrigTourStrings.sin;
+const tanString = TrigTourStrings.tan;
 
 class TrigTourGraphAxesNode extends Node {
   /**

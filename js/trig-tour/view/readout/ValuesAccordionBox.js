@@ -10,7 +10,7 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../../sun/js/AccordionBox.js';
 import trigTour from '../../../trigTour.js';
-import trigTourStrings from '../../../trigTourStrings.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ReadoutNode from './ReadoutNode.js';
 
@@ -23,7 +23,7 @@ const CONTENT_X_MARGIN = 20;
 const CLOSE_BUTTON_WIDTH = 16;
 
 //strings
-const valuesString = trigTourStrings.values;
+const valuesString = TrigTourStrings.values;
 
 class ValuesAccordionBox extends AccordionBox {
 

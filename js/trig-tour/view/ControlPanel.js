@@ -11,7 +11,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../sun/js/AquaRadioButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import HSeparator from '../../../../sun/js/HSeparator.js';
+import HSeparatorDeprecated from '../../../../sun/js/HSeparatorDeprecated.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -81,7 +81,7 @@ class ControlPanel extends Panel {
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparator( separatorWidth ),
+        new HSeparatorDeprecated( separatorWidth ),
         specialAnglesCheckbox,
         labelsCheckbox,
         gridCheckbox

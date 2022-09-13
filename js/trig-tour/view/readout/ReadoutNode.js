@@ -10,8 +10,8 @@
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, Text, VBox } from '../../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
-import HSeparator from '../../../../../sun/js/HSeparator.js';
-import VSeparator from '../../../../../sun/js/VSeparator.js';
+import HSeparatorDeprecated from '../../../../../sun/js/HSeparatorDeprecated.js';
+import VSeparatorDeprecated from '../../../../../sun/js/VSeparatorDeprecated.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
@@ -79,13 +79,13 @@ class ReadoutNode extends Node {
     const separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };
     const contentVBox = new VBox( {
       children: [
-        new VSeparator( rowSpacing, separatorOptions ),
+        new VSeparatorDeprecated( rowSpacing, separatorOptions ),
         row1,
-        new VSeparator( rowSpacing + 5, separatorOptions ),
+        new VSeparatorDeprecated( rowSpacing + 5, separatorOptions ),
         row2,
-        new VSeparator( rowSpacing, separatorOptions ),
+        new VSeparatorDeprecated( rowSpacing, separatorOptions ),
         row3,
-        new HSeparator( 180 ),
+        new HSeparatorDeprecated( 180 ),
         degreesRadioButton,
         radiansRadioButton
       ],

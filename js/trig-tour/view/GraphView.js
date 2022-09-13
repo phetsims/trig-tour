@@ -19,7 +19,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Circle, HBox, Line, Node, Rectangle, SimpleDragHandler, Text } from '../../../../scenery/js/imports.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
-import HSeparator from '../../../../sun/js/HSeparator.js';
+import HSeparatorDeprecated from '../../../../sun/js/HSeparatorDeprecated.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -73,7 +73,7 @@ class GraphView extends Node {
     this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in view coordinates
     const numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
 
-    const buttonSeparator = new HSeparator( 17, { stroke: BACKGROUND_COLOR } );
+    const buttonSeparator = new HSeparatorDeprecated( 17, { stroke: BACKGROUND_COLOR } );
 
     // @private
     this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );

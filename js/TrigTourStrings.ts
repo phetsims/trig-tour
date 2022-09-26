@@ -5,46 +5,46 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../axon/js/LinkableProperty.js';
 import trigTour from './trigTour.js';
 
 type StringsType = {
   'trig-tour': {
     'title': string;
-    'titleStringProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': LinkableProperty<string>;
   };
   'angle': string;
-  'angleStringProperty': TReadOnlyProperty<string>;
+  'angleStringProperty': LinkableProperty<string>;
   'cos': string;
-  'cosStringProperty': TReadOnlyProperty<string>;
+  'cosStringProperty': LinkableProperty<string>;
   'degrees': string;
-  'degreesStringProperty': TReadOnlyProperty<string>;
+  'degreesStringProperty': LinkableProperty<string>;
   'grid': string;
-  'gridStringProperty': TReadOnlyProperty<string>;
+  'gridStringProperty': LinkableProperty<string>;
   'labels': string;
-  'labelsStringProperty': TReadOnlyProperty<string>;
+  'labelsStringProperty': LinkableProperty<string>;
   'rads': string;
-  'radsStringProperty': TReadOnlyProperty<string>;
+  'radsStringProperty': LinkableProperty<string>;
   'radians': string;
-  'radiansStringProperty': TReadOnlyProperty<string>;
+  'radiansStringProperty': LinkableProperty<string>;
   'sin': string;
-  'sinStringProperty': TReadOnlyProperty<string>;
+  'sinStringProperty': LinkableProperty<string>;
   'specialAngles': string;
-  'specialAnglesStringProperty': TReadOnlyProperty<string>;
+  'specialAnglesStringProperty': LinkableProperty<string>;
   'tan': string;
-  'tanStringProperty': TReadOnlyProperty<string>;
+  'tanStringProperty': LinkableProperty<string>;
   'x': string;
-  'xStringProperty': TReadOnlyProperty<string>;
+  'xStringProperty': LinkableProperty<string>;
   'y': string;
-  'yStringProperty': TReadOnlyProperty<string>;
+  'yStringProperty': LinkableProperty<string>;
   'values': string;
-  'valuesStringProperty': TReadOnlyProperty<string>;
+  'valuesStringProperty': LinkableProperty<string>;
   'vs': string;
-  'vsStringProperty': TReadOnlyProperty<string>;
+  'vsStringProperty': LinkableProperty<string>;
   'valueUnitPattern': string;
-  'valueUnitPatternStringProperty': TReadOnlyProperty<string>;
+  'valueUnitPatternStringProperty': LinkableProperty<string>;
   'numberPiPattern': string;
-  'numberPiPatternStringProperty': TReadOnlyProperty<string>;
+  'numberPiPatternStringProperty': LinkableProperty<string>;
 };
 
 const TrigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;

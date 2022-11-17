@@ -8,10 +8,9 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
+import { HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../sun/js/AquaRadioButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import HSeparatorDeprecated from '../../../../sun/js/HSeparatorDeprecated.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -75,13 +74,12 @@ class ControlPanel extends Panel {
 
     // Adjust touch areas
     const spacing = 15;
-    const separatorWidth = specialAnglesCheckbox.width + 10;
     const content = new VBox( {
       children: [
         cosRadioButton,
         sinRadioButton,
         tanRadioButton,
-        new HSeparatorDeprecated( separatorWidth ),
+        new HSeparator(),
         specialAnglesCheckbox,
         labelsCheckbox,
         gridCheckbox

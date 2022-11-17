@@ -8,10 +8,8 @@
  */
 
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text, VBox } from '../../../../../scenery/js/imports.js';
+import { HSeparator, Node, Spacer, Text, VBox } from '../../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
-import HSeparatorDeprecated from '../../../../../sun/js/HSeparatorDeprecated.js';
-import VSeparatorDeprecated from '../../../../../sun/js/VSeparatorDeprecated.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
@@ -26,7 +24,6 @@ const radiansString = TrigTourStrings.radians;
 //constants
 const DISPLAY_FONT = new PhetFont( 20 );
 const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
-const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 
 class ReadoutNode extends Node {
 
@@ -75,17 +72,15 @@ class ReadoutNode extends Node {
 
     // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox
     const spacing = 10;
-    const rowSpacing = 5;
-    const separatorOptions = { lineWidth: 0, stroke: PANEL_COLOR };
     const contentVBox = new VBox( {
       children: [
-        new VSeparatorDeprecated( rowSpacing, separatorOptions ),
+        new Spacer( 0, 5 ),
         row1,
-        new VSeparatorDeprecated( rowSpacing + 5, separatorOptions ),
+        new Spacer( 0, 8 ),
         row2,
-        new VSeparatorDeprecated( rowSpacing, separatorOptions ),
+        new Spacer( 0, 8 ),
         row3,
-        new HSeparatorDeprecated( 180 ),
+        new HSeparator(),
         degreesRadioButton,
         radiansRadioButton
       ],

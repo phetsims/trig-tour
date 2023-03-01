@@ -138,11 +138,11 @@ class AngleReadoutRow extends Node {
     if ( units === 'radians' ) {
       const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
       const unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );
-      this.angleReadoutDecimal.text = unitsString;
+      this.angleReadoutDecimal.string = unitsString;
     }
     else {
       const roundedAngle = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
-      this.angleReadoutDecimal.text = `${roundedAngle}\u00B0`;
+      this.angleReadoutDecimal.string = `${roundedAngle}\u00B0`;
     }
   }
 
@@ -164,10 +164,10 @@ class AngleReadoutRow extends Node {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
     if ( !radiansDisplayed ) {
-      this.angleReadoutDecimal.text = `${Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision )}\u00B0`;
+      this.angleReadoutDecimal.string = `${Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision )}\u00B0`;
     }
     if ( radiansDisplayed && !specialAnglesVisible ) {
-      this.angleReadoutDecimal.text = `${Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 )} ${radsString}`;
+      this.angleReadoutDecimal.string = `${Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 )} ${radsString}`;
     }
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();

@@ -181,8 +181,7 @@ class LabelFractionValueRow extends Node {
     }
     assert && assert( typeof trigValue !== 'undefined', 'trigLabelString must be one of cos, tan, or sin' );
 
-    const trigValueString = Utils.toFixed( trigValue, 3 );
-    trigValueNumberText.text = trigValueString;
+    trigValueNumberText.string = Utils.toFixed( trigValue, 3 );
   }
 
   /**

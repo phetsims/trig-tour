@@ -5,46 +5,46 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import LinkableProperty from '../../axon/js/LinkableProperty.js';
+import type LocalizedStringProperty from '../../chipper/js/LocalizedStringProperty.js';
 import trigTour from './trigTour.js';
 
 type StringsType = {
   'trig-tour': {
     'title': string;
-    'titleStringProperty': LinkableProperty<string>;
+    'titleStringProperty': LocalizedStringProperty;
   };
   'angle': string;
-  'angleStringProperty': LinkableProperty<string>;
+  'angleStringProperty': LocalizedStringProperty;
   'cos': string;
-  'cosStringProperty': LinkableProperty<string>;
+  'cosStringProperty': LocalizedStringProperty;
   'degrees': string;
-  'degreesStringProperty': LinkableProperty<string>;
+  'degreesStringProperty': LocalizedStringProperty;
   'grid': string;
-  'gridStringProperty': LinkableProperty<string>;
+  'gridStringProperty': LocalizedStringProperty;
   'labels': string;
-  'labelsStringProperty': LinkableProperty<string>;
+  'labelsStringProperty': LocalizedStringProperty;
   'rads': string;
-  'radsStringProperty': LinkableProperty<string>;
+  'radsStringProperty': LocalizedStringProperty;
   'radians': string;
-  'radiansStringProperty': LinkableProperty<string>;
+  'radiansStringProperty': LocalizedStringProperty;
   'sin': string;
-  'sinStringProperty': LinkableProperty<string>;
+  'sinStringProperty': LocalizedStringProperty;
   'specialAngles': string;
-  'specialAnglesStringProperty': LinkableProperty<string>;
+  'specialAnglesStringProperty': LocalizedStringProperty;
   'tan': string;
-  'tanStringProperty': LinkableProperty<string>;
+  'tanStringProperty': LocalizedStringProperty;
   'x': string;
-  'xStringProperty': LinkableProperty<string>;
+  'xStringProperty': LocalizedStringProperty;
   'y': string;
-  'yStringProperty': LinkableProperty<string>;
+  'yStringProperty': LocalizedStringProperty;
   'values': string;
-  'valuesStringProperty': LinkableProperty<string>;
+  'valuesStringProperty': LocalizedStringProperty;
   'vs': string;
-  'vsStringProperty': LinkableProperty<string>;
+  'vsStringProperty': LocalizedStringProperty;
   'valueUnitPattern': string;
-  'valueUnitPatternStringProperty': LinkableProperty<string>;
+  'valueUnitPatternStringProperty': LocalizedStringProperty;
   'numberPiPattern': string;
-  'numberPiPatternStringProperty': LinkableProperty<string>;
+  'numberPiPatternStringProperty': LocalizedStringProperty;
 };
 
 const TrigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;

@@ -2,39 +2,39 @@
   "comment": "# trig-tour 1.0.0-dev.20 Thu Jan 28 2016 11:37:59 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
-    "branch": "master"
+    "branch": "main"
   },
   "axon": {
     "sha": "f527eaf1915908e0da3ecaee15d48b76a8539dcf",
-    "branch": "master"
+    "branch": "main"
   },
   "brand": {
     "sha": "8c6f9c0402d8d445e61b8692c25b78b0ef09f279",
-    "branch": "master"
+    "branch": "main"
   },
   "chipper": {
     "sha": "57c99807c0b8747ad05cf1f5faa87459ade78c1d",
-    "branch": "master"
+    "branch": "main"
   },
   "dot": {
     "sha": "ddf82014392e9956043fab8608d5b8222e6134dc",
-    "branch": "master"
+    "branch": "main"
   },
   "joist": {
     "sha": "4c228a327558f18681a136f64c23a28006f16b9f",
-    "branch": "master"
+    "branch": "main"
   },
   "kite": {
     "sha": "4a947119f6e57cb6a6d9d1bf4596502ca721464c",
-    "branch": "master"
+    "branch": "main"
   },
   "phet-core": {
     "sha": "874a703dc94ace52f052a7339ea8b26cfefce482",
-    "branch": "master"
+    "branch": "main"
   },
   "phetcommon": {
     "sha": "3db92af30d53b7d6bb3ce3c47c632f622f17986c",
-    "branch": "master"
+    "branch": "main"
   },
   "scenery": {
     "sha": "0f5a6f9c426c91327bf2855f2e18473abdc9e83e",
@@ -42,22 +42,22 @@
   },
   "scenery-phet": {
     "sha": "e903fad21de1daea73dc854965e6f8c50d72ac6f",
-    "branch": "master"
+    "branch": "main"
   },
   "sherpa": {
     "sha": "bf82eb95d808250f7191328b3b30179ec1f44090",
-    "branch": "master"
+    "branch": "main"
   },
   "sun": {
     "sha": "45c7d334c5417ec96dcf6e43b9735c4064a44a8c",
-    "branch": "master"
+    "branch": "main"
   },
   "tandem": {
     "sha": "5388a9e411c9b75bcfde1c4ca504c2774e630f11",
-    "branch": "master"
+    "branch": "main"
   },
   "trig-tour": {
     "sha": "dbfde426b9d8368933e06780bd1c9fa6b9292e67",
-    "branch": "master"
+    "branch": "main"
   }
 }

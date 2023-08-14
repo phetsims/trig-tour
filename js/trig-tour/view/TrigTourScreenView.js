@@ -1,7 +1,7 @@
 // Copyright 2015-2022, University of Colorado Boulder
 
 /**
- * Main screen view, master layout of view on stage
+ * Main screen view, main layout of view on stage
  *
  * Layout calculations are done empirically, numbers used in all layout calculations were chosen because
  * they 'look good'.

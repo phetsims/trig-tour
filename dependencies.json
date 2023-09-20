@@ -33,7 +33,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "9c40b9373dd8642b0ff0c7577182da57e5d4dfb0",
+    "sha": "724318dac8bfbe261f625a6c43fe25f1b6530571",
     "branch": "HEAD"
   },
   "phetmarks": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "e68d7d1d8d4c8ff1f79a1a1dc63c06f4afe34002",
+    "sha": "53b3acbe48e535c41893634285609903fb2cbe1d",
     "branch": "1.0"
   }
 }

@@ -3,7 +3,7 @@
 /**
  * Color constants used in trig-tour
  *
- * Created by Michael Dubson (PhET developer) on 6/16/2015.
+ * @author Michael Dubson (PhET developer) on 6/16/2015.
  */
 
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';

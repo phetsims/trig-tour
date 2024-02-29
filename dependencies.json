@@ -41,7 +41,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "e75e984949cb39cc141126cb48d7cb96a71c5c69",
+    "sha": "2f080be2e6a78946a5b76e6f179b47ef1fce77e3",
     "branch": "HEAD"
   },
   "scenery-phet": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "67b782fe26571cbb20b121734a4b24a76dc51a4f",
+    "sha": "a0c321f45e8142859c8b7a13af8845adcfcd5dfe",
     "branch": "1.0"
   }
 }

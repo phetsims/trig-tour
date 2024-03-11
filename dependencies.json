@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.0.35-rc.1 Thu Feb 29 2024 15:53:23 GMT-0700 (Mountain Standard Time)",
+  "comment": "# trig-tour 1.0.35 Mon Mar 11 2024 13:00:56 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "d4909677d27ed571d5d859d709a0612bf7811db8",
     "branch": "HEAD"
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "e73eb57272a98b4d0e28cacb2a5a4f7cfb50a881",
+    "sha": "031d206710cb10334ba987e43219e178799e68c7",
     "branch": "1.0"
   }
 }

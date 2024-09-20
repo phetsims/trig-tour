@@ -29,7 +29,7 @@
         ],
         "parserOptions": {
           "project": [
-            "../trig-tour/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }

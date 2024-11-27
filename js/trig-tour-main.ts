@@ -6,14 +6,14 @@
  * @author Michael Dubson (PhET)
  */
 
-import Sim from '../../joist/js/Sim.js';
+import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import TrigTourScreen from './trig-tour/TrigTourScreen.js';
 import TrigTourStrings from './TrigTourStrings.js';
 
 const trigTourTitleStringProperty = TrigTourStrings[ 'trig-tour' ].titleStringProperty;
 
-const simOptions = {
+const simOptions: SimOptions = {
   credits: {
     leadDesign: 'Michael Dubson, Amanda McGarry',
     softwareDevelopment: 'Michael Dubson, Jesse Greenberg',

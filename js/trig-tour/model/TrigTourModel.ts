@@ -8,6 +8,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
 import trigTour from '../../trigTour.js';
 import SpecialAngles from '../SpecialAngles.js';
@@ -17,33 +18,36 @@ const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
 const MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
 
 class TrigTourModel {
-  constructor() {
 
-    // @public {Property.<Number>} total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
+  // Total (full) angle in radians, can be greater than 2*pi, or less than -2*pi
+  private readonly fullAngleProperty: Property<number>;
+
+  // Indicates singularity in tan function at theta = +/- 90 degrees, true if fullAngle is close
+  // to +/-90 degrees
+  private readonly singularityProperty: Property<boolean>;
+
+  // True if user exceeds maximum allowed angle
+  private readonly maxAngleExceededProperty: Property<boolean>;
+
+  private smallAngle = 0; // fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
+  private previousAngle = 0; // smallAngle in previous step, needed to compute total fullAngle from smallAngle
+
+  // number of turns around the unit circle, incremented at +/-180 deg, needed to compute fullAngle from smallAngle
+  private rotationNumberFromPi = 0;
+
+  private fullTurnCount = 0; // Number of turns around unit circle, incremented at fullAngle = 0 deg
+  private halfTurnCount = 0; // Number of half turns around unit circle, incremented at smallAngle = 0 and 180
+
+  public constructor() {
     this.fullAngleProperty = new NumberProperty( 0 );
-
-    // @public {Property.<boolean>} indicates singularity in tan function at theta = +/- 90 degrees
-    // true if fullAngle is close to +/-90 degrees
     this.singularityProperty = new BooleanProperty( false );
-
-    // @public {Property.<boolean>} (read-only) true if user exceeds maximum allowed angle
     this.maxAngleExceededProperty = new BooleanProperty( false );
-
-
-    this.smallAngle = 0;    // @private, fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
-    this.previousAngle = 0; // @private, smallAngle in previous step, needed to compute total fullAngle from smallAngle
-    this.rotationNumberFromPi = 0;  //@private, number of turns around the unit circle, incremented at +/-180 deg,
-                                    //needed to compute fullAngle from smallAngle
-    this.fullTurnCount = 0; // @public, number of turns around unit circle, incremented at fullAngle = 0 deg
-    this.halfTurnCount = 0; // @public, number of half turns around unit circle, incremented at smallAngle = 0 and 180
   }
-
 
   /**
    * Resets the properties of the model
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.fullAngleProperty.reset();
     this.singularityProperty.reset();
     this.maxAngleExceededProperty.reset();
@@ -51,32 +55,23 @@ class TrigTourModel {
 
   /**
    * Returns cos of the total model fullAngle in radians.
-   * @public
-   *
-   * @returns {number}
    */
-  cos() {
+  public cos(): number {
     return Math.cos( this.fullAngleProperty.value );
   }
 
   /**
    * Returns sin of the total model fullAngle in radians.
-   * @public
-   *
-   * @returns {number}
    */
-  sin() {
+  public sin(): number {
     return Math.sin( this.fullAngleProperty.value );
   }
 
   /**
    * Returns tangent of current model fullAngle in radians. When near +/-90 degrees, cuts off tan value at +/- maxValue.
    * Must cut off value at +/- maxValue or else Safari Browser won't display properly.
-   * @public
-   *
-   * @returns {number}
    */
-  tan() {
+  public tan(): number {
     const tanValue = Math.tan( this.fullAngleProperty.value );
     const maxValue = 350;
     this.singularityProperty.value = false;
@@ -97,51 +92,36 @@ class TrigTourModel {
 
   /**
    * Get the current model fullAngle in radians.
-   * @public
-   *
-   * @returns {number}
    */
-  getFullAngleInRadians() {
+  public getFullAngleInRadians(): number {
     return this.fullAngleProperty.value;
   }
 
   /**
    * Get the current model fullAngle in degrees.
-   * @public
-   *
-   * @returns {number}
    */
-  getFullAngleInDegrees() {
+  public getFullAngleInDegrees(): number {
     return Utils.toDegrees( this.fullAngleProperty.value );
   }
 
   /**
    * Returns the small angle in radians, between -pi and +pi
-   * @public
-   *
-   * @returns {number}
    */
-  getSmallAngleInRadians() {
+  public getSmallAngleInRadians(): number {
     return this.smallAngle;
   }
 
   /**
    * Return the small angle in degrees between -180 and +180.
-   * @public
-   *
-   * @returns {number}
    */
-  getSmallAngleInDegrees() {
+  public getSmallAngleInDegrees(): number {
     return Utils.toDegrees( this.smallAngle );
   }
 
   /**
    * Convenience function, return the small angle in degrees bound by 0 to +360
-   * @public
-   *
-   * @returns {number}
    */
-  getSmallAngle0To360() {
+  public getSmallAngle0To360(): number {
     if ( this.smallAngle > 0 ) {
       return Utils.toDegrees( this.smallAngle );
     }
@@ -152,11 +132,10 @@ class TrigTourModel {
 
   /**
    * Set the full angle, and the associated small angle and various turn counts.
-   * @public
    *
-   * @param {number} fullAngleInRads - requested new angle
+   * @param fullAngleInRads - requested new angle
    */
-  setFullAngleInRadians( fullAngleInRads ) {
+  public setFullAngleInRadians( fullAngleInRads: number ): void {
     let remainderAngle = fullAngleInRads % ( 2 * Math.PI );
     this.fullTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( 2 * Math.PI ) );
 
@@ -179,11 +158,10 @@ class TrigTourModel {
 
   /**
    * Set the full angle and its associated small angle and turn counts from a desired small angle.
-   * @public
    *
-   * @param {number} smallAngle
+   * @param smallAngle
    */
-  setFullAngleWithSmallAngle( smallAngle ) {
+  public setFullAngleWithSmallAngle( smallAngle: number ): void {
     this.smallAngle = smallAngle;
 
     // must be less than (180-30)deg in order to handle special angle correctly
@@ -218,11 +196,10 @@ class TrigTourModel {
    * Given the small angle in radians, set the current fullAngle to nearest special angle in radians. The small angle
    * is bound in the range of -PI to PI due to the delta of the drag handler, so the list of special angles is
    * also bound to this range.
-   * @public
    *
-   * @param {number} smallAngle - small angle in radians
+   * @param smallAngle - small angle in radians
    */
-  setSpecialAngleWithSmallAngle( smallAngle ) {
+  public setSpecialAngleWithSmallAngle( smallAngle: number ): void {
     const smallAngleInDegrees = Utils.toDegrees( smallAngle );
     let nearestSpecialAngleInRads = 0;
     const specialAnglesFromPi = SpecialAngles.SPECIAL_ANGLES_FROM_PI;
@@ -243,11 +220,10 @@ class TrigTourModel {
 
   /**
    * Given the full angle, set angle to the nearest special angle.
-   * @public
    *
-   * @param {number} fullAngle - full angle in radians
+   * @param fullAngle - full angle in radians
    */
-  setSpecialAngleWithFullAngle( fullAngle ) {
+  public setSpecialAngleWithFullAngle( fullAngle: number ): void {
     const remainderAngle = fullAngle % ( 2 * Math.PI );
     const fullTurnsAngle = fullAngle - remainderAngle;
     const remainderInDegrees = Utils.toDegrees( remainderAngle );
@@ -288,19 +264,16 @@ class TrigTourModel {
    * Checks to see if the user exceeds max number of rotations.  If the user exceeds +/- 25.25 rotations, the
    * fullAngle can not grow in magnitude. Sets the max angleExceeded property and is called whenever user tries to
    * change the fullAngle.
-   *
-   * @public
    */
-  checkMaxAngleExceeded() {
+  public checkMaxAngleExceeded(): void {
+
     // determine if max angle is exceeded and set the property.
     this.maxAngleExceededProperty.value = ( Math.abs( this.getFullAngleInRadians() ) > MAX_ANGLE_LIMIT );
   }
+
+  public static readonly MAX_SMALL_ANGLE_LIMIT = MAX_SMALL_ANGLE_LIMIT;
+  public static readonly MAX_ANGLE_LIMIT = MAX_ANGLE_LIMIT;
 }
-
-
-// statics
-TrigTourModel.MAX_SMALL_ANGLE_LIMIT = MAX_SMALL_ANGLE_LIMIT;
-TrigTourModel.MAX_ANGLE_LIMIT = MAX_ANGLE_LIMIT;
 
 trigTour.register( 'TrigTourModel', TrigTourModel );
 

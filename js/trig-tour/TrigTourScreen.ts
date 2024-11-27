@@ -14,7 +14,7 @@ import TrigTourColors from './view/TrigTourColors.js';
 import TrigTourScreenView from './view/TrigTourScreenView.js';
 
 class TrigTourScreen extends Screen<TrigTourModel, TrigTourScreenView> {
-  constructor() {
+  public constructor() {
     super(
       () => new TrigTourModel(),
       ( model: TrigTourModel ) => new TrigTourScreenView( model ),

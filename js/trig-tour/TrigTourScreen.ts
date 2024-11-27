@@ -7,17 +7,21 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import trigTour from '../trigTour.js';
 import TrigTourModel from './model/TrigTourModel.js';
 import TrigTourColors from './view/TrigTourColors.js';
 import TrigTourScreenView from './view/TrigTourScreenView.js';
 
-class TrigTourScreen extends Screen {
+class TrigTourScreen extends Screen<TrigTourModel, TrigTourScreenView> {
   constructor() {
     super(
       () => new TrigTourModel(),
-      model => new TrigTourScreenView( model ),
-      { backgroundColorProperty: new Property( TrigTourColors.BACKGROUND_COLOR ) }
+      ( model: TrigTourModel ) => new TrigTourScreenView( model ),
+      {
+        backgroundColorProperty: new Property( TrigTourColors.BACKGROUND_COLOR ),
+        tandem: Tandem.OPT_OUT
+      }
     );
   }
 }

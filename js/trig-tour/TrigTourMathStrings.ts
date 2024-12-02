@@ -1,4 +1,4 @@
-// Copyright 2015-2020, University of Colorado Boulder
+// Copyright 2015-2024, University of Colorado Boulder
 
 /**
  * The following is a collection of strings used in trig-tour that are not meant to be translatable, including some

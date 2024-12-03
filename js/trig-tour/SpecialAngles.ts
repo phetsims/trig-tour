@@ -14,6 +14,15 @@ import trigTour from '../trigTour.js';
 // constants
 const PI = MathSymbols.PI;
 
+type FractionInfo = {
+  numerator: number | string,
+  denominator: number | string,
+  radical?: boolean
+};
+
+const SPECIAL_ANGLES = [ 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360 ] as const;
+export type SpecialAngle = ( typeof SPECIAL_ANGLES )[number];
+
 const SpecialAngles = {
 
   // an array containing the 'special' angles around the unit circle
@@ -31,6 +40,8 @@ const SpecialAngles = {
 
   // the following array holds objects with the information needed for FractionNode to build fractions representing
   // the special angles in fractional form.  The first key is the angle in degrees to be represented by the fraction.
+
+  // a constant with keys of type number and values of type RecordInfo
   SPECIAL_ANGLE_FRACTIONS: {
     0: {
       numerator: 0,
@@ -100,7 +111,7 @@ const SpecialAngles = {
       numerator: 2 + PI,
       denominator: ''
     }
-  },
+  } as Record<SpecialAngle, FractionInfo>,
 
   // object containing information needed by FractionNode to build the fractional form of cos evaluated at special
   // angles - the first keys are the angle in degrees which are represented by the fraction.
@@ -190,7 +201,7 @@ const SpecialAngles = {
       denominator: '',
       radical: false
     }
-  },
+  } as Record<SpecialAngle, FractionInfo>,
 
   // object containing information needed by FractionNode to build the fractional form of sin evaluated at special
   // angles - the first keys are the angle in degrees which are represented by the fraction.
@@ -280,7 +291,7 @@ const SpecialAngles = {
       denominator: '',
       radical: false
     }
-  },
+  } as Record<SpecialAngle, FractionInfo>,
 
   // object containing information needed by FractionNode to build the fractional form of sin evaluated at special
   // angles - the first keys are the angle in degrees which are represented by the fraction.
@@ -370,7 +381,7 @@ const SpecialAngles = {
       denominator: '',
       radical: false
     }
-  }
+  } as Record<SpecialAngle, FractionInfo>
 };
 
 trigTour.register( 'SpecialAngles', SpecialAngles );

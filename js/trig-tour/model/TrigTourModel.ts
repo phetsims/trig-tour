@@ -35,8 +35,8 @@ class TrigTourModel {
   // number of turns around the unit circle, incremented at +/-180 deg, needed to compute fullAngle from smallAngle
   private rotationNumberFromPi = 0;
 
-  private fullTurnCount = 0; // Number of turns around unit circle, incremented at fullAngle = 0 deg
-  private halfTurnCount = 0; // Number of half turns around unit circle, incremented at smallAngle = 0 and 180
+  private _fullTurnCount = 0; // Number of turns around unit circle, incremented at fullAngle = 0 deg
+  private _halfTurnCount = 0; // Number of half turns around unit circle, incremented at smallAngle = 0 and 180
 
   public constructor() {
     this.fullAngleProperty = new NumberProperty( 0 );
@@ -118,6 +118,14 @@ class TrigTourModel {
     return Utils.toDegrees( this.smallAngle );
   }
 
+  public get fullTurnCount(): number {
+    return this._fullTurnCount;
+  }
+
+  public get halfTurnCount(): number {
+    return this._halfTurnCount;
+  }
+
   /**
    * Convenience function, return the small angle in degrees bound by 0 to +360
    */
@@ -137,22 +145,22 @@ class TrigTourModel {
    */
   public setFullAngleInRadians( fullAngleInRads: number ): void {
     let remainderAngle = fullAngleInRads % ( 2 * Math.PI );
-    this.fullTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( 2 * Math.PI ) );
+    this._fullTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( 2 * Math.PI ) );
 
     if ( Math.abs( remainderAngle ) <= Math.PI ) {
-      this.rotationNumberFromPi = this.fullTurnCount;
+      this.rotationNumberFromPi = this._fullTurnCount;
     }
     else {
       if ( fullAngleInRads > 0 ) {
-        this.rotationNumberFromPi = this.fullTurnCount + 1;
+        this.rotationNumberFromPi = this._fullTurnCount + 1;
       }
       else {
-        this.rotationNumberFromPi = this.fullTurnCount - 1;
+        this.rotationNumberFromPi = this._fullTurnCount - 1;
       }
     }
     this.smallAngle = fullAngleInRads - this.rotationNumberFromPi * 2 * Math.PI;
     remainderAngle = fullAngleInRads % ( Math.PI );
-    this.halfTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
+    this._halfTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
     this.fullAngleProperty.value = fullAngleInRads;
   }
 
@@ -185,9 +193,9 @@ class TrigTourModel {
     let remainderAngle = targetAngle % ( 2 * Math.PI );
 
     // set turn counts and angles
-    this.fullTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
+    this._fullTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
     remainderAngle = targetAngle % ( Math.PI );
-    this.halfTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
+    this._halfTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
     this.fullAngleProperty.value = targetAngle;  // now can trigger angle update
     this.previousAngle = smallAngle;
   }

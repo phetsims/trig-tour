@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import trigTour from '../../trigTour.js';
 
 export type Graph = 'cos' | 'sin' | 'tan';
-type AngleUnits = 'degrees' | 'radians';
+export type AngleUnits = 'degrees' | 'radians';
 
 class ViewProperties {
 

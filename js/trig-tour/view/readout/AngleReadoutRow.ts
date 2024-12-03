@@ -12,12 +12,14 @@ import Utils from '../../../../../dot/js/Utils.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
-import SpecialAngles from '../../SpecialAngles.js';
+import TrigTourModel from '../../model/TrigTourModel.js';
+import SpecialAngles, { SpecialAngle } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
+import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
 //strings
@@ -34,18 +36,27 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
 class AngleReadoutRow extends Node {
 
-  /**
-   * @param {TrigTourModel} trigTourModel is the main model of the sim
-   * @param {ViewProperties} viewProperties
-   * @param {Object} [options] to pass the maximum width of content in the ReadoutNode panel in the screen view.
-   */
-  constructor( trigTourModel, viewProperties, options ) {
+  // number of decimal places for display of fullAngle, = 0 for special angles
+  private decimalPrecision: number;
+  private units: AngleUnits;
+  private viewProperties: ViewProperties;
+  private trigTourModel: TrigTourModel;
 
-    super( options );
+  private readonly angleReadoutDecimal: Text;
+  private readonly fullAngleFractionNode: FractionNode;
+  private readonly angleReadoutFraction: FractionNode;
+
+  /**
+   * @param trigTourModel is the main model of the sim
+   * @param viewProperties
+   * @param [providedOptions] to pass the maximum width of content in the ReadoutNode panel in the screen view.
+   */
+  public constructor( trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: NodeOptions ) {
+    super( providedOptions );
 
     // @private
-    this.decimalPrecision = 1; // number of decimal places for display of fullAngle, = 0 for special angles
-    this.units = 'degrees'; // {string} 'degrees'|'radians' set by radio buttons on ReadoutNode
+    this.decimalPrecision = 1;
+    this.units = 'degrees';
     this.viewProperties = viewProperties;
     this.trigTourModel = trigTourModel;
 
@@ -99,7 +110,7 @@ class AngleReadoutRow extends Node {
 
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
 
-      //select correct angle readout
+      // select correct angle readout
       if ( specialAnglesVisible && viewProperties.angleUnitsProperty.value === 'radians' ) {
         this.fullAngleFractionNode.visible = true;
         this.angleReadoutFraction.visible = true;
@@ -129,11 +140,8 @@ class AngleReadoutRow extends Node {
 
   /**
    * Set readout units to either degrees or radians.
-   * @private
-   *
-   * @param {string} units one of 'degrees' || 'radians'
    */
-  setUnits( units ) {
+  private setUnits( units: AngleUnits ): void {
     this.units = units;
     if ( units === 'radians' ) {
       const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
@@ -148,19 +156,15 @@ class AngleReadoutRow extends Node {
 
   /**
    * Set the fullAngle readout precision.
-   * @private
-   *
-   * @param {number} decimalPrecision
    */
-  setAngleReadoutPrecision( decimalPrecision ) {
+  private setAngleReadoutPrecision( decimalPrecision: number ): void {
     this.decimalPrecision = decimalPrecision;
   }
 
   /**
    * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
-   * @private
    */
-  setAngleReadout() {
+  private setAngleReadout(): void {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
     if ( !radiansDisplayed ) {
@@ -176,9 +180,8 @@ class AngleReadoutRow extends Node {
 
   /**
    * Set the special angle readout.
-   * @private
    */
-  setSpecialAngleReadout() {
+  private setSpecialAngleReadout(): void {
     this.angleReadoutFraction.visible = true;
 
     // need integer value of angle, since internal arithmetic often not-quite integer
@@ -210,14 +213,17 @@ class AngleReadoutRow extends Node {
 
     // set the angle readout, making sure that the angle is defined in the special fractions object
     const specialAngleFractions = SpecialAngles.SPECIAL_ANGLE_FRACTIONS;
-    if ( specialAngleFractions[ angleInDegs ] || specialAngleFractions[ -angleInDegs ] ) {
+    if ( specialAngleFractions[ angleInDegs as SpecialAngle ] || specialAngleFractions[ -angleInDegs as SpecialAngle ] ) {
+
       // correct for negative angles, fraction must reflect if negative and objects in SpecialAngles do not track
       // this information
       const sign = angleInDegs >= 0 ? '' : '-';
       const coefficient = angleInDegs >= 0 ? +1 : -1;
+
+      const specialAngle = coefficient * angleInDegs as SpecialAngle;
       this.angleReadoutFraction.setValues(
-        sign + specialAngleFractions[ coefficient * angleInDegs ].numerator, // string concatenation
-        specialAngleFractions[ coefficient * angleInDegs ].denominator,
+        sign + specialAngleFractions[ specialAngle ].numerator, // string concatenation
+        specialAngleFractions[ specialAngle ].denominator,
         false /* no radicals for special angle fractions */
       );
     }

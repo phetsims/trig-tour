@@ -9,29 +9,36 @@
  * @author Jesse Greenberg
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Text } from '../../../../scenery/js/imports.js';
+import { HBox, HBoxOptions, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 
 // constants
 const DISPLAY_FONT = new PhetFont( { size: 20 } );
 const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 
-class TrigFunctionLabelText extends HBox {
-  /**
-   * Constructor.
-   *
-   * @param {string} trigFunctionString - label for the trig function
-   * @param {Object} [options]
-   */
-  constructor( trigFunctionString, options ) {
+type SelfOptions = {
+  trigFunctionLabelFont?: PhetFont;
+  thetaLabelFont?: PhetFont;
+};
+type ParentOptions = HBoxOptions;
 
-    options = merge( {
+export type TrigFunctionLabelTextOptions = SelfOptions & ParentOptions;
+
+class TrigFunctionLabelText extends HBox {
+
+  /**
+   * @param trigFunctionString - displayed label for the trig function
+   * @param [providedOptions]
+   */
+  public constructor( trigFunctionString: string, providedOptions?: TrigFunctionLabelTextOptions ) {
+
+    const options = optionize<TrigFunctionLabelTextOptions, SelfOptions, ParentOptions>()( {
       trigFunctionLabelFont: DISPLAY_FONT,
       thetaLabelFont: DISPLAY_FONT_ITALIC
-    }, options );
+    }, providedOptions );
 
     // build the text for the trig function label
     const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );

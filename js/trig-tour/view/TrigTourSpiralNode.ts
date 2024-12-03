@@ -18,7 +18,7 @@ import TrigTourModel from '../model/TrigTourModel.js';
 class TrigTourSpiralNode extends Node {
 
   // watch the current radius which points to the end point of the spiral
-  private endPointRadius: number;
+  private _endPointRadius: number;
 
   // The minimum radius of the spiral, from where the spiral starts
   private minimumRadius: number;
@@ -39,7 +39,7 @@ class TrigTourSpiralNode extends Node {
       preventFit: true
     } );
 
-    this.endPointRadius = minimumRadius;
+    this._endPointRadius = minimumRadius;
     this.minimumRadius = minimumRadius;
 
     // draw an arrow head which will be placed at the outer end of the spiral
@@ -68,7 +68,7 @@ class TrigTourSpiralNode extends Node {
 
       // // draw the spiral with gradually increasing radius
       // var arcShape = new Shape();
-      // arcShape.moveTo( this.endPointRadius, 0 ); // initial position of the spiral
+      // arcShape.moveTo( this._endPointRadius, 0 ); // initial position of the spiral
       // var totalAngle = trigTourModel.getFullAngleInRadians();
 
       // // if the total angle is less than 0.5 radians, delta should be smaller for smoother lines
@@ -84,8 +84,8 @@ class TrigTourSpiralNode extends Node {
       //     if ( Math.abs( totalAngle ) < 0.5 ) {
       //       deltaAngle = 0.02;
       //     }
-      //     this.endPointRadius += deltaAngle;
-      //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
+      //     this._endPointRadius += deltaAngle;
+      //     arcShape.lineTo( this._endPointRadius * Math.cos( angle ), -this._endPointRadius * Math.sin( angle ) );
       //   }
       // }
       // else {
@@ -94,8 +94,8 @@ class TrigTourSpiralNode extends Node {
       //       deltaAngle = 0.02;
       //     }
 
-      //     this.endPointRadius += deltaAngle;
-      //     arcShape.lineTo( this.endPointRadius * Math.cos( angle ), -this.endPointRadius * Math.sin( angle ) );
+      //     this._endPointRadius += deltaAngle;
+      //     arcShape.lineTo( this._endPointRadius * Math.cos( angle ), -this._endPointRadius * Math.sin( angle ) );
       //   }
       // }
 
@@ -154,23 +154,30 @@ class TrigTourSpiralNode extends Node {
     this.angleArcArrowHead.visible = Math.abs( fullAngle ) > Utils.toRadians( 45 );
 
     // position the arrow head
-    this.angleArcArrowHead.x = this.endPointRadius * Math.cos( fullAngle );
-    this.angleArcArrowHead.y = -this.endPointRadius * Math.sin( fullAngle );
+    this.angleArcArrowHead.x = this._endPointRadius * Math.cos( fullAngle );
+    this.angleArcArrowHead.y = -this._endPointRadius * Math.sin( fullAngle );
 
     // orient arrow head on angle arc correctly
     if ( fullAngle < 0 ) {
-      this.angleArcArrowHead.rotation = Math.PI - fullAngle - ( 6 / this.endPointRadius );
+      this.angleArcArrowHead.rotation = Math.PI - fullAngle - ( 6 / this._endPointRadius );
     }
     else {
-      this.angleArcArrowHead.rotation = -fullAngle + ( 6 / this.endPointRadius );
+      this.angleArcArrowHead.rotation = -fullAngle + ( 6 / this._endPointRadius );
     }
+  }
+
+  /**
+   * Accessor for the end point radius of the spiral.
+   */
+  public get endPointRadius(): number {
+    return this._endPointRadius;
   }
 
   /**
    * Calculates a new radius for the end point of the spiral, based on the full angle in the model.
    */
   private updateEndPointRadius( fullAngle: number ): void {
-    this.endPointRadius = this.minimumRadius;
+    this._endPointRadius = this.minimumRadius;
     let deltaAngle;
     let angle;
     if ( Math.abs( fullAngle ) < 0.5 ) {
@@ -181,12 +188,12 @@ class TrigTourSpiralNode extends Node {
     }
     if ( fullAngle > 0 ) {
       for ( angle = 0; angle <= fullAngle; angle += deltaAngle ) {
-        this.endPointRadius += deltaAngle;
+        this._endPointRadius += deltaAngle;
       }
     }
     else {
       for ( angle = 0; angle >= fullAngle; angle -= deltaAngle ) {
-        this.endPointRadius += deltaAngle;
+        this._endPointRadius += deltaAngle;
       }
     }
   }
@@ -203,7 +210,7 @@ class TrigTourSpiralNode extends Node {
     // We'll build the clip shape with two arc segments. We need to compute the radius on each to be the average of
     // the equivalent spiral's starting and ending radii. We'll start at r0 and end at r1, so by drawing two arcs,
     // we'll have a radius in the middle of rHalf.
-    const r0 = this.endPointRadius - 2.5;
+    const r0 = this._endPointRadius - 2.5;
     const r1 = r0 + Math.PI * 2;
     const rHalf = ( r0 + r1 ) / 2;
 

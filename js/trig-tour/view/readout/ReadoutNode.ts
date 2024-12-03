@@ -12,6 +12,8 @@ import { HSeparator, Node, Spacer, Text, VBox } from '../../../../../scenery/js/
 import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
+import TrigTourModel from '../../model/TrigTourModel.js';
+import ViewProperties from '../ViewProperties.js';
 import TrigTourColors from '../TrigTourColors.js';
 import AngleReadoutRow from './AngleReadoutRow.js';
 import CoordinatesRow from './CoordinatesRow.js';
@@ -31,11 +33,11 @@ class ReadoutNode extends Node {
    * Constructor for ReadoutNode which displays live values of fullAngle, sin, cos, and tan
    * This node is the content of ValuesAccordionBox.
    *
-   * @param {TrigTourModel} model is the main model of the sim
-   * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
+   * @param model
+   * @param viewProperties
+   * @param maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
    */
-  constructor( model, viewProperties, maxPanelWidth ) {
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
     super();
 
     // create the first two rows

@@ -50,7 +50,7 @@ class LabelFractionValueRow extends Node {
   // collection of special angles for this trig function
   private readonly specialAngles: SpecialAngleMap;
 
-  public constructor( graphType: Graph, trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: NodeOptions ) {
+  public constructor( graphType: Graph, trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions?: NodeOptions ) {
     super( providedOptions );
 
     // prevent block fitting of this row as a performance optimization

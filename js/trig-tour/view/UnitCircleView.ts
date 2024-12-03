@@ -11,7 +11,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Line, Node, Path, Rectangle, SimpleDragHandler, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, Path, Rectangle, SceneryEvent, SimpleDragHandler, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
@@ -20,9 +20,7 @@ import TrigTourMathStrings from '../TrigTourMathStrings.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourSpiralNode from './TrigTourSpiralNode.js';
-
-const xString = TrigTourStrings.x;
-const yString = TrigTourStrings.y;
+import ViewProperties from './ViewProperties.js';
 
 // constants
 const DISPLAY_FONT = new PhetFont( 20 );
@@ -38,17 +36,24 @@ const VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
 const ARROW_HEAD_WIDTH = 8;
 const MAX_LABEL_WIDTH = ARROW_HEAD_WIDTH * 3;
 
+const xString = TrigTourStrings.x;
+const yString = TrigTourStrings.y;
+
 class UnitCircleView extends Node {
+
+  // a slightly transparent rectangle placed over the unit circle so that the tangent
+  // curves do not occlude this node.
+  private readonly backgroundRectangle: Rectangle;
 
   /**
    * Constructor for the UnitCircleView.
    *
-   * @param {TrigTourModel} trigTourModel - the main model of the sim
-   * @param {Rectangle} backgroundRectangle - Bounds for the background rectangle of the unit circle
-   * @param {number} backgroundOffset - Offset of the background rectangle behind the unit circle view
-   * @param {ViewProperties} viewProperties - collection of properties handling visibility of elements on screen
+   * @param trigTourModel - the main model of the sim
+   * @param viewRectangle - Rectangle for the background rectangle of the unit circle, including view properties like lineWidth
+   * @param backgroundOffset - Offset of the background rectangle behind the unit circle view
+   * @param viewProperties - collection of properties handling visibility of elements on screen
    */
-  constructor( trigTourModel, backgroundRectangle, backgroundOffset, viewProperties ) {
+  public constructor( trigTourModel: TrigTourModel, viewRectangle: Rectangle, backgroundOffset: number, viewProperties: ViewProperties ) {
     super();
 
     // Draw Unit Circle
@@ -72,12 +77,10 @@ class UnitCircleView extends Node {
       ) );
     }
 
-    // draw background, a slightly transparent rectangle placed over the unit circle so that the tangent
-    // curves do not occlude this node.
-    const backgroundLineWidth = backgroundRectangle.lineWidth;
-    const backgroundWidth = backgroundRectangle.width;
-    const bHeight = backgroundRectangle.height;
-    const arcRadius = backgroundRectangle.cornerRadius;
+    const backgroundLineWidth = viewRectangle.lineWidth;
+    const backgroundWidth = viewRectangle.width;
+    const bHeight = viewRectangle.height;
+    const arcRadius = viewRectangle.cornerRadius;
     this.backgroundRectangle = new Rectangle(
       -backgroundWidth / 2 + backgroundLineWidth + backgroundOffset / 2,
       -bHeight / 2 + backgroundLineWidth,
@@ -171,14 +174,14 @@ class UnitCircleView extends Node {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
 
-        drag: e => {
-          const v1 = rotorPin.globalToParentPoint( e.pointer.point );
+        drag: ( event: SceneryEvent ) => {
+          const v1 = rotorPin.globalToParentPoint( event.pointer.point );
           const smallAngle = -v1.angle; // model angle is negative of xy screen coordinates angle
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
-          const setFullAngle = dragAngle => {
+          const setFullAngle = () => {
             if ( !viewProperties.specialAnglesVisibleProperty.value ) {
               trigTourModel.setFullAngleWithSmallAngle( smallAngle );
             }
@@ -188,7 +191,7 @@ class UnitCircleView extends Node {
           };
 
           if ( !trigTourModel.maxAngleExceededProperty.value ) {
-            setFullAngle( smallAngle );
+            setFullAngle();
           }
           else {
             // maximum angle exceeded, only update full angle if abs val of small angle is decreasing
@@ -198,7 +201,7 @@ class UnitCircleView extends Node {
               if ( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
                 return;
               }
-              setFullAngle( smallAngle );
+              setFullAngle();
             }
           }
         }
@@ -210,12 +213,12 @@ class UnitCircleView extends Node {
     const clockWiseSpiralNode = new TrigTourSpiralNode( trigTourModel, initialSpiralRadius, -TrigTourModel.MAX_ANGLE_LIMIT - Math.PI );
 
     // function to update which spiral is visible
-    const updateVisibleSpiral = angle => {
+    const updateVisibleSpiral = ( angle: number ) => {
       counterClockWiseSpiralNode.visible = angle > 0;
       clockWiseSpiralNode.visible = !counterClockWiseSpiralNode.visible;
     };
 
-    const setLabelVisibility = isVisible => {
+    const setLabelVisibility = ( isVisible: boolean ) => {
       positionLabels();
       labelCanvas.visible = isVisible;
     };

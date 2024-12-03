@@ -15,6 +15,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Circle, HBox, Line, Node, Rectangle, SceneryEvent, SimpleDragHandler, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
@@ -187,7 +188,7 @@ class GraphView extends Node {
     this.trigPlotsNode.addChild( this.singularityIndicator );
     this.trigPlotsNode.addChild( this.singularityRectangle );
 
-    this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
+    this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, Orientation.VERTICAL, {
       tailWidth: 4,
       lineWidth: 1,
       headWidth: 12,

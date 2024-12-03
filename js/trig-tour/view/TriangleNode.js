@@ -20,7 +20,7 @@ class TriangleNode extends Node {
    *
    * @param {number} length - length triangle in view coordinates
    * @param {number} width - width of triangle in view coordinates
-   * @param {string} color - string, e.g. '#0F0'
+   * @param {string|Color} color - string, e.g. '#0F0'
    * @param {number} rotationInDegrees - rotation of node about (0,0)
    */
   constructor( length, width, color, rotationInDegrees ) {

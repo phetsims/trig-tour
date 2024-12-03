@@ -8,6 +8,7 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -117,7 +118,7 @@ class UnitCircleView extends Node {
     // draw vertical (sine) line on rotor triangle
     // displayed line is either simple Line (no arrow head) or TrigIndicatorArrowNode (with arrow head)
     const verticalLine = new Line( 0, 0, 0, -radius, { lineWidth: 4, stroke: 'black' } );
-    const verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'vertical', {
+    const verticalIndicatorArrow = new TrigIndicatorArrowNode( radius, Orientation.VERTICAL, {
       tailWidth: 5,
       lineWidth: 1,
       fill: SIN_COLOR,
@@ -126,7 +127,7 @@ class UnitCircleView extends Node {
 
     // draw horizontal (cosine) line on rotor triangle
     const horizontalLine = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: 'black' } );
-    const horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, 'horizontal', {
+    const horizontalIndicatorArrow = new TrigIndicatorArrowNode( radius, Orientation.HORIZONTAL, {
       tailWidth: 5,
       lineWidth: 1,
       fill: COS_COLOR,

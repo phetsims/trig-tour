@@ -7,6 +7,7 @@
  * @author Jesse Greenberg
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -14,6 +15,7 @@ import { Node, Path } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TriangleNode from './TriangleNode.js';
 import TrigTourColors from './TrigTourColors.js';
+import { Graph } from './ViewProperties.js';
 
 // constants
 const COS_COLOR = TrigTourColors.COS_COLOR;
@@ -23,14 +25,12 @@ const TAN_COLOR = TrigTourColors.TAN_COLOR;
 class TrigPlotsNode extends Node {
 
   /**
-   * Constructor.
-   *
-   * @param {number} wavelength
-   * @param {number} numberOfWavelengths
-   * @param {number} amplitude
-   * @param {Property.<string>} graphProperty - which graph is visible, one of 'cos', 'sin', or 'tan'
+   * @param wavelength
+   * @param numberOfWavelengths
+   * @param amplitude
+   * @param graphProperty - Property indicating which graph is visible.
    */
-  constructor( wavelength, numberOfWavelengths, amplitude, graphProperty ) {
+  public constructor( wavelength: number, numberOfWavelengths: number, amplitude: number, graphProperty: TReadOnlyProperty<Graph> ) {
 
     super();
 

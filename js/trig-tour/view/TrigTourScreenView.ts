@@ -11,9 +11,10 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, Rectangle } from '../../../../scenery/js/imports.js';
+import { Image, Rectangle, Node } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
+import TrigTourModel from '../model/TrigTourModel.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
 import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
@@ -21,18 +22,17 @@ import TrigTourColors from './TrigTourColors.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
 
-//images
-
 // constants
 const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 
 class TrigTourScreenView extends ScreenView {
 
-  /**
-   * @param {TrigTourModel} trigTourModel - main model for sim
-   */
-  constructor( trigTourModel ) {
+  private readonly dizzyPhetGirlImage: Node;
 
+  /**
+   * @param trigTourModel - main model for sim
+   */
+  public constructor( trigTourModel: TrigTourModel ) {
     super();
     const viewProperties = new ViewProperties();
 

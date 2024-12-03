@@ -54,7 +54,7 @@ class GraphView extends Node {
   private readonly viewProperties: ViewProperties;
 
   // Supports hiding/showing the graph with an ExpandCollapseButton
-  private readonly expandedProperty: Property<boolean>;
+  public readonly expandedProperty: Property<boolean>;
 
   // amplitude of sinusoidal curve in view coordinates
   private readonly amplitude: number;
@@ -64,8 +64,8 @@ class GraphView extends Node {
   private readonly titleDisplayPanel: Node;
   private readonly expandCollapseButton: Node;
 
-  // axes node for displaying axes on the graph
-  private readonly graphAxesNode: TrigTourGraphAxesNode;
+  // axes node for displaying axes on the graph - public for layout
+  public readonly graphAxesNode: TrigTourGraphAxesNode;
 
   // node containing paths of the trig curves sin, cos, and tan
   private readonly trigPlotsNode: Node;

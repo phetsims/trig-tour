@@ -11,24 +11,27 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
+import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
+import { TPaint } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 
 class TrigIndicatorArrowNode extends ArrowNode {
 
+  // Is this arrow vertical or horizontal?
+  private readonly orientation: Orientation;
+
   /**
-   * Constructor for TrigIndicatorArrowNode which is an arrow node with a
-   *
-   * @param {number} defaultLength - arrow in view coordinates
-   * @param {string} orientation -  one of 'vertical' or 'horizontal'
-   * @param {Object} [options] - passed to ArrowNode
+   * @param defaultLength - arrow length in view coordinates
+   * @param orientation
+   * @param [providedOptions] - passed to ArrowNode
    */
-  constructor( defaultLength, orientation, options ) {
+  public constructor( defaultLength: number, orientation: Orientation, providedOptions: ArrowNodeOptions ) {
 
     let tipX = 0;
     let tipY = 0;
 
-    if ( orientation === 'vertical' ) {
+    if ( orientation === Orientation.VERTICAL ) {
       tipY = defaultLength;
     }
     else {
@@ -41,37 +44,34 @@ class TrigIndicatorArrowNode extends ArrowNode {
       headHeight: 25,
       headWidth: 15,
       lineWidth: 0
-    }, options ) );
+    }, providedOptions ) );
 
-    this.orientation = orientation; // @private, 'horizontal' or 'vertical' orientation
+    this.orientation = orientation;
 
+    // override for performance
     const emptyBounds = new Bounds2( 0, 0, 0, 0 );
     this.computeShapeBounds = () => emptyBounds;
   }
 
   /**
    * Sets the color of this arrow, with no stroke this is just the fill.
-   * @public
-   * @param {string | Color} color
    */
-  setColor( color ) {
+  public setColor( color: TPaint ): void {
     this.fill = color;
     this.stroke = color;
   }
 
   /**
    * Sets the endpoint for the arrow.  Dependent on sign and magnitude of end point displacement.
-   * @param displacement
-   * @public
    */
-  setEndPoint( displacement ) {
+  public setEndPoint( displacement: number ): void {
 
     // determine the sign of displacement if displacement is non zero
     // sign is positive if arrow is pointing up or right, negative if pointing down or left
     const sign = displacement === 0 ? 0 : Utils.roundSymmetric( displacement / Math.abs( displacement ) );
 
     const arrowLength = Math.abs( displacement );
-    if ( this.orientation === 'vertical' ) {
+    if ( this.orientation === Orientation.VERTICAL ) {
       this.setTailAndTip( this.tailX, this.tailY, this.tipX, -sign * arrowLength );
     }
     else {

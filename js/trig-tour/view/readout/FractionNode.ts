@@ -8,13 +8,39 @@
  */
 
 import { Shape } from '../../../../../kite/js/imports.js';
-import merge from '../../../../../phet-core/js/merge.js';
+import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Line, Node, Path, Text } from '../../../../../scenery/js/imports.js';
+import { Line, Node, NodeOptions, Path, Text, TPaint } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 
+type FractionNodeFontOptions = {
+
+  // fonts for numerator and denominator text
+  font?: PhetFont;
+  fill?: TPaint;
+  fontWeight?: string;
+};
+
+type SelfOptions = {
+
+  // does this fraction contain a radical in the numerator?
+  radical?: boolean;
+
+  // fonts for numerator and denominator text
+  fontOptions?: FractionNodeFontOptions;
+};
+
+type ParentOptions = NodeOptions;
+export type FractionNodeOptions = SelfOptions & ParentOptions;
+
 class FractionNode extends Node {
+  private _numerator: string | number;
+  private _denominator: string | number;
+  private _radical: boolean;
+
+  // options for Text
+  private readonly fontOptions: FractionNodeFontOptions;
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
@@ -24,28 +50,25 @@ class FractionNode extends Node {
    *    If either A or B (but not both) is negative, a minus sign is displayed at the same level as the divider bar
    *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
-   * @param {string|number} numerator
-   * @param {string|number} denominator
-   * @param {Object} [options]
    */
-  constructor( numerator, denominator, options ) {
+  public constructor( numerator: string | number, denominator: string | number, providedOptions: FractionNodeOptions ) {
 
-    options = merge( {
-      radical: false, // does this fraction contain a radical in the numerator?
-
-      // fonts for numerator and denominator text
-      font: new PhetFont( 20 ),
-      fill: TrigTourColors.TEXT_COLOR,
-      fontWeight: 'normal'
-    }, options );
+    const options = optionize<FractionNodeOptions, SelfOptions, ParentOptions>()( {
+      radical: false,
+      fontOptions: {
+        font: new PhetFont( 20 ),
+        fill: TrigTourColors.TEXT_COLOR,
+        fontWeight: 'normal'
+      }
+    }, providedOptions );
 
     // call the super constructor
     super( options );
 
-    this.numerator = numerator; // @public (read-only)
-    this.denominator = denominator; // @public (read-only)
-    this.radical = options.radical; // @public (read-only)
-    this.fontOptions = _.pick( options, 'font', 'fill', 'fontWeight' ); // @private options for text
+    this._numerator = numerator;
+    this._denominator = denominator;
+    this._radical = options.radical;
+    this.fontOptions = options.fontOptions;
 
     // create the fraction
     this.setFraction();
@@ -53,22 +76,41 @@ class FractionNode extends Node {
     this.mutate( options );
   }
 
+  /**
+   * Getter for the numerator of this fractionNode.
+   */
+  public get numerator(): string | number {
+    return this._numerator;
+  }
+
+  /**
+   * Getter for the denominator of this fractionNode.
+   */
+  public getDenominator(): string | number {
+    return this._denominator;
+  }
+
+  /**
+   * Getter for the radical property of this fractionNode.
+   */
+  public isRadical(): boolean {
+    return this._radical;
+  }
 
   /**
    * Set the numerator and denominator of this fractionNode.
-   * @public
    *
-   * @param {string|number} numerator
-   * @param {string|number} denominator
-   * @param {boolean} [radical] - optional parameter, does the numerator contain a radical?
+   * @param numerator
+   * @param denominator
+   * @param [radical] - optional parameter, does the numerator contain a radical?
    */
-  setValues( numerator, denominator, radical ) {
+  public setValues( numerator: string | number, denominator: string | number, radical?: boolean ): void {
 
-    this.numerator = numerator;
-    this.denominator = denominator;
+    this._numerator = numerator;
+    this._denominator = denominator;
 
     if ( typeof radical !== 'undefined' ) {
-      this.radical = radical;
+      this._radical = radical;
     }
 
     this.setFraction();
@@ -76,37 +118,39 @@ class FractionNode extends Node {
 
   /**
    * Set the fraction node and draw its various parts.
-   * @private
    */
-  setFraction() {
+  private setFraction(): void {
     let minusSign;                            // short horizontal line for minus sign, in front of divisor bar
     let numeratorNegative = false;            // true if numerator is negative
     let denominatorNegative = false;          // true if denominator is negative
     let minusSignNeeded = false;              // true if sign of over-all fraction is negative
-    const squareRootSignNeeded = this.radical;  // true if square root symbol is needed over the numerator
+    const squareRootSignNeeded = this._radical;  // true if square root symbol is needed over the numerator
     let denominatorNeeded = true;             // true if only the numerator is displayed as a fractional number
 
     // Check that arguments are strings
-    if ( typeof this.numerator !== 'string' ) { this.numerator = this.numerator.toString(); }
-    if ( typeof this.denominator !== 'string' ) { this.denominator = this.denominator.toString(); }
+    if ( typeof this._numerator !== 'string' ) { this._numerator = this._numerator.toString(); }
+    if ( typeof this._denominator !== 'string' ) { this._denominator = this._denominator.toString(); }
 
     // Process leading minus sign and determine overall sign.
-    if ( this.numerator.charAt( 0 ) === '-' ) {
+    if ( this._numerator.startsWith( '-' ) ) {
+
       // remove minus sign, if found
-      this.numerator = this.numerator.slice( 1 );
+      this._numerator = this._numerator.slice( 1 );
       numeratorNegative = true;
     }
-    if ( this.denominator.charAt( 0 ) === '-' ) {
+    if ( this._denominator.startsWith( '-' ) ) {
+
       // remove minus sign, if found
-      this.denominator = this.denominator.slice( 1 );
+      this._denominator = this._denominator.slice( 1 );
       denominatorNegative = true;
     }
+
     // JavaScript does not have an xor operator
     minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
     const fontOptions = this.fontOptions;
-    const numeratorText = new Text( this.numerator, fontOptions );
-    const denominatorText = new Text( this.denominator, fontOptions );
+    const numeratorText = new Text( this._numerator, fontOptions );
+    const denominatorText = new Text( this._denominator, fontOptions );
 
     // Draw minus sign to go in front of fraction, if needed.
     let length = 8;
@@ -119,6 +163,7 @@ class FractionNode extends Node {
       } );
     }
     else {
+
       // just a placeholder is no minus sign
       minusSign = new Line( 0, 0, 0, 0 );
     }
@@ -149,7 +194,8 @@ class FractionNode extends Node {
     const sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
 
     // if no denominator argument is passed in, then display the numerator as a non-fraction number
-    if ( typeof this.denominator === 'undefined' || this.denominator === '' ) {
+    if ( typeof this._denominator === 'undefined' || this._denominator === '' ) {
+
       // make current children invisible so numerator is not obscured
       denominatorNeeded = false;
       for ( let i = 0; i < this.children.length; i++ ) {

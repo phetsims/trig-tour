@@ -103,13 +103,15 @@ class LabelFractionValueRow extends Node {
     const leftEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
 
     // label fraction for the row defining the shown value, something like 'x/1'
-    const trigFraction = new FractionNode( numeratorString, denominatorString, { size: 20, fontWeight: 'bold' } );
+    const trigFraction = new FractionNode( numeratorString, denominatorString, {
+      fontOptions: { size: 20, fontWeight: 'bold' }
+    } );
 
     // value presented by this row as a number, updates with the model and depends on the angle
     const trigValueNumberText = new Text( 'trigModelValue', fontOptions );
 
     // value presented by this row as a fraction, updates with the model and depends on the angle
-    const trigValueFraction = new FractionNode( '', '', fontOptions );
+    const trigValueFraction = new FractionNode( '', '', { fontOptions: fontOptions } );
 
     // create an text representation of the equal sign
     const rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );

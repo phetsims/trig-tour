@@ -24,7 +24,7 @@ class TrigTourModel {
 
   // Indicates singularity in tan function at theta = +/- 90 degrees, true if fullAngle is close
   // to +/-90 degrees
-  private readonly singularityProperty: Property<boolean>;
+  public readonly singularityProperty: Property<boolean>;
 
   // True if user exceeds maximum allowed angle
   public readonly maxAngleExceededProperty: Property<boolean>;

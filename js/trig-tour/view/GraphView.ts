@@ -17,7 +17,7 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, HBox, Line, Node, Rectangle, SimpleDragHandler, Spacer, Text } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Line, Node, Rectangle, SceneryEvent, SimpleDragHandler, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
@@ -28,6 +28,7 @@ import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigPlotsNode from './TrigPlotsNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourGraphAxesNode from './TrigTourGraphAxesNode.js';
+import ViewProperties, { Graph } from './ViewProperties.js';
 
 //strings
 const cosString = TrigTourStrings.cos;
@@ -47,52 +48,73 @@ const DISPLAY_FONT = new PhetFont( 20 );
 const ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
 
 class GraphView extends Node {
+
+  private readonly trigTourModel: TrigTourModel;
+  private readonly viewProperties: ViewProperties;
+
+  // Supports hiding/showing the graph with an ExpandCollapseButton
+  private readonly expandedProperty: Property<boolean>;
+
+  // amplitude of sinusoidal curve in view coordinates
+  private readonly amplitude: number;
+
+  private graphTitle: Node;
+  private readonly titleDisplayHBox: Node;
+  private readonly titleDisplayPanel: Node;
+  private readonly expandCollapseButton: Node;
+
+  // axes node for displaying axes on the graph
+  private readonly graphAxesNode: TrigTourGraphAxesNode;
+
+  // node containing paths of the trig curves sin, cos, and tan
+  private readonly trigPlotsNode: Node;
+  private readonly singularityIndicator: Node;
+  private readonly singularityRectangle: Node;
+  private readonly redDotHandle: Node;
+
+  // A vertical arrow on the trig curve showing current value of angle and trigFunction(angle),
+  // and a red dot on top of the indicator line that echoes the red dot on unit circle.
+  private readonly trigIndicatorArrowNode: TrigIndicatorArrowNode;
+
   /**
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and
    * has a draggable handle for changing the angle.
    *
-   * @param {TrigTourModel} trigTourModel
-   * @param {number} height of y-axis on graph
-   * @param {number} width of x-axis on graph
-   * @param {ViewProperties} viewProperties - which graph is visible, one of 'cos', 'sin', or 'tan'
+   * @param trigTourModel
+   * @param height of y-axis on graph
+   * @param width of x-axis on graph
+   * @param viewProperties
    */
-  constructor( trigTourModel, height, width, viewProperties ) {
-
-    // Call the super constructor
+  public constructor( trigTourModel: TrigTourModel, height: number, width: number, viewProperties: ViewProperties ) {
     super();
 
-    // @private
     this.trigTourModel = trigTourModel;
     this.viewProperties = viewProperties;
-    this.expandedProperty = new Property( true ); // @private, Graph can be hidden with expandCollapse button
+    this.expandedProperty = new Property( true );
 
     // Graph drawing code is determined empirically, numbers are chosen based on what 'looks good'.
-    const marginWidth = 25;   // distance between edge of Node and edge of nearest full wavelength
-    const wavelength = ( width - 2 * marginWidth ) / 4;  //wavelength of sinusoidal curve in view coordinates
-    this.amplitude = 0.475 * height;  // @private amplitude of sinusoidal curve in view coordinates
-    const numberOfWavelengths = 2 * 2;    // number of full wavelengths displayed, must be even to keep graph symmetric
+    const marginWidth = 25; // distance between edge of Node and edge of nearest full wavelength
+    const wavelength = ( width - 2 * marginWidth ) / 4; // wavelength of sinusoidal curve in view coordinates
+    this.amplitude = 0.475 * height;
+    const numberOfWavelengths = 2 * 2; // number of full wavelengths displayed, must be even to keep graph symmetric
 
     const buttonSpacer = new Spacer( 17, 0 );
 
-    // @private
     this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );
     this.titleDisplayHBox = new HBox( { children: [ buttonSpacer, this.graphTitle ], spacing: 5 } );
 
-    const panelOptions = {
+    // when graph is collapsed/hidden, a title is displayed
+    this.titleDisplayPanel = new Panel( this.titleDisplayHBox, {
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2, // width of the background border
       xMargin: 12,
       yMargin: 5,
-      cornerRadius: 5, // radius of the rounded corners on the background
-      // resize: false, // dynamically resize when content bounds change
+      cornerRadius: 5,
       backgroundPickable: false,
-      align: 'left', // {string} horizontal of content in the pane, left|center|right
-      minWidth: 0 // minimum width of the panel
-    };
-
-    // @private when graph is collapsed/hidden, a title is displayed
-    this.titleDisplayPanel = new Panel( this.titleDisplayHBox, panelOptions );
+      align: 'left',
+      minWidth: 0
+    } );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
       sideLength: 15,
       cursor: 'pointer'
@@ -136,10 +158,7 @@ class GraphView extends Node {
       { fill: BACKGROUND_COLOR }
     );
 
-    // @public (read-only) axes node for displaying axes on the graph
     this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
-
-    // @public (read-only) node containing paths of the trig curves sin, cos, and tan
     this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );
 
     // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
@@ -168,8 +187,6 @@ class GraphView extends Node {
     this.trigPlotsNode.addChild( this.singularityIndicator );
     this.trigPlotsNode.addChild( this.singularityRectangle );
 
-    // trigIndicatorArrowNode is a vertical arrow on the trig curve showing current value of angle and
-    // trigFunction(angle) a red dot on top of the indicator line echoes red dot on unit circle
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, 'vertical', {
       tailWidth: 4,
       lineWidth: 1,
@@ -216,8 +233,8 @@ class GraphView extends Node {
       {
         allowTouchSnag: true,
 
-        drag: e => {
-          const position = this.trigIndicatorArrowNode.globalToParentPoint( e.pointer.point );   //returns Vector2
+        drag: ( event: SceneryEvent ) => {
+          const position = this.trigIndicatorArrowNode.globalToParentPoint( event.pointer.point );   //returns Vector2
           const fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
 
           // make sure the full angle does not exceed max allowed angle
@@ -233,7 +250,7 @@ class GraphView extends Node {
           }
           else {
             // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
-            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_FULL_ANGLE ) {
+            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
               trigTourModel.setFullAngleInRadians( fullAngle );
             }
           }
@@ -306,44 +323,40 @@ class GraphView extends Node {
 
   /**
    * Set the indicator line, which is a draggable, vertical arrow indicating current position on graph.
-   * @private
    */
-  setTrigIndicatorArrowNode() {
+  private setTrigIndicatorArrowNode(): void {
     const cosNow = this.trigTourModel.cos();
     const sinNow = this.trigTourModel.sin();
     const tanNow = this.trigTourModel.tan();
 
-    const setIndicatorAndHandle = ( trigValue, indicatorColor ) => {
+    const setIndicatorAndHandle = ( trigValue: number, indicatorColor: TPaint ) => {
       this.trigIndicatorArrowNode.setEndPoint( trigValue * this.amplitude );
       this.trigIndicatorArrowNode.setColor( indicatorColor );
       this.redDotHandle.y = -trigValue * this.amplitude;
     };
-    if ( this.viewProperties.graphProperty.value === 'cos' ) {
+
+    const selectedGraph = this.viewProperties.graphProperty.value;
+    if ( selectedGraph === 'cos' ) {
       setIndicatorAndHandle( cosNow, COS_COLOR );
     }
-    else if ( this.viewProperties.graphProperty.value === 'sin' ) {
+    else if ( selectedGraph === 'sin' ) {
       setIndicatorAndHandle( sinNow, SIN_COLOR );
     }
-    else if ( this.viewProperties.graphProperty.value === 'tan' ) {
+    else if ( selectedGraph === 'tan' ) {
       setIndicatorAndHandle( tanNow, TAN_COLOR );
-    }
-    else {
-      //Do nothing, following line for debugging only
-      console.error( 'ERROR in GraphView.setTrigIndicatorArrowNode()' );
     }
   }
 
   /**
-   * Set the title bar text.  Different strings in the title require different font styles.  HTML text should be
+   * Set the title bar text.  Different strings in the title require different font styles. HTML text should be
    * avoided because it causes issues in performance.  So the text is built up here.
-   * @private
    *
-   * @param {string} trigString - the label for the trig function
+   * @param trigString - the type of trig function to be displayed in the title
    */
-  setTitleBarText( trigString ) {
+  private setTitleBarText( trigString: Graph ): void {
 
     // determine the appropriate trig function string for the title.
-    let trigTitleString;
+    let trigTitleString: string;
     if ( trigString === 'cos' ) {
       trigTitleString = cosString;
     }
@@ -354,12 +367,15 @@ class GraphView extends Node {
       trigTitleString = tanString;
     }
 
+    const definedTrigTitleString = trigTitleString!;
+    assert && assert( definedTrigTitleString, `trigTitleString is not defined for trigString: ${trigString}` );
+
     // create each text component
     const variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT } );
     const vsText = new Text( vsString, { font: DISPLAY_FONT } );
 
     // build up and format the title
-    const trigFunctionLabelText = new TrigFunctionLabelText( trigTitleString );
+    const trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString );
 
     // everything formatted in an HBox
     const titleTextHBox = new HBox( {
@@ -372,7 +388,6 @@ class GraphView extends Node {
     this.titleDisplayHBox.removeChildWithIndex( this.graphTitle, this.titleDisplayHBox.children.indexOf( this.graphTitle ) );
     this.graphTitle = titleTextHBox;
     this.titleDisplayHBox.insertChild( this.titleDisplayHBox.children.length, this.graphTitle );
-
   }
 }
 

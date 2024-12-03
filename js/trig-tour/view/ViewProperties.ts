@@ -10,7 +10,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import trigTour from '../../trigTour.js';
 
-type Graph = 'cos' | 'sin' | 'tan';
+export type Graph = 'cos' | 'sin' | 'tan';
 type AngleUnits = 'degrees' | 'radians';
 
 class ViewProperties {

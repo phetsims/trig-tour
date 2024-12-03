@@ -11,6 +11,8 @@ import { Text } from '../../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../../sun/js/AccordionBox.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
+import TrigTourModel from '../../model/TrigTourModel.js';
+import ViewProperties from '../ViewProperties.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ReadoutNode from './ReadoutNode.js';
 
@@ -26,13 +28,7 @@ const CLOSE_BUTTON_WIDTH = 16;
 const valuesString = TrigTourStrings.values;
 
 class ValuesAccordionBox extends AccordionBox {
-
-  /**
-   * @param {TrigTourModel} model is the main model of the sim
-   * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - max width for the panel, determined by layout of the screen view
-   */
-  constructor( model, viewProperties, maxPanelWidth ) {
+  constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
 
     // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
     const maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );

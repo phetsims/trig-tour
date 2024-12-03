@@ -28,7 +28,7 @@ const CLOSE_BUTTON_WIDTH = 16;
 const valuesString = TrigTourStrings.values;
 
 class ValuesAccordionBox extends AccordionBox {
-  constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
 
     // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
     const maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );

@@ -53,7 +53,6 @@ class AngleReadoutRow extends Node {
   public constructor( trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: NodeOptions ) {
     super( providedOptions );
 
-    // @private
     this.decimalPrecision = 1;
     this.viewProperties = viewProperties;
     this.trigTourModel = trigTourModel;

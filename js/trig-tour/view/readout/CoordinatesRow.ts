@@ -8,13 +8,17 @@
  */
 
 import Utils from '../../../../../dot/js/Utils.js';
+import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
-import SpecialAngles from '../../SpecialAngles.js';
+import TrigTourModel from '../../model/TrigTourModel.js';
+import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
+import ViewProperties from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
 const xString = TrigTourStrings.x;
@@ -31,21 +35,21 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 const SPECIAL_COS_FRACTIONS = SpecialAngles.SPECIAL_COS_FRACTIONS;
 const SPECIAL_SIN_FRACTIONS = SpecialAngles.SPECIAL_SIN_FRACTIONS;
 
+type CoordinatesRowOptions = EmptySelfOptions & PickOptional<NodeOptions, 'maxWidth'>;
+
 class CoordinatesRow extends Node {
 
-  /**
-   * Constructor.
-   *
-   * @param {TrigTourModel} trigTourModel
-   * @param {ViewProperties} viewProperties
-   * @param {Object} [options]
-   * @constructor
-   */
-  constructor( trigTourModel, viewProperties, options ) {
-    super( options );
+  private readonly trigTourModel: TrigTourModel;
 
-    this.trigTourModel = trigTourModel; // @private
-    this.viewProperties = viewProperties; // @private
+  private readonly sinReadoutFraction: FractionNode;
+  private readonly cosReadoutFraction: FractionNode;
+  private readonly coordinatesReadout: Text;
+  private readonly coordinatesHBox: HBox;
+
+  public constructor( trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: CoordinatesRowOptions ) {
+    super( providedOptions );
+
+    this.trigTourModel = trigTourModel;
 
     // initialize fonts for this row
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
@@ -110,26 +114,19 @@ class CoordinatesRow extends Node {
 
   /**
    * Set the special angle readout display.
-   *
-   * @private
    */
-  setSpecialAngleTrigReadout( trigValueFraction, specialFractions ) {
-    const smallAngleInDegrees = Utils.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
+  private setSpecialAngleTrigReadout( trigValueFraction: FractionNode, specialFractions: SpecialAngleMap ): void {
+    const smallAngleInDegrees = Utils.roundSymmetric( this.trigTourModel.getSmallAngle0To360() ) as SpecialAngle;
     const specialFraction = specialFractions[ smallAngleInDegrees ];
 
-    const setFractionValues = ( readoutFraction, specialFraction ) => {
-
-      // sanity check to make sure that the special fraction is defined in the special fractions objects above
-      if ( specialFraction ) {
-        readoutFraction.setValues(
-          specialFraction.numerator,
-          specialFraction.denominator,
-          specialFraction.radical,
-          specialFraction.negative
-        );
-      }
-    };
-    setFractionValues( trigValueFraction, specialFraction );
+    // sanity check to make sure that the special fraction is defined in the special fractions objects above
+    if ( specialFraction ) {
+      trigValueFraction.setValues(
+        specialFraction.numerator,
+        specialFraction.denominator,
+        specialFraction.radical
+      );
+    }
   }
 }
 

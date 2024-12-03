@@ -9,12 +9,12 @@
 
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { HSeparator, Node, Spacer, Text, VBox } from '../../../../../scenery/js/imports.js';
-import AquaRadioButton from '../../../../../sun/js/AquaRadioButton.js';
+import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../../sun/js/AquaRadioButtonGroup.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
-import ViewProperties from '../ViewProperties.js';
 import TrigTourColors from '../TrigTourColors.js';
+import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 import AngleReadoutRow from './AngleReadoutRow.js';
 import CoordinatesRow from './CoordinatesRow.js';
 import LabelFractionValueRow from './LabelFractionValueRow.js';
@@ -26,6 +26,7 @@ const radiansString = TrigTourStrings.radians;
 //constants
 const DISPLAY_FONT = new PhetFont( 20 );
 const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
+const SPACING = 10;
 
 class ReadoutNode extends Node {
 
@@ -56,24 +57,27 @@ class ReadoutNode extends Node {
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    const myRadioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white', maxWidth: maxPanelWidth };
-    const degreeText = new Text( degreesString, fontInfo );
-    const radiansText = new Text( radiansString, fontInfo );
-    const degreesRadioButton = new AquaRadioButton(
-      viewProperties.angleUnitsProperty,
-      'degrees',
-      degreeText,
-      myRadioButtonOptions
-    );
-    const radiansRadioButton = new AquaRadioButton(
-      viewProperties.angleUnitsProperty,
-      'radians',
-      radiansText,
-      myRadioButtonOptions
-    );
+
+    const radioButtonItems: AquaRadioButtonGroupItem<AngleUnits>[] = [
+      {
+        value: 'degrees',
+        createNode: () => new Text( degreesString, fontInfo )
+      },
+      {
+        value: 'radians',
+        createNode: () => new Text( radiansString, fontInfo )
+      }
+    ];
+
+    const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.angleUnitsProperty, radioButtonItems, {
+      radioButtonOptions: {
+        radius: 10
+      },
+      spacing: SPACING,
+      maxWidth: maxPanelWidth
+    } );
 
     // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox
-    const spacing = 10;
     const contentVBox = new VBox( {
       children: [
         new Spacer( 0, 5 ),
@@ -83,11 +87,10 @@ class ReadoutNode extends Node {
         new Spacer( 0, 8 ),
         row3,
         new HSeparator(),
-        degreesRadioButton,
-        radiansRadioButton
+        radioButtonGroup
       ],
       align: 'left',
-      spacing: spacing,
+      spacing: SPACING,
       resize: false
     } );
 

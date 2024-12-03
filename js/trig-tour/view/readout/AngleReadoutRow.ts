@@ -38,7 +38,6 @@ class AngleReadoutRow extends Node {
 
   // number of decimal places for display of fullAngle, = 0 for special angles
   private decimalPrecision: number;
-  private units: AngleUnits;
   private viewProperties: ViewProperties;
   private trigTourModel: TrigTourModel;
 
@@ -56,7 +55,6 @@ class AngleReadoutRow extends Node {
 
     // @private
     this.decimalPrecision = 1;
-    this.units = 'degrees';
     this.viewProperties = viewProperties;
     this.trigTourModel = trigTourModel;
 
@@ -142,7 +140,6 @@ class AngleReadoutRow extends Node {
    * Set readout units to either degrees or radians.
    */
   private setUnits( units: AngleUnits ): void {
-    this.units = units;
     if ( units === 'radians' ) {
       const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
       const unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );

@@ -2,7 +2,10 @@
 
 /**
  * Simple triangle graphic
- * Used as arrow heads on curves in GraphView
+ * Used as arrow heads on curves in GraphView.
+ *
+ * Note that there is a TriangleNode in scenery-phet, but it has a different origin and
+ * rotation support. I decided not to use it here, see https://github.com/phetsims/trig-tour/issues/104
  *
  * @author Michael Dubson (PhET developer) on 6/23/2015.
  */

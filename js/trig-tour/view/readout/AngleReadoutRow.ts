@@ -162,7 +162,7 @@ class AngleReadoutRow extends Node {
    */
   private setAngleReadout(): void {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
-    const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value === true;
+    const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value;
     if ( !radiansDisplayed ) {
       this.angleReadoutDecimal.string = `${Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision )}\u00B0`;
     }

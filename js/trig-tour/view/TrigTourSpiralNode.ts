@@ -9,35 +9,38 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
 import { Image, Node, Path } from '../../../../scenery/js/imports.js';
 import clockwiseSpiral_png from '../../../mipmaps/clockwiseSpiral_png.js';
 import counterClockwiseSpiral_png from '../../../mipmaps/counterClockwiseSpiral_png.js';
 import trigTour from '../../trigTour.js';
+import TrigTourModel from '../model/TrigTourModel.js';
 
 class TrigTourSpiralNode extends Node {
 
+  // watch the current radius which points to the end point of the spiral
+  private endPointRadius: number;
+
+  // The minimum radius of the spiral, from where the spiral starts
+  private minimumRadius: number;
+
+  private readonly angleArcArrowHead: Path;
+
   /**
    * Constructor.
-   * @param {TrigTourModel} trigTourModel
-   * @param {number} initialRadius - initial radius of the spiral
-   * @param {number} spiralAngle - total angle of the spiral shape
-   * @param {Object} [options]
+   *
+   * @param trigTourModel
+   * @param minimumRadius - initial minimum radius of the spiral
+   * @param spiralAngle - total angle of the spiral shape
    */
-  constructor( trigTourModel, initialRadius, spiralAngle, options ) {
-    options = merge( {
-      stroke: 'black',
-      arrowHeadColor: 'black',
-      arrowHeadLineWidth: 1,
-      lineWidth: 2,
+  public constructor( trigTourModel: TrigTourModel, minimumRadius: number, spiralAngle: number ) {
+    super( {
+
+      // Likely for performance?
       preventFit: true
-    }, options );
+    } );
 
-    super( options );
-
-    // watch the current radius which points to the end point of the spiral
-    this.endPointRadius = initialRadius; // @private
-    this.initialRadius = initialRadius; // @private
+    this.endPointRadius = minimumRadius;
+    this.minimumRadius = minimumRadius;
 
     // draw an arrow head which will be placed at the outer end of the spiral
     const arrowHeadShape = new Shape();
@@ -48,8 +51,8 @@ class TrigTourSpiralNode extends Node {
       .lineTo( arrowHeadWidth / 2, arrowHeadLength )
       .close();
     this.angleArcArrowHead = new Path( arrowHeadShape, {
-      lineWidth: options.arrowHeadLineWidth,
-      fill: options.arrowHeadColor
+      lineWidth: 1,
+      fill: 'black'
     } );
 
     //------------------------------------------------------------------------------------------------------------------
@@ -142,18 +145,18 @@ class TrigTourSpiralNode extends Node {
     } );
   }
 
-
   /**
-   * @private
-   * @param {number} fullAngle
+   * Updates visibilty, position, and rotation of the arrow head.
    */
-  updateArrowHead( fullAngle ) {
+  private updateArrowHead( fullAngle: number ): void {
+
     // show arrow head on angle arc if angle is > 45 degrees
     this.angleArcArrowHead.visible = Math.abs( fullAngle ) > Utils.toRadians( 45 );
 
     // position the arrow head
     this.angleArcArrowHead.x = this.endPointRadius * Math.cos( fullAngle );
     this.angleArcArrowHead.y = -this.endPointRadius * Math.sin( fullAngle );
+
     // orient arrow head on angle arc correctly
     if ( fullAngle < 0 ) {
       this.angleArcArrowHead.rotation = Math.PI - fullAngle - ( 6 / this.endPointRadius );
@@ -164,11 +167,10 @@ class TrigTourSpiralNode extends Node {
   }
 
   /**
-   * @private
-   * @param {number} fullAngle
+   * Calculates a new radius for the end point of the spiral, based on the full angle in the model.
    */
-  updateEndPointRadius( fullAngle ) {
-    this.endPointRadius = this.initialRadius;
+  private updateEndPointRadius( fullAngle: number ): void {
+    this.endPointRadius = this.minimumRadius;
     let deltaAngle;
     let angle;
     if ( Math.abs( fullAngle ) < 0.5 ) {
@@ -193,11 +195,8 @@ class TrigTourSpiralNode extends Node {
    * The clip area is a single loop of the spiral offset by a small amount to include the largest rotation of the full
    * spiral shape for the given angle.  Updating the clip area shape is a performance enhancement for redrawing
    * the entire spiral shape every frame.
-   * @private
-   *
-   * @param {number} fullAngle
    */
-  updateClipArea( fullAngle ) {
+  private updateClipArea( fullAngle: number ): void {
 
     const clipShape = new Shape();
 

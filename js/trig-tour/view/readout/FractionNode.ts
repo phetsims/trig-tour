@@ -10,17 +10,9 @@
 import { Shape } from '../../../../../kite/js/imports.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Line, Node, NodeOptions, Path, Text, TPaint } from '../../../../../scenery/js/imports.js';
+import { Line, Node, NodeOptions, Path, Text, TextOptions } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
-
-type FractionNodeFontOptions = {
-
-  // fonts for numerator and denominator text
-  font?: PhetFont;
-  fill?: TPaint;
-  fontWeight?: string;
-};
 
 type SelfOptions = {
 
@@ -28,7 +20,7 @@ type SelfOptions = {
   radical?: boolean;
 
   // fonts for numerator and denominator text
-  fontOptions?: FractionNodeFontOptions;
+  textOptions?: TextOptions;
 };
 
 type ParentOptions = NodeOptions;
@@ -40,7 +32,7 @@ class FractionNode extends Node {
   private _radical: boolean;
 
   // options for Text
-  private readonly fontOptions: FractionNodeFontOptions;
+  private readonly textOptions: TextOptions;
 
   /**
    * Constructor for FractionNode which takes two string parameters, A and B, and creates built-up fraction A/B:
@@ -55,7 +47,7 @@ class FractionNode extends Node {
 
     const options = optionize<FractionNodeOptions, SelfOptions, ParentOptions>()( {
       radical: false,
-      fontOptions: {
+      textOptions: {
         font: new PhetFont( 20 ),
         fill: TrigTourColors.TEXT_COLOR,
         fontWeight: 'normal'
@@ -68,7 +60,7 @@ class FractionNode extends Node {
     this._numerator = numerator;
     this._denominator = denominator;
     this._radical = options.radical;
-    this.fontOptions = options.fontOptions;
+    this.textOptions = options.textOptions;
 
     // create the fraction
     this.setFraction();
@@ -148,9 +140,9 @@ class FractionNode extends Node {
     // JavaScript does not have an xor operator
     minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
-    const fontOptions = this.fontOptions;
-    const numeratorText = new Text( this._numerator, fontOptions );
-    const denominatorText = new Text( this._denominator, fontOptions );
+    const textOptions = this.textOptions;
+    const numeratorText = new Text( this._numerator, textOptions );
+    const denominatorText = new Text( this._denominator, textOptions );
 
     // Draw minus sign to go in front of fraction, if needed.
     let length = 8;

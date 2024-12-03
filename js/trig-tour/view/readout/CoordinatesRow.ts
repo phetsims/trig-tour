@@ -61,8 +61,8 @@ class CoordinatesRow extends Node {
     const coordinatesLabel = new Text( xyEqualString, fontBoldInfo );
 
     // fraction values set below
-    this.sinReadoutFraction = new FractionNode( '', '', { fontOptions: fontInfo } );
-    this.cosReadoutFraction = new FractionNode( '', '', { fontOptions: fontInfo } );
+    this.sinReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );
+    this.cosReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );
     this.coordinatesReadout = new Text( '', fontInfo ); // text provided by model.fullAngleProperty.link, below
 
     // create the text for the parentheses.  Comma uses different font options, so a pattern cannot be used.

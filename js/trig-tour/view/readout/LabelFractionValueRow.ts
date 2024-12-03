@@ -14,13 +14,15 @@
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
-import SpecialAngles from '../../SpecialAngles.js';
+import TrigTourModel from '../../model/TrigTourModel.js';
+import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigFunctionLabelText from '../TrigFunctionLabelText.js';
 import TrigTourColors from '../TrigTourColors.js';
+import ViewProperties, { Graph } from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
 const cosString = TrigTourStrings.cos;
@@ -40,36 +42,33 @@ const DISPLAY_FONT_LARGE_BOLD_ITALIC = new PhetFont( { size: 20, weight: 'bold',
 const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
 class LabelFractionValueRow extends Node {
-  /**
-   * Constructor.
-   *
-   * @param {string} trigLabelString - string representing the trig function for this row
-   * @param {TrigTourModel} trigTourModel
-   * @param {ViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( trigLabelString, trigTourModel, viewProperties, options ) {
 
-    super( options );
+  private readonly trigTourModel: TrigTourModel;
+  private readonly viewProperties: ViewProperties;
+  private readonly graphType: Graph;
+
+  // collection of special angles for this trig function
+  private readonly specialAngles: SpecialAngleMap;
+
+  public constructor( graphType: Graph, trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: NodeOptions ) {
+    super( providedOptions );
 
     // prevent block fitting of this row as a performance optimization
     this.preventFit = true;
 
-    this.trigTourModel = trigTourModel; // @private
-    this.viewProperties = viewProperties; // @private
-    this.trigLabelString = trigLabelString; // @private
+    this.trigTourModel = trigTourModel;
+    this.viewProperties = viewProperties;
+    this.graphType = graphType;
 
     const fontOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR };
 
-    // initialize strings and variables for the row, depending on trigLabelString
+    // initialize strings and variables for the row, depending on graphType
     let trigString;
     let numeratorString;
     let denominatorString;
-    this.trigModelFunction; // @private - trig function for this value
-    this.specialAngles; // @private - collection of special angles for this trig function
 
     // get the values needed to represent the special angle as a fraction, dependent on trig function type
-    switch( trigLabelString ) {
+    switch( graphType ) {
       case 'sin': {
         trigString = sinString;
         numeratorString = yString;
@@ -84,15 +83,14 @@ class LabelFractionValueRow extends Node {
         this.specialAngles = SpecialAngles.SPECIAL_COS_FRACTIONS;
         break;
       }
-      case 'tan': {
+      default:
+
+        // 'tan' case
         trigString = tanString;
         numeratorString = yString;
         denominatorString = xString;
         this.specialAngles = SpecialAngles.SPECIAL_TAN_FRACTIONS;
         break;
-      }
-      default:
-        throw new Error( `invalid trigLabelString: ${trigLabelString}` );
     }
 
     // label section of the row, something like 'Cos θ ='
@@ -104,14 +102,14 @@ class LabelFractionValueRow extends Node {
 
     // label fraction for the row defining the shown value, something like 'x/1'
     const trigFraction = new FractionNode( numeratorString, denominatorString, {
-      fontOptions: { size: 20, fontWeight: 'bold' }
+      textOptions: { font: new PhetFont( 20 ), fontWeight: 'bold' }
     } );
 
     // value presented by this row as a number, updates with the model and depends on the angle
     const trigValueNumberText = new Text( 'trigModelValue', fontOptions );
 
     // value presented by this row as a fraction, updates with the model and depends on the angle
-    const trigValueFraction = new FractionNode( '', '', { fontOptions: fontOptions } );
+    const trigValueFraction = new FractionNode( '', '', { textOptions: fontOptions } );
 
     // create an text representation of the equal sign
     const rightEqualText = new Text( equalString, { font: DISPLAY_FONT_LARGE_BOLD } );
@@ -127,7 +125,7 @@ class LabelFractionValueRow extends Node {
     trigValueFraction.leftCenter = rightEqualText.rightCenter.plusXY( space, 0 );
 
     // if this row is for 'tan', create and add an infinity symbol to represent the singularity
-    if ( trigLabelString === 'tan' ) {
+    if ( graphType === 'tan' ) {
       const plusMinusInfinityNode = new Node();
       const plusMinusText = new Text( MathSymbols.PLUS_MINUS, { font: DISPLAY_FONT, fill: TEXT_COLOR } );
       const infinityText = new Text( MathSymbols.INFINITY, { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR } );
@@ -147,7 +145,7 @@ class LabelFractionValueRow extends Node {
     }
 
     // synchronize row values with model
-    trigTourModel.fullAngleProperty.link( fullAngle => {
+    trigTourModel.fullAngleProperty.link( () => {
       this.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
 
@@ -162,54 +160,42 @@ class LabelFractionValueRow extends Node {
 
   /**
    * Set the value of the trig value.
-   * @private
-   *
-   * @param {Text} trigValueNumberText
-   * @param {FractionNode} trigValueFraction
    */
-  setTrigReadout( trigValueNumberText, trigValueFraction ) {
+  private setTrigReadout( trigValueNumberText: Text, trigValueFraction: FractionNode ): void {
     if ( this.viewProperties.specialAnglesVisibleProperty.value ) {
       this.setSpecialAngleTrigReadout( trigValueFraction );
     }
     let trigValue;
-    if ( this.trigLabelString === 'sin' ) {
+    if ( this.graphType === 'sin' ) {
       trigValue = this.trigTourModel.sin();
     }
-    else if ( this.trigLabelString === 'cos' ) {
+    else if ( this.graphType === 'cos' ) {
       trigValue = this.trigTourModel.cos();
     }
-    else if ( this.trigLabelString === 'tan' ) {
+    else {
       trigValue = this.trigTourModel.tan();
     }
-    assert && assert( typeof trigValue !== 'undefined', 'trigLabelString must be one of cos, tan, or sin' );
 
     trigValueNumberText.string = Utils.toFixed( trigValue, 3 );
   }
 
   /**
    * Set the special angle readout display.
-   * @private
-   *
-   * @param {FractionNode} trigValueFraction
    */
-  setSpecialAngleTrigReadout( trigValueFraction ) {
+  private setSpecialAngleTrigReadout( trigValueFraction: FractionNode ): void {
     const smallAngleInDegrees = Utils.roundSymmetric( this.trigTourModel.getSmallAngle0To360() );
 
     // get the values needed to represent the special angle as a fraction.
-    const specialFraction = this.specialAngles[ smallAngleInDegrees ];
+    const specialFraction = this.specialAngles[ smallAngleInDegrees as SpecialAngle ];
 
-    const setFractionValues = ( readoutFraction, specialFraction ) => {
-      // sanity check to make sure that the special fraction is defined in the special fractions objects above
-      if ( specialFraction ) {
-        readoutFraction.setValues(
-          specialFraction.numerator,
-          specialFraction.denominator,
-          specialFraction.radical,
-          specialFraction.negative
-        );
-      }
-    };
-    setFractionValues( trigValueFraction, specialFraction );
+    // sanity check to make sure that the special fraction is defined in the special fractions objects above
+    if ( specialFraction ) {
+      trigValueFraction.setValues(
+        specialFraction.numerator,
+        specialFraction.denominator,
+        specialFraction.radical
+      );
+    }
   }
 }
 

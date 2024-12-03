@@ -68,10 +68,10 @@ class AngleReadoutRow extends Node {
     const angleLabelText = new Text( angleString, fontBoldInfo );
     const angleLabelEqualsText = new Text( equalString, fontBoldInfo );
     this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
-    this.fullAngleFractionNode = new FractionNode( '', '', { fontOptions: fontInfo } );  // node representing fractional form of full angle
+    this.fullAngleFractionNode = new FractionNode( '', '', { textOptions: fontInfo } );  // node representing fractional form of full angle
 
     // used to display angle as FractionNode in Special angles mode
-    this.angleReadoutFraction = new FractionNode( '', '', { fontOptions: fontInfo } );
+    this.angleReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );
     this.angleReadoutDecimal.visible = true;
     this.angleReadoutFraction.visible = false;
 

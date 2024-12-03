@@ -6,7 +6,6 @@
  * @author Michael Dubson (PhET developer) on 6/4/2015.
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../sun/js/AquaRadioButton.js';
@@ -15,6 +14,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourColors from './TrigTourColors.js';
+import ViewProperties from './ViewProperties.js';
 
 // constants
 const DISPLAY_FONT = new PhetFont( 20 );
@@ -35,19 +35,10 @@ class ControlPanel extends Panel {
   /**
    * Constructor for the control panel
    *
-   * @param {ViewProperties} viewProperties
-   * @param {number} maxPanelWidth - The maximum width of this panel, calculated in the screenView
-   * @param {Object} [options]
+   * @param viewProperties
+   * @param maxPanelWidth - The maximum width of this panel, calculated in the screenView
    */
-  constructor( viewProperties, maxPanelWidth, options ) {
-
-    options = merge( {
-      xMargin: 15,
-      yMargin: 15,
-      lineWidth: 1,
-      fill: PANEL_COLOR,
-      resize: false
-    }, options );
+  public constructor( viewProperties: ViewProperties, maxPanelWidth: number ) {
 
     // create the text nodes, determining their max width from the panel width and the width of the buttons
     const maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
@@ -60,7 +51,6 @@ class ControlPanel extends Panel {
     const specialAnglesText = new Text( specialAnglesString, fontInfo );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
-    // viewProperties.graph = 'cos'|'sin'|'tan'
     const radioButtonOptions = { radius: RADIO_BUTTON_RADIUS, fontSize: 15, deselectedColor: 'white' };
     const cosRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'cos', cosText, radioButtonOptions );
     const sinRadioButton = new AquaRadioButton( viewProperties.graphProperty, 'sin', sinText, radioButtonOptions );
@@ -72,7 +62,6 @@ class ControlPanel extends Panel {
     const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, checkboxOptions );
     const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, checkboxOptions );
 
-    // Adjust touch areas
     const spacing = 15;
     const content = new VBox( {
       children: [
@@ -89,7 +78,13 @@ class ControlPanel extends Panel {
       resize: false
     } );
 
-    super( content, options );
+    super( content, {
+      xMargin: 15,
+      yMargin: 15,
+      lineWidth: 1,
+      fill: PANEL_COLOR,
+      resize: false
+    } );
   }
 }
 

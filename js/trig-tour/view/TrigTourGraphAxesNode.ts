@@ -14,12 +14,13 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Line, Node, Text } from '../../../../scenery/js/imports.js';
+import { Line, Node, Text, TPaint } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigTourColors from './TrigTourColors.js';
+import ViewProperties from './ViewProperties.js';
 
 // constants
 const LINE_COLOR = TrigTourColors.LINE_COLOR;
@@ -33,23 +34,24 @@ const numberPiPatternString = TrigTourStrings.numberPiPattern;
 const sinString = TrigTourStrings.sin;
 const tanString = TrigTourStrings.tan;
 
-class TrigTourGraphAxesNode extends Node {
-  /**
-   * Constructor.
-   *
-   * @param {number} width
-   * @param {number} wavelength
-   * @param {number} numberOfWavelengths
-   * @param {number} amplitude
-   * @param {ViewProperties} viewProperties
-   */
-  constructor( width, wavelength, numberOfWavelengths, amplitude, viewProperties ) {
+// Collection of fields that will be used to style label Text instances.
+type StyleInfo = {
+  font: PhetFont;
+  fill: TPaint;
+  maxWidth?: number;
+};
 
+class TrigTourGraphAxesNode extends Node {
+
+  // Break into layers because we need to to layer things on the graph view in order: Axis, plots, labels
+  public readonly axisNode: Node;
+  public readonly labelsNode: Node;
+
+  public constructor( width: number, wavelength: number, numberOfWavelengths: number, amplitude: number, viewProperties: ViewProperties ) {
     super();
 
-    // Break into layers because we need to to layer things on the graph view in order: Axis, plots, labels
-    this.axisNode = new Node(); // @public (read-only)
-    this.labelsNode = new Node(); // @public (read-only)
+    this.axisNode = new Node();
+    this.labelsNode = new Node();
 
     // draw x-axis and y-axis, represented by ArrowNodes
     const xAxisLength = width;
@@ -86,10 +88,10 @@ class TrigTourGraphAxesNode extends Node {
     this.children = [ xAxis, yAxis ];
 
     // draw 1/-1 labels on y-axis
-    const onesNode = new Node(); // @public (read-only)
-    let fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
-    const oneLabel = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    const minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
+    const onesNode = new Node();
+    let styleInfo: StyleInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR };
+    const oneLabel = new Text( TrigTourMathStrings.ONE_STRING, styleInfo );
+    const minusOneLabel = new Text( TrigTourMathStrings.MINUS_ONE_STRING, styleInfo );
     onesNode.children = [ oneLabel, minusOneLabel ];
     const xOffset = 8;
     oneLabel.left = xOffset;
@@ -141,8 +143,8 @@ class TrigTourGraphAxesNode extends Node {
 
     // Axes labels
     const maxThetaWidth = ticLength * 3; // restrict for i18n
-    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
-    const thetaLabel = new Text( MathSymbols.THETA, fontInfo );
+    styleInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: maxThetaWidth };
+    const thetaLabel = new Text( MathSymbols.THETA, styleInfo );
     thetaLabel.left = this.right + 5;
     thetaLabel.centerY = xAxis.centerY;
     const maxTrigLabelWidth = xAxis.width / 4;

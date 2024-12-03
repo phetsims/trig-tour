@@ -59,14 +59,8 @@ class ReadoutNode extends Node {
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
 
     const radioButtonItems: AquaRadioButtonGroupItem<AngleUnits>[] = [
-      {
-        value: 'degrees',
-        createNode: () => new Text( degreesString, fontInfo )
-      },
-      {
-        value: 'radians',
-        createNode: () => new Text( radiansString, fontInfo )
-      }
+      { value: 'degrees', createNode: () => new Text( degreesString, fontInfo ) },
+      { value: 'radians', createNode: () => new Text( radiansString, fontInfo ) }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.angleUnitsProperty, radioButtonItems, {

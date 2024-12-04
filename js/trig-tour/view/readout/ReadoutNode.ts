@@ -1,4 +1,4 @@
-// Copyright 2015-2022, University of Colorado Boulder
+// Copyright 2015-2024, University of Colorado Boulder
 
 /**
  * Live readout of angle, and values of sin, cos, tan.

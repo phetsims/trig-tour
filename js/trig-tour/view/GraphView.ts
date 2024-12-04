@@ -18,7 +18,8 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, HBox, Line, Node, Rectangle, SceneryEvent, SimpleDragHandler, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
+import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
+import { Circle, HBox, Line, Node, Rectangle, SceneryEvent, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
@@ -230,10 +231,8 @@ class GraphView extends Node {
       this.titleDisplayPanel.visible = !expanded;
     } );
 
-    const dragHandler = new SimpleDragHandler(
+    const dragHandler = new SoundRichDragListener(
       {
-        allowTouchSnag: true,
-
         drag: ( event: SceneryEvent ) => {
           const position = this.trigIndicatorArrowNode.globalToParentPoint( event.pointer.point );   //returns Vector2
           const fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians

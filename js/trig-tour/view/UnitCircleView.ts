@@ -12,7 +12,8 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Line, Node, Path, Rectangle, SceneryEvent, SimpleDragHandler, Text } from '../../../../scenery/js/imports.js';
+import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
+import { Circle, Line, Node, Path, Rectangle, SceneryEvent, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
@@ -170,11 +171,8 @@ class UnitCircleView extends Node {
 
     labelCanvas.children = [ oneText, xLabelText, yLabelText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
 
-    rotorPin.addInputListener( new SimpleDragHandler(
+    rotorPin.addInputListener( new SoundRichDragListener(
       {
-        // When dragging across it in a mobile device, pick it up
-        allowTouchSnag: true,
-
         drag: ( event: SceneryEvent ) => {
           const v1 = rotorPin.globalToParentPoint( event.pointer.point );
           const smallAngle = -v1.angle; // model angle is negative of xy screen coordinates angle

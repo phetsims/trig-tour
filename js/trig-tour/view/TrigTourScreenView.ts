@@ -101,6 +101,21 @@ class TrigTourScreenView extends ScreenView {
       radius: 21
     } );
     this.addChild( resetAllButton );
+
+    // TODO: Finalize the traversal order, see https://github.com/phetsims/trig-tour/issues/101
+    // Play area focus order
+    this.pdomPlayAreaNode.pdomOrder = [
+      readoutDisplay,
+      unitCircleView,
+      graphView,
+      controlPanel.radioButtonGroup
+    ];
+
+    // Control area focus order
+    this.pdomControlAreaNode.pdomOrder = [
+      controlPanel.checkboxGroup,
+      resetAllButton
+    ];
   }
 }
 

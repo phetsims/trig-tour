@@ -194,7 +194,12 @@ class GraphView extends Node {
       lineWidth: 1,
       headWidth: 12,
       headHeight: 20,
-      cursor: 'pointer'
+      cursor: 'pointer',
+
+      // pdom - this is the Node that receives the input listener so it needs to be focusable
+      tagName: 'div',
+      focusable: true,
+      accessibleName: '{{GRAPH PIN NEEDS ACCSESIBLE NAME}}'
     } );
 
     const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );

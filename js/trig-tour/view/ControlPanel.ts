@@ -7,7 +7,7 @@
  */
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HSeparator, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -32,6 +32,11 @@ const specialAnglesString = TrigTourStrings.specialAngles;
 const tanString = TrigTourStrings.tan;
 
 class ControlPanel extends Panel {
+
+  // Groups of controls are available to place in the sim traversal order.
+  public readonly radioButtonGroup: Node;
+  public readonly checkboxGroup: Node;
+
 
   /**
    * Constructor for the control panel
@@ -68,13 +73,17 @@ class ControlPanel extends Panel {
     const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, checkboxOptions );
     const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, checkboxOptions );
 
+    const checkboxGroup = new VBox( {
+      children: [ labelsCheckbox, gridCheckbox, specialAnglesCheckbox ],
+      align: 'left',
+      spacing: SPACING
+    } );
+
     const content = new VBox( {
       children: [
         radioButtonGroup,
         new HSeparator(),
-        specialAnglesCheckbox,
-        labelsCheckbox,
-        gridCheckbox
+        checkboxGroup
       ],
       align: 'left',
       spacing: SPACING,
@@ -88,6 +97,9 @@ class ControlPanel extends Panel {
       fill: PANEL_COLOR,
       resize: false
     } );
+
+    this.radioButtonGroup = radioButtonGroup;
+    this.checkboxGroup = checkboxGroup;
   }
 }
 

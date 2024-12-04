@@ -137,7 +137,18 @@ class UnitCircleView extends Node {
 
     // Draw rotor arm with draggable red pin at end
     const rotorArm = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } );
-    const rotorPin = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
+    const rotorPin = new Circle( 7, {
+      stroke: LINE_COLOR,
+      fill: 'red',
+      cursor: 'pointer',
+
+      // pdom
+      tagName: 'div',
+      focusable: true,
+
+      // TODO, see https://github.com/phetsims/trig-tour/issues/101
+      accessibleName: '{{UNIT CIRCLE PIN NEEDS ACCSESIBLE NAME}}'
+    } );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;

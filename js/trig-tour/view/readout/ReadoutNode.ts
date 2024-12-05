@@ -68,7 +68,11 @@ class ReadoutNode extends Node {
         radius: 10
       },
       spacing: SPACING,
-      maxWidth: maxPanelWidth
+      maxWidth: maxPanelWidth,
+
+      // pdom
+      accessibleName: TrigTourStrings.a11y.unitsRadioButtons.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.unitsRadioButtons.helpTextStringProperty
     } );
 
     // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox

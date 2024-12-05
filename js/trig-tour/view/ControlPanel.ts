@@ -64,7 +64,11 @@ class ControlPanel extends Panel {
       radioButtonOptions: {
         radius: RADIO_BUTTON_RADIUS
       },
-      spacing: SPACING
+      spacing: SPACING,
+
+      // pdom
+      accessibleName: TrigTourStrings.a11y.graphRadioButtons.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.graphRadioButtons.helpTextStringProperty
     } );
 
     // 3 checkboxes: Labels, Grid, Special Angles

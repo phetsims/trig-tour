@@ -146,9 +146,8 @@ class UnitCircleView extends Node {
       // pdom
       tagName: 'div',
       focusable: true,
-
-      // TODO, see https://github.com/phetsims/trig-tour/issues/101
-      accessibleName: '{{UNIT CIRCLE PIN NEEDS ACCSESIBLE NAME}}'
+      accessibleName: TrigTourStrings.a11y.unitCirclePin.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.unitCirclePin.helpTextStringProperty
     } );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );

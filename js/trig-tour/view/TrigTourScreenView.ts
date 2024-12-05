@@ -9,11 +9,13 @@
  * @author Michael Dubson (PhET)
  */
 
+import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Image, Rectangle, Node } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
+import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
@@ -33,7 +35,14 @@ class TrigTourScreenView extends ScreenView {
    * @param trigTourModel - main model for sim
    */
   public constructor( trigTourModel: TrigTourModel ) {
-    super();
+    super( {
+      screenSummaryContent: new ScreenSummaryContent( [
+        TrigTourStrings.a11y.screenSummary.playAreaStringProperty,
+        TrigTourStrings.a11y.screenSummary.controlAreaStringProperty,
+        TrigTourStrings.a11y.screenSummary.stateDescriptionStringProperty,
+        TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
+      ] )
+    } );
     const viewProperties = new ViewProperties();
 
     // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of

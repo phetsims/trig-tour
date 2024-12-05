@@ -120,7 +120,11 @@ class GraphView extends Node {
     } );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
       sideLength: 15,
-      cursor: 'pointer'
+      cursor: 'pointer',
+
+      // pdom
+      accessibleName: TrigTourStrings.a11y.graphViewAccordionBox.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty
     } );
     let hitBound = 30;
     let midX = this.expandCollapseButton.centerX;
@@ -204,7 +208,8 @@ class GraphView extends Node {
       // pdom - this is the Node that receives the input listener so it needs to be focusable
       tagName: 'div',
       focusable: true,
-      accessibleName: '{{GRAPH PIN NEEDS ACCSESIBLE NAME}}'
+      accessibleName: TrigTourStrings.a11y.graphLine.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.graphLine.helpTextStringProperty
     } );
 
     const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );

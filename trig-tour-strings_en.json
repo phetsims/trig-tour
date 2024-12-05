@@ -49,6 +49,62 @@
   },
   "numberPiPattern": {
     "value": "{0}{1}"
+  },
+  "a11y": {
+    "graphViewAccordionBox": {
+      "accessibleName": {
+        "value": "{{GRAPH VIEW ACCORDION BOX NAME}}"
+      },
+      "helpText": {
+        "value": "{{(Optional) HELP TEXT FOR GRAPH VIEW ACCORDION BOX}}"
+      }
+    },
+    "unitsRadioButtons": {
+      "accessibleName": {
+        "value": "{{UNITS RADIO BUTTONS NAME}}"
+      },
+      "helpText": {
+        "value": "{{(Optional) HELP TEXT FOR UNITS RADIO BUTTONS}}"
+      }
+    },
+    "graphRadioButtons": {
+      "accessibleName": {
+        "value": "{{GRAPH RADIO BUTTONS NAME}}"
+      },
+      "helpText": {
+        "value": "{{(Optional)HELP TEXT FOR GRAPH RADIO BUTTONS}}"
+      }
+    },
+    "unitCirclePin": {
+      "accessibleName": {
+        "value": "{{UNIT CIRCLE PIN NAME}}"
+      },
+      "helpText": {
+        "value": "{{(Optional) HELP TEXT FOR UNIT CIRCLE PIN}}"
+      }
+    },
+    "graphLine": {
+      "accessibleName": {
+        "value": "{{GRAPH LINE NAME}}"
+      },
+      "helpText": {
+        "value": "{{(Optional) HELP TEXT FOR GRAPH LINE}}"
+      }
+    },
+    "screenSummary": {
+      "playArea": {
+        "value": "{{THE PLAY AREA CONTAINS...}}"
+      },
+      "controlArea": {
+        "value": "{{THE CONTROL AREA HAS...}}"
+      },
+      "stateDescription": {
+        "value": "{{DYNAMIC STATE DESCRIPTION GOES HERE (IF IN SCOPE)...}}"
+      },
+      "interactionHint": {
+        "value": "{{INTERACTION HINT}}"
+      }
+    }
   }
 }
 

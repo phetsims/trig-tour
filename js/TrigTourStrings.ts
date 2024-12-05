@@ -48,6 +48,48 @@ type StringsType = {
   'valueUnitPatternStringProperty': LocalizedStringProperty;
   'numberPiPattern': string;
   'numberPiPatternStringProperty': LocalizedStringProperty;
+  'a11y': {
+    'graphViewAccordionBox': {
+      'accessibleName': string;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'unitsRadioButtons': {
+      'accessibleName': string;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'graphRadioButtons': {
+      'accessibleName': string;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'unitCirclePin': {
+      'accessibleName': string;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'graphLine': {
+      'accessibleName': string;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'screenSummary': {
+      'playArea': string;
+      'playAreaStringProperty': LocalizedStringProperty;
+      'controlArea': string;
+      'controlAreaStringProperty': LocalizedStringProperty;
+      'stateDescription': string;
+      'stateDescriptionStringProperty': LocalizedStringProperty;
+      'interactionHint': string;
+      'interactionHintStringProperty': LocalizedStringProperty;
+    }
+  }
 };
 
 const TrigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;

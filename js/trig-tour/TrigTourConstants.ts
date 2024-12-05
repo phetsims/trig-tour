@@ -12,6 +12,6 @@ const TrigTourConstants = {
     dragDelta: Math.PI / 10,
     shiftDragDelta: Math.PI / 20
   }
-}
+};
 
 export default TrigTourConstants;

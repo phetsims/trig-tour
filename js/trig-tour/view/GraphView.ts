@@ -252,24 +252,7 @@ class GraphView extends Node {
 
           // For alt input, use modelDelta to increment/decrement the full angle
           if ( event.isFromPDOM() ) {
-
-            // By default, the modelDelta will the
-            let modelDelta = Math.abs( listener.modelDelta.x ) || Math.abs( listener.modelDelta.y );
-
-            // If special angles are visible, use the larger increment to move far enough to get to the next
-            // special angle.
-            if ( viewProperties.specialAnglesVisibleProperty.value ) {
-              modelDelta = TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS.dragDelta;
-            }
-
-            // Positive y is down, so subtract the y delta from the full angle
-            const increasing = listener.modelDelta.x > 0 || listener.modelDelta.y < 0;
-            if ( increasing ) {
-              fullAngle = trigTourModel.fullAngleProperty.value + modelDelta;
-            }
-            else {
-              fullAngle = trigTourModel.fullAngleProperty.value - modelDelta;
-            }
+            fullAngle = trigTourModel.getNextFullDeltaFromKeyboardInput( listener.modelDelta, viewProperties.specialAnglesVisibleProperty.value );
           }
           else {
 
@@ -278,21 +261,7 @@ class GraphView extends Node {
             fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
           }
 
-          if ( !trigTourModel.maxAngleExceededProperty.value ) {
-            if ( !viewProperties.specialAnglesVisibleProperty.value ) {
-              trigTourModel.setFullAngleInRadians( fullAngle );
-            }
-            else {
-              trigTourModel.setSpecialAngleWithFullAngle( fullAngle );
-            }
-          }
-          else {
-            // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
-            if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
-              trigTourModel.setFullAngleInRadians( fullAngle );
-            }
-          }
-
+          trigTourModel.setNewFullAngle( fullAngle, viewProperties.specialAnglesVisibleProperty.value );
         }
       } );
 

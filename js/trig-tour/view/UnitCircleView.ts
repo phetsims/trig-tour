@@ -192,31 +192,8 @@ class UnitCircleView extends Node {
           trigTourModel.checkMaxAngleExceeded();
 
           if ( event.isFromPDOM() ) {
-            const modelDelta = listener.modelDelta;
-            let fullAngle = trigTourModel.getFullAngleInRadians();
-            if ( Math.abs( modelDelta.x ) > 0 ) {
-              fullAngle += modelDelta.x;
-            }
-            else {
-
-              // Positive y is down, so subtract the y delta from the full angle
-              fullAngle -= modelDelta.y;
-            }
-
-            if ( !trigTourModel.maxAngleExceededProperty.value ) {
-              if ( !viewProperties.specialAnglesVisibleProperty.value ) {
-                trigTourModel.setFullAngleInRadians( fullAngle );
-              }
-              else {
-                trigTourModel.setSpecialAngleWithFullAngle( fullAngle );
-              }
-            }
-            else {
-              // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
-              if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
-                trigTourModel.setFullAngleInRadians( fullAngle );
-              }
-            }
+            const newFullAngle = trigTourModel.getNextFullDeltaFromKeyboardInput( listener.modelDelta, viewProperties.specialAnglesVisibleProperty.value );
+            trigTourModel.setFullAngleWithSmallAngle( newFullAngle );
           }
           else {
             const v1 = rotorPin.globalToParentPoint( event.pointer.point );

@@ -10,8 +10,10 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import trigTour from '../../trigTour.js';
 import SpecialAngles from '../SpecialAngles.js';
+import TrigTourConstants from '../TrigTourConstants.js';
 
 // constants
 const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
@@ -198,6 +200,52 @@ class TrigTourModel {
     this._halfTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
     this.fullAngleProperty.value = targetAngle;  // now can trigger angle update
     this.previousAngle = smallAngle;
+  }
+
+  public getNextFullDeltaFromKeyboardInput( keyboardDelta: Vector2, specialAnglesVisible: boolean ): number {
+    let nextFullAngle = 0;
+
+    // By default, the modelDelta will provided by the delta of the keyboard listener.
+    let modelDelta = Math.abs( keyboardDelta.x ) || Math.abs( keyboardDelta.y );
+
+    // If special angles are visible, use the larger increment to move far enough to get
+    // to the next special angle.
+    if ( specialAnglesVisible ) {
+      modelDelta = TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS.dragDelta;
+    }
+
+    // Positive y is down, so we are increasing if y is negative.
+    const increasing = keyboardDelta.x > 0 || keyboardDelta.y < 0;
+    if ( increasing ) {
+      nextFullAngle = this.fullAngleProperty.value + modelDelta;
+    }
+    else {
+      nextFullAngle = this.fullAngleProperty.value - modelDelta;
+    }
+
+    return nextFullAngle;
+  }
+
+  /**
+   * Set a new full angle, from a proposed full angle. Applies the correct angle
+   * based on whether the max angle is exceeded and whether special angles are visible.
+   */
+  public setNewFullAngle( newFullAngle: number, specialAnglesVisible: boolean ): void {
+    if ( !this.maxAngleExceededProperty.value ) {
+      if ( !specialAnglesVisible ) {
+        this.setFullAngleInRadians( newFullAngle );
+      }
+      else {
+        this.setSpecialAngleWithFullAngle( newFullAngle );
+      }
+    }
+    else {
+
+      // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
+      if ( Math.abs( newFullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
+        this.setFullAngleInRadians( newFullAngle );
+      }
+    }
   }
 
   /**

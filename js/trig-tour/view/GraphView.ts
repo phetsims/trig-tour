@@ -241,7 +241,7 @@ class GraphView extends Node {
         keyboardDragListenerOptions: {
           moveOnHoldInterval: 75,
           dragDelta: Math.PI / 10,
-          shiftDragDelta: Math.PI / 20,
+          shiftDragDelta: Math.PI / 20
         },
         drag: ( event: SceneryEvent, listener: KeyboardDragListener | DragListener ) => {
           let fullAngle;

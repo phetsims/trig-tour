@@ -192,7 +192,7 @@ class UnitCircleView extends Node {
 
           if ( event.isFromPDOM() ) {
             const newFullAngle = trigTourModel.getNextFullDeltaFromKeyboardInput( listener.modelDelta, viewProperties.specialAnglesVisibleProperty.value );
-            trigTourModel.setFullAngleWithSmallAngle( newFullAngle );
+            trigTourModel.setNewFullAngle( newFullAngle, viewProperties.specialAnglesVisibleProperty.value );
           }
           else {
             const v1 = rotorPin.globalToParentPoint( event.pointer.point );

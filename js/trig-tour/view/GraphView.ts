@@ -25,6 +25,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
+import TrigTourConstants from '../TrigTourConstants.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigPlotsNode from './TrigPlotsNode.js';
@@ -182,7 +183,11 @@ class GraphView extends Node {
       cursor: 'pointer',
       visible: false,
       opacity: 0, // this needs to be completely invisible
-      center: this.singularityIndicator.center
+      center: this.singularityIndicator.center,
+
+      // This Node will become visible/invisible when there is a singularity, but that should not interrupt
+      // input with the graph. See https://github.com/phetsims/trig-tour/issues/106.
+      interruptSubtreeOnInvisible: false
     } );
 
     this.singularityIndicator.visible = false;
@@ -238,11 +243,7 @@ class GraphView extends Node {
 
     const dragHandler = new SoundRichDragListener(
       {
-        keyboardDragListenerOptions: {
-          moveOnHoldInterval: 75,
-          dragDelta: Math.PI / 10,
-          shiftDragDelta: Math.PI / 20
-        },
+        keyboardDragListenerOptions: TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS,
         drag: ( event: SceneryEvent, listener: KeyboardDragListener | DragListener ) => {
           let fullAngle;
 
@@ -251,14 +252,23 @@ class GraphView extends Node {
 
           // For alt input, use modelDelta to increment/decrement the full angle
           if ( event.isFromPDOM() ) {
-            const modelDelta = listener.modelDelta;
-            if ( Math.abs( modelDelta.x ) > 0 ) {
-              fullAngle = trigTourModel.fullAngleProperty.value + modelDelta.x;
+
+            // By default, the modelDelta will the
+            let modelDelta = Math.abs( listener.modelDelta.x ) || Math.abs( listener.modelDelta.y );
+
+            // If special angles are visible, use the larger increment to move far enough to get to the next
+            // special angle.
+            if ( viewProperties.specialAnglesVisibleProperty.value ) {
+              modelDelta = TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS.dragDelta;
+            }
+
+            // Positive y is down, so subtract the y delta from the full angle
+            const increasing = listener.modelDelta.x > 0 || listener.modelDelta.y < 0;
+            if ( increasing ) {
+              fullAngle = trigTourModel.fullAngleProperty.value + modelDelta;
             }
             else {
-
-              // Positive y is down, so subtract the y delta from the full angle
-              fullAngle = trigTourModel.fullAngleProperty.value - modelDelta.y;
+              fullAngle = trigTourModel.fullAngleProperty.value - modelDelta;
             }
           }
           else {

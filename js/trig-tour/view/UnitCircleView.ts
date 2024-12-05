@@ -13,11 +13,12 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, Line, Node, Path, Rectangle, SceneryEvent, Text } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
+import TrigTourConstants from '../TrigTourConstants.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigTourColors from './TrigTourColors.js';
@@ -184,34 +185,65 @@ class UnitCircleView extends Node {
 
     rotorPin.addInputListener( new SoundRichDragListener(
       {
-        drag: ( event: SceneryEvent ) => {
-          const v1 = rotorPin.globalToParentPoint( event.pointer.point );
-          const smallAngle = -v1.angle; // model angle is negative of xy screen coordinates angle
+        keyboardDragListenerOptions: TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS,
+        drag: ( event: SceneryEvent, listener: DragListener | KeyboardDragListener ) => {
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
-          const setFullAngle = () => {
-            if ( !viewProperties.specialAnglesVisibleProperty.value ) {
-              trigTourModel.setFullAngleWithSmallAngle( smallAngle );
+          if ( event.isFromPDOM() ) {
+            const modelDelta = listener.modelDelta;
+            let fullAngle = trigTourModel.getFullAngleInRadians();
+            if ( Math.abs( modelDelta.x ) > 0 ) {
+              fullAngle += modelDelta.x;
             }
             else {
-              trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
-            }
-          };
 
-          if ( !trigTourModel.maxAngleExceededProperty.value ) {
-            setFullAngle();
+              // Positive y is down, so subtract the y delta from the full angle
+              fullAngle -= modelDelta.y;
+            }
+
+            if ( !trigTourModel.maxAngleExceededProperty.value ) {
+              if ( !viewProperties.specialAnglesVisibleProperty.value ) {
+                trigTourModel.setFullAngleInRadians( fullAngle );
+              }
+              else {
+                trigTourModel.setSpecialAngleWithFullAngle( fullAngle );
+              }
+            }
+            else {
+              // max angle exceeded, ony update if user tries to decrease magnitude of fullAngle
+              if ( Math.abs( fullAngle ) < TrigTourModel.MAX_ANGLE_LIMIT ) {
+                trigTourModel.setFullAngleInRadians( fullAngle );
+              }
+            }
           }
           else {
-            // maximum angle exceeded, only update full angle if abs val of small angle is decreasing
-            if ( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
-              // if the difference between angles is too large, rotor was dragged across Math.PI and small angle
-              // changed signs. Immediately return because this can allow the user to drag to far.
-              if ( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
-                return;
+            const v1 = rotorPin.globalToParentPoint( event.pointer.point );
+            const smallAngle = -v1.angle; // model angle is negative of xy screen coordinates angle
+
+            const setFullAngle = () => {
+              if ( !viewProperties.specialAnglesVisibleProperty.value ) {
+                trigTourModel.setFullAngleWithSmallAngle( smallAngle );
               }
+              else {
+                trigTourModel.setSpecialAngleWithSmallAngle( smallAngle );
+              }
+            };
+
+            if ( !trigTourModel.maxAngleExceededProperty.value ) {
               setFullAngle();
+            }
+            else {
+              // maximum angle exceeded, only update full angle if abs val of small angle is decreasing
+              if ( Math.abs( smallAngle ) < Math.abs( trigTourModel.previousAngle ) ) {
+                // if the difference between angles is too large, rotor was dragged across Math.PI and small angle
+                // changed signs. Immediately return because this can allow the user to drag to far.
+                if ( Math.abs( smallAngle - trigTourModel.previousAngle ) > Math.PI / 2 ) {
+                  return;
+                }
+                setFullAngle();
+              }
             }
           }
         }

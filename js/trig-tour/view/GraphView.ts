@@ -19,7 +19,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, HBox, Line, Node, Rectangle, SceneryEvent, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
@@ -238,12 +238,35 @@ class GraphView extends Node {
 
     const dragHandler = new SoundRichDragListener(
       {
-        drag: ( event: SceneryEvent ) => {
-          const position = this.trigIndicatorArrowNode.globalToParentPoint( event.pointer.point );   //returns Vector2
-          const fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
+        keyboardDragListenerOptions: {
+          moveOnHoldInterval: 75,
+          dragDelta: Math.PI / 10,
+          shiftDragDelta: Math.PI / 20,
+        },
+        drag: ( event: SceneryEvent, listener: KeyboardDragListener | DragListener ) => {
+          let fullAngle;
 
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
+
+          // For alt input, use modelDelta to increment/decrement the full angle
+          if ( event.isFromPDOM() ) {
+            const modelDelta = listener.modelDelta;
+            if ( Math.abs( modelDelta.x ) > 0 ) {
+              fullAngle = trigTourModel.fullAngleProperty.value + modelDelta.x;
+            }
+            else {
+
+              // Positive y is down, so subtract the y delta from the full angle
+              fullAngle = trigTourModel.fullAngleProperty.value - modelDelta.y;
+            }
+          }
+          else {
+
+            // With mouse movement, calculate the full angle based on the x position of the indicator arrow
+            const position = this.trigIndicatorArrowNode.globalToParentPoint( event.pointer.point );   //returns Vector2
+            fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
+          }
 
           if ( !trigTourModel.maxAngleExceededProperty.value ) {
             if ( !viewProperties.specialAnglesVisibleProperty.value ) {

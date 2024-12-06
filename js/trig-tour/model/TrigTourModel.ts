@@ -205,9 +205,9 @@ class TrigTourModel {
     this._fullTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
     remainderAngle = targetAngle % ( Math.PI );
 
-    // If the remainderAngle is very close to Math.PI, set to 0 so that the halfTurnCount is not off by 1.
+    // If the remainderAngle is very close to Math.PI or 2 * Math.PI, set to 0 so that the halfTurnCount is not off by 1.
     // See https://github.com/phetsims/trig-tour/issues/97.
-    if ( Math.abs( remainderAngle - Math.PI ) < 1e-10 ) {
+    if ( Math.abs( remainderAngle - Math.PI ) < 1e-10 || Math.abs( remainderAngle - 2 * Math.PI ) < 1e10 ) {
       remainderAngle = 0;
     }
     this._halfTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );

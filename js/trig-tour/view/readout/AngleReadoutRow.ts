@@ -227,18 +227,45 @@ class AngleReadoutRow extends Node {
     // Must handle smallAngle = 0 or pi as special cases
     const roundedAngle = Utils.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
     if ( roundedAngle === 0 || roundedAngle === 180 ) {
-      const nbrPiRads = this.trigTourModel.halfTurnCount;
-      let angleRadianString = nbrPiRads + MathSymbols.PI;
-      if ( nbrPiRads === 0 ) {
-        angleRadianString = '0';
+      const halfTurnCount = this.trigTourModel.halfTurnCount;
+      let numberOfPiRadiansString;
+
+      if ( halfTurnCount === 0 ) {
+
+        // No turns, so we just show '0'
+        numberOfPiRadiansString = '0';
       }
-      else if ( nbrPiRads === 1 ) {
-        angleRadianString = MathSymbols.PI;
+      else if ( halfTurnCount === 1 ) {
+
+        // At 180 degrees, we show pi radians
+        numberOfPiRadiansString = MathSymbols.PI;
       }
-      else if ( nbrPiRads === -1 ) {
-        angleRadianString = `-${MathSymbols.PI}`;
+      else if ( halfTurnCount === -1 ) {
+
+        // At -180 degrees, we show -pi radians
+        numberOfPiRadiansString = `-${MathSymbols.PI}`;
       }
-      this.fullAngleFractionNode.setValues( angleRadianString, '' );
+      else if ( roundedAngle === 180 ) {
+
+        // In this special case, we show the number of radians like 2pi + pi. Displaying the equivalent like 3pi
+        // was confusing to the student because it is a different representation when there is usually a fraction
+        // representing the remaining angle. See https://github.com/phetsims/trig-tour/issues/80.
+        const angleNegative = this.trigTourModel.getFullAngleInRadians() < 0;
+
+        // The display needs to change if the angle is negative. For example, it should be
+        // 2pi + pi (angle positive) OR
+        // -2pi - pi (angle negative)
+        const additionalPiSign = angleNegative ? '-' : '+';
+        const minusSign = angleNegative ? '-' : '';
+        numberOfPiRadiansString = `${minusSign}${Math.abs( halfTurnCount ) - 1}${MathSymbols.PI} ${additionalPiSign} ${MathSymbols.PI}`;
+      }
+      else {
+
+        // Otherwise, the remaining angle is displayed as a fraction so show the number of half turns.
+        numberOfPiRadiansString = `${halfTurnCount}${MathSymbols.PI}`;
+      }
+
+      this.fullAngleFractionNode.setValues( numberOfPiRadiansString, '' );
 
       // dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
       this.angleReadoutFraction.setValues( 'A', 'B' );

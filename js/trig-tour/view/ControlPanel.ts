@@ -7,7 +7,7 @@
  */
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HSeparator, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Line, Node, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -47,7 +47,7 @@ class ControlPanel extends Panel {
   public constructor( viewProperties: ViewProperties, maxPanelWidth: number ) {
 
     // create the text nodes, determining their max width from the panel width and the width of the buttons
-    const maxWidth = maxPanelWidth - 4 * RADIO_BUTTON_RADIUS;
+    const maxWidth = maxPanelWidth - 8 * RADIO_BUTTON_RADIUS;
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
     const labelsText = new Text( labelsString, fontInfo );
     const gridText = new Text( gridString, fontInfo );
@@ -55,9 +55,9 @@ class ControlPanel extends Panel {
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [
-      { value: 'cos', createNode: () => new Text( cosString, fontInfo ) },
-      { value: 'sin', createNode: () => new Text( sinString, fontInfo ) },
-      { value: 'tan', createNode: () => new Text( tanString, fontInfo ) }
+      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos', maxWidth ) },
+      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin', maxWidth ) },
+      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan', maxWidth ) }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.graphProperty, radioButtonItems, {
@@ -104,6 +104,34 @@ class ControlPanel extends Panel {
 
     this.radioButtonGroup = radioButtonGroup;
     this.checkboxGroup = checkboxGroup;
+  }
+
+  public static createGraphRadioButtonIcon( graph: Graph, maxTextWidth: number ): Node {
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxTextWidth };
+
+    let labelString: string;
+    let iconColor: TPaint;
+
+    if ( graph === 'cos' ) {
+      labelString = cosString;
+      iconColor = TrigTourColors.COS_COLOR;
+    }
+    else if ( graph === 'sin' ) {
+      labelString = sinString;
+      iconColor = TrigTourColors.SIN_COLOR;
+    }
+    else {
+      labelString = tanString;
+      iconColor = TrigTourColors.TAN_COLOR;
+    }
+
+    const labelText = new Text( labelString, fontInfo );
+    const iconLine = new Line( 0, 0, 40, 0, { stroke: iconColor, lineWidth: 2 } );
+
+    return new HBox( {
+      children: [ labelText, iconLine ],
+      spacing: 5
+    } );
   }
 }
 

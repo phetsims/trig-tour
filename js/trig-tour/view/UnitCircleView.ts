@@ -20,6 +20,7 @@ import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
 import TrigTourConstants from '../TrigTourConstants.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
+import AngleSoundGenerator from './AngleSoundGenerator.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourSpiralNode from './TrigTourSpiralNode.js';
@@ -55,8 +56,9 @@ class UnitCircleView extends Node {
    * @param viewRectangle - Rectangle for the background rectangle of the unit circle, including view properties like lineWidth
    * @param backgroundOffset - Offset of the background rectangle behind the unit circle view
    * @param viewProperties - collection of properties handling visibility of elements on screen
+   * @param angleSoundGenerator - sound generator for angle changes
    */
-  public constructor( trigTourModel: TrigTourModel, viewRectangle: Rectangle, backgroundOffset: number, viewProperties: ViewProperties ) {
+  public constructor( trigTourModel: TrigTourModel, viewRectangle: Rectangle, backgroundOffset: number, viewProperties: ViewProperties, angleSoundGenerator: AngleSoundGenerator ) {
     super();
 
     // Draw Unit Circle
@@ -190,6 +192,8 @@ class UnitCircleView extends Node {
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
+          const oldValue = trigTourModel.getFullAngleInRadians();
+
           if ( event.isFromPDOM() ) {
             const newFullAngle = trigTourModel.getNextFullDeltaFromKeyboardInput( listener.modelDelta, viewProperties.specialAnglesVisibleProperty.value );
             trigTourModel.setNewFullAngle( newFullAngle, viewProperties.specialAnglesVisibleProperty.value );
@@ -220,6 +224,17 @@ class UnitCircleView extends Node {
                 }
                 setFullAngle();
               }
+            }
+          }
+
+          // After the new value has been computed, play the sound if the value has changed
+          const newValue = trigTourModel.getFullAngleInRadians();
+          if ( oldValue !== newValue ) {
+            if ( event.isFromPDOM() ) {
+              angleSoundGenerator.playSoundForValueChange( newValue, oldValue );
+            }
+            else {
+              angleSoundGenerator.playSoundIfThresholdReached( newValue, oldValue );
             }
           }
         }

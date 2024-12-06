@@ -26,6 +26,7 @@ import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigTourConstants from '../TrigTourConstants.js';
+import AngleSoundGenerator from './AngleSoundGenerator.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
 import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
 import TrigPlotsNode from './TrigPlotsNode.js';
@@ -87,8 +88,9 @@ class GraphView extends Node {
    * @param height of y-axis on graph
    * @param width of x-axis on graph
    * @param viewProperties
+   * @param angleSoundGenerator
    */
-  public constructor( trigTourModel: TrigTourModel, height: number, width: number, viewProperties: ViewProperties ) {
+  public constructor( trigTourModel: TrigTourModel, height: number, width: number, viewProperties: ViewProperties, angleSoundGenerator: AngleSoundGenerator ) {
     super();
 
     this.trigTourModel = trigTourModel;
@@ -255,6 +257,8 @@ class GraphView extends Node {
           // make sure the full angle does not exceed max allowed angle
           trigTourModel.checkMaxAngleExceeded();
 
+          const oldValue = trigTourModel.getFullAngleInRadians();
+
           // For alt input, use modelDelta to increment/decrement the full angle
           if ( event.isFromPDOM() ) {
             fullAngle = trigTourModel.getNextFullDeltaFromKeyboardInput( listener.modelDelta, viewProperties.specialAnglesVisibleProperty.value );
@@ -267,6 +271,17 @@ class GraphView extends Node {
           }
 
           trigTourModel.setNewFullAngle( fullAngle, viewProperties.specialAnglesVisibleProperty.value );
+
+          // After the new value has been computed, play the sound if the value has changed
+          const newValue = trigTourModel.getFullAngleInRadians();
+          if ( oldValue !== newValue ) {
+            if ( event.isFromPDOM() ) {
+              angleSoundGenerator.playSoundForValueChange( newValue, oldValue );
+            }
+            else {
+              angleSoundGenerator.playSoundIfThresholdReached( newValue, oldValue );
+            }
+          }
         }
       } );
 

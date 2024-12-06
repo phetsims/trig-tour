@@ -17,6 +17,7 @@ import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
+import AngleSoundGenerator from './AngleSoundGenerator.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
 import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
@@ -59,10 +60,13 @@ class TrigTourScreenView extends ScreenView {
     whiteSheet.x = this.layoutBounds.centerX;
     whiteSheet.top = this.layoutBounds.top + 20;
 
-    const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties );
+    // A reusable sound generator for the UI components that can control the angle.
+    const angleSoundGenerator = new AngleSoundGenerator();
+
+    const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties, angleSoundGenerator );
     unitCircleView.center = whiteSheet.center;
 
-    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties );
+    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties, angleSoundGenerator );
     graphView.x = this.layoutBounds.centerX;
     graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
 

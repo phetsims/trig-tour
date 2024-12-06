@@ -14,10 +14,13 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import trigTour from '../../trigTour.js';
 import SpecialAngles from '../SpecialAngles.js';
 import TrigTourConstants from '../TrigTourConstants.js';
+import TrigTourQueryParameters from '../TrigTourQueryParameters.js';
 
 // constants
 const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
-const MAX_ANGLE_LIMIT = 50 * Math.PI + MAX_SMALL_ANGLE_LIMIT; // must be ( integer+0.5) number of full rotations
+
+// must be ( integer+0.5) number of full rotations
+const MAX_ANGLE_LIMIT = TrigTourQueryParameters.maxRotations * Math.PI + MAX_SMALL_ANGLE_LIMIT;
 
 class TrigTourModel {
 
@@ -163,7 +166,11 @@ class TrigTourModel {
     this.smallAngle = fullAngleInRads - this.rotationNumberFromPi * 2 * Math.PI;
     remainderAngle = fullAngleInRads % ( Math.PI );
     this._halfTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
-    this.fullAngleProperty.value = fullAngleInRads;
+    this.fullAngleProperty.value = this.constrainFullAngle( fullAngleInRads );
+  }
+
+  private constrainFullAngle( fullAngle: number ): number {
+    return Utils.clamp( fullAngle, -MAX_ANGLE_LIMIT, MAX_ANGLE_LIMIT );
   }
 
   /**
@@ -198,7 +205,7 @@ class TrigTourModel {
     this._fullTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( 2 * Math.PI ) );
     remainderAngle = targetAngle % ( Math.PI );
     this._halfTurnCount = Utils.roundSymmetric( ( targetAngle - remainderAngle ) / ( Math.PI ) );
-    this.fullAngleProperty.value = targetAngle;  // now can trigger angle update
+    this.fullAngleProperty.value = this.constrainFullAngle( targetAngle );  // now can trigger angle update
     this.previousAngle = smallAngle;
   }
 
@@ -324,7 +331,7 @@ class TrigTourModel {
   public checkMaxAngleExceeded(): void {
 
     // determine if max angle is exceeded and set the property.
-    this.maxAngleExceededProperty.value = ( Math.abs( this.getFullAngleInRadians() ) > MAX_ANGLE_LIMIT );
+    this.maxAngleExceededProperty.value = ( Math.abs( this.getFullAngleInRadians() ) >= MAX_ANGLE_LIMIT );
   }
 
   public static readonly MAX_SMALL_ANGLE_LIMIT = MAX_SMALL_ANGLE_LIMIT;

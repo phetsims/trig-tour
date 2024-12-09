@@ -155,6 +155,9 @@ class UnitCircleView extends Node {
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;
 
+    // A custom focus highlight so it is easier to see, see https://github.com/phetsims/trig-tour/issues/101
+    rotorPin.focusHighlight = Shape.circle( rotorPin.radius * 3 );
+
     // Draw x, y, and '1' labels on the xyR triangle
     const labelCanvas = new Node();
     fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };

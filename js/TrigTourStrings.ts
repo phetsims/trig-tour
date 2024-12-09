@@ -48,6 +48,8 @@ type StringsType = {
   'valueUnitPatternStringProperty': LocalizedStringProperty;
   'numberPiPattern': string;
   'numberPiPatternStringProperty': LocalizedStringProperty;
+  'pointOffScale': string;
+  'pointOffScaleStringProperty': LocalizedStringProperty;
   'a11y': {
     'graphViewAccordionBox': {
       'accessibleName': string;

@@ -17,6 +17,7 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import OffScaleIndicatorNode, { OffScaleIndicatorNodeOptions } from '../../../../scenery-phet/js/OffScaleIndicatorNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
@@ -50,6 +51,22 @@ const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 const VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
 const DISPLAY_FONT = new PhetFont( 20 );
 const ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
+const BACKGROUND_STROKE = TEXT_COLOR_GRAY;
+const BACKGROUND_LINE_WIDTH = 2;
+const BACKGROUND_CORNER_RADIUS = 5;
+
+const OFF_SCALE_INDICATOR_NODE_OPTIONS: OffScaleIndicatorNodeOptions = {
+  offScaleStringProperty: TrigTourStrings.pointOffScaleStringProperty,
+  panelOptions: {
+    stroke: BACKGROUND_STROKE,
+    lineWidth: BACKGROUND_LINE_WIDTH,
+    cornerRadius: BACKGROUND_CORNER_RADIUS
+  },
+  richTextOptions: {
+    font: DISPLAY_FONT,
+    maxWidth: 200
+  }
+};
 
 class GraphView extends Node {
 
@@ -112,10 +129,10 @@ class GraphView extends Node {
     this.titleDisplayPanel = new Panel( this.titleDisplayHBox, {
       fill: 'white',
       stroke: TEXT_COLOR_GRAY,
-      lineWidth: 2, // width of the background border
+      lineWidth: BACKGROUND_LINE_WIDTH,
       xMargin: 12,
       yMargin: 5,
-      cornerRadius: 5,
+      cornerRadius: BACKGROUND_CORNER_RADIUS,
       backgroundPickable: false,
       align: 'left',
       minWidth: 0
@@ -234,11 +251,20 @@ class GraphView extends Node {
       leftBorder
     ];
 
+    // Indicators for when the angle value goes beyond the displayed graph
+    const leftIndicator = new OffScaleIndicatorNode( 'left', OFF_SCALE_INDICATOR_NODE_OPTIONS );
+    const rightIndicator = new OffScaleIndicatorNode( 'right', OFF_SCALE_INDICATOR_NODE_OPTIONS );
+
+    leftIndicator.leftBottom = backgroundRectangle.leftTop.minusXY( 0, 5 );
+    rightIndicator.rightBottom = backgroundRectangle.rightTop.minusXY( 0, 5 );
+
     this.children = [
       backgroundRectangle,
       this.titleDisplayPanel,
       this.expandCollapseButton,
-      displayNode
+      displayNode,
+      leftIndicator,
+      rightIndicator
     ];
 
     // link visibility to the expandCollapseButton
@@ -344,6 +370,15 @@ class GraphView extends Node {
           this.trigIndicatorArrowNode.opacity = 1;
         }
       }
+    } );
+
+    // Update visibility of the out-of-range indicators when the angle gets to large.
+    trigTourModel.fullAngleProperty.link( fullAngle => {
+
+      // The number of wavelengths that are displayed on the graph
+      const absoluteMaxAngle = numberOfWavelengths * Math.PI + Math.PI / 2;
+      leftIndicator.visible = fullAngle < -absoluteMaxAngle;
+      rightIndicator.visible = fullAngle > absoluteMaxAngle;
     } );
   }
 

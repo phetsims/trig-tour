@@ -224,7 +224,7 @@ class TrigTourModel {
     // If special angles are visible, use the larger increment to move far enough to get
     // to the next special angle.
     if ( specialAnglesVisible ) {
-      modelDelta = TrigTourConstants.KEYBOARD_DRAG_LISTENER_OPTIONS.dragDelta;
+      modelDelta = TrigTourConstants.SPECIAL_ANGLE_DELTA;
     }
 
     // Positive y is down, so we are increasing if y is negative.

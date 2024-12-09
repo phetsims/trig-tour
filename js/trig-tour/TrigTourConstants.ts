@@ -13,7 +13,11 @@ const TrigTourConstants = {
     moveOnHoldInterval: 75,
     dragDelta: Utils.toRadians( 5 ),
     shiftDragDelta: Utils.toRadians( 0.5 )
-  }
+  },
+
+  // A larger delta in radians to apply when special angles are visible so that
+  // we always move to the next special angle.
+  SPECIAL_ANGLE_DELTA: Utils.toRadians( 20 )
 };
 
 export default TrigTourConstants;

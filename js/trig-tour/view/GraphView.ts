@@ -15,6 +15,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import OffScaleIndicatorNode, { OffScaleIndicatorNodeOptions } from '../../../../scenery-phet/js/OffScaleIndicatorNode.js';
@@ -54,6 +55,7 @@ const ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
 const BACKGROUND_STROKE = TEXT_COLOR_GRAY;
 const BACKGROUND_LINE_WIDTH = 2;
 const BACKGROUND_CORNER_RADIUS = 5;
+const EXPAND_COLLAPSE_BUTTON_SPACING = 7;
 
 const OFF_SCALE_INDICATOR_NODE_OPTIONS: OffScaleIndicatorNodeOptions = {
   offScaleStringProperty: TrigTourStrings.pointOffScaleStringProperty,
@@ -90,7 +92,6 @@ class GraphView extends Node {
   // node containing paths of the trig curves sin, cos, and tan
   private readonly trigPlotsNode: Node;
   private readonly singularityIndicator: Node;
-  private readonly singularityRectangle: Node;
   private readonly redDotHandle: Node;
 
   // A vertical arrow on the trig curve showing current value of angle and trigFunction(angle),
@@ -162,8 +163,8 @@ class GraphView extends Node {
     } );
 
     // align expandCollapseButton and titleDisplayButton
-    this.expandCollapseButton.left = backgroundRectangle.left + 7;
-    this.expandCollapseButton.top = backgroundRectangle.top + 7;
+    this.expandCollapseButton.left = backgroundRectangle.left + EXPAND_COLLAPSE_BUTTON_SPACING;
+    this.expandCollapseButton.top = backgroundRectangle.top + EXPAND_COLLAPSE_BUTTON_SPACING;
     this.titleDisplayPanel.left = backgroundRectangle.left;
     this.titleDisplayPanel.top = backgroundRectangle.top;
 
@@ -195,27 +196,10 @@ class GraphView extends Node {
       cursor: 'pointer'
     } );
 
-    // Lines are not draggable.  An invisible rectangle needs to cover the singularity indicator so that the user
-    // can  drag it once it appears.
-    hitBound = 20;
-    const minY = this.singularityIndicator.bottom;
-    const maxY = this.singularityIndicator.top;
-    midX = this.singularityIndicator.centerX;
 
-    this.singularityRectangle = new Rectangle( midX - hitBound, minY, midX + 2 * hitBound, -maxY, {
-      cursor: 'pointer',
-      visible: false,
-      opacity: 0, // this needs to be completely invisible
-      center: this.singularityIndicator.center,
-
-      // This Node will become visible/invisible when there is a singularity, but that should not interrupt
-      // input with the graph. See https://github.com/phetsims/trig-tour/issues/106.
-      interruptSubtreeOnInvisible: false
-    } );
 
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );
-    this.trigPlotsNode.addChild( this.singularityRectangle );
 
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, Orientation.VERTICAL, {
       tailWidth: 4,
@@ -231,11 +215,20 @@ class GraphView extends Node {
       helpText: TrigTourStrings.a11y.graphLine.helpTextStringProperty
     } );
 
+    hitBound = 20;
     const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
     this.trigIndicatorArrowNode.mouseArea = interactionArea;
     this.trigIndicatorArrowNode.touchArea = interactionArea;
     this.redDotHandle = new Circle( 7, { stroke: LINE_COLOR, fill: 'red', cursor: 'pointer' } );
     this.trigIndicatorArrowNode.addChild( this.redDotHandle );
+
+    const highlightBounds = new Bounds2(
+      -hitBound,
+      -backgroundRectangle.height / 2 - EXPAND_COLLAPSE_BUTTON_SPACING - BACKGROUND_LINE_WIDTH,
+      hitBound,
+      backgroundRectangle.height / 2
+    );
+    this.trigIndicatorArrowNode.focusHighlight = Shape.bounds( highlightBounds );
 
     // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by
     // expandCollapseButton
@@ -313,7 +306,6 @@ class GraphView extends Node {
 
     // add a drag handler to the indicatorArrowNode
     this.trigIndicatorArrowNode.addInputListener( dragHandler );
-    this.singularityRectangle.addInputListener( dragHandler );
 
     // Register for synchronization with model
     // function that reduces the indicator arrow tail width around the tan function singularity
@@ -331,7 +323,6 @@ class GraphView extends Node {
       const xPos = fullAngle / ( 2 * Math.PI ) * wavelength;
       this.trigIndicatorArrowNode.x = xPos;
       this.singularityIndicator.x = xPos;
-      this.singularityRectangle.x = xPos;
       setIndicatorTailWidth();
       this.setTrigIndicatorArrowNode();
     } );
@@ -346,13 +337,11 @@ class GraphView extends Node {
         if ( graph === 'cos' || graph === 'sin' ) {
           this.trigIndicatorArrowNode.opacity = 1;
           this.singularityIndicator.visible = false;
-          this.singularityRectangle.visible = false;
         }
         else {
           // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
           this.trigIndicatorArrowNode.opacity = 0;
           this.singularityIndicator.visible = true;
-          this.singularityRectangle.visible = true;
         }
       }
       this.setTrigIndicatorArrowNode();
@@ -361,7 +350,6 @@ class GraphView extends Node {
     trigTourModel.singularityProperty.link( singularity => {
       if ( this.viewProperties.graphProperty.value === 'tan' ) {
         this.singularityIndicator.visible = singularity;
-        this.singularityRectangle.visible = singularity;
         // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
         if ( singularity ) {
           this.trigIndicatorArrowNode.opacity = 0;

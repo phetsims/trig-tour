@@ -6,11 +6,13 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Utils from '../../../dot/js/Utils.js';
+
 const TrigTourConstants = {
   KEYBOARD_DRAG_LISTENER_OPTIONS: {
     moveOnHoldInterval: 75,
-    dragDelta: Math.PI / 10,
-    shiftDragDelta: Math.PI / 20
+    dragDelta: Utils.toRadians( 5 ),
+    shiftDragDelta: Utils.toRadians( 0.5 )
   }
 };
 

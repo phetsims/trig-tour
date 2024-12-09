@@ -147,7 +147,7 @@ class GraphView extends Node {
       helpText: TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty
     } );
     let hitBound = 30;
-    let midX = this.expandCollapseButton.centerX;
+    const midX = this.expandCollapseButton.centerX;
     const midY = this.expandCollapseButton.centerY;
     this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
     this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
@@ -195,8 +195,6 @@ class GraphView extends Node {
       lineDash: [ 10, 5 ],
       cursor: 'pointer'
     } );
-
-
 
     this.singularityIndicator.visible = false;
     this.trigPlotsNode.addChild( this.singularityIndicator );

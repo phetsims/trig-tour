@@ -7,6 +7,8 @@
  * @author Jesse Greenberg
  */
 
+import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../../axon/js/Property.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
@@ -21,8 +23,8 @@ import TrigTourColors from '../TrigTourColors.js';
 import ViewProperties from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
-const xString = TrigTourStrings.x;
-const yString = TrigTourStrings.y;
+const xStringProperty = TrigTourStrings.xStringProperty;
+const yStringProperty = TrigTourStrings.yStringProperty;
 
 // non translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -54,11 +56,16 @@ class CoordinatesRow extends Node {
     // initialize fonts for this row
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     const largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
-    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
+    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 64 };
 
-    // string pattern for the axis readout
-    const xyEqualString = `(${xString},${yString})${equalString}`;
-    const coordinatesLabel = new Text( xyEqualString, fontBoldInfo );
+    // string pattern for the axis readout - this mathematical representation and the equals sign is not translatable.
+    const xyEqualsStringProperty = new PatternStringProperty( new Property( '({{x}},{{y}}){{equals}}' ), {
+      x: xStringProperty,
+      y: yStringProperty,
+      equals: equalString
+    } );
+    const coordinatesLabel = new Text( xyEqualsStringProperty, fontBoldInfo );
+    console.log( coordinatesLabel.width );
 
     // fraction values set below
     this.sinReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );

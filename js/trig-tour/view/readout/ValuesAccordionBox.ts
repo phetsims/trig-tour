@@ -12,8 +12,8 @@ import AccordionBox from '../../../../../sun/js/AccordionBox.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
-import ViewProperties from '../ViewProperties.js';
 import TrigTourColors from '../TrigTourColors.js';
+import ViewProperties from '../ViewProperties.js';
 import ReadoutNode from './ReadoutNode.js';
 
 //constants
@@ -24,15 +24,15 @@ const TITLE_X_SPACING = 10.5;
 const CONTENT_X_MARGIN = 20;
 const CLOSE_BUTTON_WIDTH = 16;
 
+// Found by inspection, maximum width for accordion box content for i18n layout purposes.
+const MAX_CONTENT_WIDTH = 220;
+
 //strings
-const valuesString = TrigTourStrings.values;
+const valuesStringProperty = TrigTourStrings.valuesStringProperty;
 
 class ValuesAccordionBox extends AccordionBox {
-  public constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
-
-    // for i18n, restrict the width of the panel content by the max panel with minus the spacing params
-    const maxContentWidth = maxPanelWidth - ( BUTTON_X_MARGIN + TITLE_X_SPACING + CONTENT_X_MARGIN );
-    const readoutNode = new ReadoutNode( model, viewProperties, maxContentWidth );
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties ) {
+    const readoutNode = new ReadoutNode( model, viewProperties, MAX_CONTENT_WIDTH );
 
     // dilation for the close button touch/click areas
     const buttonDilation = 30 - CLOSE_BUTTON_WIDTH / 2;
@@ -42,7 +42,7 @@ class ValuesAccordionBox extends AccordionBox {
       cornerRadius: 10,
       buttonXMargin: BUTTON_X_MARGIN, // horizontal space between button and left|right edge of box
       buttonYMargin: 12,
-      titleNode: new Text( valuesString, { font: DISPLAY_FONT, fontWeight: 'bold', maxWidth: maxContentWidth } ),
+      titleNode: new Text( valuesStringProperty, { font: DISPLAY_FONT, fontWeight: 'bold', maxWidth: MAX_CONTENT_WIDTH * 3 / 4 } ),
       titleXSpacing: TITLE_X_SPACING,
       titleAlignX: 'left',
       fill: PANEL_COLOR,

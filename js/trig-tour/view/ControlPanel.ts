@@ -23,6 +23,9 @@ const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 const RADIO_BUTTON_RADIUS = 10;
 const SPACING = 15;
 
+// By inspection, max width of contents for layout and i18n.
+const CONTENT_MAX_WIDTH = 300;
+
 //strings
 const cosString = TrigTourStrings.cos;
 const gridString = TrigTourStrings.grid;
@@ -42,12 +45,11 @@ class ControlPanel extends Panel {
    * Constructor for the control panel
    *
    * @param viewProperties
-   * @param maxPanelWidth - The maximum width of this panel, calculated in the screenView
    */
-  public constructor( viewProperties: ViewProperties, maxPanelWidth: number ) {
+  public constructor( viewProperties: ViewProperties ) {
 
     // create the text nodes, determining their max width from the panel width and the width of the buttons
-    const maxWidth = maxPanelWidth - 8 * RADIO_BUTTON_RADIUS;
+    const maxWidth = CONTENT_MAX_WIDTH - 8 * RADIO_BUTTON_RADIUS;
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
     const labelsText = new Text( labelsString, fontInfo );
     const gridText = new Text( gridString, fontInfo );

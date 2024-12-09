@@ -12,7 +12,7 @@
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, Rectangle, Node } from '../../../../scenery/js/imports.js';
+import { Image, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -70,17 +70,14 @@ class TrigTourScreenView extends ScreenView {
     graphView.x = this.layoutBounds.centerX;
     graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
 
-    // for i18n, calculate the maximum width for the readoutNode and the control panel.
-    const maxPanelWidth = this.layoutBounds.right - unitCircleView.right - 60;
-
     // small buffer between edges of the layout and panels on the screen view, for layout calculations
     const layoutBuffer = this.layoutBounds.width * 0.015;
 
-    const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties, maxPanelWidth );
+    const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties );
     readoutDisplay.left = layoutBuffer;
     readoutDisplay.top = unitCircleView.top;
 
-    const controlPanel = new ControlPanel( viewProperties, maxPanelWidth );
+    const controlPanel = new ControlPanel( viewProperties );
     controlPanel.right = this.layoutBounds.right - layoutBuffer;
     controlPanel.top = unitCircleView.top;
 

@@ -23,7 +23,7 @@ import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
 //strings
-const angleString = TrigTourStrings.angle;
+const angleStringProperty = TrigTourStrings.angleStringProperty;
 const radsString = TrigTourStrings.rads;
 const valueUnitPatternString = TrigTourStrings.valueUnitPattern;
 
@@ -58,15 +58,15 @@ class AngleReadoutRow extends Node {
     this.trigTourModel = trigTourModel;
 
     // initialize font styles
-    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold' };
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 100 };
+    const boldTextOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 55 };
 
     // full angle for the trigTourModel
     const fullAngleValue = Utils.toFixed( trigTourModel.fullAngleProperty.value, 1 );
 
     //  value is decimal number or exact fraction of radians (in special angle mode)
-    const angleLabelText = new Text( angleString, fontBoldInfo );
-    const angleLabelEqualsText = new Text( equalString, fontBoldInfo );
+    const angleLabelText = new Text( angleStringProperty, boldTextOptions );
+    const angleLabelEqualsText = new Text( equalString, boldTextOptions );
     this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
     this.fullAngleFractionNode = new FractionNode( '', '', { textOptions: fontInfo } );  // node representing fractional form of full angle
 
@@ -79,12 +79,14 @@ class AngleReadoutRow extends Node {
     // or (fullAngleFractionNode + angleReadoutFraction) visible in Special angles mode
     this.children = [ angleLabelText, angleLabelEqualsText, this.angleReadoutDecimal, this.fullAngleFractionNode, this.angleReadoutFraction ];
 
-    // row 2 layout
-    const spacing = 4;
-    angleLabelEqualsText.left = angleLabelText.right + spacing;
-    this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
-    this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
-    this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
+    // row 2 layout - needs to update whenever the label changes for dynamic layout
+    angleLabelText.boundsProperty.link( bounds => {
+      const spacing = 4;
+      angleLabelEqualsText.left = angleLabelText.right + spacing;
+      this.angleReadoutDecimal.left = angleLabelEqualsText.right + spacing;
+      this.fullAngleFractionNode.left = angleLabelEqualsText.right + spacing;
+      this.angleReadoutFraction.left = this.fullAngleFractionNode.right + spacing;
+    } );
 
     trigTourModel.fullAngleProperty.link( fullAngle => {    // fullAngle is in radians
       this.setAngleReadout();

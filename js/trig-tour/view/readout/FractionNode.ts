@@ -7,6 +7,8 @@
  * @author Michael Dubson (PhET developer) on 6/10/2015.
  */
 
+import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import { Shape } from '../../../../../kite/js/imports.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -26,10 +28,15 @@ type SelfOptions = {
 type ParentOptions = NodeOptions;
 export type FractionNodeOptions = SelfOptions & ParentOptions;
 
+type FractionValue = string | number | TReadOnlyProperty<string | number>;
+
 class FractionNode extends Node {
-  private _numerator: string | number;
-  private _denominator: string | number;
+  private _numerator: FractionValue;
+  private _denominator: FractionValue;
   private _radical: boolean;
+
+  // A callback that will update the layout of the fraction components.
+  private boundSetFraction = this.setFraction.bind( this );
 
   // options for Text
   private readonly textOptions: TextOptions;
@@ -43,24 +50,31 @@ class FractionNode extends Node {
    *    If numerator includes the string 'q' , then a square root symbol is placed on the numerator
    *    If the denominator is '' (empty string), then the numerator is displayed as an ordinary number (not a fraction).
    */
-  public constructor( numerator: string | number, denominator: string | number, providedOptions: FractionNodeOptions ) {
+  public constructor( numerator: FractionValue, denominator: FractionValue, providedOptions: FractionNodeOptions ) {
 
     const options = optionize<FractionNodeOptions, SelfOptions, ParentOptions>()( {
       radical: false,
       textOptions: {
         font: new PhetFont( 20 ),
         fill: TrigTourColors.TEXT_COLOR,
-        fontWeight: 'normal'
+        fontWeight: 'normal',
+
+        // Found by inspection, the maximum width of the text in the fraction node.
+        maxWidth: 12
       }
     }, providedOptions );
 
     // call the super constructor
     super( options );
 
+    this.textOptions = options.textOptions;
+
+    this.setValues( numerator, denominator, options.radical );
+
+    // Set in setValues, but defined here so TypeScript is happy.
     this._numerator = numerator;
     this._denominator = denominator;
-    this._radical = options.radical;
-    this.textOptions = options.textOptions;
+    this._radical = options.radical
 
     // create the fraction
     this.setFraction();
@@ -71,14 +85,14 @@ class FractionNode extends Node {
   /**
    * Getter for the numerator of this fractionNode.
    */
-  public get numerator(): string | number {
+  public get numerator(): FractionValue {
     return this._numerator;
   }
 
   /**
    * Getter for the denominator of this fractionNode.
    */
-  public getDenominator(): string | number {
+  public getDenominator(): FractionValue {
     return this._denominator;
   }
 
@@ -96,7 +110,18 @@ class FractionNode extends Node {
    * @param denominator
    * @param [radical] - optional parameter, does the numerator contain a radical?
    */
-  public setValues( numerator: string | number, denominator: string | number, radical?: boolean ): void {
+  public setValues( numerator: FractionValue, denominator: FractionValue, radical?: boolean ): void {
+
+    // Remove the bound setFraction callback from the previous numerator and denominator, if they
+    // were Properties.
+    if ( this._numerator instanceof ReadOnlyProperty ) {
+      assert && assert( this._numerator.hasListener( this.boundSetFraction ), 'numerator should have the layout listener' );
+      this._numerator.unlink( this.boundSetFraction );
+    }
+    if ( this._denominator instanceof ReadOnlyProperty ) {
+      assert && assert( this._denominator.hasListener( this.boundSetFraction ), 'denominator should have the layout listener' );
+      this._denominator.unlink( this.boundSetFraction );
+    }
 
     this._numerator = numerator;
     this._denominator = denominator;
@@ -106,6 +131,23 @@ class FractionNode extends Node {
     }
 
     this.setFraction();
+
+    // Add the bound layout callback to the new numerator and denominator, if they are Properties.
+    if ( this._numerator instanceof ReadOnlyProperty ) {
+      this._numerator.link( this.boundSetFraction );
+    }
+    if ( this._denominator instanceof ReadOnlyProperty ) {
+      this._denominator.link( this.boundSetFraction );
+    }
+  }
+
+  private static getStringValue( fractionValue: FractionValue ): string {
+    if ( fractionValue instanceof ReadOnlyProperty ) {
+      return fractionValue.value.toString();
+    }
+    else {
+      return fractionValue.toString();
+    }
   }
 
   /**
@@ -119,21 +161,21 @@ class FractionNode extends Node {
     const squareRootSignNeeded = this._radical;  // true if square root symbol is needed over the numerator
     let denominatorNeeded = true;             // true if only the numerator is displayed as a fractional number
 
-    // Check that arguments are strings
-    if ( typeof this._numerator !== 'string' ) { this._numerator = this._numerator.toString(); }
-    if ( typeof this._denominator !== 'string' ) { this._denominator = this._denominator.toString(); }
+    // Resolve to the string value of the numerator and denominator.
+    let numerator = FractionNode.getStringValue( this._numerator );
+    let denominator = FractionNode.getStringValue( this._denominator );
 
     // Process leading minus sign and determine overall sign.
-    if ( this._numerator.startsWith( '-' ) ) {
+    if ( numerator.startsWith( '-' ) ) {
 
       // remove minus sign, if found
-      this._numerator = this._numerator.slice( 1 );
+      numerator = numerator.slice( 1 );
       numeratorNegative = true;
     }
-    if ( this._denominator.startsWith( '-' ) ) {
+    if ( denominator.startsWith( '-' ) ) {
 
       // remove minus sign, if found
-      this._denominator = this._denominator.slice( 1 );
+      denominator = denominator.slice( 1 );
       denominatorNegative = true;
     }
 
@@ -141,8 +183,8 @@ class FractionNode extends Node {
     minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
     const textOptions = this.textOptions;
-    const numeratorText = new Text( this._numerator, textOptions );
-    const denominatorText = new Text( this._denominator, textOptions );
+    const numeratorText = new Text( numerator, textOptions );
+    const denominatorText = new Text( denominator, textOptions );
 
     // Draw minus sign to go in front of fraction, if needed.
     let length = 8;
@@ -186,7 +228,7 @@ class FractionNode extends Node {
     const sqRtPath = new Path( sqRtShape, { stroke: TrigTourColors.LINE_COLOR, lineWidth: 1, lineCap: 'round' } );
 
     // if no denominator argument is passed in, then display the numerator as a non-fraction number
-    if ( typeof this._denominator === 'undefined' || this._denominator === '' ) {
+    if ( typeof denominator === 'undefined' || denominator === '' ) {
 
       // make current children invisible so numerator is not obscured
       denominatorNeeded = false;

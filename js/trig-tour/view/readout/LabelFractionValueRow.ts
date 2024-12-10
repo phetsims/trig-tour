@@ -25,11 +25,11 @@ import TrigTourColors from '../TrigTourColors.js';
 import ViewProperties, { Graph } from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
 
-const cosString = TrigTourStrings.cos;
-const sinString = TrigTourStrings.sin;
-const tanString = TrigTourStrings.tan;
-const xString = TrigTourStrings.x;
-const yString = TrigTourStrings.y;
+const cosStringProperty = TrigTourStrings.cosStringProperty;
+const sinStringProperty = TrigTourStrings.sinStringProperty;
+const tanStringProperty = TrigTourStrings.tanStringProperty;
+const xStringProperty = TrigTourStrings.xStringProperty;
+const yStringProperty = TrigTourStrings.yStringProperty;
 
 // non translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -70,15 +70,15 @@ class LabelFractionValueRow extends Node {
     // get the values needed to represent the special angle as a fraction, dependent on trig function type
     switch( graphType ) {
       case 'sin': {
-        trigString = sinString;
-        numeratorString = yString;
+        trigString = sinStringProperty;
+        numeratorString = yStringProperty;
         denominatorString = '1';
         this.specialAngles = SpecialAngles.SPECIAL_SIN_FRACTIONS;
         break;
       }
       case 'cos': {
-        trigString = cosString;
-        numeratorString = xString;
+        trigString = cosStringProperty;
+        numeratorString = xStringProperty;
         denominatorString = '1';
         this.specialAngles = SpecialAngles.SPECIAL_COS_FRACTIONS;
         break;
@@ -86,9 +86,9 @@ class LabelFractionValueRow extends Node {
       default:
 
         // 'tan' case
-        trigString = tanString;
-        numeratorString = yString;
-        denominatorString = xString;
+        trigString = tanStringProperty;
+        numeratorString = yStringProperty;
+        denominatorString = xStringProperty;
         this.specialAngles = SpecialAngles.SPECIAL_TAN_FRACTIONS;
         break;
     }

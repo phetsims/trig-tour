@@ -9,6 +9,7 @@
  * @author Jesse Greenberg
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -33,7 +34,7 @@ class TrigFunctionLabelText extends HBox {
    * @param trigFunctionString - displayed label for the trig function
    * @param [providedOptions]
    */
-  public constructor( trigFunctionString: string, providedOptions?: TrigFunctionLabelTextOptions ) {
+  public constructor( trigFunctionString: string | TReadOnlyProperty<string>, providedOptions?: TrigFunctionLabelTextOptions ) {
 
     const options = optionize<TrigFunctionLabelTextOptions, SelfOptions, ParentOptions>()( {
       trigFunctionLabelFont: DISPLAY_FONT,
@@ -41,7 +42,10 @@ class TrigFunctionLabelText extends HBox {
     }, providedOptions );
 
     // build the text for the trig function label
-    const trigTitleText = new Text( trigFunctionString, { font: options.trigFunctionLabelFont } );
+    const trigTitleText = new Text( trigFunctionString, {
+      font: options.trigFunctionLabelFont,
+      maxWidth: 32 // by inspection, for i18n
+    } );
 
     // create the text for the mathematical symbol theta
     const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );

@@ -27,12 +27,12 @@ const SPACING = 15;
 const CONTENT_MAX_WIDTH = 300;
 
 //strings
-const cosString = TrigTourStrings.cos;
-const gridString = TrigTourStrings.grid;
-const labelsString = TrigTourStrings.labels;
-const sinString = TrigTourStrings.sin;
-const specialAnglesString = TrigTourStrings.specialAngles;
-const tanString = TrigTourStrings.tan;
+const cosStringProperty = TrigTourStrings.cosStringProperty;
+const gridStringProperty = TrigTourStrings.gridStringProperty;
+const labelsStringProperty = TrigTourStrings.labelsStringProperty;
+const sinStringProperty = TrigTourStrings.sinStringProperty;
+const specialAnglesStringProperty = TrigTourStrings.specialAnglesStringProperty;
+const tanStringProperty = TrigTourStrings.tanStringProperty;
 
 class ControlPanel extends Panel {
 
@@ -51,9 +51,9 @@ class ControlPanel extends Panel {
     // create the text nodes, determining their max width from the panel width and the width of the buttons
     const maxWidth = CONTENT_MAX_WIDTH - 8 * RADIO_BUTTON_RADIUS;
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
-    const labelsText = new Text( labelsString, fontInfo );
-    const gridText = new Text( gridString, fontInfo );
-    const specialAnglesText = new Text( specialAnglesString, fontInfo );
+    const labelsText = new Text( labelsStringProperty, fontInfo );
+    const gridText = new Text( gridStringProperty, fontInfo );
+    const specialAnglesText = new Text( specialAnglesStringProperty, fontInfo );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [
@@ -115,15 +115,15 @@ class ControlPanel extends Panel {
     let iconColor: TPaint;
 
     if ( graph === 'cos' ) {
-      labelString = cosString;
+      labelString = cosStringProperty;
       iconColor = TrigTourColors.COS_COLOR;
     }
     else if ( graph === 'sin' ) {
-      labelString = sinString;
+      labelString = sinStringProperty;
       iconColor = TrigTourColors.SIN_COLOR;
     }
     else {
-      labelString = tanString;
+      labelString = tanStringProperty;
       iconColor = TrigTourColors.TAN_COLOR;
     }
 

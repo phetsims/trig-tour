@@ -74,7 +74,7 @@ class FractionNode extends Node {
     // Set in setValues, but defined here so TypeScript is happy.
     this._numerator = numerator;
     this._denominator = denominator;
-    this._radical = options.radical
+    this._radical = options.radical;
 
     // create the fraction
     this.setFraction();

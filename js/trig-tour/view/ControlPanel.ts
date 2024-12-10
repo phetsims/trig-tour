@@ -23,9 +23,6 @@ const PANEL_COLOR = TrigTourColors.PANEL_COLOR;
 const RADIO_BUTTON_RADIUS = 10;
 const SPACING = 15;
 
-// By inspection, max width of contents for layout and i18n.
-const CONTENT_MAX_WIDTH = 300;
-
 //strings
 const cosStringProperty = TrigTourStrings.cosStringProperty;
 const gridStringProperty = TrigTourStrings.gridStringProperty;
@@ -49,17 +46,17 @@ class ControlPanel extends Panel {
   public constructor( viewProperties: ViewProperties ) {
 
     // create the text nodes, determining their max width from the panel width and the width of the buttons
-    const maxWidth = CONTENT_MAX_WIDTH - 8 * RADIO_BUTTON_RADIUS;
-    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxWidth };
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 132 };
     const labelsText = new Text( labelsStringProperty, fontInfo );
     const gridText = new Text( gridStringProperty, fontInfo );
     const specialAnglesText = new Text( specialAnglesStringProperty, fontInfo );
+    console.log( specialAnglesText.width );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [
-      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos', maxWidth ) },
-      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin', maxWidth ) },
-      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan', maxWidth ) }
+      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos' ) },
+      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin' ) },
+      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan' ) }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.graphProperty, radioButtonItems, {
@@ -108,8 +105,8 @@ class ControlPanel extends Panel {
     this.checkboxGroup = checkboxGroup;
   }
 
-  public static createGraphRadioButtonIcon( graph: Graph, maxTextWidth: number ): Node {
-    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: maxTextWidth };
+  public static createGraphRadioButtonIcon( graph: Graph ): Node {
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 75 };
 
     let labelString: string;
     let iconColor: TPaint;

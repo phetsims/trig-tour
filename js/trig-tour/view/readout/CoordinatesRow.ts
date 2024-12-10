@@ -65,7 +65,6 @@ class CoordinatesRow extends Node {
       equals: equalString
     } );
     const coordinatesLabel = new Text( xyEqualsStringProperty, fontBoldInfo );
-    console.log( coordinatesLabel.width );
 
     // fraction values set below
     this.sinReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );

@@ -50,7 +50,6 @@ class ControlPanel extends Panel {
     const labelsText = new Text( labelsStringProperty, fontInfo );
     const gridText = new Text( gridStringProperty, fontInfo );
     const specialAnglesText = new Text( specialAnglesStringProperty, fontInfo );
-    console.log( specialAnglesText.width );
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [

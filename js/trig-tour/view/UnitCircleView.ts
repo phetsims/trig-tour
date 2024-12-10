@@ -15,6 +15,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import { Circle, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
@@ -38,10 +39,10 @@ const COS_COLOR = TrigTourColors.COS_COLOR;
 const SIN_COLOR = TrigTourColors.SIN_COLOR;
 const VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
 const ARROW_HEAD_WIDTH = 8;
-const MAX_LABEL_WIDTH = ARROW_HEAD_WIDTH * 3;
+const MAX_LABEL_WIDTH = 18;
 
-const xString = TrigTourStrings.x;
-const yString = TrigTourStrings.y;
+const xStringProperty = TrigTourStrings.xStringProperty;
+const yStringProperty = TrigTourStrings.yStringProperty;
 
 class UnitCircleView extends Node {
 
@@ -102,13 +103,15 @@ class UnitCircleView extends Node {
     const xAxis = new ArrowNode( -1.2 * radius, 0, 1.2 * radius, 0, arrowOptions );
 
     // Draw and position x-, y-axis labels
-    let fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
-    const xAxisText = new Text( xString, fontInfo );
-    const yAxisText = new Text( yString, fontInfo );
+    const axisTextOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
+    const xAxisText = new Text( xStringProperty, axisTextOptions );
+    const yAxisText = new Text( yStringProperty, axisTextOptions );
     xAxisText.left = 1.2 * radius + 5;
     xAxisText.centerY = yAxis.centerY;
     yAxisText.right = -12;
     yAxisText.top = -1.2 * radius - 2;
+
+    console.log( xAxisText.width );
 
     // Draw Grid, simple square grid, visibility set by Control Panel;
     const gridShape = new Shape();
@@ -160,18 +163,18 @@ class UnitCircleView extends Node {
 
     // Draw x, y, and '1' labels on the xyR triangle
     const labelCanvas = new Node();
-    fontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
-    const oneText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    const xLabelText = new Text( xString, fontInfo );
-    const yLabelText = new Text( yString, fontInfo );
-    fontInfo = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
-    const thetaText = new Text( MathSymbols.THETA, fontInfo );
+    const plotLabelOptions = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
+    const oneText = new Text( TrigTourMathStrings.ONE_STRING, plotLabelOptions );
+    const xLabelText = new Text( xStringProperty, plotLabelOptions );
+    const yLabelText = new Text( yStringProperty, plotLabelOptions );
+    const thetaTextOptions = { font: DISPLAY_FONT_ITALIC, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
+    const thetaText = new Text( MathSymbols.THETA, thetaTextOptions );
     // +1, -1 labels on axes
-    fontInfo = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY, maxWidth: MAX_LABEL_WIDTH };
-    const oneXText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    const minusOneXText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
-    const oneYText = new Text( TrigTourMathStrings.ONE_STRING, fontInfo );
-    const minusOneYText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, fontInfo );
+    const unitLabelTextOptions = { font: DISPLAY_FONT_SMALL, fill: TEXT_COLOR_GRAY, maxWidth: MAX_LABEL_WIDTH };
+    const oneXText = new Text( TrigTourMathStrings.ONE_STRING, unitLabelTextOptions );
+    const minusOneXText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, unitLabelTextOptions );
+    const oneYText = new Text( TrigTourMathStrings.ONE_STRING, unitLabelTextOptions );
+    const minusOneYText = new Text( TrigTourMathStrings.MINUS_ONE_STRING, unitLabelTextOptions );
 
     // position +1/-1 labels on xy axes
     const xOffset = 5;
@@ -353,6 +356,9 @@ class UnitCircleView extends Node {
       positionLabels();
 
     } );
+
+    // For dynamic layout, whenever the language changes, reposition the moving labels.
+    Multilink.multilink( [ xLabelText.boundsProperty, yLabelText.boundsProperty ], positionLabels );
 
     viewProperties.graphProperty.link( graph => {
       horizontalIndicatorArrow.visible = ( graph === 'cos' || graph === 'tan' );

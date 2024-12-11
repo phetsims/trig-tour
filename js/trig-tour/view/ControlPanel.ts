@@ -108,23 +108,23 @@ class ControlPanel extends Panel {
   public static createGraphRadioButtonIcon( graph: Graph ): Node {
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 75 };
 
-    let labelString: TReadOnlyProperty<string>;
+    let labelStringProperty: TReadOnlyProperty<string>;
     let iconColor: TPaint;
 
     if ( graph === 'cos' ) {
-      labelString = cosStringProperty;
+      labelStringProperty = cosStringProperty;
       iconColor = TrigTourColors.COS_COLOR;
     }
     else if ( graph === 'sin' ) {
-      labelString = sinStringProperty;
+      labelStringProperty = sinStringProperty;
       iconColor = TrigTourColors.SIN_COLOR;
     }
     else {
-      labelString = tanStringProperty;
+      labelStringProperty = tanStringProperty;
       iconColor = TrigTourColors.TAN_COLOR;
     }
 
-    const labelText = new Text( labelString, fontInfo );
+    const labelText = new Text( labelStringProperty, fontInfo );
     const iconLine = new Line( 0, 0, 40, 0, { stroke: iconColor, lineWidth: 2 } );
 
     return new HBox( {

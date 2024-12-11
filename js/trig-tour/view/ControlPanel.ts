@@ -6,6 +6,7 @@
  * @author Michael Dubson (PhET developer) on 6/4/2015.
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, HSeparator, Line, Node, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
@@ -107,7 +108,7 @@ class ControlPanel extends Panel {
   public static createGraphRadioButtonIcon( graph: Graph ): Node {
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 75 };
 
-    let labelString: string;
+    let labelString: TReadOnlyProperty<string>;
     let iconColor: TPaint;
 
     if ( graph === 'cos' ) {

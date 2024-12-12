@@ -26,7 +26,7 @@ import FractionNode from './FractionNode.js';
 
 //strings
 const angleStringProperty = TrigTourStrings.angleStringProperty;
-const radsString = TrigTourStrings.radsStringProperty;
+const radsStringProperty = TrigTourStrings.radsStringProperty;
 const valueUnitPatternStringProperty = TrigTourStrings.valueUnitPatternStringProperty;
 
 // non-translatable string
@@ -182,11 +182,11 @@ class AngleReadoutRow extends Node {
    *
    * Remember to dispose the old Property before setting a new one!
    */
-  getAngleNumberInRadiansStringProperty(): TReadOnlyProperty<string> {
+  private getAngleNumberInRadiansStringProperty(): TReadOnlyProperty<string> {
     const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
     const patternStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
       value: radiansValue,
-      unit: radsString
+      unit: radsStringProperty
     }, {
       formatNames: [ 'value', 'unit' ]
     } );
@@ -200,7 +200,7 @@ class AngleReadoutRow extends Node {
    *
    * Remember to dispose the old Property before setting a new one!
    */
-  getAngleNumberInDegreesStringProperty(): TReadOnlyProperty<string> {
+  private getAngleNumberInDegreesStringProperty(): TReadOnlyProperty<string> {
     return new StringProperty( `${Utils.toFixed(
       this.trigTourModel.getFullAngleInDegrees(),
       this.decimalPrecision )

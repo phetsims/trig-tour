@@ -238,7 +238,7 @@ class AngleReadoutRow extends Node {
     }
 
     this.fullAngleFractionNode.setValues( fullTurnString, '', false );
-    this.angleReadoutFraction.left = this.fullAngleFractionNode.right;
+    this.angleReadoutFraction.left = this.fullAngleFractionNode.right + 4;
 
     // set the angle readout, making sure that the angle is defined in the special fractions object
     const specialAngleFractions = SpecialAngles.SPECIAL_ANGLE_FRACTIONS;
@@ -258,6 +258,7 @@ class AngleReadoutRow extends Node {
     }
 
     // Must handle smallAngle = 0 or pi as special cases
+    let useFractionNode = false;
     const roundedAngle = Utils.roundSymmetric( this.trigTourModel.getSmallAngleInDegrees() );
     if ( roundedAngle === 0 || roundedAngle === 180 ) {
       const halfTurnCount = this.trigTourModel.halfTurnCount;
@@ -288,9 +289,12 @@ class AngleReadoutRow extends Node {
         // The display needs to change if the angle is negative. For example, it should be
         // 2pi + pi (angle positive) OR
         // -2pi - pi (angle negative)
-        const additionalPiSign = angleNegative ? '-' : '+';
-        const minusSign = angleNegative ? '-' : '';
-        numberOfPiRadiansString = `${minusSign}${Math.abs( halfTurnCount ) - 1}${MathSymbols.PI} ${additionalPiSign} ${MathSymbols.PI}`;
+        const sign = angleNegative ? '-' : ''; // a minus sign is drawn as a custom line in the FractionNode, if this dash is added
+        numberOfPiRadiansString = `${sign}${Math.abs( halfTurnCount ) - 1}${MathSymbols.PI}`;
+
+        // The fraction Node will be used to show the additional pi sign.
+        useFractionNode = true;
+        this.angleReadoutFraction.setValues( `${sign}${MathSymbols.PI}`, '' );
       }
       else {
 
@@ -301,8 +305,14 @@ class AngleReadoutRow extends Node {
       this.fullAngleFractionNode.setValues( numberOfPiRadiansString, '' );
 
       // dummy angleReadoutFraction is set to ensure bounds remain constant and readoutDisplay does not jump around
-      this.angleReadoutFraction.setValues( 'A', 'B' );
-      this.angleReadoutFraction.visible = false;
+      if ( useFractionNode ) {
+        this.angleReadoutFraction.visible = true;
+        this.angleReadoutFraction.left = this.fullAngleFractionNode.right + 9.5;
+      }
+      else {
+        this.angleReadoutFraction.setValues( 'A', 'B' );
+        this.angleReadoutFraction.visible = false;
+      }
     }
   }
 }

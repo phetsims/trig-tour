@@ -14,6 +14,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
@@ -37,10 +38,10 @@ import TrigTourGraphAxesNode from './TrigTourGraphAxesNode.js';
 import ViewProperties, { Graph } from './ViewProperties.js';
 
 //strings
-const cosString = TrigTourStrings.cos;
-const sinString = TrigTourStrings.sin;
-const tanString = TrigTourStrings.tan;
-const vsString = TrigTourStrings.vs;
+const cosStringProperty = TrigTourStrings.cosStringProperty;
+const sinStringProperty = TrigTourStrings.sinStringProperty;
+const tanStringProperty = TrigTourStrings.tanStringProperty;
+const vsStringProperty = TrigTourStrings.vsStringProperty;
 
 //constants
 const BACKGROUND_COLOR = TrigTourColors.BACKGROUND_COLOR;
@@ -404,32 +405,35 @@ class GraphView extends Node {
   private setTitleBarText( trigString: Graph ): void {
 
     // determine the appropriate trig function string for the title.
-    let trigTitleString: string;
+    let trigTitleString: string | TReadOnlyProperty<string>;
     if ( trigString === 'cos' ) {
-      trigTitleString = cosString;
+      trigTitleString = cosStringProperty;
     }
     if ( trigString === 'sin' ) {
-      trigTitleString = sinString;
+      trigTitleString = sinStringProperty;
     }
     else if ( trigString === 'tan' ) {
-      trigTitleString = tanString;
+      trigTitleString = tanStringProperty;
     }
 
     const definedTrigTitleString = trigTitleString!;
     assert && assert( definedTrigTitleString, `trigTitleString is not defined for trigString: ${trigString}` );
 
     // create each text component
-    const variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT } );
-    const vsText = new Text( vsString, { font: DISPLAY_FONT } );
+    const variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT, maxWidth: 600 } );
+    const vsText = new Text( vsStringProperty, { font: DISPLAY_FONT, maxWidth: 50 } );
 
     // build up and format the title
-    const trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString );
+    const trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString, {
+
+      // Allow this label to grow further.
+      labelMaxWidth: 64
+    } );
 
     // everything formatted in an HBox
     const titleTextHBox = new HBox( {
       children: [ trigFunctionLabelText, vsText, variableThetaText ],
-      spacing: 6,
-      resize: false
+      spacing: 6
     } );
 
     // update the content of the title HBox, removing the title child, and inserting it back after update

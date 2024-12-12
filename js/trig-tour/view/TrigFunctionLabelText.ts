@@ -23,6 +23,9 @@ const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 type SelfOptions = {
   trigFunctionLabelFont?: PhetFont;
   thetaLabelFont?: PhetFont;
+
+  // Max width for the trig function label.
+  labelMaxWidth?: number;
 };
 type ParentOptions = HBoxOptions;
 
@@ -38,20 +41,21 @@ class TrigFunctionLabelText extends HBox {
 
     const options = optionize<TrigFunctionLabelTextOptions, SelfOptions, ParentOptions>()( {
       trigFunctionLabelFont: DISPLAY_FONT,
-      thetaLabelFont: DISPLAY_FONT_ITALIC
+      thetaLabelFont: DISPLAY_FONT_ITALIC,
+      labelMaxWidth: 32 // by inspection, for i18n
     }, providedOptions );
 
     // build the text for the trig function label
     const trigTitleText = new Text( trigFunctionString, {
       font: options.trigFunctionLabelFont,
-      maxWidth: 32 // by inspection, for i18n
+      maxWidth: options.labelMaxWidth
     } );
 
     // create the text for the mathematical symbol theta
     const trigThetaText = new Text( MathSymbols.THETA, { font: options.thetaLabelFont } );
 
     // build the text, placing both function and theta labels in an HBox
-    super( { children: [ trigTitleText, trigThetaText ], spacing: 0, resize: false } );
+    super( { children: [ trigTitleText, trigThetaText ], spacing: 0 } );
 
   }
 }

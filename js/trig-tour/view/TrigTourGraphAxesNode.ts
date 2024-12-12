@@ -9,8 +9,8 @@
  * @author Jesse Greenberg
  */
 
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -29,10 +29,10 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 const DISPLAY_FONT_ITALIC = new PhetFont( { size: 20, style: 'italic' } );
 const DISPLAY_FONT_SMALL_ITALIC = new PhetFont( { size: 18, family: 'Arial', style: 'italic' } );
 
-const cosString = TrigTourStrings.cos;
-const numberPiPatternString = TrigTourStrings.numberPiPattern;
-const sinString = TrigTourStrings.sin;
-const tanString = TrigTourStrings.tan;
+const cosStringProperty = TrigTourStrings.cosStringProperty;
+const numberPiPatternStringProperty = TrigTourStrings.numberPiPatternStringProperty;
+const sinStringProperty = TrigTourStrings.sinStringProperty;
+const tanStringProperty = TrigTourStrings.tanStringProperty;
 
 // Collection of fields that will be used to style label Text instances.
 type StyleInfo = {
@@ -101,11 +101,10 @@ class TrigTourGraphAxesNode extends Node {
 
     // draw tic mark labels in degrees
     const tickMarkLabelsInDegrees = new Node();
-    let label;
     for ( let j = -numberOfWavelengths; j <= numberOfWavelengths; j++ ) {
       let degrees = Utils.toFixed( 180 * j, 0 );
       degrees = degrees.toString();
-      label = new Text( `${degrees}\u00B0`, { font: DISPLAY_FONT_SMALL } );
+      const label = new Text( `${degrees}\u00B0`, { font: DISPLAY_FONT_SMALL } );
       label.centerX = j * wavelength / 2;
       label.top = xAxis.bottom;
       if ( j !== 0 ) {
@@ -115,25 +114,67 @@ class TrigTourGraphAxesNode extends Node {
 
     // tic mark labels in radians
     const tickMarkLabelsInRadians = new Node();
-    let labelString = '';
     const pi = MathSymbols.PI;
     const labelStrings = [
-      StringUtils.format( numberPiPatternString, '-4', pi ),
-      StringUtils.format( numberPiPatternString, '-3', pi ),
-      StringUtils.format( numberPiPatternString, '-2', pi ),
-      StringUtils.format( numberPiPatternString, '-', pi ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '-4',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '-3',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '-2',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '-',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
       pi,
-      StringUtils.format( numberPiPatternString, '2', pi ),
-      StringUtils.format( numberPiPatternString, '3', pi ),
-      StringUtils.format( numberPiPatternString, '4', pi )
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '2',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '3',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } ),
+      new PatternStringProperty( numberPiPatternStringProperty, {
+        value: '4',
+        pi: pi
+      }, {
+        formatNames: [ 'value', 'pi' ]
+      } )
     ];
     const xPositions = [ -4, -3, -2, -1, 1, 2, 3, 4 ];
     for ( let i = 0; i < xPositions.length; i++ ) {
-      labelString = labelStrings[ i ];
-      label = new Text( labelString, { font: DISPLAY_FONT_SMALL_ITALIC, fill: TEXT_COLOR } );
-      label.centerX = xPositions[ i ] * wavelength / 2;
-      label.top = xAxis.bottom;
+      const labelStringProperty = labelStrings[ i ];
+      const label = new Text( labelStringProperty, {
+        font: DISPLAY_FONT_SMALL_ITALIC,
+        fill: TEXT_COLOR,
+        maxWidth: 88
+      } );
       tickMarkLabelsInRadians.addChild( label );
+
+      label.boundsProperty.link( () => {
+        const centerPosition = xPositions[ i ] * wavelength / 2;
+        label.centerX = centerPosition;
+        label.top = xAxis.bottom;
+      } );
     }
 
     // visibility set by Labels control in Control Panel and by degs/rads RBs in Readout Panel
@@ -148,9 +189,9 @@ class TrigTourGraphAxesNode extends Node {
     thetaLabel.left = this.right + 5;
     thetaLabel.centerY = xAxis.centerY;
     const maxTrigLabelWidth = xAxis.width / 4;
-    const cosThetaLabel = new TrigFunctionLabelText( cosString, { maxWidth: maxTrigLabelWidth } );
-    const sinThetaLabel = new TrigFunctionLabelText( sinString, { maxWidth: maxTrigLabelWidth } );
-    const tanThetaLabel = new TrigFunctionLabelText( tanString, { maxWidth: maxTrigLabelWidth } );
+    const cosThetaLabel = new TrigFunctionLabelText( cosStringProperty, { maxWidth: maxTrigLabelWidth } );
+    const sinThetaLabel = new TrigFunctionLabelText( sinStringProperty, { maxWidth: maxTrigLabelWidth } );
+    const tanThetaLabel = new TrigFunctionLabelText( tanStringProperty, { maxWidth: maxTrigLabelWidth } );
     cosThetaLabel.right = sinThetaLabel.right = tanThetaLabel.right = yAxis.left - 10;
     cosThetaLabel.top = sinThetaLabel.top = tanThetaLabel.top = yAxis.top;
 

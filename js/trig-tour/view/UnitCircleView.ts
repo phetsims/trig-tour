@@ -111,8 +111,6 @@ class UnitCircleView extends Node {
     yAxisText.right = -12;
     yAxisText.top = -1.2 * radius - 2;
 
-    console.log( xAxisText.width );
-
     // Draw Grid, simple square grid, visibility set by Control Panel;
     const gridShape = new Shape();
     gridShape.moveTo( -radius, -radius );

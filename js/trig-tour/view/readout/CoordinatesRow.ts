@@ -56,15 +56,20 @@ class CoordinatesRow extends Node {
     // initialize fonts for this row
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     const largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
-    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 64 };
+    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 48 };
 
     // string pattern for the axis readout - this mathematical representation and the equals sign is not translatable.
-    const xyEqualsStringProperty = new PatternStringProperty( new Property( '({{x}},{{y}}){{equals}}' ), {
+    const xyStringProperty = new PatternStringProperty( new Property( '({{x}},{{y}})' ), {
       x: xStringProperty,
       y: yStringProperty,
       equals: equalString
     } );
-    const coordinatesLabel = new Text( xyEqualsStringProperty, fontBoldInfo );
+    const xyText = new Text( xyStringProperty, fontBoldInfo );
+    const equalsText = new Text( equalString, fontBoldInfo );
+    const coordinatesLabel = new HBox( {
+      children: [ xyText, equalsText ],
+      align: 'center'
+    } );
 
     // fraction values set below
     this.sinReadoutFraction = new FractionNode( '', '', { textOptions: fontInfo } );
@@ -97,6 +102,7 @@ class CoordinatesRow extends Node {
       const spacing = 4;
       this.coordinatesReadout.left = coordinatesLabel.right + spacing;
       this.coordinatesHBox.left = coordinatesLabel.right + spacing;
+      this.coordinatesReadout.centerY = coordinatesLabel.centerY;
       this.coordinatesHBox.centerY = coordinatesLabel.centerY;
     };
 
@@ -111,6 +117,9 @@ class CoordinatesRow extends Node {
       // update the layout accordingly
       setRowLayout();
     } );
+
+    // Whenever the string for coordinates changes, update the layout accordingly
+    coordinatesLabel.boundsProperty.link( setRowLayout );
 
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
       this.coordinatesHBox.visible = specialAnglesVisible;

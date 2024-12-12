@@ -8,8 +8,10 @@
  * @author Jesse Greenberg
  */
 
+import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
+import StringProperty from '../../../../../axon/js/StringProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../../dot/js/Utils.js';
-import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
@@ -24,8 +26,8 @@ import FractionNode from './FractionNode.js';
 
 //strings
 const angleStringProperty = TrigTourStrings.angleStringProperty;
-const radsString = TrigTourStrings.rads;
-const valueUnitPatternString = TrigTourStrings.valueUnitPattern;
+const radsString = TrigTourStrings.radsStringProperty;
+const valueUnitPatternStringProperty = TrigTourStrings.valueUnitPatternStringProperty;
 
 // non-translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -142,13 +144,11 @@ class AngleReadoutRow extends Node {
    */
   private setUnits( units: AngleUnits ): void {
     if ( units === 'radians' ) {
-      const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
-      const unitsString = StringUtils.format( valueUnitPatternString, radiansValue, radsString );
-      this.angleReadoutDecimal.string = unitsString;
+      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInRadiansStringProperty();
     }
     else {
       const roundedAngle = Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision );
-      this.angleReadoutDecimal.string = `${roundedAngle}\u00B0`;
+      this.angleReadoutDecimal.stringProperty = new StringProperty( `${roundedAngle}\u00B0` );
     }
   }
 
@@ -166,14 +166,45 @@ class AngleReadoutRow extends Node {
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value;
     if ( !radiansDisplayed ) {
-      this.angleReadoutDecimal.string = `${Utils.toFixed( this.trigTourModel.getFullAngleInDegrees(), this.decimalPrecision )}\u00B0`;
+      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInDegreesStringProperty();
     }
     if ( radiansDisplayed && !specialAnglesVisible ) {
-      this.angleReadoutDecimal.string = `${Utils.toFixed( this.trigTourModel.fullAngleProperty.value, 3 )} ${radsString}`;
+      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInRadiansStringProperty();
     }
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }
+  }
+
+  /**
+   * Returns a string Property (that will update with dynamic locales) for the angle readout as a numerical
+   * value in radians.
+   *
+   * Remember to dispose the old Property before setting a new one!
+   */
+  getAngleNumberInRadiansStringProperty(): TReadOnlyProperty<string> {
+    const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
+    const patternStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
+      value: radiansValue,
+      unit: radsString
+    }, {
+      formatNames: [ 'value', 'unit' ]
+    } );
+
+    return patternStringProperty;
+  }
+
+  /**
+   * Returns a string Property for the angle readout as a numerical value in degrees. Since values for this Text
+   * may need to change dynamically, all strings must use StringProperty (even though this one does not update).
+   *
+   * Remember to dispose the old Property before setting a new one!
+   */
+  getAngleNumberInDegreesStringProperty(): TReadOnlyProperty<string> {
+    return new StringProperty( `${Utils.toFixed(
+      this.trigTourModel.getFullAngleInDegrees(),
+      this.decimalPrecision )
+    }\u00B0` );
   }
 
   /**

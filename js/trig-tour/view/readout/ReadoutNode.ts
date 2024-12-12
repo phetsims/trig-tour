@@ -20,8 +20,8 @@ import CoordinatesRow from './CoordinatesRow.js';
 import LabelFractionValueRow from './LabelFractionValueRow.js';
 
 //strings
-const degreesString = TrigTourStrings.degrees;
-const radiansString = TrigTourStrings.radians;
+const degreesStringProperty = TrigTourStrings.degreesStringProperty;
+const radiansStringProperty = TrigTourStrings.radiansStringProperty;
 
 //constants
 const DISPLAY_FONT = new PhetFont( 20 );
@@ -56,11 +56,11 @@ class ReadoutNode extends Node {
     } );
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
-    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 150 };
 
     const radioButtonItems: AquaRadioButtonGroupItem<AngleUnits>[] = [
-      { value: 'degrees', createNode: () => new Text( degreesString, fontInfo ) },
-      { value: 'radians', createNode: () => new Text( radiansString, fontInfo ) }
+      { value: 'degrees', createNode: () => new Text( degreesStringProperty, fontInfo ) },
+      { value: 'radians', createNode: () => new Text( radiansStringProperty, fontInfo ) }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.angleUnitsProperty, radioButtonItems, {
@@ -68,7 +68,6 @@ class ReadoutNode extends Node {
         radius: 10
       },
       spacing: SPACING,
-      maxWidth: maxPanelWidth,
 
       // pdom
       accessibleName: TrigTourStrings.a11y.unitsRadioButtons.accessibleNameStringProperty,

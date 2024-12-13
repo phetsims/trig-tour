@@ -159,8 +159,9 @@ class UnitCircleView extends Node {
     // A custom focus highlight so it is easier to see, see https://github.com/phetsims/trig-tour/issues/101
     rotorPin.focusHighlight = Shape.circle( rotorPin.radius * 3 );
 
-    // Draw x, y, and '1' labels on the xyR triangle
-    const labelCanvas = new Node();
+    // Draw x, y, and '1', and theta labels on the xyR triangle
+    const labelCanvas = new Node(); // visibility set by Control Panel
+    const alwaysVisibleLabelCanvas = new Node(); // labels that must always be visible
     const plotLabelOptions = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR, maxWidth: MAX_LABEL_WIDTH };
     const oneText = new Text( TrigTourMathStrings.ONE_STRING, plotLabelOptions );
     const xLabelText = new Text( xStringProperty, plotLabelOptions );
@@ -186,7 +187,10 @@ class UnitCircleView extends Node {
     minusOneYText.top = grid.bottom;
     minusOneYText.right = -xOffset;
 
-    labelCanvas.children = [ oneText, xLabelText, yLabelText, thetaText, oneXText, minusOneXText, oneYText, minusOneYText ];
+    // Many labels can be hidden by the user, but others must always be visible for pedagogical reasons.
+    // See https://github.com/phetsims/trig-tour/issues/110.
+    labelCanvas.children = [ xLabelText, yLabelText, oneXText, minusOneXText, oneYText, minusOneYText ];
+    alwaysVisibleLabelCanvas.children = [ oneText, thetaText ];
 
     rotorPin.addInputListener( new SoundRichDragListener(
       {
@@ -326,7 +330,8 @@ class UnitCircleView extends Node {
       specialAnglesNode,
       rotorArm,
       rotorPin,
-      labelCanvas
+      labelCanvas,
+      alwaysVisibleLabelCanvas
     ];
 
     // Register for synchronization with model.

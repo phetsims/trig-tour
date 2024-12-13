@@ -9,7 +9,7 @@
     "value": "cos"
   },
   "degrees": {
-    "value": "degrees"
+    "value": "Degrees"
   },
   "grid": {
     "value": "Grid"
@@ -21,7 +21,7 @@
     "value": "rads"
   },
   "radians": {
-    "value": "radians"
+    "value": "Radians"
   },
   "sin": {
     "value": "sin"

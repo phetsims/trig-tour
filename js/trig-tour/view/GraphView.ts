@@ -13,6 +13,7 @@
  * @author Michael Dubson (PhET developer) on 6/3/2015.
  */
 
+import Multilink from '../../../../axon/js/Multilink.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -359,13 +360,13 @@ class GraphView extends Node {
       }
     } );
 
-    // Update visibility of the out-of-range indicators when the angle gets to large.
-    trigTourModel.fullAngleProperty.link( fullAngle => {
+    // Update visibility of the out-of-range indicators when the angle gets to large. Should only be shown when expanded.
+    Multilink.multilink( [ trigTourModel.fullAngleProperty, this.expandedProperty ], ( fullAngle, expanded ) => {
 
       // The number of wavelengths that are displayed on the graph
       const absoluteMaxAngle = numberOfWavelengths * Math.PI + Math.PI / 2;
-      leftIndicator.visible = fullAngle < -absoluteMaxAngle;
-      rightIndicator.visible = fullAngle > absoluteMaxAngle;
+      leftIndicator.visible = ( fullAngle < -absoluteMaxAngle ) && expanded;
+      rightIndicator.visible = ( fullAngle > absoluteMaxAngle ) && expanded;
     } );
   }
 

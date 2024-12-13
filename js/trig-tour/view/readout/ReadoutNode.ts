@@ -42,8 +42,8 @@ class ReadoutNode extends Node {
     super();
 
     // create the first two rows
-    const row1 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
-    const row2 = new AngleReadoutRow( model, viewProperties, { maxWidth: maxPanelWidth } );
+    const row1 = new AngleReadoutRow( model, viewProperties, { maxWidth: maxPanelWidth } );
+    const row2 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
 
     // Row 3: trig function label = trig fraction = trig value
     const sinLabelFractionValueRow = new LabelFractionValueRow( 'sin', model, viewProperties );

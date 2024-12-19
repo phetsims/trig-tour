@@ -347,19 +347,6 @@ class GraphView extends Node {
       this.setTrigIndicatorArrowNode();
     } );
 
-    // trigTourModel.singularityProperty.link( singularity => {
-    //   if ( this.viewProperties.graphProperty.value === 'tan' ) {
-    //
-    //     // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
-    //     if ( singularity ) {
-    //       this.trigIndicatorArrowNode.opacity = 0;
-    //     }
-    //     else {
-    //       this.trigIndicatorArrowNode.opacity = 1;
-    //     }
-    //   }
-    // } );
-
     // Update visibility of the out-of-range indicators when the angle gets to large. Should only be shown when expanded.
     Multilink.multilink( [ trigTourModel.fullAngleProperty, this.expandedProperty ], ( fullAngle, expanded ) => {
 

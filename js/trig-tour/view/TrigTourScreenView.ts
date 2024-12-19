@@ -116,7 +116,6 @@ class TrigTourScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
-    // TODO: Finalize the traversal order, see https://github.com/phetsims/trig-tour/issues/101
     // Play area focus order
     this.pdomPlayAreaNode.pdomOrder = [
       readoutDisplay,

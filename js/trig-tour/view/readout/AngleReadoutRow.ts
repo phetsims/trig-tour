@@ -289,12 +289,18 @@ class AngleReadoutRow extends Node {
         // The display needs to change if the angle is negative. For example, it should be
         // 2pi + pi (angle positive) OR
         // -2pi - pi (angle negative)
-        const sign = angleNegative ? '-' : ''; // a minus sign is drawn as a custom line in the FractionNode, if this dash is added
-        numberOfPiRadiansString = `${sign}${Math.abs( halfTurnCount ) - 1}${MathSymbols.PI}`;
+
+        // If negative, a minus sign is added - BUT NOTE: Its presence will make the FractionNode draw a custom line.
+        const fractionNodeMinusSign = angleNegative ? '-' : '';
+
+        // If positive, an addition plus sign is needed before the Pi sign from the FractionNode. (A minus sign is drawn
+        // by FractionNode if necessary).
+        const positivePlusSign = angleNegative ? '' : ' +'; // Spacing needed for conditional formatting.
+        numberOfPiRadiansString = `${fractionNodeMinusSign}${Math.abs( halfTurnCount ) - 1}${MathSymbols.PI}${positivePlusSign}`;
 
         // The fraction Node will be used to show the additional pi sign.
         useFractionNode = true;
-        this.angleReadoutFraction.setValues( `${sign}${MathSymbols.PI}`, '' );
+        this.angleReadoutFraction.setValues( `${fractionNodeMinusSign}${MathSymbols.PI}`, '' );
       }
       else {
 

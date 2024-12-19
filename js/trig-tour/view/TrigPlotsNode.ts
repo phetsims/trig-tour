@@ -170,6 +170,14 @@ class TrigPlotsNode extends Node {
       tanPath.visible = ( visibleGraph === 'tan' );
     } );
   }
+
+  /**
+   * Get the origin point in the global coorinate frame. Useful for
+   * layout.
+   */
+  public getGlobalOriginPoint(): Vector2 {
+    return this.localToGlobalPoint( Vector2.ZERO );
+  }
 }
 
 trigTour.register( 'TrigPlotsNode', TrigPlotsNode );

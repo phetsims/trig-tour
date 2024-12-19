@@ -3,8 +3,8 @@
 /**
  * View of Graph of sin, cos, or tan vs. theta, at bottom of stage, below unit circle
  *
- * The graph exists in a panel that can be minimized so that the graph is hidden on the display.  Since the
- * panel needs to shrink down to the size of the title when minimized, AccordionBox could not be used.
+ * The graph lives in an AccordionBox. Components that need to extend outside of the AccordionBox are added
+ * as siblings - otherwise the AccordionBox would grow too large.
  *
  * The GraphView is constructed with TrigPlotsNode and TrigTourGraphAxesNode.  The TrigTourGraphAxesNode contains
  * the axes and labels and the TrigTourPlotsNode handles drawing the plot shape and path rendering.  This file
@@ -14,18 +14,18 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
-import Property from '../../../../axon/js/Property.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import OffScaleIndicatorNode, { OffScaleIndicatorNodeOptions } from '../../../../scenery-phet/js/OffScaleIndicatorNode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Spacer, Text, TPaint } from '../../../../scenery/js/imports.js';
-import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
-import Panel from '../../../../sun/js/Panel.js';
+import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Text, TPaint } from '../../../../scenery/js/imports.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
@@ -52,22 +52,18 @@ const TAN_COLOR = TrigTourColors.TAN_COLOR;
 const LINE_COLOR = TrigTourColors.LINE_COLOR;
 const TEXT_COLOR_GRAY = TrigTourColors.TEXT_COLOR_GRAY;
 const VIEW_BACKGROUND_COLOR = TrigTourColors.VIEW_BACKGROUND_COLOR;
-const DISPLAY_FONT = new PhetFont( 20 );
-const ITALIC_DISPLAY_FONT = new PhetFont( { size: 20, style: 'italic' } );
-const BACKGROUND_STROKE = TEXT_COLOR_GRAY;
 const BACKGROUND_LINE_WIDTH = 2;
-const BACKGROUND_CORNER_RADIUS = 5;
 const EXPAND_COLLAPSE_BUTTON_SPACING = 7;
 
 const OFF_SCALE_INDICATOR_NODE_OPTIONS: OffScaleIndicatorNodeOptions = {
   offScaleStringProperty: TrigTourStrings.pointOffScaleStringProperty,
   panelOptions: {
-    stroke: BACKGROUND_STROKE,
-    lineWidth: BACKGROUND_LINE_WIDTH,
-    cornerRadius: BACKGROUND_CORNER_RADIUS
+    stroke: TrigTourColors.TEXT_COLOR_GRAY,
+    lineWidth: 2,
+    cornerRadius: 5
   },
   richTextOptions: {
-    font: DISPLAY_FONT,
+    font: TrigTourConstants.DISPLAY_FONT,
     maxWidth: 200
   }
 };
@@ -77,22 +73,20 @@ class GraphView extends Node {
   private readonly trigTourModel: TrigTourModel;
   private readonly viewProperties: ViewProperties;
 
-  // Supports hiding/showing the graph with an ExpandCollapseButton
-  public readonly expandedProperty: Property<boolean>;
-
   // amplitude of sinusoidal curve in view coordinates
   private readonly amplitude: number;
 
-  private graphTitle: Node;
-  private readonly titleDisplayHBox: Node;
-  private readonly titleDisplayPanel: Node;
-  private readonly expandCollapseButton: Node;
+  private graphTitleNode: Node;
+  private graphTitleContent: Node | null = null;
+
+  private readonly accordionBox: AccordionBox;
+  public readonly expandedProperty: TProperty<boolean>;
 
   // axes node for displaying axes on the graph - public for layout
   public readonly graphAxesNode: TrigTourGraphAxesNode;
 
   // node containing paths of the trig curves sin, cos, and tan
-  private readonly trigPlotsNode: Node;
+  private readonly trigPlotsNode: TrigPlotsNode;
   private readonly singularityIndicator: Node;
   private readonly redDotHandle: Node;
 
@@ -115,44 +109,14 @@ class GraphView extends Node {
 
     this.trigTourModel = trigTourModel;
     this.viewProperties = viewProperties;
-    this.expandedProperty = new Property( true );
 
     // Graph drawing code is determined empirically, numbers are chosen based on what 'looks good'.
     const marginWidth = 25; // distance between edge of Node and edge of nearest full wavelength
     const wavelength = ( width - 2 * marginWidth ) / 4; // wavelength of sinusoidal curve in view coordinates
     this.amplitude = 0.475 * height;
-    const numberOfWavelengths = 2 * 2; // number of full wavelengths displayed, must be even to keep graph symmetric
 
-    const buttonSpacer = new Spacer( 17, 0 );
-
-    this.graphTitle = new Text( '', { font: DISPLAY_FONT, maxWidth: width / 3 } );
-    this.titleDisplayHBox = new HBox( { children: [ buttonSpacer, this.graphTitle ], spacing: 5 } );
-
-    // when graph is collapsed/hidden, a title is displayed
-    this.titleDisplayPanel = new Panel( this.titleDisplayHBox, {
-      fill: 'white',
-      stroke: TEXT_COLOR_GRAY,
-      lineWidth: BACKGROUND_LINE_WIDTH,
-      xMargin: 12,
-      yMargin: 5,
-      cornerRadius: BACKGROUND_CORNER_RADIUS,
-      backgroundPickable: false,
-      align: 'left',
-      minWidth: 0
-    } );
-    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
-      sideLength: 15,
-      cursor: 'pointer',
-
-      // pdom
-      accessibleName: TrigTourStrings.a11y.graphViewAccordionBox.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty
-    } );
-    let hitBound = 30;
-    const midX = this.expandCollapseButton.centerX;
-    const midY = this.expandCollapseButton.centerY;
-    this.expandCollapseButton.mouseArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
-    this.expandCollapseButton.touchArea = new Bounds2( midX - hitBound, midY - hitBound, midX + hitBound, midY + hitBound );
+    // A container for the title Node, since the Text instances are recreated.
+    this.graphTitleNode = new Node();
 
     // draw white background
     const backgroundHeight = 1.2 * height;
@@ -163,12 +127,6 @@ class GraphView extends Node {
       stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
     } );
-
-    // align expandCollapseButton and titleDisplayButton
-    this.expandCollapseButton.left = backgroundRectangle.left + EXPAND_COLLAPSE_BUTTON_SPACING;
-    this.expandCollapseButton.top = backgroundRectangle.top + EXPAND_COLLAPSE_BUTTON_SPACING;
-    this.titleDisplayPanel.left = backgroundRectangle.left;
-    this.titleDisplayPanel.top = backgroundRectangle.top;
 
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
     const borderWidth = 400;
@@ -187,8 +145,8 @@ class GraphView extends Node {
       { fill: BACKGROUND_COLOR }
     );
 
-    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, numberOfWavelengths, this.amplitude, viewProperties );
-    this.trigPlotsNode = new TrigPlotsNode( wavelength, numberOfWavelengths, this.amplitude, viewProperties.graphProperty );
+    this.graphAxesNode = new TrigTourGraphAxesNode( width, wavelength, TrigTourConstants.GRAPH_NUMBER_OF_WAVELENGTHS, this.amplitude, viewProperties );
+    this.trigPlotsNode = new TrigPlotsNode( wavelength, TrigTourConstants.GRAPH_NUMBER_OF_WAVELENGTHS, this.amplitude, viewProperties.graphProperty );
 
     // SingularityIndicator is a dashed vertical line indicating singularity in tan function at angle = +/- 90 deg
     this.singularityIndicator = new Line( 0, -800, 0, 400, {
@@ -199,7 +157,6 @@ class GraphView extends Node {
     } );
 
     this.singularityIndicator.visible = false;
-    this.trigPlotsNode.addChild( this.singularityIndicator );
 
     this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, Orientation.VERTICAL, {
       tailWidth: 4,
@@ -215,7 +172,7 @@ class GraphView extends Node {
       helpText: TrigTourStrings.a11y.graphLine.helpTextStringProperty
     } );
 
-    hitBound = 20;
+    const hitBound = 20;
     const interactionArea = new Bounds2( -hitBound, -height / 2, hitBound, height / 2 );
     this.trigIndicatorArrowNode.mouseArea = interactionArea;
     this.trigIndicatorArrowNode.touchArea = interactionArea;
@@ -238,34 +195,44 @@ class GraphView extends Node {
     displayNode.children = [
       this.graphAxesNode.axisNode,
       this.trigPlotsNode,
-      this.graphAxesNode.labelsNode,
-      this.trigIndicatorArrowNode,
-      rightBorder,
-      leftBorder
+      this.graphAxesNode.labelsNode
     ];
+
+    // Initialize content for the title
+    this.setTitleBarText( viewProperties.graphProperty.value );
+
+    this.accordionBox = new AccordionBox( displayNode, combineOptions<AccordionBoxOptions>( {}, TrigTourConstants.ACCORDION_BOX_OPTIONS, {
+      titleNode: this.graphTitleNode,
+      showTitleWhenExpanded: false,
+      useContentWidthWhenCollapsed: false,
+
+      // Chosen by inspection, makes this accordionBox as wide as the "Values" accordion box when collapsed
+      minWidth: 233,
+
+      // So that the graph goes right to the stroke of the box
+      contentYMargin: 0
+    } ) );
+
+    this.expandedProperty = this.accordionBox.expandedProperty;
 
     // Indicators for when the angle value goes beyond the displayed graph
     const leftIndicator = new OffScaleIndicatorNode( 'left', OFF_SCALE_INDICATOR_NODE_OPTIONS );
     const rightIndicator = new OffScaleIndicatorNode( 'right', OFF_SCALE_INDICATOR_NODE_OPTIONS );
-
-    leftIndicator.leftBottom = backgroundRectangle.leftTop.minusXY( 0, 5 );
-    rightIndicator.rightBottom = backgroundRectangle.rightTop.minusXY( 0, 5 );
+    leftIndicator.leftBottom = this.accordionBox.leftTop.minusXY( 0, 5 );
+    rightIndicator.rightBottom = this.accordionBox.rightTop.minusXY( 0, 5 );
 
     this.children = [
-      backgroundRectangle,
-      this.titleDisplayPanel,
-      this.expandCollapseButton,
-      displayNode,
+      this.accordionBox,
+      this.trigIndicatorArrowNode,
+      this.singularityIndicator,
       leftIndicator,
-      rightIndicator
+      rightIndicator,
+      rightBorder,
+      leftBorder
     ];
 
-    // link visibility to the expandCollapseButton
-    this.expandedProperty.link( expanded => {
-      backgroundRectangle.visible = expanded;
-      displayNode.visible = expanded;
-      this.titleDisplayPanel.visible = !expanded;
-    } );
+    rightBorder.left = this.accordionBox.right;
+    leftBorder.right = this.accordionBox.left;
 
     const dragHandler = new SoundRichDragListener(
       {
@@ -285,8 +252,11 @@ class GraphView extends Node {
           else {
 
             // With mouse movement, calculate the full angle based on the x position of the indicator arrow
-            const position = this.trigIndicatorArrowNode.globalToParentPoint( event.pointer.point );   //returns Vector2
-            fullAngle = ( 2 * Math.PI * position.x / wavelength );   // in radians
+            const globalOriginPoint = this.trigPlotsNode.getGlobalOriginPoint();
+            const localOriginPoint = this.globalToLocalPoint( globalOriginPoint );
+            const localPointerPoint = this.globalToLocalPoint( event.pointer.point );
+            const position = localPointerPoint.x - localOriginPoint.x;
+            fullAngle = ( 2 * Math.PI * position / wavelength );   // in radians
           }
 
           trigTourModel.setNewFullAngle( fullAngle, viewProperties.specialAnglesVisibleProperty.value );
@@ -320,51 +290,81 @@ class GraphView extends Node {
     };
 
     trigTourModel.fullAngleProperty.link( fullAngle => {
+      const globalOriginPoint = this.trigPlotsNode.getGlobalOriginPoint();
+      const localOriginPoint = this.globalToLocalPoint( globalOriginPoint );
+
       const xPos = fullAngle / ( 2 * Math.PI ) * wavelength;
-      this.trigIndicatorArrowNode.x = xPos;
-      this.singularityIndicator.x = xPos;
+
+      this.singularityIndicator.x = localOriginPoint.x + xPos;
+      this.trigIndicatorArrowNode.x = localOriginPoint.x + xPos;
+      this.trigIndicatorArrowNode.y = localOriginPoint.y;
+
       setIndicatorTailWidth();
       this.setTrigIndicatorArrowNode();
     } );
 
+    Multilink.multilink(
+      [ viewProperties.graphProperty, trigTourModel.singularityProperty, this.expandedProperty ],
+      ( graph, singularity, expanded ) => {
+        if ( !expanded ) {
+
+          // If not expanded, everything is hidden
+          this.trigIndicatorArrowNode.visible = false;
+          this.singularityIndicator.visible = false;
+        }
+        else {
+
+          // If expanded, the trigIndicatorArrowNode is always visible (though opacity may be controlled by singularity state)
+          this.trigIndicatorArrowNode.visible = true;
+        }
+
+        if ( singularity ) {
+          if ( graph === 'cos' || graph === 'sin' ) {
+            this.trigIndicatorArrowNode.opacity = 1;
+            this.singularityIndicator.visible = false;
+          }
+          else {
+
+            // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
+            this.trigIndicatorArrowNode.opacity = 0;
+            this.singularityIndicator.visible = true;
+          }
+        }
+        else {
+          this.trigIndicatorArrowNode.opacity = 1;
+          this.singularityIndicator.visible = false;
+        }
+      } );
+
     viewProperties.graphProperty.link( graph => {
+
       // whenever the graph changes, make sure that the trigIndicatorArrowNode has a correctly sized tail width
       setIndicatorTailWidth();
 
       // set title bar in GraphView
       this.setTitleBarText( graph );
-      if ( trigTourModel.singularityProperty.value ) {
-        if ( graph === 'cos' || graph === 'sin' ) {
-          this.trigIndicatorArrowNode.opacity = 1;
-          this.singularityIndicator.visible = false;
-        }
-        else {
-          // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
-          this.trigIndicatorArrowNode.opacity = 0;
-          this.singularityIndicator.visible = true;
-        }
-      }
+
       this.setTrigIndicatorArrowNode();
     } );
 
-    trigTourModel.singularityProperty.link( singularity => {
-      if ( this.viewProperties.graphProperty.value === 'tan' ) {
-        this.singularityIndicator.visible = singularity;
-        // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
-        if ( singularity ) {
-          this.trigIndicatorArrowNode.opacity = 0;
-        }
-        else {
-          this.trigIndicatorArrowNode.opacity = 1;
-        }
-      }
-    } );
+    // trigTourModel.singularityProperty.link( singularity => {
+    //   if ( this.viewProperties.graphProperty.value === 'tan' ) {
+    //
+    //     // trigIndicatorArrowNode must always be draggable, so it must adjust visibility by setting opacity
+    //     if ( singularity ) {
+    //       this.trigIndicatorArrowNode.opacity = 0;
+    //     }
+    //     else {
+    //       this.trigIndicatorArrowNode.opacity = 1;
+    //     }
+    //   }
+    // } );
 
     // Update visibility of the out-of-range indicators when the angle gets to large. Should only be shown when expanded.
     Multilink.multilink( [ trigTourModel.fullAngleProperty, this.expandedProperty ], ( fullAngle, expanded ) => {
 
       // The number of wavelengths that are displayed on the graph
-      const absoluteMaxAngle = numberOfWavelengths * Math.PI + Math.PI / 2;
+      const absoluteMaxAngle = TrigTourConstants.GRAPH_NUMBER_OF_WAVELENGTHS * Math.PI + Math.PI / 2;
       leftIndicator.visible = ( fullAngle < -absoluteMaxAngle ) && expanded;
       rightIndicator.visible = ( fullAngle > absoluteMaxAngle ) && expanded;
     } );
@@ -421,8 +421,8 @@ class GraphView extends Node {
     assert && assert( definedTrigTitleString, `trigTitleString is not defined for trigString: ${trigString}` );
 
     // create each text component
-    const variableThetaText = new Text( MathSymbols.THETA, { font: ITALIC_DISPLAY_FONT, maxWidth: 600 } );
-    const vsText = new Text( vsStringProperty, { font: DISPLAY_FONT, maxWidth: 50 } );
+    const variableThetaText = new Text( MathSymbols.THETA, { font: TrigTourConstants.ITALIC_DISPLAY_FONT, maxWidth: 600 } );
+    const vsText = new Text( vsStringProperty, { font: TrigTourConstants.DISPLAY_FONT, maxWidth: 50 } );
 
     // build up and format the title
     const trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString, {
@@ -438,9 +438,19 @@ class GraphView extends Node {
     } );
 
     // update the content of the title HBox, removing the title child, and inserting it back after update
-    this.titleDisplayHBox.removeChildWithIndex( this.graphTitle, this.titleDisplayHBox.children.indexOf( this.graphTitle ) );
-    this.graphTitle = titleTextHBox;
-    this.titleDisplayHBox.insertChild( this.titleDisplayHBox.children.length, this.graphTitle );
+    if ( this.graphTitleContent ) {
+      this.graphTitleNode.removeChildWithIndex( this.graphTitleContent, this.graphTitleNode.children.indexOf( this.graphTitleContent ) );
+    }
+    this.graphTitleContent = titleTextHBox;
+    this.graphTitleNode.insertChild( this.graphTitleNode.children.length, this.graphTitleContent );
+  }
+
+  /**
+   * Gets an offset Vector so that we can position this Node relative to the
+   * AccordionBox that contains the graph.
+   */
+  public getPositionOffset(): Vector2 {
+    return this.accordionBox.leftTop.minus( this.leftTop );
   }
 }
 

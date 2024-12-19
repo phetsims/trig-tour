@@ -9,6 +9,7 @@
  * @author Michael Dubson (PhET)
  */
 
+import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -66,16 +67,19 @@ class TrigTourScreenView extends ScreenView {
     const unitCircleView = new UnitCircleView( trigTourModel, whiteSheet, xOffset, viewProperties, angleSoundGenerator );
     unitCircleView.center = whiteSheet.center;
 
-    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.92 * this.layoutBounds.width, viewProperties, angleSoundGenerator );
-    graphView.x = this.layoutBounds.centerX;
-    graphView.y = this.layoutBounds.bottom - graphView.graphAxesNode.bottom - 15;
-
     // small buffer between edges of the layout and panels on the screen view, for layout calculations
     const layoutBuffer = this.layoutBounds.width * 0.015;
 
     const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties );
     readoutDisplay.left = layoutBuffer;
     readoutDisplay.top = unitCircleView.top;
+
+    const graphView = new GraphView( trigTourModel, 0.25 * this.layoutBounds.height, 0.90 * this.layoutBounds.width, viewProperties, angleSoundGenerator );
+    const initialPosition = new Vector2( readoutDisplay.left, unitCircleView.bottom + 10 );
+
+    // Position the GraphView relative to its accordion box. It has siblings that surround
+    // the AccordionBox that change bounds.
+    graphView.leftTop = initialPosition.minus( graphView.getPositionOffset() );
 
     const controlPanel = new ControlPanel( viewProperties );
     controlPanel.right = this.layoutBounds.right - layoutBuffer;

@@ -166,7 +166,7 @@ class TrigTourGraphAxesNode extends Node {
       const label = new Text( labelStringProperty, {
         font: DISPLAY_FONT_SMALL_ITALIC,
         fill: TEXT_COLOR,
-        maxWidth: 88
+        maxWidth: 30
       } );
       tickMarkLabelsInRadians.addChild( label );
 

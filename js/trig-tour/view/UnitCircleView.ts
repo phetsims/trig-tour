@@ -289,8 +289,8 @@ class UnitCircleView extends Node {
 
       // position x-label
       let xPos = 0.5 * radius * Math.cos( totalAngle );
-      let yPos = 0.6 * xLabelText.height;
-      if ( smallAngle < 0 ) { yPos = -0.6 * xLabelText.height; }
+      let yPos = 15; // By inspection, puts the label in a spot that doesn't overlap with axes
+      if ( smallAngle < 0 ) { yPos = -15; }
       xLabelText.centerX = xPos;
       xLabelText.centerY = yPos;
 

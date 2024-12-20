@@ -7,10 +7,11 @@
  */
 
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, HSeparator, Line, Node, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
+import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -54,9 +55,9 @@ class ControlPanel extends Panel {
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [
-      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos' ) },
-      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin' ) },
-      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan' ) }
+      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.cosButton.accessibleNameStringProperty } },
+      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.sinButton.accessibleNameStringProperty } },
+      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.tanButton.accessibleNameStringProperty } }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.graphProperty, radioButtonItems, {
@@ -72,9 +73,15 @@ class ControlPanel extends Panel {
 
     // 3 checkboxes: Labels, Grid, Special Angles
     const checkboxOptions = { checkboxColorBackground: 'white' };
-    const labelsCheckbox = new Checkbox( viewProperties.labelsVisibleProperty, labelsText, checkboxOptions );
-    const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, checkboxOptions );
-    const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, checkboxOptions );
+    const labelsCheckbox = new Checkbox( viewProperties.labelsVisibleProperty, labelsText, combineOptions<CheckboxOptions>( {
+      helpText: TrigTourStrings.a11y.labelsCheckbox.helpTextStringProperty
+    }, checkboxOptions ) );
+    const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, combineOptions<CheckboxOptions>( {
+      helpText: TrigTourStrings.a11y.gridCheckbox.helpTextStringProperty
+    }, checkboxOptions ) );
+    const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, combineOptions<CheckboxOptions>( {
+      helpText: TrigTourStrings.a11y.specialAnglesCheckbox.helpTextStringProperty
+    }, checkboxOptions ) );
 
     const checkboxGroup = new VBox( {
       children: [ labelsCheckbox, gridCheckbox, specialAnglesCheckbox ],

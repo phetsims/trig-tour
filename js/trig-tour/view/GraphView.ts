@@ -168,8 +168,8 @@ class GraphView extends Node {
       // pdom - this is the Node that receives the input listener so it needs to be focusable
       tagName: 'div',
       focusable: true,
-      accessibleName: TrigTourStrings.a11y.graphLine.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.graphLine.helpTextStringProperty
+      accessibleName: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty
     } );
 
     const hitBound = 20;
@@ -212,6 +212,29 @@ class GraphView extends Node {
       // So that the graph goes right to the stroke of the box
       contentYMargin: 0
     } ) );
+
+    // The accessible Name of the accordion box changes based on the graph being displayed.
+    viewProperties.graphProperty.link( graph => {
+      let accessibleNameStringProperty: TReadOnlyProperty<string>;
+      if ( graph === 'cos' ) {
+        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.cosAccessibleNameStringProperty;
+      }
+      else if ( graph === 'sin' ) {
+        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.sinAccessibleNameStringProperty;
+      }
+      else if ( graph === 'tan' ) {
+        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.tanAccessibleNameStringProperty;
+      }
+
+      assert && assert( accessibleNameStringProperty!, `accessibleNameStringProperty is not defined for graph: ${graph}` );
+      this.accordionBox.accessibleName = accessibleNameStringProperty!;
+    } );
+
+    // The help text is only shown when the accordion box is collapsed.
+    // TODO: Is this how all AccordionBoxes should behave? See https://github.com/phetsims/trig-tour/issues/107
+    this.accordionBox.expandedProperty.link( expanded => {
+      this.accordionBox.helpText = expanded ? null : TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty;
+    } );
 
     this.expandedProperty = this.accordionBox.expandedProperty;
 

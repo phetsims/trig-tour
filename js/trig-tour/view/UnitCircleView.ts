@@ -149,8 +149,8 @@ class UnitCircleView extends Node {
       // pdom
       tagName: 'div',
       focusable: true,
-      accessibleName: TrigTourStrings.a11y.unitCirclePin.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.unitCirclePin.helpTextStringProperty
+      accessibleName: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
+      helpText: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty
     } );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );

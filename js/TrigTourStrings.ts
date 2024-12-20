@@ -52,32 +52,62 @@ type StringsType = {
   'pointOffScaleStringProperty': LocalizedStringProperty;
   'a11y': {
     'graphViewAccordionBox': {
-      'accessibleName': string;
-      'accessibleNameStringProperty': LocalizedStringProperty;
+      'tanAccessibleName': string;
+      'tanAccessibleNameStringProperty': LocalizedStringProperty;
+      'sinAccessibleName': string;
+      'sinAccessibleNameStringProperty': LocalizedStringProperty;
+      'cosAccessibleName': string;
+      'cosAccessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'valuesAccordionBox': {
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;
     };
     'unitsRadioButtons': {
       'accessibleName': string;
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'helpText': string;
-      'helpTextStringProperty': LocalizedStringProperty;
     };
     'graphRadioButtons': {
       'accessibleName': string;
       'accessibleNameStringProperty': LocalizedStringProperty;
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;
+      'cosButton': {
+        'accessibleName': string;
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'sinButton': {
+        'accessibleName': string;
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'tanButton': {
+        'accessibleName': string;
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      }
     };
-    'unitCirclePin': {
+    'unitCirclePoint': {
       'accessibleName': string;
       'accessibleNameStringProperty': LocalizedStringProperty;
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;
     };
-    'graphLine': {
+    'graphPoint': {
       'accessibleName': string;
       'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'specialAnglesCheckbox': {
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'labelsCheckbox': {
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
+    };
+    'gridCheckbox': {
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;
     };

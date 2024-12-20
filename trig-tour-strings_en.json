@@ -55,57 +55,95 @@
   },
   "a11y": {
     "graphViewAccordionBox": {
-      "accessibleName": {
-        "value": "{{GRAPH VIEW ACCORDION BOX NAME}}"
+      "tanAccessibleName": {
+        "value": "Tangent Theta versus Theta"
+      },
+      "sinAccessibleName": {
+        "value": "Sine Theta versus Theta"
+      },
+      "cosAccessibleName": {
+        "value": "Cosine Theta versus Theta"
       },
       "helpText": {
-        "value": "{{(Optional) HELP TEXT FOR GRAPH VIEW ACCORDION BOX}}"
+        "value": "Expand to explore graph of function versus angle."
+      }
+    },
+    "valuesAccordionBox": {
+      "helpText": {
+        "value": "Expand to show angle measure, coordinates, and trig value."
       }
     },
     "unitsRadioButtons": {
       "accessibleName": {
-        "value": "{{UNITS RADIO BUTTONS NAME}}"
-      },
-      "helpText": {
-        "value": "{{(Optional) HELP TEXT FOR UNITS RADIO BUTTONS}}"
+        "value": "Angle Units"
       }
     },
     "graphRadioButtons": {
       "accessibleName": {
-        "value": "{{GRAPH RADIO BUTTONS NAME}}"
+        "value": "Trig Functions"
       },
       "helpText": {
-        "value": "{{(Optional)HELP TEXT FOR GRAPH RADIO BUTTONS}}"
+        "value": "Compare values and graphs of different trig functions."
+      },
+      "cosButton": {
+        "accessibleName": {
+          "value": "Cosine"
+        }
+      },
+      "sinButton": {
+        "accessibleName": {
+          "value": "Sine"
+        }
+      },
+      "tanButton": {
+        "accessibleName": {
+          "value": "Tangent"
+        }
       }
     },
-    "unitCirclePin": {
+    "unitCirclePoint": {
       "accessibleName": {
-        "value": "{{UNIT CIRCLE PIN NAME}}"
+        "value": "Point on Circle"
       },
       "helpText": {
-        "value": "{{(Optional) HELP TEXT FOR UNIT CIRCLE PIN}}"
+        "value": "Move point on circle to change angle."
       }
     },
-    "graphLine": {
+    "graphPoint": {
       "accessibleName": {
-        "value": "{{GRAPH LINE NAME}}"
+        "value": "Point on Graph"
       },
       "helpText": {
-        "value": "{{(Optional) HELP TEXT FOR GRAPH LINE}}"
+        "value": "Move point on graph to change theta."
+      }
+    },
+    "specialAnglesCheckbox": {
+      "helpText": {
+        "value": "Explore with or without angles constrained to multiples of 30, 45, 60, and 90 degrees."
+      }
+    },
+    "labelsCheckbox": {
+      "helpText": {
+        "value": "Explore angles with or without help of visual labels on unit circle and graph."
+      }
+    },
+    "gridCheckbox": {
+      "helpText": {
+        "value": "Create angles with or without help of coordinate grid on unit circle."
       }
     },
     "screenSummary": {
       "playArea": {
-        "value": "{{THE PLAY AREA CONTAINS...}}"
+        "value": "In Play Area: An interactive circle with a radius of 1 is centered on a coordinate plane. A movable point on the circle defines an angle theta as the point is rotated counterclockwise or clockwise from the x-axis. A right triangle is formed by the radius, a vertical line from the point to the x-axis, and the x-axis. There are options to explore different trigonometric functions and simultaneously highlight sides of the triangle inside the circle. Below the circle, an accordion box can display a graph of the selected function versus theta. The graph has a corresponding movable point which can go off screen."
       },
       "controlArea": {
-        "value": "{{THE CONTROL AREA HAS...}}"
+        "value": "In Control Area: Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."
       },
       "stateDescription": {
         "value": "{{DYNAMIC STATE DESCRIPTION GOES HERE (IF IN SCOPE)...}}"
       },
       "interactionHint": {
-        "value": "{{INTERACTION HINT}}"
+        "value": "Move point on circle or graph to explore different angles."
       }
     }
   }

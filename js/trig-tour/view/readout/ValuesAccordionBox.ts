@@ -27,7 +27,7 @@ class ValuesAccordionBox extends AccordionBox {
     const readoutNode = new ReadoutNode( model, viewProperties, MAX_CONTENT_WIDTH );
 
     // dilation for the close button touch/click areas
-    super( readoutNode, combineOptions<AccordionBoxOptions>( {}, {
+    super( readoutNode, combineOptions<AccordionBoxOptions>( {}, TrigTourConstants.ACCORDION_BOX_OPTIONS, {
       titleNode: new Text( valuesStringProperty, {
         font: TrigTourConstants.DISPLAY_FONT,
         fontWeight: TrigTourConstants.ACCORDION_BOX_TITLE_WEIGHT,
@@ -35,7 +35,14 @@ class ValuesAccordionBox extends AccordionBox {
       } ),
       contentYMargin: 15,
       contentYSpacing: 8
-    }, TrigTourConstants.ACCORDION_BOX_OPTIONS ) );
+    }, {
+    } ) );
+
+    // Only show the helpText when the accordion box is collapsed.
+    // TODO: Is this how all AccordionBoxes should behave? See https://github.com/phetsims/trig-tour/issues/107
+    this.expandedProperty.link( expanded => {
+      this.helpText = expanded ? null : TrigTourStrings.a11y.valuesAccordionBox.helpTextStringProperty;
+    } );
   }
 }
 

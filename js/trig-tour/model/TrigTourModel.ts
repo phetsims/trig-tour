@@ -7,8 +7,10 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import trigTour from '../../trigTour.js';
@@ -18,6 +20,8 @@ import TrigTourQueryParameters from '../TrigTourQueryParameters.js';
 
 // constants
 const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
+
+export type Quadrant = 1 | 2 | 3 | 4;
 
 // must be ( integer+0.5) number of full rotations
 const MAX_ANGLE_LIMIT = TrigTourQueryParameters.maxRotations * Math.PI + MAX_SMALL_ANGLE_LIMIT;
@@ -34,6 +38,9 @@ class TrigTourModel {
   // True if user exceeds maximum allowed angle
   public readonly maxAngleExceededProperty: Property<boolean>;
 
+  // A value between 1 and 4, indicating the quadrant where the movable point on the circle is.
+  public readonly quadrantProperty: TReadOnlyProperty<Quadrant>;
+
   private smallAngle = 0; // fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
   public previousAngle = 0; // smallAngle in previous step, needed to compute total fullAngle from smallAngle
 
@@ -47,6 +54,17 @@ class TrigTourModel {
     this.fullAngleProperty = new NumberProperty( 0 );
     this.singularityProperty = new BooleanProperty( false );
     this.maxAngleExceededProperty = new BooleanProperty( false );
+
+    this.quadrantProperty = new DerivedProperty( [ this.fullAngleProperty ], ( fullAngle: number ) => {
+
+      // Normalizes angle to [0, 2π)
+      const fullAngleMod2Pi = ( fullAngle % ( 2 * Math.PI ) + 2 * Math.PI ) % ( 2 * Math.PI );
+
+      // Quadrant is 1, 2, 3, or 4 based on the angle
+      const quadrant = Math.floor( fullAngleMod2Pi / ( Math.PI / 2 ) ) + 1;
+
+      return quadrant as Quadrant;
+    } );
   }
 
   /**

@@ -116,8 +116,12 @@ type StringsType = {
       'playAreaStringProperty': LocalizedStringProperty;
       'controlArea': string;
       'controlAreaStringProperty': LocalizedStringProperty;
-      'stateDescription': string;
-      'stateDescriptionStringProperty': LocalizedStringProperty;
+      'quadrantInfoDetailsPattern': string;
+      'quadrantInfoDetailsPatternStringProperty': LocalizedStringProperty;
+      'clockwiseAngleDetails': string;
+      'clockwiseAngleDetailsStringProperty': LocalizedStringProperty;
+      'counterclockwiseAngleDetails': string;
+      'counterclockwiseAngleDetailsStringProperty': LocalizedStringProperty;
       'interactionHint': string;
       'interactionHintStringProperty': LocalizedStringProperty;
     }

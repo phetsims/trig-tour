@@ -139,8 +139,14 @@
       "controlArea": {
         "value": "In Control Area: Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."
       },
-      "stateDescription": {
-        "value": "{{DYNAMIC STATE DESCRIPTION GOES HERE (IF IN SCOPE)...}}"
+      "quadrantInfoDetailsPattern": {
+        "value": "Currently, the movable point on the circle is in quadrant {{n}} of the coordinate plane."
+      },
+      "clockwiseAngleDetails": {
+        "value": "An angle theta is formed by a clockwise rotation of the point."
+      },
+      "counterclockwiseAngleDetails": {
+        "value": "An angle theta is formed by a counterclockwise rotation of the point."
       },
       "interactionHint": {
         "value": "Move point on circle or graph to explore different angles."

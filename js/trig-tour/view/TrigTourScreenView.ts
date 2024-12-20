@@ -10,19 +10,18 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Image, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
 import trigTour from '../../trigTour.js';
-import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import AngleSoundGenerator from './AngleSoundGenerator.js';
 import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
 import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 import TrigTourColors from './TrigTourColors.js';
+import TrigTourScreenSummaryContent from './TrigTourScreenSummaryContent.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
 
@@ -37,13 +36,9 @@ class TrigTourScreenView extends ScreenView {
    * @param trigTourModel - main model for sim
    */
   public constructor( trigTourModel: TrigTourModel ) {
+
     super( {
-      screenSummaryContent: new ScreenSummaryContent( [
-        TrigTourStrings.a11y.screenSummary.playAreaStringProperty,
-        TrigTourStrings.a11y.screenSummary.controlAreaStringProperty,
-        TrigTourStrings.a11y.screenSummary.stateDescriptionStringProperty,
-        TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
-      ] )
+      screenSummaryContent: new TrigTourScreenSummaryContent( trigTourModel.quadrantProperty, trigTourModel.fullAngleProperty )
     } );
     const viewProperties = new ViewProperties();
 

@@ -21,6 +21,7 @@ import TrigTourQueryParameters from '../TrigTourQueryParameters.js';
 // constants
 const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
 
+// One of the quadrants in the unit circle.
 export type Quadrant = 1 | 2 | 3 | 4;
 
 // must be ( integer+0.5) number of full rotations

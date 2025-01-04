@@ -1,4 +1,4 @@
-// Copyright 2016-2024, University of Colorado Boulder
+// Copyright 2016-2025, University of Colorado Boulder
 
 /**
  * Creates the third row for the ReadoutNode of Trig Tour.  This row contains a label for the trig function,

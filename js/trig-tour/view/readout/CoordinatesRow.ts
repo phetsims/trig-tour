@@ -7,6 +7,7 @@
  * @author Jesse Greenberg
  */
 
+import Multilink from '../../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../../axon/js/Property.js';
 import Utils from '../../../../../dot/js/Utils.js';
@@ -107,10 +108,11 @@ class CoordinatesRow extends Node {
     };
 
     // Register for synchronization with model.
-    trigTourModel.fullAngleProperty.link( fullAngle => {
-      const sinText = Utils.toFixed( trigTourModel.sin(), 3 );
-      const cosText = Utils.toFixed( trigTourModel.cos(), 3 );
-      this.coordinatesReadout.string = `(${cosText}, ${sinText})`;
+    Multilink.multilink( [
+      trigTourModel.cosValueStringProperty,
+      trigTourModel.sinValueStringProperty
+    ], ( xString: string, yString: string ) => {
+      this.coordinatesReadout.string = `(${xString}, ${yString})`;
       this.setSpecialAngleTrigReadout( this.sinReadoutFraction, SPECIAL_SIN_FRACTIONS );
       this.setSpecialAngleTrigReadout( this.cosReadoutFraction, SPECIAL_COS_FRACTIONS );
 

@@ -134,19 +134,42 @@
     },
     "screenSummary": {
       "playArea": {
-        "value": "In Play Area: An interactive circle with a radius of 1 is centered on a coordinate plane. A movable point on the circle defines an angle theta as the point is rotated counterclockwise or clockwise from the x-axis. A right triangle is formed by the radius, a vertical line from the point to the x-axis, and the x-axis. There are options to explore different trigonometric functions and simultaneously highlight sides of the triangle inside the circle. Below the circle, an accordion box can display a graph of the selected function versus theta. The graph has a corresponding movable point which can go off screen."
+        "value": "An interactive circle with a radius of 1 is centered on a coordinate plane. A movable point on the circle defines an angle theta as the point is rotated counterclockwise or clockwise from the x-axis. A right triangle is formed by the radius, a vertical line from the point to the x-axis, and the x-axis. There are options to explore different trigonometric functions and simultaneously highlight sides of the triangle inside the circle. Below the circle, an accordion box can display a graph of the selected function versus theta. The graph has a corresponding movable point which can go off screen."
       },
       "controlArea": {
-        "value": "In Control Area: Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."
+        "value": "Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."
       },
-      "quadrantInfoDetailsPattern": {
-        "value": "Currently, the movable point on the circle is in quadrant {{n}} of the coordinate plane."
-      },
-      "clockwiseAngleDetails": {
-        "value": "An angle theta is formed by a clockwise rotation of the point."
-      },
-      "counterclockwiseAngleDetails": {
-        "value": "An angle theta is formed by a counterclockwise rotation of the point."
+      "details": {
+        "quadrantInfoPattern": {
+          "value": "Currently, the movable point on the circle is in quadrant {{n}} of the coordinate plane."
+        },
+        "clockwiseAngle": {
+          "value": "An angle theta is formed by a clockwise rotation of the point."
+        },
+        "counterClockwiseAngle": {
+          "value": "An angle theta is formed by a counterclockwise rotation of the point."
+        },
+        "forThisAngle": {
+          "value": "For this angle:"
+        },
+        "xValuePattern": {
+          "value": "x equals {{value}};"
+        },
+        "yValuePattern": {
+          "value": "y equals {{value}};"
+        },
+        "trigValuePattern": {
+          "value": "{{trigFunction}} equals {{value}}."
+        },
+        "sinFunction": {
+          "value": "Sine"
+        },
+        "cosFunction": {
+          "value": "Cosine"
+        },
+        "tanFunction": {
+          "value": "Tangent"
+        }
       },
       "interactionHint": {
         "value": "Move point on circle or graph to explore different angles."

@@ -42,6 +42,14 @@ class TrigTourModel {
   // A value between 1 and 4, indicating the quadrant where the movable point on the circle is.
   public readonly quadrantProperty: TReadOnlyProperty<Quadrant>;
 
+  // True if the values are expanded in the accordion box.
+  public readonly valuesExpandedProperty: Property<boolean>;
+
+  // String representations of sin, cos, and tan values.
+  public readonly sinValueStringProperty: TReadOnlyProperty<string>;
+  public readonly cosValueStringProperty: TReadOnlyProperty<string>;
+  public readonly tanValueStringProperty: TReadOnlyProperty<string>;
+
   private smallAngle = 0; // fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
   public previousAngle = 0; // smallAngle in previous step, needed to compute total fullAngle from smallAngle
 
@@ -55,6 +63,17 @@ class TrigTourModel {
     this.fullAngleProperty = new NumberProperty( 0 );
     this.singularityProperty = new BooleanProperty( false );
     this.maxAngleExceededProperty = new BooleanProperty( false );
+    this.valuesExpandedProperty = new BooleanProperty( true );
+
+    this.sinValueStringProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
+      return Utils.toFixed( this.sin(), 3 );
+    } );
+    this.cosValueStringProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
+      return Utils.toFixed( this.cos(), 3 );
+    } );
+    this.tanValueStringProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
+      return Utils.toFixed( this.tan(), 3 );
+    } );
 
     this.quadrantProperty = new DerivedProperty( [ this.fullAngleProperty ], ( fullAngle: number ) => {
 

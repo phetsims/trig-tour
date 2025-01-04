@@ -36,11 +36,11 @@ class TrigTourScreenView extends ScreenView {
    * @param trigTourModel - main model for sim
    */
   public constructor( trigTourModel: TrigTourModel ) {
+    const viewProperties = new ViewProperties();
 
     super( {
-      screenSummaryContent: new TrigTourScreenSummaryContent( trigTourModel.quadrantProperty, trigTourModel.fullAngleProperty )
+      screenSummaryContent: new TrigTourScreenSummaryContent( trigTourModel, viewProperties )
     } );
-    const viewProperties = new ViewProperties();
 
     // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of
     // unitCircle View. Want graphView under unitCircleView so tangent curve appears to be underneath unitCircle

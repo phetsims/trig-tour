@@ -34,7 +34,8 @@ class ValuesAccordionBox extends AccordionBox {
         maxWidth: MAX_CONTENT_WIDTH * 3 / 4
       } ),
       contentYMargin: 15,
-      contentYSpacing: 8
+      contentYSpacing: 8,
+      expandedProperty: model.valuesExpandedProperty
     }, {
     } ) );
 

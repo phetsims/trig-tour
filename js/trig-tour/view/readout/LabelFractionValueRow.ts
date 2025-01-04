@@ -165,6 +165,7 @@ class LabelFractionValueRow extends Node {
     if ( this.viewProperties.specialAnglesVisibleProperty.value ) {
       this.setSpecialAngleTrigReadout( trigValueFraction );
     }
+
     let trigValue;
     if ( this.graphType === 'sin' ) {
       trigValue = this.trigTourModel.sin();

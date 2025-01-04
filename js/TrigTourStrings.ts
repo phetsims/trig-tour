@@ -116,12 +116,28 @@ type StringsType = {
       'playAreaStringProperty': LocalizedStringProperty;
       'controlArea': string;
       'controlAreaStringProperty': LocalizedStringProperty;
-      'quadrantInfoDetailsPattern': string;
-      'quadrantInfoDetailsPatternStringProperty': LocalizedStringProperty;
-      'clockwiseAngleDetails': string;
-      'clockwiseAngleDetailsStringProperty': LocalizedStringProperty;
-      'counterclockwiseAngleDetails': string;
-      'counterclockwiseAngleDetailsStringProperty': LocalizedStringProperty;
+      'details': {
+        'quadrantInfoPattern': string;
+        'quadrantInfoPatternStringProperty': LocalizedStringProperty;
+        'clockwiseAngle': string;
+        'clockwiseAngleStringProperty': LocalizedStringProperty;
+        'counterClockwiseAngle': string;
+        'counterClockwiseAngleStringProperty': LocalizedStringProperty;
+        'forThisAngle': string;
+        'forThisAngleStringProperty': LocalizedStringProperty;
+        'xValuePattern': string;
+        'xValuePatternStringProperty': LocalizedStringProperty;
+        'yValuePattern': string;
+        'yValuePatternStringProperty': LocalizedStringProperty;
+        'trigValuePattern': string;
+        'trigValuePatternStringProperty': LocalizedStringProperty;
+        'sinFunction': string;
+        'sinFunctionStringProperty': LocalizedStringProperty;
+        'cosFunction': string;
+        'cosFunctionStringProperty': LocalizedStringProperty;
+        'tanFunction': string;
+        'tanFunctionStringProperty': LocalizedStringProperty;
+      };
       'interactionHint': string;
       'interactionHintStringProperty': LocalizedStringProperty;
     }

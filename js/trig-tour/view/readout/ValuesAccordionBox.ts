@@ -13,6 +13,7 @@ import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import TrigTourConstants from '../../TrigTourConstants.js';
+import TrigTourDescriber from '../TrigTourDescriber.js';
 import ViewProperties from '../ViewProperties.js';
 import ReadoutNode from './ReadoutNode.js';
 
@@ -23,8 +24,8 @@ const MAX_CONTENT_WIDTH = 220;
 const valuesStringProperty = TrigTourStrings.valuesStringProperty;
 
 class ValuesAccordionBox extends AccordionBox {
-  public constructor( model: TrigTourModel, viewProperties: ViewProperties ) {
-    const readoutNode = new ReadoutNode( model, viewProperties, MAX_CONTENT_WIDTH );
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties, describer: TrigTourDescriber ) {
+    const readoutNode = new ReadoutNode( model, viewProperties, MAX_CONTENT_WIDTH, describer );
 
     // dilation for the close button touch/click areas
     super( readoutNode, combineOptions<AccordionBoxOptions>( {}, TrigTourConstants.ACCORDION_BOX_OPTIONS, {

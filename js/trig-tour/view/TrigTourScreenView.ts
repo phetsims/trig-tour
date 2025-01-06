@@ -68,7 +68,7 @@ class TrigTourScreenView extends ScreenView {
     // small buffer between edges of the layout and panels on the screen view, for layout calculations
     const layoutBuffer = this.layoutBounds.width * 0.015;
 
-    const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties );
+    const readoutDisplay = new ValuesAccordionBox( trigTourModel, viewProperties, trigTourDescriber );
     readoutDisplay.left = layoutBuffer;
     readoutDisplay.top = unitCircleView.top;
 

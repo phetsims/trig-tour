@@ -14,6 +14,7 @@ import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import TrigTourColors from '../TrigTourColors.js';
+import TrigTourDescriber from '../TrigTourDescriber.js';
 import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 import AngleReadoutRow from './AngleReadoutRow.js';
 import CoordinatesRow from './CoordinatesRow.js';
@@ -37,8 +38,9 @@ class ReadoutNode extends Node {
    * @param model
    * @param viewProperties
    * @param maxPanelWidth - maximum width of content in the ReadoutNode panel in the screen view.
+   * @param describer - Describes values for accessibility.
    */
-  public constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number ) {
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties, maxPanelWidth: number, describer: TrigTourDescriber ) {
     super();
 
     // create the first two rows
@@ -85,7 +87,7 @@ class ReadoutNode extends Node {
       ],
 
       // pdom - a paragraph that describes all values
-      accessibleParagraph: 'Readout values for the angle, sine, cosine, and tangent functions....',
+      accessibleParagraph: describer.valuesDescriptionStringProperty,
 
       align: 'left',
       spacing: SPACING,

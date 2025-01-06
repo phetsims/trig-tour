@@ -9,14 +9,14 @@
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
+import TrigTourDescriber from './TrigTourDescriber.js';
 import ViewProperties from './ViewProperties.js';
 
 export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
-  public constructor( model: TrigTourModel, viewProperties: ViewProperties ) {
+  public constructor( model: TrigTourModel, viewProperties: ViewProperties, trigTourDescriber: TrigTourDescriber ) {
 
     // Describes the current quadrant of the point in the unit circle.
     const quadrantDetailsStringProperty = new PatternStringProperty(
@@ -44,48 +44,12 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
       interactionHintContent: TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
     } );
 
-    const xValuePatternStringProperty = new PatternStringProperty( TrigTourStrings.a11y.screenSummary.details.xValuePatternStringProperty, {
-      value: model.cosValueStringProperty
-    } );
-    const yValuePatternStringProperty = new PatternStringProperty( TrigTourStrings.a11y.screenSummary.details.yValuePatternStringProperty, {
-      value: model.sinValueStringProperty
-    } );
-
-    const trigFunctionStringProperty = new DerivedStringProperty( [
-      viewProperties.graphProperty,
-      model.sinValueStringProperty,
-      model.cosValueStringProperty,
-      model.tanValueStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.trigValuePatternStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.sinFunctionStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.cosFunctionStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.tanFunctionStringProperty
-    ], (
-      graph,
-      sinValueString,
-      cosValueString,
-      tanValueString,
-      patternString,
-      sinEqualsString,
-      cosEqualsString,
-      tanEqualsString
-    ) => {
-      const functionString = graph === 'sin' ? sinEqualsString : graph === 'cos' ? cosEqualsString : tanEqualsString;
-      const valueStringProperty = graph === 'sin' ? sinValueString : graph === 'cos' ? cosValueString : tanValueString;
-      return StringUtils.fillIn( patternString, {
-        trigFunction: functionString,
-        value: valueStringProperty
-      } );
-    } );
-
+    // When collapsed, the details summary does not include any of the inforamtion about values.
     model.valuesExpandedProperty.link( expanded => {
       const content = expanded ? [
         quadrantDetailsStringProperty,
         thetaDetailsStringProperty,
-        TrigTourStrings.a11y.screenSummary.details.forThisAngleStringProperty,
-        xValuePatternStringProperty,
-        yValuePatternStringProperty,
-        trigFunctionStringProperty
+        trigTourDescriber.valuesDescriptionStringProperty
       ] : [
         quadrantDetailsStringProperty,
         thetaDetailsStringProperty

@@ -73,15 +73,29 @@ class ReadoutNode extends Node {
       accessibleName: TrigTourStrings.a11y.unitsRadioButtons.accessibleNameStringProperty
     } );
 
-    // Layout rows of Readout Panel. Entire panel is content of ValuesAccordionBox
-    const contentVBox = new VBox( {
+    // Layout rows of Readout Panel.
+    const readouts = new VBox( {
       children: [
         new Spacer( 0, 5 ),
         row1,
         new Spacer( 0, 8 ),
         row2,
         new Spacer( 0, 8 ),
-        row3,
+        row3
+      ],
+
+      // pdom - a paragraph that describes all values
+      accessibleParagraph: 'Readout values for the angle, sine, cosine, and tangent functions....',
+
+      align: 'left',
+      spacing: SPACING,
+      resize: false
+    } );
+
+    // Entire panel is content of ValuesAccordionBox
+    const contentVBox = new VBox( {
+      children: [
+        readouts,
         new HSeparator(),
         radioButtonGroup
       ],

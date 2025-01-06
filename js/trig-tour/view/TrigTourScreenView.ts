@@ -21,6 +21,7 @@ import ControlPanel from './ControlPanel.js';
 import GraphView from './GraphView.js';
 import ValuesAccordionBox from './readout/ValuesAccordionBox.js';
 import TrigTourColors from './TrigTourColors.js';
+import TrigTourDescriber from './TrigTourDescriber.js';
 import TrigTourScreenSummaryContent from './TrigTourScreenSummaryContent.js';
 import UnitCircleView from './UnitCircleView.js';
 import ViewProperties from './ViewProperties.js';
@@ -38,8 +39,10 @@ class TrigTourScreenView extends ScreenView {
   public constructor( trigTourModel: TrigTourModel ) {
     const viewProperties = new ViewProperties();
 
+    const trigTourDescriber = new TrigTourDescriber( trigTourModel, viewProperties );
+
     super( {
-      screenSummaryContent: new TrigTourScreenSummaryContent( trigTourModel, viewProperties )
+      screenSummaryContent: new TrigTourScreenSummaryContent( trigTourModel, viewProperties, trigTourDescriber )
     } );
 
     // white sheet placed under unitCircleView to prevent background color bleeding through transparent cover of

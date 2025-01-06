@@ -149,14 +149,11 @@
         "counterClockwiseAngle": {
           "value": "An angle theta is formed by a counterclockwise rotation of the point."
         },
-        "forThisAngle": {
-          "value": "For this angle:"
-        },
         "xValuePattern": {
-          "value": "x equals {{value}};"
+          "value": "x equals {{value}}"
         },
         "yValuePattern": {
-          "value": "y equals {{value}};"
+          "value": "y equals {{value}}"
         },
         "trigValuePattern": {
           "value": "{{trigFunction}} equals {{value}}."
@@ -169,6 +166,9 @@
         },
         "tanFunction": {
           "value": "Tangent"
+        },
+        "valuesDescriptionPattern": {
+          "value": "The angle is {{angle}}. For this angle, x equals {{xValue}}; y equals {{yValue}}; {{trigFunction}} equals {{trigValue}}."
         }
       },
       "interactionHint": {

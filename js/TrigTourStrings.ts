@@ -123,8 +123,6 @@ type StringsType = {
         'clockwiseAngleStringProperty': LocalizedStringProperty;
         'counterClockwiseAngle': string;
         'counterClockwiseAngleStringProperty': LocalizedStringProperty;
-        'forThisAngle': string;
-        'forThisAngleStringProperty': LocalizedStringProperty;
         'xValuePattern': string;
         'xValuePatternStringProperty': LocalizedStringProperty;
         'yValuePattern': string;
@@ -137,6 +135,8 @@ type StringsType = {
         'cosFunctionStringProperty': LocalizedStringProperty;
         'tanFunction': string;
         'tanFunctionStringProperty': LocalizedStringProperty;
+        'valuesDescriptionPattern': string;
+        'valuesDescriptionPatternStringProperty': LocalizedStringProperty;
       };
       'interactionHint': string;
       'interactionHintStringProperty': LocalizedStringProperty;

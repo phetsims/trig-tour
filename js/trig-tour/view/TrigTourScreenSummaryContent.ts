@@ -53,13 +53,25 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
 
     const trigFunctionStringProperty = new DerivedStringProperty( [
       viewProperties.graphProperty,
+      model.sinValueStringProperty,
+      model.cosValueStringProperty,
+      model.tanValueStringProperty,
       TrigTourStrings.a11y.screenSummary.details.trigValuePatternStringProperty,
       TrigTourStrings.a11y.screenSummary.details.sinFunctionStringProperty,
       TrigTourStrings.a11y.screenSummary.details.cosFunctionStringProperty,
       TrigTourStrings.a11y.screenSummary.details.tanFunctionStringProperty
-    ], ( graph, patternString, sinString, cosString, tanString ) => {
-      const functionString = graph === 'sin' ? sinString : graph === 'cos' ? cosString : tanString;
-      const valueStringProperty = graph === 'sin' ? model.sinValueStringProperty : graph === 'cos' ? model.cosValueStringProperty : model.tanValueStringProperty;
+    ], (
+      graph,
+      sinValueString,
+      cosValueString,
+      tanValueString,
+      patternString,
+      sinEqualsString,
+      cosEqualsString,
+      tanEqualsString
+    ) => {
+      const functionString = graph === 'sin' ? sinEqualsString : graph === 'cos' ? cosEqualsString : tanEqualsString;
+      const valueStringProperty = graph === 'sin' ? sinValueString : graph === 'cos' ? cosValueString : tanValueString;
       return StringUtils.fillIn( patternString, {
         trigFunction: functionString,
         value: valueStringProperty

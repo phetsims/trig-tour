@@ -24,7 +24,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import OffScaleIndicatorNode, { OffScaleIndicatorNodeOptions } from '../../../../scenery-phet/js/OffScaleIndicatorNode.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Text, TPaint } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Text, TPaint, Voicing } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -32,7 +32,7 @@ import TrigTourModel from '../model/TrigTourModel.js';
 import TrigTourConstants from '../TrigTourConstants.js';
 import AngleSoundGenerator from './AngleSoundGenerator.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
-import TrigIndicatorArrowNode from './TrigIndicatorArrowNode.js';
+import TrigIndicatorArrowNode, { VoicingTrigIndicatorArrowNode } from './TrigIndicatorArrowNode.js';
 import TrigPlotsNode from './TrigPlotsNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourGraphAxesNode from './TrigTourGraphAxesNode.js';
@@ -158,7 +158,7 @@ class GraphView extends Node {
 
     this.singularityIndicator.visible = false;
 
-    this.trigIndicatorArrowNode = new TrigIndicatorArrowNode( this.amplitude, Orientation.VERTICAL, {
+    this.trigIndicatorArrowNode = new VoicingTrigIndicatorArrowNode( this.amplitude, Orientation.VERTICAL, {
       tailWidth: 4,
       lineWidth: 1,
       headWidth: 12,
@@ -169,7 +169,11 @@ class GraphView extends Node {
       tagName: 'div',
       focusable: true,
       accessibleName: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty
+      helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty,
+
+      // voicing - accessibleName and helpText are used for Voicing
+      accessibleNameBehavior: Voicing.BASIC_ACCESSIBLE_NAME_BEHAVIOR,
+      helpTextBehavior: Voicing.BASIC_HELP_TEXT_BEHAVIOR
     } );
 
     const hitBound = 20;

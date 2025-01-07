@@ -13,7 +13,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import { TPaint } from '../../../../scenery/js/imports.js';
+import { TPaint, Voicing } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 
 class TrigIndicatorArrowNode extends ArrowNode {
@@ -80,5 +80,15 @@ class TrigIndicatorArrowNode extends ArrowNode {
   }
 }
 
+/**
+ * A TrigIndicatorArrowNode that is composed with Voicing to support speech with the Voicing feature.
+ */
+class VoicingTrigIndicatorArrowNode extends Voicing( TrigIndicatorArrowNode ) {
+  public constructor( defaultLength: number, orientation: Orientation, providedOptions: ArrowNodeOptions ) {
+    super( defaultLength, orientation, providedOptions );
+  }
+}
+
 trigTour.register( 'TrigIndicatorArrowNode', TrigIndicatorArrowNode );
 export default TrigIndicatorArrowNode;
+export { VoicingTrigIndicatorArrowNode };

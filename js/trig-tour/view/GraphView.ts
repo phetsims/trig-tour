@@ -32,7 +32,7 @@ import TrigTourModel from '../model/TrigTourModel.js';
 import TrigTourConstants from '../TrigTourConstants.js';
 import AngleSoundGenerator from './AngleSoundGenerator.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
-import TrigIndicatorArrowNode, { VoicingTrigIndicatorArrowNode } from './TrigIndicatorArrowNode.js';
+import { VoicingTrigIndicatorArrowNode } from './TrigIndicatorArrowNode.js';
 import TrigPlotsNode from './TrigPlotsNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import TrigTourGraphAxesNode from './TrigTourGraphAxesNode.js';
@@ -92,7 +92,7 @@ class GraphView extends Node {
 
   // A vertical arrow on the trig curve showing current value of angle and trigFunction(angle),
   // and a red dot on top of the indicator line that echoes the red dot on unit circle.
-  private readonly trigIndicatorArrowNode: TrigIndicatorArrowNode;
+  private readonly trigIndicatorArrowNode: VoicingTrigIndicatorArrowNode;
 
   /**
    * Constructor for view of Graph, which displays sin, cos, or tan vs angle theta in either degrees or radians, and

@@ -13,7 +13,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, Voicing, VoicingCircle } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, Voicing, VoicingActivationResponseListener, VoicingCircle } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -157,6 +157,9 @@ class UnitCircleView extends Node {
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;
+
+    // Speak the name and hint response when the rotor pin is activated
+    rotorPin.addInputListener( new VoicingActivationResponseListener( rotorPin ) );
 
     // A custom focus highlight so it is easier to see, see https://github.com/phetsims/trig-tour/issues/101
     rotorPin.focusHighlight = Shape.circle( rotorPin.radius * 3 );

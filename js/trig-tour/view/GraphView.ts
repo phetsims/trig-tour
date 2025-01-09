@@ -90,6 +90,11 @@ class GraphView extends Node {
   private readonly singularityIndicator: Node;
   private readonly redDotHandle: Node;
 
+  // References for Text instances that need to be disposed to reconstruct the title.
+  private variableThetaText: Node | null = null;
+  private vsText: Node | null = null;
+  private trigFunctionLabelText: Node | null = null;
+
   // A vertical arrow on the trig curve showing current value of angle and trigFunction(angle),
   // and a red dot on top of the indicator line that echoes the red dot on unit circle.
   private readonly trigIndicatorArrowNode: VoicingTrigIndicatorArrowNode;
@@ -420,12 +425,34 @@ class GraphView extends Node {
   }
 
   /**
+   * Dispose of the text instances in the title bar. Call before reconstructing text to preventa memory leak.
+   */
+  private disposeText(): void {
+    if ( this.variableThetaText ) {
+      this.variableThetaText.dispose();
+    }
+    if ( this.vsText ) {
+      this.vsText.dispose();
+    }
+    if ( this.trigFunctionLabelText ) {
+      this.trigFunctionLabelText.dispose();
+    }
+
+    this.variableThetaText = null;
+    this.vsText = null;
+    this.trigFunctionLabelText = null;
+  }
+
+  /**
    * Set the title bar text.  Different strings in the title require different font styles. HTML text should be
    * avoided because it causes issues in performance.  So the text is built up here.
    *
    * @param trigString - the type of trig function to be displayed in the title
    */
   private setTitleBarText( trigString: Graph ): void {
+
+    // Make sure that old text instances are disposed to clear memory
+    this.disposeText();
 
     // determine the appropriate trig function string for the title.
     let trigTitleString: string | TReadOnlyProperty<string>;
@@ -443,11 +470,11 @@ class GraphView extends Node {
     assert && assert( definedTrigTitleString, `trigTitleString is not defined for trigString: ${trigString}` );
 
     // create each text component
-    const variableThetaText = new Text( MathSymbols.THETA, { font: TrigTourConstants.ITALIC_DISPLAY_FONT, maxWidth: 600 } );
-    const vsText = new Text( vsStringProperty, { font: TrigTourConstants.DISPLAY_FONT, maxWidth: 50 } );
+    this.variableThetaText = new Text( MathSymbols.THETA, { font: TrigTourConstants.ITALIC_DISPLAY_FONT, maxWidth: 600 } );
+    this.vsText = new Text( vsStringProperty, { font: TrigTourConstants.DISPLAY_FONT, maxWidth: 50 } );
 
     // build up and format the title
-    const trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString, {
+    this.trigFunctionLabelText = new TrigFunctionLabelText( definedTrigTitleString, {
 
       // Allow this label to grow further.
       labelMaxWidth: 64
@@ -455,7 +482,7 @@ class GraphView extends Node {
 
     // everything formatted in an HBox
     const titleTextHBox = new HBox( {
-      children: [ trigFunctionLabelText, vsText, variableThetaText ],
+      children: [ this.trigFunctionLabelText, this.vsText, this.variableThetaText ],
       spacing: 6
     } );
 

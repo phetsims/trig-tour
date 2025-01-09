@@ -33,6 +33,9 @@ export type TrigFunctionLabelTextOptions = SelfOptions & ParentOptions;
 
 class TrigFunctionLabelText extends HBox {
 
+  // A reference for the title text so that it can be disposed.
+  private readonly trigTitleText: Text;
+
   /**
    * @param trigFunctionString - displayed label for the trig function
    * @param [providedOptions]
@@ -57,6 +60,12 @@ class TrigFunctionLabelText extends HBox {
     // build the text, placing both function and theta labels in an HBox
     super( { children: [ trigTitleText, trigThetaText ], spacing: 0 } );
 
+    this.trigTitleText = trigTitleText;
+  }
+
+  public override dispose(): void {
+    this.trigTitleText.dispose();
+    super.dispose();
   }
 }
 

@@ -149,15 +149,6 @@
         "counterClockwiseAngle": {
           "value": "An angle theta is formed by a counterclockwise rotation of the point."
         },
-        "xValuePattern": {
-          "value": "x equals {{value}}"
-        },
-        "yValuePattern": {
-          "value": "y equals {{value}}"
-        },
-        "trigValuePattern": {
-          "value": "{{trigFunction}} equals {{value}}."
-        },
         "sinFunction": {
           "value": "Sine"
         },

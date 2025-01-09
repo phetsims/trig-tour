@@ -123,12 +123,6 @@ type StringsType = {
         'clockwiseAngleStringProperty': LocalizedStringProperty;
         'counterClockwiseAngle': string;
         'counterClockwiseAngleStringProperty': LocalizedStringProperty;
-        'xValuePattern': string;
-        'xValuePatternStringProperty': LocalizedStringProperty;
-        'yValuePattern': string;
-        'yValuePatternStringProperty': LocalizedStringProperty;
-        'trigValuePattern': string;
-        'trigValuePatternStringProperty': LocalizedStringProperty;
         'sinFunction': string;
         'sinFunctionStringProperty': LocalizedStringProperty;
         'cosFunction': string;

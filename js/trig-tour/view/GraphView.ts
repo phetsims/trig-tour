@@ -220,7 +220,8 @@ class GraphView extends Node {
       minWidth: 233,
 
       // So that the graph goes right to the stroke of the box
-      contentYMargin: 0
+      contentYMargin: 0,
+      contentXMargin: 0
     } ) );
 
     // The accessible Name of the accordion box changes based on the graph being displayed.

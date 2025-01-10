@@ -134,8 +134,8 @@ class GraphView extends Node {
     } );
 
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
-    const borderWidth = 400;
-    const borderHeight = 1000;
+    const borderWidth = 800;
+    const borderHeight = 1200;
     const rightBorder = new Rectangle(
       -backgroundWidth / 2 - borderWidth - 1,
       -0.8 * borderHeight, borderWidth,
@@ -271,8 +271,8 @@ class GraphView extends Node {
       leftBorder
     ];
 
-    rightBorder.left = this.accordionBox.right;
-    leftBorder.right = this.accordionBox.left;
+    rightBorder.leftCenter = this.accordionBox.rightCenter;
+    leftBorder.rightCenter = this.accordionBox.leftCenter;
 
     const dragHandler = new SoundRichDragListener(
       {

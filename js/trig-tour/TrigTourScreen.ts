@@ -11,6 +11,7 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import trigTour from '../trigTour.js';
 import TrigTourModel from './model/TrigTourModel.js';
 import TrigTourColors from './view/TrigTourColors.js';
+import TrigTourKeyboardHelpContent from './view/TrigTourKeyboardHelpContent.js';
 import TrigTourScreenView from './view/TrigTourScreenView.js';
 
 class TrigTourScreen extends Screen<TrigTourModel, TrigTourScreenView> {
@@ -20,6 +21,7 @@ class TrigTourScreen extends Screen<TrigTourModel, TrigTourScreenView> {
       ( model: TrigTourModel ) => new TrigTourScreenView( model ),
       {
         backgroundColorProperty: new Property( TrigTourColors.BACKGROUND_COLOR ),
+        createKeyboardHelpNode: () => new TrigTourKeyboardHelpContent(),
         tandem: Tandem.OPT_OUT
       }
     );

@@ -128,8 +128,6 @@ class GraphView extends Node {
     const backgroundWidth = 1.05 * width;
     const arcRadius = 10;
     const backgroundRectangle = new Rectangle( -backgroundWidth / 2, -( backgroundHeight / 2 ) - 5, backgroundWidth, backgroundHeight, arcRadius, arcRadius, {
-      fill: VIEW_BACKGROUND_COLOR,
-      stroke: TEXT_COLOR_GRAY,
       lineWidth: 2
     } );
 
@@ -214,6 +212,10 @@ class GraphView extends Node {
       titleNode: this.graphTitleNode,
       showTitleWhenExpanded: false,
       useContentWidthWhenCollapsed: false,
+
+      fill: 'white',
+      lineWidth: 2,
+      stroke: TEXT_COLOR_GRAY,
 
       // Chosen by inspection, makes this accordionBox as wide as the "Values" accordion box when collapsed
       minWidth: 233,

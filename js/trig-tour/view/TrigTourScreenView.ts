@@ -78,6 +78,7 @@ class TrigTourScreenView extends ScreenView {
     // Position the GraphView relative to its accordion box. It has siblings that surround
     // the AccordionBox that change bounds.
     graphView.leftTop = initialPosition.minus( graphView.getPositionOffset() );
+    graphView.centerX = unitCircleView.centerX;
 
     const controlPanel = new ControlPanel( viewProperties );
     controlPanel.right = this.layoutBounds.right - layoutBuffer;

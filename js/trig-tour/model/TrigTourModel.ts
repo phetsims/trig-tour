@@ -91,9 +91,14 @@ class TrigTourModel {
    * Resets the properties of the model
    */
   public reset(): void {
-    this.fullAngleProperty.reset();
     this.singularityProperty.reset();
     this.maxAngleExceededProperty.reset();
+
+    // Reset through the function because this will also update other dependent fields.
+    this.setFullAngleInRadians( 0 );
+
+    // So that computations for the small angle are correct after the reset.
+    this.previousAngle = 0;
   }
 
   /**

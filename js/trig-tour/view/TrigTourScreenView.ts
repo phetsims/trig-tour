@@ -106,7 +106,7 @@ class TrigTourScreenView extends ScreenView {
         viewProperties.reset();
         graphView.expandedProperty.value = true;
         readoutDisplay.expandedProperty.value = true;
-        trigTourModel.setFullAngleInRadians( 0 );
+        trigTourModel.reset();
         this.dizzyPhetGirlImage.visible = false;
       },
       right: controlPanel.right,

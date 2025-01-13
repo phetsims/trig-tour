@@ -358,23 +358,23 @@ class GraphView extends Node {
 
           // If expanded, the trigIndicatorArrowNode is always visible (though opacity may be controlled by singularity state)
           this.trigIndicatorArrowNode.visible = true;
-        }
 
-        if ( singularity ) {
-          if ( graph === 'cos' || graph === 'sin' ) {
+          if ( singularity ) {
+            if ( graph === 'cos' || graph === 'sin' ) {
+              this.trigIndicatorArrowNode.opacity = 1;
+              this.singularityIndicator.visible = false;
+            }
+            else {
+
+              // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
+              this.trigIndicatorArrowNode.opacity = 0;
+              this.singularityIndicator.visible = true;
+            }
+          }
+          else {
             this.trigIndicatorArrowNode.opacity = 1;
             this.singularityIndicator.visible = false;
           }
-          else {
-
-            // always want indicatorLine grabbable, so do NOT want indicatorLine.visible = false
-            this.trigIndicatorArrowNode.opacity = 0;
-            this.singularityIndicator.visible = true;
-          }
-        }
-        else {
-          this.trigIndicatorArrowNode.opacity = 1;
-          this.singularityIndicator.visible = false;
         }
       } );
 

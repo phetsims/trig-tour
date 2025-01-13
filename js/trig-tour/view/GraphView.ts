@@ -331,18 +331,20 @@ class GraphView extends Node {
       }
     };
 
-    trigTourModel.fullAngleProperty.link( fullAngle => {
-      const globalOriginPoint = this.trigPlotsNode.getGlobalOriginPoint();
-      const localOriginPoint = this.globalToLocalPoint( globalOriginPoint );
+    Multilink.multilink( [ trigTourModel.fullAngleProperty, this.expandedProperty ], ( fullAngle, expanded ) => {
+      if ( expanded ) {
+        const globalOriginPoint = this.trigPlotsNode.getGlobalOriginPoint();
+        const localOriginPoint = this.globalToLocalPoint( globalOriginPoint );
 
-      const xPos = fullAngle / ( 2 * Math.PI ) * wavelength;
+        const xPos = fullAngle / ( 2 * Math.PI ) * wavelength;
 
-      this.singularityIndicator.x = localOriginPoint.x + xPos;
-      this.trigIndicatorArrowNode.x = localOriginPoint.x + xPos;
-      this.trigIndicatorArrowNode.y = localOriginPoint.y;
+        this.singularityIndicator.x = localOriginPoint.x + xPos;
+        this.trigIndicatorArrowNode.x = localOriginPoint.x + xPos;
+        this.trigIndicatorArrowNode.y = localOriginPoint.y;
 
-      setIndicatorTailWidth();
-      this.setTrigIndicatorArrowNode();
+        setIndicatorTailWidth();
+        this.setTrigIndicatorArrowNode();
+      }
     } );
 
     Multilink.multilink(

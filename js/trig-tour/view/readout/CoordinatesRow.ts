@@ -57,7 +57,7 @@ class CoordinatesRow extends Node {
     // initialize fonts for this row
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     const largeFontInfo = { font: DISPLAY_FONT_LARGE, fill: TEXT_COLOR };
-    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 48 };
+    const fontBoldInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 42 };
 
     // string pattern for the axis readout - this mathematical representation and the equals sign is not translatable.
     const xyStringProperty = new PatternStringProperty( new Property( '({{x}},{{y}})' ), {

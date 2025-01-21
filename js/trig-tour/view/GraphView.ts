@@ -273,6 +273,10 @@ class GraphView extends Node {
       leftBorder
     ];
 
+    // The trigIndicatorArrow needs to be inside of the AccordionBox or the screen reader
+    // content is read as "empty".
+    displayNode.pdomOrder = [ this.trigIndicatorArrowNode ];
+
     rightBorder.leftCenter = this.accordionBox.rightCenter;
     leftBorder.rightCenter = this.accordionBox.leftCenter;
 

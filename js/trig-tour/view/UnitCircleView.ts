@@ -6,16 +6,18 @@
  * @author Michael Dubson (PhET developer) on 6/2/2015.
  */
 
+import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, Voicing, VoicingActivationResponseListener, VoicingCircle } from '../../../../scenery/js/imports.js';
+import { Circle, CircleOptions, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, Voicing, VoicingActivationResponseListener, VoicingCircle } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
@@ -141,7 +143,7 @@ class UnitCircleView extends Node {
 
     // Draw rotor arm with draggable red pin at end
     const rotorArm = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } );
-    const rotorPin = new VoicingCircle( 7, {
+    const rotorPin = new VoicingCircle( 7, combineOptions<CircleOptions>( {}, AccessibleDraggableOptions, {
       stroke: LINE_COLOR,
       fill: 'red',
       cursor: 'pointer',
@@ -153,7 +155,7 @@ class UnitCircleView extends Node {
       helpText: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty,
       accessibleNameBehavior: Voicing.BASIC_ACCESSIBLE_NAME_BEHAVIOR,
       helpTextBehavior: Voicing.BASIC_HELP_TEXT_BEHAVIOR
-    } );
+    } ) );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;

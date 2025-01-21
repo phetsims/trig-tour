@@ -11,8 +11,10 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import { TPaint, Voicing, VoicingActivationResponseListener } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 
@@ -85,7 +87,8 @@ class TrigIndicatorArrowNode extends ArrowNode {
  */
 class VoicingTrigIndicatorArrowNode extends Voicing( TrigIndicatorArrowNode ) {
   public constructor( defaultLength: number, orientation: Orientation, providedOptions: ArrowNodeOptions ) {
-    super( defaultLength, orientation, providedOptions );
+    const options = combineOptions<ArrowNodeOptions>( {}, AccessibleDraggableOptions, providedOptions );
+    super( defaultLength, orientation, options );
     this.addInputListener( new VoicingActivationResponseListener( this ) );
   }
 }

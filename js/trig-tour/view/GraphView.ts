@@ -168,8 +168,6 @@ class GraphView extends Node {
       cursor: 'pointer',
 
       // pdom - this is the Node that receives the input listener so it needs to be focusable
-      tagName: 'div',
-      focusable: true,
       accessibleName: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
       helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty,
 

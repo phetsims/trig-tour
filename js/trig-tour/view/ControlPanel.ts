@@ -84,7 +84,7 @@ class ControlPanel extends Panel {
     }, checkboxOptions ) );
 
     const checkboxGroup = new VBox( {
-      children: [ labelsCheckbox, gridCheckbox, specialAnglesCheckbox ],
+      children: [ specialAnglesCheckbox, labelsCheckbox, gridCheckbox ],
       align: 'left',
       spacing: SPACING
     } );

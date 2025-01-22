@@ -76,6 +76,9 @@
     "unitsRadioButtons": {
       "accessibleName": {
         "value": "Angle Units"
+      },
+      "helpText": {
+        "value": "Choose units for angle."
       }
     },
     "graphRadioButtons": {

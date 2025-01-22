@@ -68,6 +68,8 @@ type StringsType = {
     'unitsRadioButtons': {
       'accessibleName': string;
       'accessibleNameStringProperty': LocalizedStringProperty;
+      'helpText': string;
+      'helpTextStringProperty': LocalizedStringProperty;
     };
     'graphRadioButtons': {
       'accessibleName': string;

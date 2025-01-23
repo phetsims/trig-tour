@@ -18,7 +18,7 @@ import TrigTourDescriber from '../TrigTourDescriber.js';
 import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 import AngleReadoutRow from './AngleReadoutRow.js';
 import CoordinatesRow from './CoordinatesRow.js';
-import LabelFractionValueRow from './LabelFractionValueRow.js';
+import TrigFunctionRow from './TrigFunctionRow.js';
 
 //strings
 const degreesStringProperty = TrigTourStrings.degreesStringProperty;
@@ -48,14 +48,7 @@ class ReadoutNode extends Node {
     const row2 = new CoordinatesRow( model, viewProperties, { maxWidth: maxPanelWidth } );
 
     // Row 3: trig function label = trig fraction = trig value
-    const sinLabelFractionValueRow = new LabelFractionValueRow( 'sin', model, viewProperties );
-    const cosLabelFractionValueRow = new LabelFractionValueRow( 'cos', model, viewProperties );
-    const tanLabelFractionValueRow = new LabelFractionValueRow( 'tan', model, viewProperties );
-
-    const row3 = new Node( {
-      children: [ sinLabelFractionValueRow, cosLabelFractionValueRow, tanLabelFractionValueRow ],
-      maxWidth: maxPanelWidth
-    } );
+    const row3 = new TrigFunctionRow( model, viewProperties, maxPanelWidth );
 
     // 2 radio buttons for display in degrees or radians, located at bottom of Readout Panel
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 150 };
@@ -108,13 +101,6 @@ class ReadoutNode extends Node {
     } );
 
     this.addChild( contentVBox );
-
-    // Synchronize visibility properties with the view
-    viewProperties.graphProperty.link( graph => {
-      sinLabelFractionValueRow.visible = ( graph === 'sin' );
-      cosLabelFractionValueRow.visible = ( graph === 'cos' );
-      tanLabelFractionValueRow.visible = ( graph === 'tan' );
-    } );
   }
 }
 

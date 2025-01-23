@@ -50,6 +50,10 @@ class TrigTourModel {
   public readonly cosValueStringProperty: TReadOnlyProperty<string>;
   public readonly tanValueStringProperty: TReadOnlyProperty<string>;
 
+  // String representations of the angle in degrees and radians, without any units.
+  public readonly formattedAngleDegreesProperty: TReadOnlyProperty<string>;
+  public readonly formattedAngleRadiansProperty: TReadOnlyProperty<string>;
+
   private smallAngle = 0; // fullAngle modulo 2*pi with 180 offset, is between -pi and +pi
   public previousAngle = 0; // smallAngle in previous step, needed to compute total fullAngle from smallAngle
 
@@ -73,6 +77,12 @@ class TrigTourModel {
     } );
     this.tanValueStringProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
       return Utils.toFixed( this.tan(), 3 );
+    } );
+    this.formattedAngleDegreesProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
+      return Utils.toFixed( Utils.toDegrees( this.fullAngleProperty.value ), 1 );
+    } );
+    this.formattedAngleRadiansProperty = new DerivedProperty( [ this.fullAngleProperty ], () => {
+      return Utils.toFixed( this.fullAngleProperty.value, 3 );
     } );
 
     this.quadrantProperty = new DerivedProperty( [ this.fullAngleProperty ], ( fullAngle: number ) => {

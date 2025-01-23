@@ -11,12 +11,14 @@
  */
 
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
+import PatternMessageProperty from '../../../../../chipper/js/browser/PatternMessageProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
+import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -38,7 +40,7 @@ const equalString = TrigTourMathStrings.EQUALS_STRING;
 const DISPLAY_FONT = new PhetFont( 20 );
 const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
-class AngleReadoutRow extends Node {
+class AngleReadoutRow extends ReadingBlock( Node ) {
 
   // number of decimal places for display of fullAngle, = 0 for special angles
   private decimalPrecision: number;
@@ -138,8 +140,13 @@ class AngleReadoutRow extends Node {
       }
       this.setAngleReadout();
     } );
-  }
 
+    // voicing
+    // TODO: Fill in with additional content, update when special angles and units change (https://github.com/phetsims/trig-tour/issues/132)
+    this.readingBlockNameResponse = new PatternMessageProperty( TrigTourMessages.angleDegreesPatternMessageProperty, {
+      degrees: trigTourModel.formattedAngleDegreesProperty
+    } );
+  }
 
   /**
    * Set readout units to either degrees or radians.

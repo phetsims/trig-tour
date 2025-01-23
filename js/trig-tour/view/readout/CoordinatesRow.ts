@@ -14,7 +14,7 @@ import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -40,7 +40,7 @@ const SPECIAL_SIN_FRACTIONS = SpecialAngles.SPECIAL_SIN_FRACTIONS;
 
 type CoordinatesRowOptions = EmptySelfOptions & PickOptional<NodeOptions, 'maxWidth'>;
 
-class CoordinatesRow extends Node {
+class CoordinatesRow extends ReadingBlock( Node ) {
 
   private readonly trigTourModel: TrigTourModel;
 
@@ -127,6 +127,9 @@ class CoordinatesRow extends Node {
       this.coordinatesHBox.visible = specialAnglesVisible;
       this.coordinatesReadout.visible = !specialAnglesVisible;
     } );
+
+    // voicing
+    this.readingBlockNameResponse = 'Coordinates Row';
   }
 
   /**

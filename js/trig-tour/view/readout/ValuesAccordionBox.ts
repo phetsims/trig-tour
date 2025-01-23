@@ -36,15 +36,9 @@ class ValuesAccordionBox extends AccordionBox {
       } ),
       contentYMargin: 15,
       contentYSpacing: 8,
-      expandedProperty: model.valuesExpandedProperty
-    }, {
+      expandedProperty: model.valuesExpandedProperty,
+      voicingHintResponseCollapsed: TrigTourStrings.a11y.valuesAccordionBox.helpTextStringProperty
     } ) );
-
-    // Only show the helpText when the accordion box is collapsed.
-    // TODO: Is this how all AccordionBoxes should behave? See https://github.com/phetsims/trig-tour/issues/107
-    this.expandedProperty.link( expanded => {
-      this.helpText = expanded ? null : TrigTourStrings.a11y.valuesAccordionBox.helpTextStringProperty;
-    } );
   }
 }
 

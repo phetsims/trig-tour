@@ -219,7 +219,9 @@ class GraphView extends Node {
 
       // So that the graph goes right to the stroke of the box
       contentYMargin: 0,
-      contentXMargin: 0
+      contentXMargin: 0,
+
+      voicingHintResponseCollapsed: TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty
     } ) );
 
     // The accessible Name of the accordion box changes based on the graph being displayed.
@@ -237,12 +239,6 @@ class GraphView extends Node {
 
       assert && assert( accessibleNameStringProperty!, `accessibleNameStringProperty is not defined for graph: ${graph}` );
       this.accordionBox.accessibleName = accessibleNameStringProperty!;
-    } );
-
-    // The help text is only shown when the accordion box is collapsed.
-    // TODO: Is this how all AccordionBoxes should behave? See https://github.com/phetsims/trig-tour/issues/107
-    this.accordionBox.expandedProperty.link( expanded => {
-      this.accordionBox.helpText = expanded ? null : TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty;
     } );
 
     this.expandedProperty = this.accordionBox.expandedProperty;

@@ -1,4 +1,4 @@
-// Copyright 2015-2025, University of Colorado Boulder
+// Copyright 2025, University of Colorado Boulder
 
 /**
  * Live readout of the trig function with its fraction and value.

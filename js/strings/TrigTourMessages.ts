@@ -20,7 +20,7 @@ type TrigTourFluentType = {
 };
 
 const TrigTourMessages = getFluentModule( {
-  "en": "squareRootablePattern = { $squareRoot ->\r\n  [ TRUE ] root { $value }\r\n  *[ FALSE ] { $value }\r\n}\r\n\r\nfractionPattern = { $numeratorSquareRoot ->\r\n  [ TRUE ] root { $value }\r\n *[ VALUE ] { $value }\r\n} over { $denominatorSquareRoot ->\r\n  [ TRUE ] root { $value }\r\n *[ VALUE ] { $value }\r\n}\r\n\r\nangleDegreesPattern = Angle equals { $degrees } degrees.\r\n\r\nangleRadiansPattern = Angle equals { $radians } radians.\r\n\r\nangleRadiansFractionPattern = Angle equals { fractionPattern } radians."
+  "en": "squareRootablePattern = { $squareRoot ->\n  [ TRUE ] root { $value }\n  *[ FALSE ] { $value }\n}\n\nfractionPattern = { $numeratorSquareRoot ->\n  [ TRUE ] root { $value }\n *[ VALUE ] { $value }\n} over { $denominatorSquareRoot ->\n  [ TRUE ] root { $value }\n *[ VALUE ] { $value }\n}\n\nangleDegreesPattern = Angle equals { $degrees } degrees.\n\nangleRadiansPattern = Angle equals { $radians } radians.\n\nangleRadiansFractionPattern = Angle equals { fractionPattern } radians."
 } ) as TrigTourFluentType;
 
 trigTour.register( 'TrigTourMessages', TrigTourMessages );

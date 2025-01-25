@@ -56,13 +56,13 @@
   "a11y": {
     "graphViewAccordionBox": {
       "tanAccessibleName": {
-        "value": "Tangent Theta versus Theta"
+        "value": "Tangent Theta versus Theta Graph"
       },
       "sinAccessibleName": {
-        "value": "Sine Theta versus Theta"
+        "value": "Sine Theta versus Theta Graph"
       },
       "cosAccessibleName": {
-        "value": "Cosine Theta versus Theta"
+        "value": "Cosine Theta versus Theta Graph"
       },
       "helpText": {
         "value": "Expand to explore graph of function versus angle."

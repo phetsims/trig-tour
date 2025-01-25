@@ -109,7 +109,7 @@
         "value": "Point on Circle"
       },
       "helpText": {
-        "value": "Move point on circle to change angle."
+        "value": "Move point on circle to change theta."
       }
     },
     "graphPoint": {

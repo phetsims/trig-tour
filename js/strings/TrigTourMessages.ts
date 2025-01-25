@@ -10,18 +10,22 @@
 import getFluentModule from '../../../chipper/js/browser/getFluentModule.js';
 import trigTour from '../../js/trigTour.js';
 import LocalizedMessageProperty from '../../../chipper/js/browser/LocalizedMessageProperty.js';
+import type TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 
 type TrigTourFluentType = {
-  'squareRootablePatternMessageProperty': LocalizedMessageProperty;
+  'squareRootPatternMessageProperty': LocalizedMessageProperty;
+  'megativePatternMessageProperty': LocalizedMessageProperty;
   'fractionPatternMessageProperty': LocalizedMessageProperty;
   'angleDegreesPatternMessageProperty': LocalizedMessageProperty;
   'angleRadiansPatternMessageProperty': LocalizedMessageProperty;
-  'angleRadiansFractionPatternMessageProperty': LocalizedMessageProperty;
+  'angleEqualsSpecialAngleMessageProperty': LocalizedMessageProperty;
+  'valueMinusValuePatternMessageProperty': LocalizedMessageProperty;
+  'valuePlusValuePatternMessageProperty': LocalizedMessageProperty;
 };
 
 const TrigTourMessages = getFluentModule( {
-  "en": "squareRootablePattern = { $squareRoot ->\n  [ TRUE ] root { $value }\n  *[ FALSE ] { $value }\n}\n\nfractionPattern = { $numeratorSquareRoot ->\n  [ TRUE ] root { $value }\n *[ VALUE ] { $value }\n} over { $denominatorSquareRoot ->\n  [ TRUE ] root { $value }\n *[ VALUE ] { $value }\n}\n\nangleDegreesPattern = Angle equals { $degrees } degrees.\n\nangleRadiansPattern = Angle equals { $radians } radians.\n\nangleRadiansFractionPattern = Angle equals { fractionPattern } radians."
-} ) as TrigTourFluentType;
+  "en": "squareRootPattern = root { $value }\r\n\r\nmegativePattern = minus { $value }\r\n\r\nfractionPattern = { $numerator } over { $denominator }\r\n\r\nangleDegreesPattern = Angle equals { $value } degrees.\r\n\r\nangleRadiansPattern = Angle equals { $value } radians.\r\n\r\nangleEqualsSpecialAngle = Angle equals { $value }.\r\n\r\nvalueMinusValuePattern = { $value1 } { $value2 }\r\n\r\nvaluePlusValuePattern = { $value1 } plus { $value2 }"
+} ) as unknown as TrigTourFluentType;
 
 trigTour.register( 'TrigTourMessages', TrigTourMessages );
 

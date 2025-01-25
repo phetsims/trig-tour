@@ -1,26 +1,19 @@
-# The pattern used to create a string for a square root. Produces something like
-# "root 3" or "3".
-squareRootablePattern = { $squareRoot ->
-  [ TRUE ] root { $value }
-  *[ FALSE ] { $value }
-}
+squareRootPattern = root { $value }
 
-# The pattern used to create a string for a fraction with square roots.
-# Produces something like "x over 1" or "root 3 over 2".
-fractionPattern = { $numeratorSquareRoot ->
-  [ TRUE ] root { $value }
- *[ VALUE ] { $value }
-} over { $denominatorSquareRoot ->
-  [ TRUE ] root { $value }
- *[ VALUE ] { $value }
-}
+megativePattern = minus { $value }
+
+fractionPattern = { $numerator } over { $denominator }
 
 # The pattern that reads out an angle in degrees.
-angleDegreesPattern = Angle equals { $degrees } degrees.
+angleDegreesPattern = Angle equals { $value } degrees.
 
 # The pattern that reads out the angle in radians.
-angleRadiansPattern = Angle equals { $radians } radians.
+angleRadiansPattern = Angle equals { $value } radians.
 
-# The pattern that reads out the angle in radians when there
-# is a fraction.
-angleRadiansFractionPattern = Angle equals { fractionPattern } radians.
+# The pattern that reads out the angle in radians but without any units.
+angleEqualsSpecialAngle = Angle equals { $value }.
+
+# The minus between values is built into the negativePattern so it is not included here.
+valueMinusValuePattern = { $value1 } { $value2 }
+
+valuePlusValuePattern = { $value1 } plus { $value2 }

@@ -10,10 +10,11 @@
  * @author Jesse Greenberg
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
-import PatternMessageProperty from '../../../../../chipper/js/browser/PatternMessageProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -26,6 +27,7 @@ import SpecialAngles, { SpecialAngle } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ViewProperties, { AngleUnits } from '../ViewProperties.js';
+import AngleReadoutValue from './AngleReadoutValue.js';
 import FractionNode from './FractionNode.js';
 
 //strings
@@ -141,11 +143,90 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       this.setAngleReadout();
     } );
 
-    // voicing
-    // TODO: Fill in with additional content, update when special angles and units change (https://github.com/phetsims/trig-tour/issues/132)
-    this.readingBlockNameResponse = new PatternMessageProperty( TrigTourMessages.angleDegreesPatternMessageProperty, {
-      degrees: trigTourModel.formattedAngleDegreesProperty
+    const angleReadout = new AngleReadoutValue( trigTourModel, viewProperties );
+
+    this.readingBlockNameResponse = new DerivedProperty( [
+      this.fullAngleFractionNode.descriptionStringProperty,
+      this.angleReadoutFraction.descriptionStringProperty,
+      viewProperties.angleUnitsProperty,
+      viewProperties.specialAnglesVisibleProperty,
+      angleReadout.angleReadoutStringProperty,
+      TrigTourMessages.valueMinusValuePatternMessageProperty,
+      TrigTourMessages.valuePlusValuePatternMessageProperty,
+      TrigTourMessages.angleEqualsSpecialAngleMessageProperty,
+      TrigTourMessages.angleRadiansPatternMessageProperty,
+      TrigTourMessages.angleDegreesPatternMessageProperty
+    ], (
+      fullAngleString,
+      angleReadoutString,
+      angleUnits,
+      specialAnglesVisible,
+      angleReadout
+    ) => {
+      return this.createDescriptionString( fullAngleString, angleReadoutString, angleUnits, specialAnglesVisible, angleReadout );
+
     } );
+  }
+
+  /**
+   * Create a description string for this row. Describes the angle readout in degrees/radians, and reads the fraction
+   * values in natural language.
+   *
+   * @param fullAngleString - The fullAngleFractionNode description string
+   * @param angleReadoutString - The angleReadoutFraction description string
+   * @param angleUnits - The selected units.
+   * @param specialAnglesVisible - Are special angles visible?
+   * @param angleReadout - The angle readout string with the correct precision.
+   */
+  private createDescriptionString(
+    fullAngleString: string,
+    angleReadoutString: string,
+    angleUnits: AngleUnits,
+    specialAnglesVisible: boolean,
+    angleReadout: string
+  ): string {
+    if ( specialAnglesVisible && angleUnits === 'radians' ) {
+
+      // Hack alert - If the angleReadoutString includes the 'A' character, it is only used for layout
+      // purposes. See the setSpecialAngleReadout method.
+      if ( angleReadoutString && fullAngleString && !angleReadoutString.includes( 'A' ) ) {
+
+        const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourMessages.valueMinusValuePatternMessageProperty : TrigTourMessages.valuePlusValuePatternMessageProperty;
+        const terms = FluentUtils.formatMessage( patternMessageProperty, {
+          value1: fullAngleString,
+          value2: angleReadoutString
+        } );
+        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+          value: terms
+        } );
+      }
+      else if ( fullAngleString ) {
+
+        // The full angle string is used to display the special angle at intervals of 0 or pi.
+        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+          value: fullAngleString
+        } );
+      }
+      else {
+
+        // The angle readout string is used to display the other special angles.
+        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+          value: angleReadoutString
+        } );
+      }
+    }
+    else {
+      if ( angleUnits === 'radians' ) {
+        return FluentUtils.formatMessage( TrigTourMessages.angleRadiansPatternMessageProperty, {
+          value: angleReadout
+        } );
+      }
+      else {
+        return FluentUtils.formatMessage( TrigTourMessages.angleDegreesPatternMessageProperty, {
+          value: angleReadout
+        } );
+      }
+    }
   }
 
   /**

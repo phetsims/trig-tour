@@ -23,6 +23,9 @@ const valueUnitPatternStringProperty = TrigTourStrings.valueUnitPatternStringPro
 export default class AngleReadoutValue {
 
   // The string representation of the angle, with the correct units and decimal places.
+  public readonly angleReadoutWithUnitsStringProperty: TReadOnlyProperty<string>;
+
+  // The string representation of the angle, with correct decimal places but without units.
   public readonly angleReadoutStringProperty: TReadOnlyProperty<string>;
 
   public constructor( model: TrigTourModel, viewProperties: ViewProperties ) {
@@ -40,23 +43,35 @@ export default class AngleReadoutValue {
     } );
 
     // The readout value in radians.
-    const angleRadiansStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
+    const angleRadiansWithUnitsStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
       value: angleInRadiansStringProperty,
       unit: radsStringProperty
     }, {
       formatNames: [ 'value', 'unit' ]
     } );
 
+    const angleInDegreesStringProperty = new DerivedProperty( [ model.fullAngleProperty, decimalPrecisionProperty ], ( ( fullAngle, decimalPrecision ) => {
+      return Utils.toFixed( model.getFullAngleInDegrees(), decimalPrecision );
+    } ) );
+
     // The value in degrees, with the correct number of decimal places.
-    const angleDegreesStringProperty = new DerivedProperty( [ model.fullAngleProperty, decimalPrecisionProperty ], ( fullAngle, decimalPrecision ) => {
-      return `${Utils.toFixed( model.getFullAngleInDegrees(), decimalPrecision )}\u00B0`;
+    const angleDegreesWithUnitsStringProperty = new DerivedProperty( [ angleInDegreesStringProperty ], angleInDegrees => {
+      return `${angleInDegrees}\u00B0`;
     } );
 
     // Assemble the final readout value.
+    this.angleReadoutWithUnitsStringProperty = new DerivedProperty( [
+      viewProperties.angleUnitsProperty,
+      angleRadiansWithUnitsStringProperty,
+      angleDegreesWithUnitsStringProperty
+    ], ( units: AngleUnits, radiansString: string, degreesString: string ) => {
+      return units === 'radians' ? radiansString : degreesString;
+    } );
+
     this.angleReadoutStringProperty = new DerivedProperty( [
       viewProperties.angleUnitsProperty,
-      angleRadiansStringProperty,
-      angleDegreesStringProperty
+      angleInRadiansStringProperty,
+      angleInDegreesStringProperty
     ], ( units: AngleUnits, radiansString: string, degreesString: string ) => {
       return units === 'radians' ? radiansString : degreesString;
     } );

@@ -8,11 +8,14 @@
  */
 
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
+import StringProperty from '../../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import { Shape } from '../../../../../kite/js/imports.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Line, Node, NodeOptions, Path, Text, TextOptions } from '../../../../../scenery/js/imports.js';
+import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 
@@ -34,6 +37,8 @@ class FractionNode extends Node {
   private _numerator: FractionValue;
   private _denominator: FractionValue;
   private _radical: boolean;
+
+  private readonly _descriptionStringProperty: StringProperty;
 
   // A callback that will update the layout of the fraction components.
   private boundSetFraction = this.setFraction.bind( this );
@@ -68,6 +73,8 @@ class FractionNode extends Node {
     super( options );
 
     this.textOptions = options.textOptions;
+
+    this._descriptionStringProperty = new StringProperty( '' );
 
     this.setValues( numerator, denominator, options.radical );
 
@@ -150,14 +157,44 @@ class FractionNode extends Node {
     }
   }
 
+  public isNegative(): boolean {
+    let numeratorNegative = false;
+    let denominatorNegative = false;
+
+    // Resolve to the string value of the numerator and denominator.
+    const numerator = FractionNode.getStringValue( this._numerator );
+    const denominator = FractionNode.getStringValue( this._denominator );
+
+    // Process leading minus sign and determine overall sign.
+    if ( numerator.startsWith( '-' ) ) {
+      numeratorNegative = true;
+    }
+    if ( denominator.startsWith( '-' ) ) {
+      denominatorNegative = true;
+    }
+
+    // JavaScript does not have an xor operator
+    return ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
+  }
+
+  private trimMinusSign( value: string ): string {
+    return value.startsWith( '-' ) ? value.slice( 1 ) : value;
+  }
+
+  private removePlusSign( value: string ): string {
+    return value.replace( /\+/g, '' ).trim();
+  }
+
   /**
    * Set the fraction node and draw its various parts.
    */
   private setFraction(): void {
+    this._descriptionStringProperty.value = this.computeDescriptionString();
+
     let minusSign;                            // short horizontal line for minus sign, in front of divisor bar
     let numeratorNegative = false;            // true if numerator is negative
     let denominatorNegative = false;          // true if denominator is negative
-    let minusSignNeeded = false;              // true if sign of over-all fraction is negative
+    let isNegative = false;              // true if sign of over-all fraction is negative
     const squareRootSignNeeded = this._radical;  // true if square root symbol is needed over the numerator
     let denominatorNeeded = true;             // true if only the numerator is displayed as a fractional number
 
@@ -180,7 +217,7 @@ class FractionNode extends Node {
     }
 
     // JavaScript does not have an xor operator
-    minusSignNeeded = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
+    isNegative = ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
 
     const textOptions = this.textOptions;
     const numeratorText = new Text( numerator, textOptions );
@@ -189,7 +226,7 @@ class FractionNode extends Node {
     // Draw minus sign to go in front of fraction, if needed.
     let length = 8;
     const midHeight = 7;
-    if ( minusSignNeeded ) {
+    if ( isNegative ) {
       minusSign = new Line( 0, -midHeight, length, -midHeight, {
         stroke: TrigTourColors.LINE_COLOR,
         lineWidth: 2,
@@ -238,15 +275,15 @@ class FractionNode extends Node {
 
       this.children = [ minusSign, sqRtPath, numeratorText ];
 
-      if ( minusSignNeeded ) {
+      if ( isNegative ) {
         minusSign.left = 0;
         numeratorText.left = minusSign.right + 4;
       }
-      if ( squareRootSignNeeded && minusSignNeeded ) {
+      if ( squareRootSignNeeded && isNegative ) {
         numeratorText.left = minusSign.right + 12;
         sqRtPath.centerX = numeratorText.centerX - 3;
       }
-      if ( squareRootSignNeeded && !minusSignNeeded ) {
+      if ( squareRootSignNeeded && !isNegative ) {
         sqRtPath.left = 0;
         numeratorText.centerX = sqRtPath.centerX + 3;
       }
@@ -263,7 +300,7 @@ class FractionNode extends Node {
     numeratorText.bottom = bar.top - offset;
     denominatorText.top = bar.bottom + offset;
     offset = 4;
-    if ( minusSignNeeded ) {
+    if ( isNegative ) {
       minusSign.left = 0;
       bar.left = minusSign.right + offset;
       numeratorText.centerX = denominatorText.centerX = bar.centerX;
@@ -276,6 +313,106 @@ class FractionNode extends Node {
       sqRtPath.centerX = numeratorText.centerX - 3;
     }
   }
+
+  public get descriptionStringProperty(): TReadOnlyProperty<string> {
+    return this._descriptionStringProperty;
+  }
+
+  // /**
+  //  * Returnsa description string for the state of the fraction node. If there is a
+  //  * denominator, the description will be in the form of "numerator over denominator".
+  //  *
+  //  * If any of the values are radicals, the value will be described in the form of "root {{value}}"
+  //  *
+  //  * Returns something like
+  //  * "root 2 over 3"
+  //  * "x over 1"
+  //  * "root 2"
+  //  */
+  private computeDescriptionString(): string {
+    const numerator = FractionNode.getStringValue( this._numerator );
+    const denominator = FractionNode.getStringValue( this._denominator );
+    const denominatorNeeded = !!denominator;
+
+    const rootNeeded = this._radical;
+    const isNegative = this.isNegative();
+
+    let cleanedNumerator = this.trimMinusSign( numerator );
+    cleanedNumerator = this.removePlusSign( cleanedNumerator );
+
+    let descriptionString = cleanedNumerator;
+
+    // first add a root
+    if ( rootNeeded ) {
+      descriptionString = FluentUtils.formatMessage( TrigTourMessages.squareRootPatternMessageProperty, {
+        value: numerator
+      } );
+    }
+
+    // add a minus sign if needed
+    if ( isNegative ) {
+      descriptionString = FluentUtils.formatMessage( TrigTourMessages.megativePatternMessageProperty, {
+        value: descriptionString
+      } );
+    }
+
+    // add the denominator if needed
+    if ( denominatorNeeded ) {
+      descriptionString = FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
+        numerator: descriptionString,
+        denominator: this.trimMinusSign( denominator )
+      } );
+    }
+
+    return descriptionString;
+
+    // // If there is no denominator, use Fluent to format a string like "root 2"
+    // if ( denominatorNeeded ) {
+    //   return FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
+    //     negated: isNegative ? 'negative ' : '',
+    //     squareRoot: rootNeeded ? 'root ' + numerator : numerator,
+    //     numeratorValue: numerator,
+    //     denominatorValue: denominator
+    //   } );
+    // }
+    // else {
+    //   return FluentUtils.formatMessage( TrigTourMessages.squareRootablePatternMessageProperty, {
+    //     squareRoot: rootNeeded ? 'TRUE' : 'FALSE',
+    //     value: numerator
+    //   } );
+    // }
+  }
+  //
+  // public getFluentStringPlaceables(): Record<string, string> {
+  //   const squareRootSignNeeded = this._radical;  // true if square root symbol is needed over the numerator
+  //   const numerator = FractionNode.getStringValue( this._numerator );
+  //   const denominator = FractionNode.getStringValue( this._denominator );
+  //   // const denominatorNeeded = !!denominator;
+  //
+  //   const isNegative = this.isNegative();
+  //
+  //   return {
+  //     negated: isNegative ? 'TRUE' : 'FALSE',
+  //     squareRoot: squareRootSignNeeded ? 'TRUE' : 'FALSE',
+  //     numeratorValue: this.trimMinusSign( numerator ),
+  //     denominatorValue: this.trimMinusSign( denominator )
+  //   };
+  //
+  //   // // If there is no denominator, use Fluent to format a string like "root 2"
+  //   // if ( denominatorNeeded ) {
+  //   //   return {
+  //   //     squareRoot: squareRootSignNeeded ? 'root ' + numerator : numerator,
+  //   //     numeratorValue: numerator,
+  //   //     denominatorValue: denominator
+  //   //   };
+  //   // }
+  //   // else {
+  //   //   return TrigTourMessages.squareRootablePatternMessageProperty, {
+  //   //     squareRoot: squareRootSignNeeded ? 'TRUE' : 'FALSE',
+  //   //     value: numerator
+  //   //   };
+  //   // }
+  // }
 }
 
 trigTour.register( 'FractionNode', FractionNode );

@@ -25,3 +25,5 @@ trigReadoutPattern = { $trigFunction ->
 } theta equals { $trigFraction } or { $value }
 
 infinity = infinity
+
+coordinatesPattern = x equals { $xValue }, y equals { $yValue }

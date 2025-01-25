@@ -7,14 +7,17 @@
  * @author Jesse Greenberg
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../../axon/js/Property.js';
+import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
+import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -133,7 +136,28 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     } );
 
     // voicing
-    this.readingBlockNameResponse = 'Coordinates Row';
+    this.readingBlockNameResponse = new DerivedProperty( [
+      this.cosReadoutFraction.descriptionStringProperty,
+      this.sinReadoutFraction.descriptionStringProperty,
+      trigTourModel.cosValueStringProperty,
+      trigTourModel.sinValueStringProperty,
+      viewProperties.specialAnglesVisibleProperty
+    ], ( cosFraction, sinFraction, cosValue, sinValue, specialAnglesVisible ) => {
+
+
+      if ( specialAnglesVisible ) {
+        return FluentUtils.formatMessage( TrigTourMessages.coordinatesPatternMessageProperty, {
+          xValue: cosFraction,
+          yValue: sinFraction
+        } );
+      }
+      else {
+        return FluentUtils.formatMessage( TrigTourMessages.coordinatesPatternMessageProperty, {
+          xValue: cosValue,
+          yValue: sinValue
+        } );
+      }
+    } );
   }
 
   /**

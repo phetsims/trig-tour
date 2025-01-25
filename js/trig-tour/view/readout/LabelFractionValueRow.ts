@@ -175,7 +175,7 @@ class LabelFractionValueRow extends Node {
       singularity
     ) => {
 
-      const trigValue = singularity ? TrigTourMessages.infinityMessageProperty :
+      const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourMessages.infinityMessageProperty :
                         specialAnglesVisible ? trigValueFractionString : trigValueNumberText.string;
 
       return FluentUtils.formatMessage( TrigTourMessages.trigReadoutPatternMessageProperty, {

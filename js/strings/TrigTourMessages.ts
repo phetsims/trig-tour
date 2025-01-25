@@ -14,17 +14,19 @@ import type TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 
 type TrigTourFluentType = {
   'squareRootPatternMessageProperty': LocalizedMessageProperty;
-  'megativePatternMessageProperty': LocalizedMessageProperty;
+  'negativePatternMessageProperty': LocalizedMessageProperty;
   'fractionPatternMessageProperty': LocalizedMessageProperty;
   'angleDegreesPatternMessageProperty': LocalizedMessageProperty;
   'angleRadiansPatternMessageProperty': LocalizedMessageProperty;
   'angleEqualsSpecialAngleMessageProperty': LocalizedMessageProperty;
   'valueMinusValuePatternMessageProperty': LocalizedMessageProperty;
   'valuePlusValuePatternMessageProperty': LocalizedMessageProperty;
+  'trigReadoutPatternMessageProperty': LocalizedMessageProperty;
+  'infinityMessageProperty': TReadOnlyProperty<string>;
 };
 
 const TrigTourMessages = getFluentModule( {
-  "en": "squareRootPattern = root { $value }\r\n\r\nmegativePattern = minus { $value }\r\n\r\nfractionPattern = { $numerator } over { $denominator }\r\n\r\nangleDegreesPattern = Angle equals { $value } degrees.\r\n\r\nangleRadiansPattern = Angle equals { $value } radians.\r\n\r\nangleEqualsSpecialAngle = Angle equals { $value }.\r\n\r\nvalueMinusValuePattern = { $value1 } { $value2 }\r\n\r\nvaluePlusValuePattern = { $value1 } plus { $value2 }"
+  "en": "squareRootPattern = root { $value }\r\n\r\nnegativePattern = minus { $value }\r\n\r\nfractionPattern = { $numerator } over { $denominator }\r\n\r\nangleDegreesPattern = Angle equals { $value } degrees.\r\n\r\nangleRadiansPattern = Angle equals { $value } radians.\r\n\r\nangleEqualsSpecialAngle = Angle equals { $value }.\r\n\r\nvalueMinusValuePattern = { $value1 } { $value2 }\r\n\r\nvaluePlusValuePattern = { $value1 } plus { $value2 }\r\n\r\ntrigReadoutPattern = { $trigFunction ->\r\n  [ cos ] Cosine\r\n  [ sin ] Sine\r\n  *[tan] Tangent\r\n} theta equals { $trigFraction } or { $value }\r\n\r\ninfinity = infinity"
 } ) as unknown as TrigTourFluentType;
 
 trigTour.register( 'TrigTourMessages', TrigTourMessages );

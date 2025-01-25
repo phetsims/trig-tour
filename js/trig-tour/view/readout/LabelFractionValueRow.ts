@@ -11,10 +11,14 @@
  * @author Jesse Greenberg
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Node, NodeOptions, Text } from '../../../../../scenery/js/imports.js';
+import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -46,6 +50,9 @@ class LabelFractionValueRow extends Node {
   private readonly trigTourModel: TrigTourModel;
   private readonly viewProperties: ViewProperties;
   private readonly graphType: Graph;
+
+  // Describes the math represented in this row for accessibility.
+  public readonly descriptionStringProperty: TReadOnlyProperty<string>;
 
   // collection of special angles for this trig function
   private readonly specialAngles: SpecialAngleMap;
@@ -155,8 +162,29 @@ class LabelFractionValueRow extends Node {
       trigValueNumberText.visible = !specialAnglesVisible;
       this.setTrigReadout( trigValueNumberText, trigValueFraction );
     } );
-  }
 
+    this.descriptionStringProperty = new DerivedProperty( [
+      trigTourModel.fullAngleProperty,
+      trigValueFraction.descriptionStringProperty,
+      viewProperties.specialAnglesVisibleProperty,
+      trigTourModel.singularityProperty
+    ], (
+      fullAngle: number,
+      trigValueFractionString: string,
+      specialAnglesVisible: boolean,
+      singularity
+    ) => {
+
+      const trigValue = singularity ? TrigTourMessages.infinityMessageProperty :
+                        specialAnglesVisible ? trigValueFractionString : trigValueNumberText.string;
+
+      return FluentUtils.formatMessage( TrigTourMessages.trigReadoutPatternMessageProperty, {
+        trigFunction: graphType,
+        trigFraction: trigFraction.descriptionStringProperty,
+        value: trigValue
+      } );
+    } );
+  }
 
   /**
    * Set the value of the trig value.

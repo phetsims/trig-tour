@@ -177,8 +177,8 @@ class FractionNode extends Node {
     return ( numeratorNegative && !denominatorNegative ) || ( !numeratorNegative && denominatorNegative );
   }
 
-  private trimMinusSign( value: string ): string {
-    return value.startsWith( '-' ) ? value.slice( 1 ) : value;
+  private removeMinusSign( value: string ): string {
+    return value.replace( /-/g, '' ).trim();
   }
 
   private removePlusSign( value: string ): string {
@@ -337,7 +337,7 @@ class FractionNode extends Node {
     const rootNeeded = this._radical;
     const isNegative = this.isNegative();
 
-    let cleanedNumerator = this.trimMinusSign( numerator );
+    let cleanedNumerator = this.removeMinusSign( numerator );
     cleanedNumerator = this.removePlusSign( cleanedNumerator );
 
     let descriptionString = cleanedNumerator;
@@ -345,13 +345,13 @@ class FractionNode extends Node {
     // first add a root
     if ( rootNeeded ) {
       descriptionString = FluentUtils.formatMessage( TrigTourMessages.squareRootPatternMessageProperty, {
-        value: numerator
+        value: descriptionString
       } );
     }
 
     // add a minus sign if needed
     if ( isNegative ) {
-      descriptionString = FluentUtils.formatMessage( TrigTourMessages.megativePatternMessageProperty, {
+      descriptionString = FluentUtils.formatMessage( TrigTourMessages.negativePatternMessageProperty, {
         value: descriptionString
       } );
     }
@@ -360,7 +360,7 @@ class FractionNode extends Node {
     if ( denominatorNeeded ) {
       descriptionString = FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
         numerator: descriptionString,
-        denominator: this.trimMinusSign( denominator )
+        denominator: this.removeMinusSign( denominator )
       } );
     }
 

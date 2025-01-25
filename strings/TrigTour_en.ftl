@@ -1,6 +1,6 @@
 squareRootPattern = root { $value }
 
-megativePattern = minus { $value }
+negativePattern = minus { $value }
 
 fractionPattern = { $numerator } over { $denominator }
 
@@ -17,3 +17,11 @@ angleEqualsSpecialAngle = Angle equals { $value }.
 valueMinusValuePattern = { $value1 } { $value2 }
 
 valuePlusValuePattern = { $value1 } plus { $value2 }
+
+trigReadoutPattern = { $trigFunction ->
+  [ cos ] Cosine
+  [ sin ] Sine
+  *[tan] Tangent
+} theta equals { $trigFraction } or { $value }
+
+infinity = infinity

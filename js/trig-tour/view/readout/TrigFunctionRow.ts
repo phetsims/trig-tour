@@ -29,10 +29,11 @@ export default class TrigFunctionRow extends ReadingBlock( Node ) {
       sinLabelFractionValueRow.visible = ( graph === 'sin' );
       cosLabelFractionValueRow.visible = ( graph === 'cos' );
       tanLabelFractionValueRow.visible = ( graph === 'tan' );
-    } );
 
-    // voicing
-    this.readingBlockNameResponse = 'Trig Function Row';
+      this.readingBlockNameResponse = graph === 'sin' ? sinLabelFractionValueRow.descriptionStringProperty :
+                                      graph === 'cos' ? cosLabelFractionValueRow.descriptionStringProperty :
+                                      tanLabelFractionValueRow.descriptionStringProperty;
+    } );
   }
 }
 

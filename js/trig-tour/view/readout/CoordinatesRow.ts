@@ -14,7 +14,7 @@ import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -126,6 +126,10 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
       this.coordinatesHBox.visible = specialAnglesVisible;
       this.coordinatesReadout.visible = !specialAnglesVisible;
+
+      // Workaround - because scenery doesn't have a visible bounds Property, the highlight does not
+      // adjust when bounds change. Instead, manually update the highlight.
+      this.focusHighlight = new ReadingBlockHighlight( this );
     } );
 
     // voicing

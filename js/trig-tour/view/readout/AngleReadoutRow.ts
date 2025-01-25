@@ -18,7 +18,7 @@ import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
 import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -263,6 +263,10 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }
+
+    // Workaround - Scenery does not support an observable "visible" bounds Property and so the focus highlight
+    // cannot adjust as components are made visible/invisible. As a workaround, manually update the focus highlight.
+    this.focusHighlight = new ReadingBlockHighlight( this );
   }
 
   /**

@@ -80,9 +80,6 @@ class ReadoutNode extends Node {
         row3
       ],
 
-      // pdom - a paragraph that describes all values
-      accessibleParagraph: describer.valuesDescriptionStringProperty,
-
       align: 'left',
       spacing: SPACING,
       resize: false

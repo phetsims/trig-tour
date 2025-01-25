@@ -22,8 +22,8 @@ trigReadoutPattern = { $trigFunction ->
   [ cos ] Cosine
   [ sin ] Sine
   *[tan] Tangent
-} theta equals { $trigFraction } or { $value }
+} theta equals { $trigFraction } or { $value }.
 
 infinity = infinity
 
-coordinatesPattern = x equals { $xValue }, y equals { $yValue }
+coordinatesPattern = x equals { $xValue }, y equals { $yValue }.

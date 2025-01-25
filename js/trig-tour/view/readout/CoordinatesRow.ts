@@ -136,7 +136,7 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     } );
 
     // voicing
-    this.readingBlockNameResponse = new DerivedProperty( [
+    const descriptionStringProperty = new DerivedProperty( [
       this.cosReadoutFraction.descriptionStringProperty,
       this.sinReadoutFraction.descriptionStringProperty,
       trigTourModel.cosValueStringProperty,
@@ -158,6 +158,12 @@ class CoordinatesRow extends ReadingBlock( Node ) {
         } );
       }
     } );
+
+    // TODO: Can we use accessibleParagraph with ReadingBLock without them coliding?
+    // See https://github.com/phetsims/trig-tour/issues/132
+    this.readingBlockNameResponse = descriptionStringProperty;
+    this.descriptionContent = descriptionStringProperty;
+    this.readingBlockDisabledTagName = 'p';
   }
 
   /**

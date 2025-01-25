@@ -145,7 +145,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
 
     const angleReadout = new AngleReadoutValue( trigTourModel, viewProperties );
 
-    this.readingBlockNameResponse = new DerivedProperty( [
+    const descriptionStringProperty = new DerivedProperty( [
       this.fullAngleFractionNode.descriptionStringProperty,
       this.angleReadoutFraction.descriptionStringProperty,
       viewProperties.angleUnitsProperty,
@@ -164,8 +164,10 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       angleReadout
     ) => {
       return this.createDescriptionString( fullAngleString, angleReadoutString, angleUnits, specialAnglesVisible, angleReadout );
-
     } );
+    this.readingBlockNameResponse = descriptionStringProperty;
+    this.descriptionContent = descriptionStringProperty;
+    this.readingBlockDisabledTagName = 'p';
   }
 
   /**

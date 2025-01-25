@@ -6,6 +6,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
@@ -18,8 +19,19 @@ import ViewProperties from './ViewProperties.js';
 export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
   public constructor( model: TrigTourModel, viewProperties: ViewProperties, trigTourDescriber: TrigTourDescriber ) {
 
+    const trigInfoStringProperty = new DerivedProperty(
+      [
+        viewProperties.graphProperty,
+        TrigTourStrings.a11y.screenSummary.details.cosSelectedStringProperty,
+        TrigTourStrings.a11y.screenSummary.details.sinSelectedStringProperty,
+        TrigTourStrings.a11y.screenSummary.details.tanSelectedStringProperty
+      ], ( graph, cosString, sinString, tanString ) => {
+        return graph === 'cos' ? cosString : graph === 'sin' ? sinString : tanString;
+      }
+    );
+
     // Describes the current quadrant of the point in the unit circle.
-    const quadrantDetailsStringProperty = new PatternStringProperty(
+    const quadrantInfoStringProperty = new PatternStringProperty(
       TrigTourStrings.a11y.screenSummary.details.quadrantInfoPatternStringProperty, {
         n: model.quadrantProperty
       }
@@ -27,7 +39,7 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
 
     // Describes the rotation direction on the unit circle to create the angle theta.
     // Linked to the string Properties themselves to support dynamic locales.
-    const thetaDetailsStringProperty = new DerivedStringProperty(
+    const rotationDirectionStringProperty = new DerivedStringProperty(
       [
         model.fullAngleProperty,
         TrigTourStrings.a11y.screenSummary.details.counterClockwiseAngleStringProperty,
@@ -41,21 +53,12 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     super( {
       playAreaContent: TrigTourStrings.a11y.screenSummary.playAreaStringProperty,
       controlAreaContent: TrigTourStrings.a11y.screenSummary.controlAreaStringProperty,
+      currentDetailsContent: [
+        trigInfoStringProperty,
+        quadrantInfoStringProperty,
+        rotationDirectionStringProperty
+      ],
       interactionHintContent: TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
-    } );
-
-    // When collapsed, the details summary does not include any of the inforamtion about values.
-    model.valuesExpandedProperty.link( expanded => {
-      const content = expanded ? [
-        quadrantDetailsStringProperty,
-        thetaDetailsStringProperty,
-        trigTourDescriber.valuesDescriptionStringProperty
-      ] : [
-        quadrantDetailsStringProperty,
-        thetaDetailsStringProperty
-      ];
-
-      this.setCurrentDetailsContent( content );
     } );
   }
 }

@@ -119,6 +119,12 @@ type StringsType = {
       'controlArea': string;
       'controlAreaStringProperty': LocalizedStringProperty;
       'details': {
+        'cosSelected': string;
+        'cosSelectedStringProperty': LocalizedStringProperty;
+        'sinSelected': string;
+        'sinSelectedStringProperty': LocalizedStringProperty;
+        'tanSelected': string;
+        'tanSelectedStringProperty': LocalizedStringProperty;
         'quadrantInfoPattern': string;
         'quadrantInfoPatternStringProperty': LocalizedStringProperty;
         'clockwiseAngle': string;

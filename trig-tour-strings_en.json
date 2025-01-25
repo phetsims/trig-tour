@@ -143,14 +143,23 @@
         "value": "Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."
       },
       "details": {
+        "cosSelected": {
+          "value": "Currently, cosine is selected."
+        },
+        "sinSelected": {
+          "value": "Currently, sine is selected."
+        },
+        "tanSelected": {
+          "value": "Currently, tangent is selected."
+        },
         "quadrantInfoPattern": {
-          "value": "Currently, the movable point on the circle is in quadrant {{n}} of the coordinate plane."
+          "value": "Point on circle is in quadrant {{n}}."
         },
         "clockwiseAngle": {
-          "value": "An angle theta is formed by a clockwise rotation of the point."
+          "value": "A clockwise rotation of point on circle forms angle theta."
         },
         "counterClockwiseAngle": {
-          "value": "An angle theta is formed by a counterclockwise rotation of the point."
+          "value": "A counterclockwise rotation of point on circle forms angle theta."
         },
         "sinFunction": {
           "value": "Sine"

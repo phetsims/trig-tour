@@ -137,7 +137,7 @@
     },
     "screenSummary": {
       "playArea": {
-        "value": "An interactive circle with a radius of 1 is centered on a coordinate plane. A movable point on the circle defines an angle theta as the point is rotated counterclockwise or clockwise from the x-axis. A right triangle is formed by the radius, a vertical line from the point to the x-axis, and the x-axis. There are options to explore different trigonometric functions and simultaneously highlight sides of the triangle inside the circle. Below the circle, an accordion box can display a graph of the selected function versus theta. The graph has a corresponding movable point which can go off screen."
+        "value": "An interactive circle with a radius of 1 is centered on a coordinate plane. A movable point on the circle defines an angle theta as the point is rotated counterclockwise or clockwise from the x-axis. A right triangle forms between the radius, the x-axis, and a vertical line from the point to the x-axis. The selected trigonometric function highlights the corresponding side or sides of the triangle being explored inside the circle. Below the circle, a collapsible graph plots the selected function versus theta. The graph has a corresponding movable point which can go off screen."
       },
       "controlArea": {
         "value": "Use labels, background grid, and special angles, as needed, to guide your exploration of trigonometric functions. Reset the sim to start over."

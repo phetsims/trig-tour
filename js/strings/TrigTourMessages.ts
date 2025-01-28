@@ -27,7 +27,7 @@ type TrigTourFluentType = {
 };
 
 const TrigTourMessages = getFluentModule( {
-  "en": "squareRootPattern = root { $value }\n\nnegativePattern = minus { $value }\n\nfractionPattern = { $numerator } over { $denominator }\n\nangleDegreesPattern = Angle equals { $value } degrees.\n\nangleRadiansPattern = Angle equals { $value } radians.\n\nangleEqualsSpecialAngle = Angle equals { $value }.\n\nvalueMinusValuePattern = { $value1 } { $value2 }\n\nvaluePlusValuePattern = { $value1 } plus { $value2 }\n\ntrigReadoutPattern = { $trigFunction ->\n  [ cos ] Cosine\n  [ sin ] Sine\n  *[tan] Tangent\n} theta equals { $trigFraction } or { $value }.\n\ninfinity = infinity\n\ncoordinatesPattern = x equals { $xValue }, y equals { $yValue }."
+  "en": "squareRootPattern = root { $value }\r\n\r\nnegativePattern = minus { $value }\r\n\r\nfractionPattern = { $numerator } over { $denominator }\r\n\r\nangleDegreesPattern = Angle equals { $value } degrees.\r\n\r\nangleRadiansPattern = Angle equals { $value } radians.\r\n\r\nangleEqualsSpecialAngle = Angle equals { $value }.\r\n\r\nvalueMinusValuePattern = { $value1 } { $value2 }\r\n\r\nvaluePlusValuePattern = { $value1 } plus { $value2 }\r\n\r\ntrigReadoutPattern = { $trigFunction ->\r\n  [ cos ] Cosine\r\n  [ sin ] Sine\r\n  *[tan] Tangent\r\n} theta equals { $trigFraction } or { $value }.\r\n\r\ninfinity = plus or minus infinity\r\n\r\ncoordinatesPattern = x equals { $xValue }, y equals { $yValue }."
 } ) as unknown as TrigTourFluentType;
 
 trigTour.register( 'TrigTourMessages', TrigTourMessages );

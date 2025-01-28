@@ -12,6 +12,7 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
@@ -56,6 +57,9 @@ class LabelFractionValueRow extends Node {
 
   // collection of special angles for this trig function
   private readonly specialAngles: SpecialAngleMap;
+
+  // For layout purposes, indicate whenever the visible bounds of this component change (there is no such Property in scenery).
+  public readonly visibleBoundsChangedEmitter = new Emitter();
 
   public constructor( graphType: Graph, trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions?: NodeOptions ) {
     super( providedOptions );
@@ -148,6 +152,8 @@ class LabelFractionValueRow extends Node {
         if ( !viewProperties.specialAnglesVisibleProperty.value ) {
           trigValueNumberText.visible = !singularity;
         }
+
+        this.visibleBoundsChangedEmitter.emit();
       } );
     }
 
@@ -161,6 +167,8 @@ class LabelFractionValueRow extends Node {
       trigValueFraction.visible = specialAnglesVisible;
       trigValueNumberText.visible = !specialAnglesVisible;
       this.setTrigReadout( trigValueNumberText, trigValueFraction );
+
+      this.visibleBoundsChangedEmitter.emit();
     } );
 
     this.descriptionStringProperty = new DerivedProperty( [

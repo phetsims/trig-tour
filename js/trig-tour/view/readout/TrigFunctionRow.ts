@@ -6,7 +6,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { Node, ReadingBlock } from '../../../../../scenery/js/imports.js';
+import { Node, ReadingBlock, ReadingBlockHighlight } from '../../../../../scenery/js/imports.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import ViewProperties from '../ViewProperties.js';
@@ -36,9 +36,27 @@ export default class TrigFunctionRow extends ReadingBlock( Node ) {
 
       this.readingBlockNameResponse = descriptionProperty;
       this.descriptionContent = descriptionProperty;
+
+      this.updateFocusHighlight();
     } );
 
+    const boundUpdateFocusHighlight = this.updateFocusHighlight.bind( this );
+    sinLabelFractionValueRow.visibleBoundsChangedEmitter.addListener( boundUpdateFocusHighlight );
+    cosLabelFractionValueRow.visibleBoundsChangedEmitter.addListener( boundUpdateFocusHighlight );
+    tanLabelFractionValueRow.visibleBoundsChangedEmitter.addListener( boundUpdateFocusHighlight );
+
     this.readingBlockDisabledTagName = 'p';
+  }
+
+  //
+  // when visible components of this ReadingBlock change.
+  /**
+   * Workaround for a scenery issue - There is no visibleBoundsProperty so we need to manually update the highlight. When
+   * visible components of this ReadingBlock change, we need to recreate the focus highlight so it accurately reflects
+   * the bounds.
+   */
+  private updateFocusHighlight(): void {
+    this.focusHighlight = new ReadingBlockHighlight( this );
   }
 }
 

@@ -113,6 +113,8 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.angleReadoutDecimal.visible = true;
       }
       this.setAngleReadout();
+
+      this.updateReadingBlockHighlight();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
@@ -141,6 +143,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.setAngleReadoutPrecision( 1 );
       }
       this.setAngleReadout();
+      this.updateReadingBlockHighlight();
     } );
 
     const angleReadout = new AngleReadoutValue( trigTourModel, viewProperties );
@@ -265,10 +268,6 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }
-
-    // Workaround - Scenery does not support an observable "visible" bounds Property and so the focus highlight
-    // cannot adjust as components are made visible/invisible. As a workaround, manually update the focus highlight.
-    this.focusHighlight = new ReadingBlockHighlight( this );
   }
 
   /**
@@ -415,6 +414,18 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.angleReadoutFraction.visible = false;
       }
     }
+
+    this.updateReadingBlockHighlight();
+  }
+
+  /**
+   * This is a workaround - Scenery does not support an observable "visible" bounds Property and so the focus highlight
+   * cannot adjust as components are made visible/invisible. As a workaround, manually update the focus highlight.
+   *
+   * This needs to be called when children visibility changes.
+   */
+  private updateReadingBlockHighlight(): void {
+    this.focusHighlight = new ReadingBlockHighlight( this );
   }
 }
 

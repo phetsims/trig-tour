@@ -76,9 +76,11 @@ class TrigTourScreenView extends ScreenView {
     const initialPosition = new Vector2( readoutDisplay.left, unitCircleView.bottom + 10 );
 
     // Position the GraphView relative to its accordion box. It has siblings that surround
-    // the AccordionBox that change bounds.
-    graphView.leftTop = initialPosition.minus( graphView.getPositionOffset() );
-    graphView.centerX = unitCircleView.centerX;
+    // the AccordionBox that change bounds so we need to compute a position that is relative to the AccordionBox.
+    // In addition, the graph needs to be centered with the unit circle. Computing the bounds of the plot was
+    // difficult (see https://github.com/phetsims/trig-tour/issues/120), so this offset is applied to center
+    // the graph with the unit circle.
+    graphView.leftTop = initialPosition.minus( graphView.getPositionOffset() ).plusXY( 8.5, 0 );
 
     const controlPanel = new ControlPanel( viewProperties );
     controlPanel.right = this.layoutBounds.right - layoutBuffer;

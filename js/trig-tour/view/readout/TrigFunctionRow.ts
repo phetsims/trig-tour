@@ -56,6 +56,12 @@ export default class TrigFunctionRow extends ReadingBlock( Node ) {
    * the bounds.
    */
   private updateFocusHighlight(): void {
+
+    // If there is an old focusHighlight, dispose it.
+    if ( this.focusHighlight instanceof ReadingBlockHighlight ) {
+      this.focusHighlight.dispose();
+    }
+
     this.focusHighlight = new ReadingBlockHighlight( this );
   }
 }

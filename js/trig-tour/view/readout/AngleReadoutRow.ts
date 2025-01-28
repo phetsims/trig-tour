@@ -18,7 +18,7 @@ import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
+import { HighlightFromNode, Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
 import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -425,6 +425,12 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
    * This needs to be called when children visibility changes.
    */
   private updateReadingBlockHighlight(): void {
+
+    // If there is an old focusHighlight, dispose it.
+    if ( this.focusHighlight instanceof HighlightFromNode ) {
+      this.focusHighlight.dispose();
+    }
+
     this.focusHighlight = new ReadingBlockHighlight( this );
   }
 }

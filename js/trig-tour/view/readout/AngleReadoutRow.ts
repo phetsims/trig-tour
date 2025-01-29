@@ -53,6 +53,10 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
   private readonly fullAngleFractionNode: FractionNode;
   private readonly angleReadoutFraction: FractionNode;
 
+  // The active StringProperty for the angleReadoutDecimal, which will change with the selected local.
+  // A reference is kept so that it can be disposed.
+  private activeStringProperty: TReadOnlyProperty<string> | null = null;
+
   /**
    * @param trigTourModel is the main model of the sim
    * @param viewProperties
@@ -238,11 +242,25 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
    * Set readout units to either degrees or radians.
    */
   private setUnits( units: AngleUnits ): void {
+    this.disposeStringProperty();
     if ( units === 'radians' ) {
-      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInRadiansStringProperty();
+      this.activeStringProperty = this.getAngleNumberInRadiansStringProperty();
     }
     else {
-      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInDegreesStringProperty();
+      this.activeStringProperty = this.getAngleNumberInDegreesStringProperty();
+    }
+
+    this.angleReadoutDecimal.stringProperty = this.activeStringProperty;
+  }
+
+  /**
+   * Dispose the StringProperty used to display the angle readout. A new one is created when the readout changes
+   * or the units change.
+   */
+  private disposeStringProperty(): void {
+    if ( this.activeStringProperty ) {
+      this.activeStringProperty.dispose();
+      this.activeStringProperty = null;
     }
   }
 
@@ -257,14 +275,18 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
    * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
    */
   private setAngleReadout(): void {
+    this.disposeStringProperty();
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value;
     if ( !radiansDisplayed ) {
-      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInDegreesStringProperty();
+      this.activeStringProperty = this.getAngleNumberInDegreesStringProperty();
     }
     if ( radiansDisplayed && !specialAnglesVisible ) {
-      this.angleReadoutDecimal.stringProperty = this.getAngleNumberInRadiansStringProperty();
+      this.activeStringProperty = this.getAngleNumberInRadiansStringProperty();
     }
+
+    this.angleReadoutDecimal.stringProperty = this.activeStringProperty;
+
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }

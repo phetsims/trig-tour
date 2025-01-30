@@ -67,6 +67,9 @@ class LabelFractionValueRow extends Node {
     // prevent block fitting of this row as a performance optimization
     this.preventFit = true;
 
+    // exclude invisible children from bounds, so that the highlight accurately surrounds the visible content
+    this.excludeInvisibleChildrenFromBounds = true;
+
     this.trigTourModel = trigTourModel;
     this.viewProperties = viewProperties;
     this.graphType = graphType;

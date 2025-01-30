@@ -16,7 +16,7 @@ import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HBox, HighlightFromNode, Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
 import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -129,9 +129,6 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
       this.coordinatesHBox.visible = specialAnglesVisible;
       this.coordinatesReadout.visible = !specialAnglesVisible;
-
-
-      this.updateFocusHighlight();
     } );
 
     // voicing
@@ -163,21 +160,9 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     this.readingBlockNameResponse = descriptionStringProperty;
     this.descriptionContent = descriptionStringProperty;
     this.readingBlockDisabledTagName = 'p';
-  }
 
-  /**
-   * Workaround - because scenery doesn't have a visible bounds Property, the highlight does not
-   * adjust when bounds change. Instead, manually update the highlight.
-   */
-  private updateFocusHighlight(): void {
-
-    // If there is an old focusHighlight, dispose it.
-    if ( this.focusHighlight instanceof HighlightFromNode ) {
-      this.focusHighlight.dispose();
-    }
-
-    // Create a new focusHighlight.
-    this.focusHighlight = new ReadingBlockHighlight( this );
+    // So that the highlight surround the visible components of the row.
+    this.excludeInvisibleChildrenFromBounds = true;
   }
 
   /**
@@ -199,4 +184,5 @@ class CoordinatesRow extends ReadingBlock( Node ) {
 }
 
 trigTour.register( 'CoordinatesRow', CoordinatesRow );
+
 export default CoordinatesRow;

@@ -18,7 +18,7 @@ import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { HighlightFromNode, Node, NodeOptions, ReadingBlock, ReadingBlockHighlight, Text } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions, ReadingBlock, Text } from '../../../../../scenery/js/imports.js';
 import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -117,8 +117,6 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.angleReadoutDecimal.visible = true;
       }
       this.setAngleReadout();
-
-      this.updateReadingBlockHighlight();
     } );
 
     viewProperties.specialAnglesVisibleProperty.link( specialAnglesVisible => {
@@ -147,7 +145,6 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.setAngleReadoutPrecision( 1 );
       }
       this.setAngleReadout();
-      this.updateReadingBlockHighlight();
     } );
 
     const angleReadout = new AngleReadoutValue( trigTourModel, viewProperties );
@@ -175,6 +172,8 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     this.readingBlockNameResponse = descriptionStringProperty;
     this.descriptionContent = descriptionStringProperty;
     this.readingBlockDisabledTagName = 'p';
+
+    this.excludeInvisibleChildrenFromBounds = true;
   }
 
   /**
@@ -436,24 +435,6 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
         this.angleReadoutFraction.visible = false;
       }
     }
-
-    this.updateReadingBlockHighlight();
-  }
-
-  /**
-   * This is a workaround - Scenery does not support an observable "visible" bounds Property and so the focus highlight
-   * cannot adjust as components are made visible/invisible. As a workaround, manually update the focus highlight.
-   *
-   * This needs to be called when children visibility changes.
-   */
-  private updateReadingBlockHighlight(): void {
-
-    // If there is an old focusHighlight, dispose it.
-    if ( this.focusHighlight instanceof HighlightFromNode ) {
-      this.focusHighlight.dispose();
-    }
-
-    this.focusHighlight = new ReadingBlockHighlight( this );
   }
 }
 

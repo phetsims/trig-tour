@@ -74,7 +74,7 @@ class ReadoutNode extends Node {
       children: [
         new Spacer( 0, 5 ),
         row1,
-        new Spacer( 0, 8 ),
+        new Spacer( 0, 15 ),
         row2,
         new Spacer( 0, 8 ),
         row3

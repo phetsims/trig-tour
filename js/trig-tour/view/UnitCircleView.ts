@@ -16,7 +16,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, CircleOptions, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, Voicing, VoicingActivationResponseListener, VoicingCircle } from '../../../../scenery/js/imports.js';
+import { Circle, CircleOptions, DragListener, KeyboardDragListener, Line, Node, Path, Rectangle, SceneryEvent, Text, VoicingActivationResponseListener, VoicingCircle } from '../../../../scenery/js/imports.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
@@ -149,12 +149,12 @@ class UnitCircleView extends Node {
       cursor: 'pointer',
 
       // pdom
-      tagName: 'div',
-      focusable: true,
       accessibleName: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
       helpText: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty,
-      accessibleNameBehavior: Voicing.BASIC_ACCESSIBLE_NAME_BEHAVIOR,
-      helpTextBehavior: Voicing.BASIC_HELP_TEXT_BEHAVIOR
+
+      // voicing
+      voicingNameResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
+      voicingHintResponse: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty
     } ) );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );

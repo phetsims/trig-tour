@@ -24,7 +24,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import OffScaleIndicatorNode, { OffScaleIndicatorNodeOptions } from '../../../../scenery-phet/js/OffScaleIndicatorNode.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Text, TPaint, Voicing } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, HBox, KeyboardDragListener, Line, Node, Rectangle, SceneryEvent, Text, TPaint } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -172,8 +172,8 @@ class GraphView extends Node {
       helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty,
 
       // voicing - accessibleName and helpText are used for Voicing
-      accessibleNameBehavior: Voicing.BASIC_ACCESSIBLE_NAME_BEHAVIOR,
-      helpTextBehavior: Voicing.BASIC_HELP_TEXT_BEHAVIOR
+      voicingNameResponse: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
+      voicingHintResponse: TrigTourStrings.a11y.graphPoint.helpTextStringProperty
     } );
 
     const hitBound = 20;

@@ -11,8 +11,10 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { Node, Path, TPaint } from '../../../../scenery/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import TPaint from '../../../../scenery/js/util/TPaint.js';
 import trigTour from '../../trigTour.js';
 
 class TriangleNode extends Node {

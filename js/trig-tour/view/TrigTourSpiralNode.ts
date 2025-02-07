@@ -8,8 +8,10 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { Image, Node, Path } from '../../../../scenery/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import clockwiseSpiral_png from '../../../mipmaps/clockwiseSpiral_png.js';
 import counterClockwiseSpiral_png from '../../../mipmaps/counterClockwiseSpiral_png.js';
 import trigTour from '../../trigTour.js';

@@ -6,7 +6,8 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { Node, ReadingBlock } from '../../../../../scenery/js/imports.js';
+import ReadingBlock from '../../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import ViewProperties from '../ViewProperties.js';

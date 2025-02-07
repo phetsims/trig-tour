@@ -13,9 +13,11 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
-import { TPaint, Voicing, VoicingActivationResponseListener, VoicingOptions } from '../../../../scenery/js/imports.js';
+import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
+import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
+import VoicingActivationResponseListener from '../../../../scenery/js/accessibility/voicing/VoicingActivationResponseListener.js';
+import TPaint from '../../../../scenery/js/util/TPaint.js';
 import trigTour from '../../trigTour.js';
 
 class TrigIndicatorArrowNode extends ArrowNode {

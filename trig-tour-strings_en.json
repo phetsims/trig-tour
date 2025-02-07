@@ -50,7 +50,7 @@
   "numberPiPattern": {
     "value": "{0}{1}"
   },
-  "pointOffScale": {
+  "pointOffScreen": {
     "value": "Point off screen!"
   },
   "movePointOnCircleOrGraph": {

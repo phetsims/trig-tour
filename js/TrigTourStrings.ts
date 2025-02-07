@@ -48,8 +48,8 @@ type StringsType = {
   'valueUnitPatternStringProperty': LocalizedStringProperty;
   'numberPiPattern': string;
   'numberPiPatternStringProperty': LocalizedStringProperty;
-  'pointOffScale': string;
-  'pointOffScaleStringProperty': LocalizedStringProperty;
+  'pointOffScreen': string;
+  'pointOffScreenStringProperty': LocalizedStringProperty;
   'movePointOnCircleOrGraph': string;
   'movePointOnCircleOrGraphStringProperty': LocalizedStringProperty;
   'a11y': {

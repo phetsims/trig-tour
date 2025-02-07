@@ -64,7 +64,7 @@ const BACKGROUND_LINE_WIDTH = 2;
 const EXPAND_COLLAPSE_BUTTON_SPACING = 7;
 
 const OFF_SCALE_INDICATOR_NODE_OPTIONS: OffScaleIndicatorNodeOptions = {
-  offScaleStringProperty: TrigTourStrings.pointOffScaleStringProperty,
+  offScaleStringProperty: TrigTourStrings.pointOffScreenStringProperty,
   panelOptions: {
     stroke: TrigTourColors.TEXT_COLOR_GRAY,
     lineWidth: 2,

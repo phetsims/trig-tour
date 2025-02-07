@@ -53,6 +53,9 @@
   "pointOffScale": {
     "value": "Point off screen!"
   },
+  "movePointOnCircleOrGraph": {
+    "value": "Move Point on Circle or Graph"
+  },
   "a11y": {
     "graphViewAccordionBox": {
       "tanAccessibleName": {

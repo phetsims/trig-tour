@@ -50,6 +50,8 @@ type StringsType = {
   'numberPiPatternStringProperty': LocalizedStringProperty;
   'pointOffScale': string;
   'pointOffScaleStringProperty': LocalizedStringProperty;
+  'movePointOnCircleOrGraph': string;
+  'movePointOnCircleOrGraphStringProperty': LocalizedStringProperty;
   'a11y': {
     'graphViewAccordionBox': {
       'tanAccessibleName': string;

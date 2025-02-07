@@ -10,6 +10,7 @@ import BasicActionsKeyboardHelpSection from '../../../../scenery-phet/js/keyboar
 import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
 import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
 import trigTour from '../../trigTour.js';
+import trigTourStrings from '../../TrigTourStrings.js';
 
 class TrigTourKeyboardHelpContent extends TwoColumnKeyboardHelpContent {
   public constructor() {
@@ -19,9 +20,11 @@ class TrigTourKeyboardHelpContent extends TwoColumnKeyboardHelpContent {
       withCheckboxContent: true
     } );
 
-    const dragHelpSection = new MoveDraggableItemsKeyboardHelpSection();
+    const dragHelpSection = new MoveDraggableItemsKeyboardHelpSection( {
+      headingStringProperty: trigTourStrings.movePointOnCircleOrGraphStringProperty
+    } );
 
-    super( [ basicActionsHelpSection ], [ dragHelpSection ] );
+    super( [ dragHelpSection ], [ basicActionsHelpSection ] );
   }
 }
 

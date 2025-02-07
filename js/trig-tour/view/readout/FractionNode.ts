@@ -21,6 +21,7 @@ import Text, { TextOptions } from '../../../../../scenery/js/nodes/Text.js';
 import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
+import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 
 type SelfOptions = {
 
@@ -321,26 +322,32 @@ class FractionNode extends Node {
     return this._descriptionStringProperty;
   }
 
-  // /**
-  //  * Returnsa description string for the state of the fraction node. If there is a
-  //  * denominator, the description will be in the form of "numerator over denominator".
-  //  *
-  //  * If any of the values are radicals, the value will be described in the form of "root {{value}}"
-  //  *
-  //  * Returns something like
-  //  * "root 2 over 3"
-  //  * "x over 1"
-  //  * "root 2"
-  //  */
+  /**
+   * Returns a description string for the state of the fraction node. If there is a
+   * denominator, the description will be in the form of "numerator over denominator".
+   *
+   * If any of the values are radicals, the value will be described in the form of "root {{value}}"
+   *
+   * Returns something like
+   * "root 2 over 3"
+   * "x over 1"
+   * "root 2"
+   */
   private computeDescriptionString(): string {
     const numerator = FractionNode.getStringValue( this._numerator );
     const denominator = FractionNode.getStringValue( this._denominator );
     const denominatorNeeded = !!denominator;
 
+    // Pull the pi symbol out of the numerator and denominator and replace with the word "pi", as that is read
+    // better by speech synthesis.
+    const piRegExp = new RegExp( MathSymbols.PI, 'g' );
+    const piNumerator = numerator.replace( piRegExp, TrigTourMessages.piMessageProperty.value );
+    const piDenominator = denominator.replace( piRegExp, TrigTourMessages.piMessageProperty.value );
+
     const rootNeeded = this._radical;
     const isNegative = this.isNegative();
 
-    let cleanedNumerator = this.removeMinusSign( numerator );
+    let cleanedNumerator = this.removeMinusSign( piNumerator );
     cleanedNumerator = this.removePlusSign( cleanedNumerator );
 
     let descriptionString = cleanedNumerator;
@@ -363,59 +370,12 @@ class FractionNode extends Node {
     if ( denominatorNeeded ) {
       descriptionString = FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
         numerator: descriptionString,
-        denominator: this.removeMinusSign( denominator )
+        denominator: this.removeMinusSign( piDenominator )
       } );
     }
 
     return descriptionString;
-
-    // // If there is no denominator, use Fluent to format a string like "root 2"
-    // if ( denominatorNeeded ) {
-    //   return FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
-    //     negated: isNegative ? 'negative ' : '',
-    //     squareRoot: rootNeeded ? 'root ' + numerator : numerator,
-    //     numeratorValue: numerator,
-    //     denominatorValue: denominator
-    //   } );
-    // }
-    // else {
-    //   return FluentUtils.formatMessage( TrigTourMessages.squareRootablePatternMessageProperty, {
-    //     squareRoot: rootNeeded ? 'TRUE' : 'FALSE',
-    //     value: numerator
-    //   } );
-    // }
   }
-  //
-  // public getFluentStringPlaceables(): Record<string, string> {
-  //   const squareRootSignNeeded = this._radical;  // true if square root symbol is needed over the numerator
-  //   const numerator = FractionNode.getStringValue( this._numerator );
-  //   const denominator = FractionNode.getStringValue( this._denominator );
-  //   // const denominatorNeeded = !!denominator;
-  //
-  //   const isNegative = this.isNegative();
-  //
-  //   return {
-  //     negated: isNegative ? 'TRUE' : 'FALSE',
-  //     squareRoot: squareRootSignNeeded ? 'TRUE' : 'FALSE',
-  //     numeratorValue: this.trimMinusSign( numerator ),
-  //     denominatorValue: this.trimMinusSign( denominator )
-  //   };
-  //
-  //   // // If there is no denominator, use Fluent to format a string like "root 2"
-  //   // if ( denominatorNeeded ) {
-  //   //   return {
-  //   //     squareRoot: squareRootSignNeeded ? 'root ' + numerator : numerator,
-  //   //     numeratorValue: numerator,
-  //   //     denominatorValue: denominator
-  //   //   };
-  //   // }
-  //   // else {
-  //   //   return TrigTourMessages.squareRootablePatternMessageProperty, {
-  //   //     squareRoot: squareRootSignNeeded ? 'TRUE' : 'FALSE',
-  //   //     value: numerator
-  //   //   };
-  //   // }
-  // }
 }
 
 trigTour.register( 'FractionNode', FractionNode );

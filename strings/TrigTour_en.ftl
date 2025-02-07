@@ -26,4 +26,6 @@ trigReadoutPattern = { $trigFunction ->
 
 infinity = plus or minus infinity
 
+pi = pi
+
 coordinatesPattern = x equals { $xValue }, y equals { $yValue }.

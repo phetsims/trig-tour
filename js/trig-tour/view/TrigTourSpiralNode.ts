@@ -1,4 +1,4 @@
-// Copyright 2015-2024, University of Colorado Boulder
+// Copyright 2015-2025, University of Colorado Boulder
 
 /**
  * Node for the spiral in Trig Tour.  The spiral in this sim grows with the angle of the simulation.

@@ -277,8 +277,9 @@ class GraphView extends Node {
     ];
 
     // The trigIndicatorArrow needs to be inside of the AccordionBox or the screen reader
-    // content is read as "empty".
-    displayNode.pdomOrder = [ this.trigIndicatorArrowNode ];
+    // content is read as "empty". The indicator arrows should also be found in the
+    // accordion box in the order.
+    displayNode.pdomOrder = [ this.trigIndicatorArrowNode, leftIndicator, rightIndicator ];
 
     rightBorder.leftCenter = this.accordionBox.rightCenter;
     leftBorder.rightCenter = this.accordionBox.leftCenter;

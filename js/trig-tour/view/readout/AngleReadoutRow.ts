@@ -154,6 +154,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     const descriptionStringProperty = new DerivedProperty( [
       this.fullAngleFractionNode.descriptionStringProperty,
       this.angleReadoutFraction.descriptionStringProperty,
+      this.angleReadoutFraction.absoluteValueDescriptionStringProperty,
       viewProperties.angleUnitsProperty,
       viewProperties.specialAnglesVisibleProperty,
       angleReadout.angleReadoutStringProperty,
@@ -165,11 +166,12 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     ], (
       fullAngleString,
       angleReadoutString,
+      absoluteValueAngleReadoutString,
       angleUnits,
       specialAnglesVisible,
       angleReadout
     ) => {
-      return this.createDescriptionString( fullAngleString, angleReadoutString, angleUnits, specialAnglesVisible, angleReadout );
+      return this.createDescriptionString( fullAngleString, angleReadoutString, absoluteValueAngleReadoutString, angleUnits, specialAnglesVisible, angleReadout );
     } );
     this.readingBlockNameResponse = descriptionStringProperty;
     this.accessibleParagraph = descriptionStringProperty;
@@ -183,6 +185,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
    *
    * @param fullAngleString - The fullAngleFractionNode description string
    * @param angleReadoutString - The angleReadoutFraction description string
+   * @param absoluteValueAngleReadoutString - The angleReadoutFraction absolute value description string (no negative)
    * @param angleUnits - The selected units.
    * @param specialAnglesVisible - Are special angles visible?
    * @param angleReadout - The angle readout string with the correct precision.
@@ -190,6 +193,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
   private createDescriptionString(
     fullAngleString: string,
     angleReadoutString: string,
+    absoluteValueAngleReadoutString: string,
     angleUnits: AngleUnits,
     specialAnglesVisible: boolean,
     angleReadout: string
@@ -200,10 +204,12 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       // purposes. See the setSpecialAngleReadout method.
       if ( angleReadoutString && fullAngleString && !angleReadoutString.includes( 'A' ) ) {
 
+        // The value is being displayed with a pattern like 4pi + pi / 3.
+        // 4pi is the fullAngleString and pi / 3 is the angleReadoutString.
         const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourMessages.valueMinusValuePatternMessageProperty : TrigTourMessages.valuePlusValuePatternMessageProperty;
         const terms = FluentUtils.formatMessage( patternMessageProperty, {
           value1: fullAngleString,
-          value2: angleReadoutString
+          value2: absoluteValueAngleReadoutString // "minus" is included by the pattern so use the absolute value
         } );
         return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
           value: terms

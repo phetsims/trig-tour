@@ -42,7 +42,11 @@ class FractionNode extends Node {
   private _denominator: FractionValue;
   private _radical: boolean;
 
+  // A string that describes the fraction in natural language.
   private readonly _descriptionStringProperty: StringProperty;
+
+  // A string that describes the absolute value of the fraction in natural language (no negative).
+  private readonly _absoluteValueDescriptionStringProperty: StringProperty;
 
   // A callback that will update the layout of the fraction components.
   private boundSetFraction = this.setFraction.bind( this );
@@ -79,6 +83,7 @@ class FractionNode extends Node {
     this.textOptions = options.textOptions;
 
     this._descriptionStringProperty = new StringProperty( '' );
+    this._absoluteValueDescriptionStringProperty = new StringProperty( '' );
 
     this.setValues( numerator, denominator, options.radical );
 
@@ -193,7 +198,8 @@ class FractionNode extends Node {
    * Set the fraction node and draw its various parts.
    */
   private setFraction(): void {
-    this._descriptionStringProperty.value = this.computeDescriptionString();
+    this._descriptionStringProperty.value = this.computeDescriptionString( false );
+    this._absoluteValueDescriptionStringProperty.value = this.computeDescriptionString( true );
 
     let minusSign;                            // short horizontal line for minus sign, in front of divisor bar
     let numeratorNegative = false;            // true if numerator is negative
@@ -322,6 +328,10 @@ class FractionNode extends Node {
     return this._descriptionStringProperty;
   }
 
+  public get absoluteValueDescriptionStringProperty(): TReadOnlyProperty<string> {
+    return this._absoluteValueDescriptionStringProperty;
+  }
+
   /**
    * Returns a description string for the state of the fraction node. If there is a
    * denominator, the description will be in the form of "numerator over denominator".
@@ -333,7 +343,7 @@ class FractionNode extends Node {
    * "x over 1"
    * "root 2"
    */
-  private computeDescriptionString(): string {
+  private computeDescriptionString( absoluteValue: boolean ): string {
     const numerator = FractionNode.getStringValue( this._numerator );
     const denominator = FractionNode.getStringValue( this._denominator );
     const denominatorNeeded = !!denominator;
@@ -360,7 +370,7 @@ class FractionNode extends Node {
     }
 
     // add a minus sign if needed
-    if ( isNegative ) {
+    if ( isNegative && !absoluteValue ) {
       descriptionString = FluentUtils.formatMessage( TrigTourMessages.negativePatternMessageProperty, {
         value: descriptionString
       } );

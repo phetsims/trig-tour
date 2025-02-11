@@ -1,6 +1,6 @@
 squareRootPattern = root { $value }
 
-negativePattern = minus { $value }
+negativePattern = negative { $value }
 
 fractionPattern = { $numerator } over { $denominator }
 
@@ -13,9 +13,7 @@ angleRadiansPattern = Angle equals { $value } radians.
 # The pattern that reads out the angle in radians but without any units.
 angleEqualsSpecialAngle = Angle equals { $value }.
 
-# The minus between values is built into the negativePattern so it is not included here.
-valueMinusValuePattern = { $value1 } { $value2 }
-
+valueMinusValuePattern = { $value1 } minus { $value2 }
 valuePlusValuePattern = { $value1 } plus { $value2 }
 
 trigReadoutPattern = { $trigFunction ->

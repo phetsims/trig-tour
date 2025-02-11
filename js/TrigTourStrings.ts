@@ -103,6 +103,12 @@ type StringsType = {
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;
     };
+    'offScreenIndicator': {
+      'left': string;
+      'leftStringProperty': LocalizedStringProperty;
+      'right': string;
+      'rightStringProperty': LocalizedStringProperty;
+    };
     'specialAnglesCheckbox': {
       'helpText': string;
       'helpTextStringProperty': LocalizedStringProperty;

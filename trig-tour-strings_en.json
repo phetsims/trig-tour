@@ -123,6 +123,14 @@
         "value": "Move point on graph to change theta."
       }
     },
+    "offScreenIndicator": {
+      "left": {
+        "value": "Point off screen to the left!"
+      },
+      "right": {
+        "value": "Point off screen to the right!"
+      }
+    },
     "specialAnglesCheckbox": {
       "helpText": {
         "value": "Explore with or without angles constrained to multiples of 30, 45, 60, and 90 degrees."

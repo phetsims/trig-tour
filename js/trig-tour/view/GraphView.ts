@@ -253,8 +253,12 @@ class GraphView extends Node {
     this.expandedProperty = this.accordionBox.expandedProperty;
 
     // Indicators for when the angle value goes beyond the displayed graph
-    const leftIndicator = new OffScaleIndicatorNode( 'left', OFF_SCALE_INDICATOR_NODE_OPTIONS );
-    const rightIndicator = new OffScaleIndicatorNode( 'right', OFF_SCALE_INDICATOR_NODE_OPTIONS );
+    const leftIndicator = new OffScaleIndicatorNode( 'left', combineOptions<OffScaleIndicatorNodeOptions>( {}, {
+      accessibleParagraph: TrigTourStrings.a11y.offScreenIndicator.leftStringProperty
+    }, OFF_SCALE_INDICATOR_NODE_OPTIONS ) );
+    const rightIndicator = new OffScaleIndicatorNode( 'right', combineOptions<OffScaleIndicatorNodeOptions>( {}, {
+      accessibleParagraph: TrigTourStrings.a11y.offScreenIndicator.rightStringProperty
+    }, OFF_SCALE_INDICATOR_NODE_OPTIONS ) );
 
     // Dynamic layout - reposition indicators if their bounds change due
     // to changing language.

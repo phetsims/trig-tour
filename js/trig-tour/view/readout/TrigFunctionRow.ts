@@ -36,10 +36,8 @@ export default class TrigFunctionRow extends ReadingBlock( Node ) {
                                   tanLabelFractionValueRow.descriptionStringProperty;
 
       this.readingBlockNameResponse = descriptionProperty;
-      this.descriptionContent = descriptionProperty;
+      this.accessibleParagraph = descriptionProperty;
     } );
-
-    this.readingBlockDisabledTagName = 'p';
 
     // Exclude invisible children from bounds, so that the highlight accurately surrounds the visible content
     this.excludeInvisibleChildrenFromBounds = true;

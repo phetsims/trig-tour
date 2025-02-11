@@ -161,8 +161,7 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     // TODO: Can we use accessibleParagraph with ReadingBLock without them coliding?
     // See https://github.com/phetsims/trig-tour/issues/132
     this.readingBlockNameResponse = descriptionStringProperty;
-    this.descriptionContent = descriptionStringProperty;
-    this.readingBlockDisabledTagName = 'p';
+    this.accessibleParagraph = descriptionStringProperty;
 
     // So that the highlight surround the visible components of the row.
     this.excludeInvisibleChildrenFromBounds = true;

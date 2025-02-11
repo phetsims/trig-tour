@@ -172,8 +172,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       return this.createDescriptionString( fullAngleString, angleReadoutString, angleUnits, specialAnglesVisible, angleReadout );
     } );
     this.readingBlockNameResponse = descriptionStringProperty;
-    this.descriptionContent = descriptionStringProperty;
-    this.readingBlockDisabledTagName = 'p';
+    this.accessibleParagraph = descriptionStringProperty;
 
     this.excludeInvisibleChildrenFromBounds = true;
   }

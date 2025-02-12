@@ -11,9 +11,6 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
-import StringProperty from '../../../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
@@ -34,8 +31,6 @@ import FractionNode from './FractionNode.js';
 
 //strings
 const angleStringProperty = TrigTourStrings.angleStringProperty;
-const radsStringProperty = TrigTourStrings.radsStringProperty;
-const valueUnitPatternStringProperty = TrigTourStrings.valueUnitPatternStringProperty;
 
 // non-translatable string
 const equalString = TrigTourMathStrings.EQUALS_STRING;
@@ -46,8 +41,6 @@ const TEXT_COLOR = TrigTourColors.TEXT_COLOR;
 
 class AngleReadoutRow extends ReadingBlock( Node ) {
 
-  // number of decimal places for display of fullAngle, = 0 for special angles
-  private decimalPrecision: number;
   private viewProperties: ViewProperties;
   private trigTourModel: TrigTourModel;
 
@@ -55,9 +48,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
   private readonly fullAngleFractionNode: FractionNode;
   private readonly angleReadoutFraction: FractionNode;
 
-  // The active StringProperty for the angleReadoutDecimal, which will change with the selected local.
-  // A reference is kept so that it can be disposed.
-  private activeStringProperty: TReadOnlyProperty<string> | null = null;
+  private readonly readoutValue: AngleReadoutValue;
 
   /**
    * @param trigTourModel is the main model of the sim
@@ -67,7 +58,8 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
   public constructor( trigTourModel: TrigTourModel, viewProperties: ViewProperties, providedOptions: NodeOptions ) {
     super( providedOptions );
 
-    this.decimalPrecision = 1;
+    this.readoutValue = new AngleReadoutValue( trigTourModel, viewProperties );
+
     this.viewProperties = viewProperties;
     this.trigTourModel = trigTourModel;
 
@@ -75,13 +67,10 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     const fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR, maxWidth: 100 };
     const boldTextOptions = { font: DISPLAY_FONT, fill: TEXT_COLOR, fontWeight: 'bold', maxWidth: 55 };
 
-    // full angle for the trigTourModel
-    const fullAngleValue = Utils.toFixed( trigTourModel.fullAngleProperty.value, 1 );
-
     //  value is decimal number or exact fraction of radians (in special angle mode)
     const angleLabelText = new Text( angleStringProperty, boldTextOptions );
     const angleLabelEqualsText = new Text( equalString, boldTextOptions );
-    this.angleReadoutDecimal = new Text( fullAngleValue, fontInfo ); // angle readout as decimal number
+    this.angleReadoutDecimal = new Text( this.readoutValue.angleReadoutWithUnitsStringProperty, fontInfo ); // angle readout as decimal number
     this.fullAngleFractionNode = new FractionNode( '', '', { textOptions: fontInfo } );  // node representing fractional form of full angle
 
     // used to display angle as FractionNode in Special angles mode
@@ -107,7 +96,6 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     } );
 
     viewProperties.angleUnitsProperty.link( units => {
-      this.setUnits( units );
       if ( units === 'radians' && viewProperties.specialAnglesVisibleProperty.value ) {
         this.fullAngleFractionNode.visible = true;
         this.angleReadoutFraction.visible = true;
@@ -140,16 +128,9 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       if ( specialAnglesVisible ) {
         const currentSmallAngle = trigTourModel.getSmallAngleInRadians();
         trigTourModel.setSpecialAngleWithSmallAngle( currentSmallAngle );
-        this.setAngleReadoutPrecision( 0 );   //integer display of special angles
-      }
-      else {
-        // 1 decimal place precision for continuous angles
-        this.setAngleReadoutPrecision( 1 );
       }
       this.setAngleReadout();
     } );
-
-    const angleReadout = new AngleReadoutValue( trigTourModel, viewProperties );
 
     const descriptionStringProperty = new DerivedProperty( [
       this.fullAngleFractionNode.descriptionStringProperty,
@@ -157,7 +138,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       this.angleReadoutFraction.absoluteValueDescriptionStringProperty,
       viewProperties.angleUnitsProperty,
       viewProperties.specialAnglesVisibleProperty,
-      angleReadout.angleReadoutStringProperty,
+      this.readoutValue.angleReadoutStringProperty,
       TrigTourMessages.valueMinusValuePatternMessageProperty,
       TrigTourMessages.valuePlusValuePatternMessageProperty,
       TrigTourMessages.angleEqualsSpecialAngleMessageProperty,
@@ -245,88 +226,15 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
   }
 
   /**
-   * Set readout units to either degrees or radians.
-   */
-  private setUnits( units: AngleUnits ): void {
-    this.disposeStringProperty();
-    if ( units === 'radians' ) {
-      this.activeStringProperty = this.getAngleNumberInRadiansStringProperty();
-    }
-    else {
-      this.activeStringProperty = this.getAngleNumberInDegreesStringProperty();
-    }
-
-    this.angleReadoutDecimal.stringProperty = this.activeStringProperty;
-  }
-
-  /**
-   * Dispose the StringProperty used to display the angle readout. A new one is created when the readout changes
-   * or the units change.
-   */
-  private disposeStringProperty(): void {
-    if ( this.activeStringProperty ) {
-      this.activeStringProperty.dispose();
-      this.activeStringProperty = null;
-    }
-  }
-
-  /**
-   * Set the fullAngle readout precision.
-   */
-  private setAngleReadoutPrecision( decimalPrecision: number ): void {
-    this.decimalPrecision = decimalPrecision;
-  }
-
-  /**
    * Sets the unit format of angle readout of readout panel in degrees, radians, or special angles.
    */
   private setAngleReadout(): void {
-    this.disposeStringProperty();
     const radiansDisplayed = this.viewProperties.angleUnitsProperty.value === 'radians';
     const specialAnglesVisible = this.viewProperties.specialAnglesVisibleProperty.value;
-    if ( !radiansDisplayed ) {
-      this.activeStringProperty = this.getAngleNumberInDegreesStringProperty();
-    }
-    if ( radiansDisplayed && !specialAnglesVisible ) {
-      this.activeStringProperty = this.getAngleNumberInRadiansStringProperty();
-    }
-
-    this.angleReadoutDecimal.stringProperty = this.activeStringProperty;
 
     if ( radiansDisplayed && specialAnglesVisible ) {
       this.setSpecialAngleReadout();
     }
-  }
-
-  /**
-   * Returns a string Property (that will update with dynamic locales) for the angle readout as a numerical
-   * value in radians.
-   *
-   * Remember to dispose the old Property before setting a new one!
-   */
-  private getAngleNumberInRadiansStringProperty(): TReadOnlyProperty<string> {
-    const radiansValue = Utils.toFixed( this.trigTourModel.getFullAngleInRadians(), 3 );
-    const patternStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
-      value: radiansValue,
-      unit: radsStringProperty
-    }, {
-      formatNames: [ 'value', 'unit' ]
-    } );
-
-    return patternStringProperty;
-  }
-
-  /**
-   * Returns a string Property for the angle readout as a numerical value in degrees. Since values for this Text
-   * may need to change dynamically, all strings must use StringProperty (even though this one does not update).
-   *
-   * Remember to dispose the old Property before setting a new one!
-   */
-  private getAngleNumberInDegreesStringProperty(): TReadOnlyProperty<string> {
-    return new StringProperty( `${Utils.toFixed(
-      this.trigTourModel.getFullAngleInDegrees(),
-      this.decimalPrecision )
-    }\u00B0` );
   }
 
   /**

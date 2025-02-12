@@ -4,8 +4,6 @@
  * Creates the second row for the ReadoutNode of Trig Tour.  This row contains a label for the angle and the value
  * of the model angle, in degrees or radians.
  *
- * TODO: Re-implement value readout with AngleReadoutValue.ts, see https://github.com/phetsims/trig-tour/issues/107.
- *
  * @author Michael Dubson (PhET developer) on 6/10/2015
  * @author Jesse Greenberg
  */

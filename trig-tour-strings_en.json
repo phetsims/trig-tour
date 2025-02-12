@@ -133,7 +133,7 @@
     },
     "specialAnglesCheckbox": {
       "helpText": {
-        "value": "Explore with or without angles constrained to multiples of 30, 45, 60, and 90 degrees."
+        "value": "Explore with or without constrained angles."
       }
     },
     "labelsCheckbox": {

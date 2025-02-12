@@ -150,6 +150,38 @@ type StringsType = {
       };
       'interactionHint': string;
       'interactionHintStringProperty': LocalizedStringProperty;
+    };
+    'math': {
+      'pi': string;
+      'piStringProperty': LocalizedStringProperty;
+      'infinity': string;
+      'infinityStringProperty': LocalizedStringProperty;
+      'coordinatesPattern': string;
+      'coordinatesPatternStringProperty': LocalizedStringProperty;
+      'valueMinusValuePattern': string;
+      'valueMinusValuePatternStringProperty': LocalizedStringProperty;
+      'valuePlusValuePattern': string;
+      'valuePlusValuePatternStringProperty': LocalizedStringProperty;
+      'squareRootPattern': string;
+      'squareRootPatternStringProperty': LocalizedStringProperty;
+      'negativePattern': string;
+      'negativePatternStringProperty': LocalizedStringProperty;
+      'fractionPattern': string;
+      'fractionPatternStringProperty': LocalizedStringProperty;
+      'angleEqualsSpecialAnglePattern': string;
+      'angleEqualsSpecialAnglePatternStringProperty': LocalizedStringProperty;
+      'angleRadiansPattern': string;
+      'angleRadiansPatternStringProperty': LocalizedStringProperty;
+      'angleDegreesPattern': string;
+      'angleDegreesPatternStringProperty': LocalizedStringProperty;
+      'trigReadoutPattern': string;
+      'trigReadoutPatternStringProperty': LocalizedStringProperty;
+      'sinFunction': string;
+      'sinFunctionStringProperty': LocalizedStringProperty;
+      'cosFunction': string;
+      'cosFunctionStringProperty': LocalizedStringProperty;
+      'tanFunction': string;
+      'tanFunctionStringProperty': LocalizedStringProperty;
     }
   }
 };

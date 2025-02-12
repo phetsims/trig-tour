@@ -11,16 +11,15 @@ import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../../phet-core/js/types/PickOptional.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import ReadingBlock from '../../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -142,16 +141,14 @@ class CoordinatesRow extends ReadingBlock( Node ) {
       trigTourModel.sinValueStringProperty,
       viewProperties.specialAnglesVisibleProperty
     ], ( cosFraction, sinFraction, cosValue, sinValue, specialAnglesVisible ) => {
-
-
       if ( specialAnglesVisible ) {
-        return FluentUtils.formatMessage( TrigTourMessages.coordinatesPatternMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.coordinatesPatternStringProperty, {
           xValue: cosFraction,
           yValue: sinFraction
         } );
       }
       else {
-        return FluentUtils.formatMessage( TrigTourMessages.coordinatesPatternMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.coordinatesPatternStringProperty, {
           xValue: cosValue,
           yValue: sinValue
         } );

@@ -9,14 +9,13 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import ReadingBlock from '../../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -137,11 +136,11 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       viewProperties.angleUnitsProperty,
       viewProperties.specialAnglesVisibleProperty,
       this.readoutValue.angleReadoutStringProperty,
-      TrigTourMessages.valueMinusValuePatternMessageProperty,
-      TrigTourMessages.valuePlusValuePatternMessageProperty,
-      TrigTourMessages.angleEqualsSpecialAngleMessageProperty,
-      TrigTourMessages.angleRadiansPatternMessageProperty,
-      TrigTourMessages.angleDegreesPatternMessageProperty
+      TrigTourStrings.a11y.math.valueMinusValuePatternStringProperty,
+      TrigTourStrings.a11y.math.valuePlusValuePatternStringProperty,
+      TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty,
+      TrigTourStrings.a11y.math.angleRadiansPatternStringProperty,
+      TrigTourStrings.a11y.math.angleDegreesPatternStringProperty
     ], (
       fullAngleString,
       angleReadoutString,
@@ -185,38 +184,38 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
 
         // The value is being displayed with a pattern like 4pi + pi / 3.
         // 4pi is the fullAngleString and pi / 3 is the angleReadoutString.
-        const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourMessages.valueMinusValuePatternMessageProperty : TrigTourMessages.valuePlusValuePatternMessageProperty;
-        const terms = FluentUtils.formatMessage( patternMessageProperty, {
+        const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourStrings.a11y.math.valueMinusValuePatternStringProperty : TrigTourStrings.a11y.math.valuePlusValuePatternStringProperty;
+        const terms = StringUtils.fillIn( patternMessageProperty, {
           value1: fullAngleString,
           value2: absoluteValueAngleReadoutString // "minus" is included by the pattern so use the absolute value
         } );
-        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: terms
         } );
       }
       else if ( fullAngleString ) {
 
         // The full angle string is used to display the special angle at intervals of 0 or pi.
-        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: fullAngleString
         } );
       }
       else {
 
         // The angle readout string is used to display the other special angles.
-        return FluentUtils.formatMessage( TrigTourMessages.angleEqualsSpecialAngleMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: angleReadoutString
         } );
       }
     }
     else {
       if ( angleUnits === 'radians' ) {
-        return FluentUtils.formatMessage( TrigTourMessages.angleRadiansPatternMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleRadiansPatternStringProperty, {
           value: angleReadout
         } );
       }
       else {
-        return FluentUtils.formatMessage( TrigTourMessages.angleDegreesPatternMessageProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleDegreesPatternStringProperty, {
           value: angleReadout
         } );
       }

@@ -10,7 +10,6 @@
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -18,10 +17,11 @@ import Line from '../../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import Text, { TextOptions } from '../../../../../scenery/js/nodes/Text.js';
-import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
+import TrigTourStrings from '../../../TrigTourStrings.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 
 type SelfOptions = {
 
@@ -351,8 +351,8 @@ class FractionNode extends Node {
     // Pull the pi symbol out of the numerator and denominator and replace with the word "pi", as that is read
     // better by speech synthesis.
     const piRegExp = new RegExp( MathSymbols.PI, 'g' );
-    const piNumerator = numerator.replace( piRegExp, TrigTourMessages.piMessageProperty.value );
-    const piDenominator = denominator.replace( piRegExp, TrigTourMessages.piMessageProperty.value );
+    const piNumerator = numerator.replace( piRegExp, TrigTourStrings.a11y.math.piStringProperty.value );
+    const piDenominator = denominator.replace( piRegExp, TrigTourStrings.a11y.math.piStringProperty.value );
 
     const rootNeeded = this._radical;
     const isNegative = this.isNegative();
@@ -364,21 +364,21 @@ class FractionNode extends Node {
 
     // first add a root
     if ( rootNeeded ) {
-      descriptionString = FluentUtils.formatMessage( TrigTourMessages.squareRootPatternMessageProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.squareRootPatternStringProperty, {
         value: descriptionString
       } );
     }
 
     // add a minus sign if needed
     if ( isNegative && !absoluteValue ) {
-      descriptionString = FluentUtils.formatMessage( TrigTourMessages.negativePatternMessageProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.negativePatternStringProperty, {
         value: descriptionString
       } );
     }
 
     // add the denominator if needed
     if ( denominatorNeeded ) {
-      descriptionString = FluentUtils.formatMessage( TrigTourMessages.fractionPatternMessageProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.fractionPatternStringProperty, {
         numerator: descriptionString,
         denominator: this.removeMinusSign( piDenominator )
       } );

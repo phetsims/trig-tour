@@ -14,13 +14,12 @@
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import FluentUtils from '../../../../../chipper/js/browser/FluentUtils.js';
 import Utils from '../../../../../dot/js/Utils.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import TrigTourMessages from '../../../strings/TrigTourMessages.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -187,11 +186,15 @@ class LabelFractionValueRow extends Node {
       singularity
     ) => {
 
-      const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourMessages.infinityMessageProperty :
+      const trigFunctionProperty = graphType === 'sin' ? TrigTourStrings.a11y.math.sinFunctionStringProperty :
+                                   graphType === 'cos' ? TrigTourStrings.a11y.math.cosFunctionStringProperty :
+                                   TrigTourStrings.a11y.math.tanFunctionStringProperty;
+
+      const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourStrings.a11y.math.infinityStringProperty :
                         specialAnglesVisible ? trigValueFractionString : trigValueNumberText.string;
 
-      return FluentUtils.formatMessage( TrigTourMessages.trigReadoutPatternMessageProperty, {
-        trigFunction: graphType,
+      return StringUtils.fillIn( TrigTourStrings.a11y.math.trigReadoutPatternStringProperty, {
+        trigFunction: trigFunctionProperty,
         trigFraction: trigFraction.descriptionStringProperty,
         value: trigValue
       } );

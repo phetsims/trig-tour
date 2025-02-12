@@ -188,6 +188,53 @@
       "interactionHint": {
         "value": "Move point on circle or graph to explore different angles."
       }
+    },
+    "math": {
+      "pi": {
+        "value": "pi"
+      },
+      "infinity": {
+        "value": "plus or minus infinity"
+      },
+      "coordinatesPattern": {
+        "value": "x equals {{xValue}}, y equals {{yValue}}."
+      },
+      "valueMinusValuePattern": {
+        "value": "{{value1}} minus {{value2}}"
+      },
+      "valuePlusValuePattern": {
+        "value": "{{value1}} plus {{value2}}"
+      },
+      "squareRootPattern": {
+        "value": "root {{value}}"
+      },
+      "negativePattern": {
+        "value": "negative {{value}}"
+      },
+      "fractionPattern": {
+        "value": "{{numerator}} over {{denominator}}"
+      },
+      "angleEqualsSpecialAnglePattern": {
+        "value": "Angle equals {{value}}."
+      },
+      "angleRadiansPattern": {
+        "value": "Angle equals {{value}} radians."
+      },
+      "angleDegreesPattern": {
+        "value": "Angle equals {{value}} degrees."
+      },
+      "trigReadoutPattern": {
+        "value": "{{trigFunction}} theta equals {{trigFraction}} or {{value}}."
+      },
+      "sinFunction": {
+        "value": "Sine"
+      },
+      "cosFunction": {
+        "value": "Cosine"
+      },
+      "tanFunction": {
+        "value": "Tangent"
+      }
     }
   }
 }

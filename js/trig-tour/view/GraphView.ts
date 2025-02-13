@@ -178,11 +178,11 @@ class GraphView extends Node {
 
       // pdom - this is the Node that receives the input listener so it needs to be focusable
       accessibleName: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.graphPoint.helpTextStringProperty,
+      accessibleHelpText: TrigTourStrings.a11y.graphPoint.accessibleHelpTextStringProperty,
 
-      // voicing - accessibleName and helpText are used for Voicing
+      // voicing - accessibleName and accessibleHelpText are used for Voicing
       voicingNameResponse: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
-      voicingHintResponse: TrigTourStrings.a11y.graphPoint.helpTextStringProperty
+      voicingHintResponse: TrigTourStrings.a11y.graphPoint.accessibleHelpTextStringProperty
     } );
 
     const hitBound = 20;
@@ -230,7 +230,7 @@ class GraphView extends Node {
       contentYMargin: 0,
       contentXMargin: 0,
 
-      voicingHintResponseCollapsed: TrigTourStrings.a11y.graphViewAccordionBox.helpTextStringProperty
+      voicingHintResponseCollapsed: TrigTourStrings.a11y.graphViewAccordionBox.accessibleHelpTextStringProperty
     } ) );
 
     // The accessible Name of the accordion box changes based on the graph being displayed.

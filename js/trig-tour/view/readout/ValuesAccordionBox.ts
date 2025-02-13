@@ -37,7 +37,7 @@ class ValuesAccordionBox extends AccordionBox {
       contentYMargin: 15,
       contentYSpacing: 8,
       expandedProperty: model.valuesExpandedProperty,
-      voicingHintResponseCollapsed: TrigTourStrings.a11y.valuesAccordionBox.helpTextStringProperty
+      voicingHintResponseCollapsed: TrigTourStrings.a11y.valuesAccordionBox.accessibleHelpTextStringProperty
     } ) );
   }
 }

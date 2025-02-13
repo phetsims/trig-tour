@@ -38,18 +38,18 @@ type StringsType = {
       'tanAccessibleNameStringProperty': LocalizedStringProperty;
       'sinAccessibleNameStringProperty': LocalizedStringProperty;
       'cosAccessibleNameStringProperty': LocalizedStringProperty;
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'valuesAccordionBox': {
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'unitsRadioButtons': {
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'graphRadioButtons': {
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'cosButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
@@ -62,24 +62,24 @@ type StringsType = {
     };
     'unitCirclePoint': {
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'graphPoint': {
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'offScreenIndicator': {
       'leftStringProperty': LocalizedStringProperty;
       'rightStringProperty': LocalizedStringProperty;
     };
     'specialAnglesCheckbox': {
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'labelsCheckbox': {
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'gridCheckbox': {
-      'helpTextStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'screenSummary': {
       'playAreaStringProperty': LocalizedStringProperty;

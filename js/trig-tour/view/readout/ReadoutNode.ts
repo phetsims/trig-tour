@@ -70,7 +70,7 @@ class ReadoutNode extends Node {
 
       // pdom
       accessibleName: TrigTourStrings.a11y.unitsRadioButtons.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.unitsRadioButtons.helpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.unitsRadioButtons.accessibleHelpTextStringProperty
     } );
 
     // Layout rows of Readout Panel.

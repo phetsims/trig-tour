@@ -74,19 +74,19 @@ class ControlPanel extends Panel {
 
       // pdom
       accessibleName: TrigTourStrings.a11y.graphRadioButtons.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.graphRadioButtons.helpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.graphRadioButtons.accessibleHelpTextStringProperty
     } );
 
     // 3 checkboxes: Labels, Grid, Special Angles
     const checkboxOptions = { checkboxColorBackground: 'white' };
     const labelsCheckbox = new Checkbox( viewProperties.labelsVisibleProperty, labelsText, combineOptions<CheckboxOptions>( {
-      helpText: TrigTourStrings.a11y.labelsCheckbox.helpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.labelsCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
     const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, combineOptions<CheckboxOptions>( {
-      helpText: TrigTourStrings.a11y.gridCheckbox.helpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.gridCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
     const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, combineOptions<CheckboxOptions>( {
-      helpText: TrigTourStrings.a11y.specialAnglesCheckbox.helpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.specialAnglesCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
 
     const checkboxGroup = new VBox( {

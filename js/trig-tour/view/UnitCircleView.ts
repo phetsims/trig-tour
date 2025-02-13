@@ -160,11 +160,11 @@ class UnitCircleView extends Node {
 
       // pdom
       accessibleName: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
-      helpText: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty,
+      accessibleHelpText: TrigTourStrings.a11y.unitCirclePoint.accessibleHelpTextStringProperty,
 
       // voicing
       voicingNameResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
-      voicingHintResponse: TrigTourStrings.a11y.unitCirclePoint.helpTextStringProperty
+      voicingHintResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleHelpTextStringProperty
     } ) );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );

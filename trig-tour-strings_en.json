@@ -67,12 +67,12 @@
       "cosAccessibleName": {
         "value": "Cosine Theta versus Theta Graph"
       },
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Expand to explore graph of function versus angle."
       }
     },
     "valuesAccordionBox": {
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Expand to show angle measure, coordinates, and trig value."
       }
     },
@@ -80,7 +80,7 @@
       "accessibleName": {
         "value": "Angle Units"
       },
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Choose units for angle."
       }
     },
@@ -88,7 +88,7 @@
       "accessibleName": {
         "value": "Trig Functions"
       },
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Compare values and graphs of different trig functions."
       },
       "cosButton": {
@@ -111,7 +111,7 @@
       "accessibleName": {
         "value": "Point on Circle"
       },
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Move point on circle to change theta."
       }
     },
@@ -119,7 +119,7 @@
       "accessibleName": {
         "value": "Point on Graph"
       },
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Move point on graph to change theta."
       }
     },
@@ -132,17 +132,17 @@
       }
     },
     "specialAnglesCheckbox": {
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Explore with or without constrained angles."
       }
     },
     "labelsCheckbox": {
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Explore angles with or without help of visual labels on unit circle and graph."
       }
     },
     "gridCheckbox": {
-      "helpText": {
+      "accessibleHelpText": {
         "value": "Create angles with or without help of coordinate grid on unit circle."
       }
     },

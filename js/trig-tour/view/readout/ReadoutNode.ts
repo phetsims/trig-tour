@@ -69,8 +69,8 @@ class ReadoutNode extends Node {
       spacing: SPACING,
 
       // pdom
-      accessibleName: TrigTourStrings.a11y.unitsRadioButtons.accessibleNameStringProperty,
-      accessibleHelpText: TrigTourStrings.a11y.unitsRadioButtons.accessibleHelpTextStringProperty
+      accessibleName: TrigTourStrings.a11y.translatable.unitsRadioButtons.accessibleNameStringProperty,
+      accessibleHelpText: TrigTourStrings.a11y.translatable.unitsRadioButtons.accessibleHelpTextStringProperty
     } );
 
     // Layout rows of Readout Panel.

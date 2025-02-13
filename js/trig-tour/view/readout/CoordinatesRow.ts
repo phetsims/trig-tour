@@ -142,13 +142,13 @@ class CoordinatesRow extends ReadingBlock( Node ) {
       viewProperties.specialAnglesVisibleProperty
     ], ( cosFraction, sinFraction, cosValue, sinValue, specialAnglesVisible ) => {
       if ( specialAnglesVisible ) {
-        return StringUtils.fillIn( TrigTourStrings.a11y.math.coordinatesPatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.coordinatesPatternStringProperty, {
           xValue: cosFraction,
           yValue: sinFraction
         } );
       }
       else {
-        return StringUtils.fillIn( TrigTourStrings.a11y.math.coordinatesPatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.coordinatesPatternStringProperty, {
           xValue: cosValue,
           yValue: sinValue
         } );

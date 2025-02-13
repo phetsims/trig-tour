@@ -186,14 +186,14 @@ class LabelFractionValueRow extends Node {
       singularity
     ) => {
 
-      const trigFunctionProperty = graphType === 'sin' ? TrigTourStrings.a11y.math.sinFunctionStringProperty :
-                                   graphType === 'cos' ? TrigTourStrings.a11y.math.cosFunctionStringProperty :
-                                   TrigTourStrings.a11y.math.tanFunctionStringProperty;
+      const trigFunctionProperty = graphType === 'sin' ? TrigTourStrings.a11y.translatable.math.sinFunctionStringProperty :
+                                   graphType === 'cos' ? TrigTourStrings.a11y.translatable.math.cosFunctionStringProperty :
+                                   TrigTourStrings.a11y.translatable.math.tanFunctionStringProperty;
 
-      const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourStrings.a11y.math.infinityStringProperty :
+      const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourStrings.a11y.translatable.math.infinityStringProperty :
                         specialAnglesVisible ? trigValueFractionString : trigValueNumberText.string;
 
-      return StringUtils.fillIn( TrigTourStrings.a11y.math.trigReadoutPatternStringProperty, {
+      return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.trigReadoutPatternStringProperty, {
         trigFunction: trigFunctionProperty,
         trigFraction: trigFraction.descriptionStringProperty,
         value: trigValue

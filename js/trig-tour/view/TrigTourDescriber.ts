@@ -27,9 +27,9 @@ export default class TrigTourDescriber {
     // The trig function string that is currently being displayed. "sine", "cosine", or "tangent".
     const trigFunctionStringProperty = new DerivedStringProperty( [
       viewProperties.graphProperty,
-      TrigTourStrings.a11y.screenSummary.details.sinFunctionStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.cosFunctionStringProperty,
-      TrigTourStrings.a11y.screenSummary.details.tanFunctionStringProperty
+      TrigTourStrings.a11y.translatable.math.sinFunctionStringProperty,
+      TrigTourStrings.a11y.translatable.math.cosFunctionStringProperty,
+      TrigTourStrings.a11y.translatable.math.tanFunctionStringProperty
     ], ( graph, sinString, cosString, tanString ) => {
       return graph === 'sin' ? sinString :
              graph === 'cos' ? cosString :
@@ -51,7 +51,7 @@ export default class TrigTourDescriber {
     // An overall description of the important values of the simulation. Something like:
     // "The angle is {{angle}}. For this angle, x equals {{xValue}}; y equals {{yValue}}; {{trigFunction}} equals {{trigValue}}."
     this.valuesDescriptionStringProperty = new PatternStringProperty(
-      TrigTourStrings.a11y.screenSummary.details.valuesDescriptionPatternStringProperty, {
+      TrigTourStrings.a11y.translatable.screenSummary.details.valuesDescriptionPatternStringProperty, {
         angle: angleReadout.angleReadoutWithUnitsStringProperty,
         xValue: model.cosValueStringProperty,
         yValue: model.sinValueStringProperty,

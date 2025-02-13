@@ -22,9 +22,9 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     const trigInfoStringProperty = new DerivedProperty(
       [
         viewProperties.graphProperty,
-        TrigTourStrings.a11y.screenSummary.details.cosSelectedStringProperty,
-        TrigTourStrings.a11y.screenSummary.details.sinSelectedStringProperty,
-        TrigTourStrings.a11y.screenSummary.details.tanSelectedStringProperty
+        TrigTourStrings.a11y.translatable.screenSummary.details.cosSelectedStringProperty,
+        TrigTourStrings.a11y.translatable.screenSummary.details.sinSelectedStringProperty,
+        TrigTourStrings.a11y.translatable.screenSummary.details.tanSelectedStringProperty
       ], ( graph, cosString, sinString, tanString ) => {
         return graph === 'cos' ? cosString : graph === 'sin' ? sinString : tanString;
       }
@@ -32,7 +32,7 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
 
     // Describes the current quadrant of the point in the unit circle.
     const quadrantInfoStringProperty = new PatternStringProperty(
-      TrigTourStrings.a11y.screenSummary.details.quadrantInfoPatternStringProperty, {
+      TrigTourStrings.a11y.translatable.screenSummary.details.quadrantInfoPatternStringProperty, {
         n: model.quadrantProperty
       }
     );
@@ -42,8 +42,8 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     const rotationDirectionStringProperty = new DerivedStringProperty(
       [
         model.fullAngleProperty,
-        TrigTourStrings.a11y.screenSummary.details.counterClockwiseAngleStringProperty,
-        TrigTourStrings.a11y.screenSummary.details.clockwiseAngleStringProperty
+        TrigTourStrings.a11y.translatable.screenSummary.details.counterClockwiseAngleStringProperty,
+        TrigTourStrings.a11y.translatable.screenSummary.details.clockwiseAngleStringProperty
       ],
       ( fullAngle, counterClockwiseString, clockwiseString ) => {
         return fullAngle > 0 ? counterClockwiseString : clockwiseString;
@@ -51,14 +51,14 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     );
 
     super( {
-      playAreaContent: TrigTourStrings.a11y.screenSummary.playAreaStringProperty,
-      controlAreaContent: TrigTourStrings.a11y.screenSummary.controlAreaStringProperty,
+      playAreaContent: TrigTourStrings.a11y.translatable.screenSummary.playAreaStringProperty,
+      controlAreaContent: TrigTourStrings.a11y.translatable.screenSummary.controlAreaStringProperty,
       currentDetailsContent: [
         trigInfoStringProperty,
         quadrantInfoStringProperty,
         rotationDirectionStringProperty
       ],
-      interactionHintContent: TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
+      interactionHintContent: TrigTourStrings.a11y.translatable.screenSummary.interactionHintStringProperty
     } );
   }
 }

@@ -34,86 +34,85 @@ type StringsType = {
   'pointOffScreenStringProperty': LocalizedStringProperty;
   'movePointOnCircleOrGraphStringProperty': LocalizedStringProperty;
   'a11y': {
-    'graphViewAccordionBox': {
-      'tanAccessibleNameStringProperty': LocalizedStringProperty;
-      'sinAccessibleNameStringProperty': LocalizedStringProperty;
-      'cosAccessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'valuesAccordionBox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'unitsRadioButtons': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'graphRadioButtons': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'cosButton': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
+    'translatable': {
+      'graphViewAccordionBox': {
+        'tanAccessibleNameStringProperty': LocalizedStringProperty;
+        'sinAccessibleNameStringProperty': LocalizedStringProperty;
+        'cosAccessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'sinButton': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
+      'valuesAccordionBox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'tanButton': {
+      'unitsRadioButtons': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-      }
-    };
-    'unitCirclePoint': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'graphPoint': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'offScreenIndicator': {
-      'leftStringProperty': LocalizedStringProperty;
-      'rightStringProperty': LocalizedStringProperty;
-    };
-    'specialAnglesCheckbox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'labelsCheckbox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'gridCheckbox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-    };
-    'screenSummary': {
-      'playAreaStringProperty': LocalizedStringProperty;
-      'controlAreaStringProperty': LocalizedStringProperty;
-      'details': {
-        'cosSelectedStringProperty': LocalizedStringProperty;
-        'sinSelectedStringProperty': LocalizedStringProperty;
-        'tanSelectedStringProperty': LocalizedStringProperty;
-        'quadrantInfoPatternStringProperty': LocalizedStringProperty;
-        'clockwiseAngleStringProperty': LocalizedStringProperty;
-        'counterClockwiseAngleStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'graphRadioButtons': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'cosButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'sinButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'tanButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        }
+      };
+      'unitCirclePoint': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'graphPoint': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'offScreenIndicator': {
+        'leftStringProperty': LocalizedStringProperty;
+        'rightStringProperty': LocalizedStringProperty;
+      };
+      'specialAnglesCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'labelsCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'gridCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'screenSummary': {
+        'playAreaStringProperty': LocalizedStringProperty;
+        'controlAreaStringProperty': LocalizedStringProperty;
+        'details': {
+          'cosSelectedStringProperty': LocalizedStringProperty;
+          'sinSelectedStringProperty': LocalizedStringProperty;
+          'tanSelectedStringProperty': LocalizedStringProperty;
+          'quadrantInfoPatternStringProperty': LocalizedStringProperty;
+          'clockwiseAngleStringProperty': LocalizedStringProperty;
+          'counterClockwiseAngleStringProperty': LocalizedStringProperty;
+          'valuesDescriptionPatternStringProperty': LocalizedStringProperty;
+        };
+        'interactionHintStringProperty': LocalizedStringProperty;
+      };
+      'math': {
+        'piStringProperty': LocalizedStringProperty;
+        'infinityStringProperty': LocalizedStringProperty;
+        'coordinatesPatternStringProperty': LocalizedStringProperty;
+        'valueMinusValuePatternStringProperty': LocalizedStringProperty;
+        'valuePlusValuePatternStringProperty': LocalizedStringProperty;
+        'squareRootPatternStringProperty': LocalizedStringProperty;
+        'negativePatternStringProperty': LocalizedStringProperty;
+        'fractionPatternStringProperty': LocalizedStringProperty;
+        'angleEqualsSpecialAnglePatternStringProperty': LocalizedStringProperty;
+        'angleRadiansPatternStringProperty': LocalizedStringProperty;
+        'angleDegreesPatternStringProperty': LocalizedStringProperty;
+        'trigReadoutPatternStringProperty': LocalizedStringProperty;
         'sinFunctionStringProperty': LocalizedStringProperty;
         'cosFunctionStringProperty': LocalizedStringProperty;
         'tanFunctionStringProperty': LocalizedStringProperty;
-        'valuesDescriptionPatternStringProperty': LocalizedStringProperty;
-      };
-      'interactionHintStringProperty': LocalizedStringProperty;
-    };
-    'math': {
-      'piStringProperty': LocalizedStringProperty;
-      'infinityStringProperty': LocalizedStringProperty;
-      'coordinatesPatternStringProperty': LocalizedStringProperty;
-      'valueMinusValuePatternStringProperty': LocalizedStringProperty;
-      'valuePlusValuePatternStringProperty': LocalizedStringProperty;
-      'squareRootPatternStringProperty': LocalizedStringProperty;
-      'negativePatternStringProperty': LocalizedStringProperty;
-      'fractionPatternStringProperty': LocalizedStringProperty;
-      'angleEqualsSpecialAnglePatternStringProperty': LocalizedStringProperty;
-      'angleRadiansPatternStringProperty': LocalizedStringProperty;
-      'angleDegreesPatternStringProperty': LocalizedStringProperty;
-      'trigReadoutPatternStringProperty': LocalizedStringProperty;
-      'sinFunctionStringProperty': LocalizedStringProperty;
-      'cosFunctionStringProperty': LocalizedStringProperty;
-      'tanFunctionStringProperty': LocalizedStringProperty;
+      }
     }
   }
 };

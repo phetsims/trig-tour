@@ -351,8 +351,8 @@ class FractionNode extends Node {
     // Pull the pi symbol out of the numerator and denominator and replace with the word "pi", as that is read
     // better by speech synthesis.
     const piRegExp = new RegExp( MathSymbols.PI, 'g' );
-    const piNumerator = numerator.replace( piRegExp, TrigTourStrings.a11y.math.piStringProperty.value );
-    const piDenominator = denominator.replace( piRegExp, TrigTourStrings.a11y.math.piStringProperty.value );
+    const piNumerator = numerator.replace( piRegExp, TrigTourStrings.a11y.translatable.math.piStringProperty.value );
+    const piDenominator = denominator.replace( piRegExp, TrigTourStrings.a11y.translatable.math.piStringProperty.value );
 
     const rootNeeded = this._radical;
     const isNegative = this.isNegative();
@@ -364,21 +364,21 @@ class FractionNode extends Node {
 
     // first add a root
     if ( rootNeeded ) {
-      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.squareRootPatternStringProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.squareRootPatternStringProperty, {
         value: descriptionString
       } );
     }
 
     // add a minus sign if needed
     if ( isNegative && !absoluteValue ) {
-      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.negativePatternStringProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.negativePatternStringProperty, {
         value: descriptionString
       } );
     }
 
     // add the denominator if needed
     if ( denominatorNeeded ) {
-      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.math.fractionPatternStringProperty, {
+      descriptionString = StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.fractionPatternStringProperty, {
         numerator: descriptionString,
         denominator: this.removeMinusSign( piDenominator )
       } );

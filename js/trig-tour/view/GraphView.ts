@@ -177,12 +177,12 @@ class GraphView extends Node {
       cursor: 'pointer',
 
       // pdom - this is the Node that receives the input listener so it needs to be focusable
-      accessibleName: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
-      accessibleHelpText: TrigTourStrings.a11y.graphPoint.accessibleHelpTextStringProperty,
+      accessibleName: TrigTourStrings.a11y.translatable.graphPoint.accessibleNameStringProperty,
+      accessibleHelpText: TrigTourStrings.a11y.translatable.graphPoint.accessibleHelpTextStringProperty,
 
       // voicing - accessibleName and accessibleHelpText are used for Voicing
-      voicingNameResponse: TrigTourStrings.a11y.graphPoint.accessibleNameStringProperty,
-      voicingHintResponse: TrigTourStrings.a11y.graphPoint.accessibleHelpTextStringProperty
+      voicingNameResponse: TrigTourStrings.a11y.translatable.graphPoint.accessibleNameStringProperty,
+      voicingHintResponse: TrigTourStrings.a11y.translatable.graphPoint.accessibleHelpTextStringProperty
     } );
 
     const hitBound = 20;
@@ -230,20 +230,20 @@ class GraphView extends Node {
       contentYMargin: 0,
       contentXMargin: 0,
 
-      voicingHintResponseCollapsed: TrigTourStrings.a11y.graphViewAccordionBox.accessibleHelpTextStringProperty
+      voicingHintResponseCollapsed: TrigTourStrings.a11y.translatable.graphViewAccordionBox.accessibleHelpTextStringProperty
     } ) );
 
     // The accessible Name of the accordion box changes based on the graph being displayed.
     viewProperties.graphProperty.link( graph => {
       let accessibleNameStringProperty: TReadOnlyProperty<string>;
       if ( graph === 'cos' ) {
-        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.cosAccessibleNameStringProperty;
+        accessibleNameStringProperty = TrigTourStrings.a11y.translatable.graphViewAccordionBox.cosAccessibleNameStringProperty;
       }
       else if ( graph === 'sin' ) {
-        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.sinAccessibleNameStringProperty;
+        accessibleNameStringProperty = TrigTourStrings.a11y.translatable.graphViewAccordionBox.sinAccessibleNameStringProperty;
       }
       else if ( graph === 'tan' ) {
-        accessibleNameStringProperty = TrigTourStrings.a11y.graphViewAccordionBox.tanAccessibleNameStringProperty;
+        accessibleNameStringProperty = TrigTourStrings.a11y.translatable.graphViewAccordionBox.tanAccessibleNameStringProperty;
       }
 
       assert && assert( accessibleNameStringProperty!, `accessibleNameStringProperty is not defined for graph: ${graph}` );
@@ -254,10 +254,10 @@ class GraphView extends Node {
 
     // Indicators for when the angle value goes beyond the displayed graph
     const leftIndicator = new OffScaleIndicatorNode( 'left', combineOptions<OffScaleIndicatorNodeOptions>( {}, {
-      accessibleParagraph: TrigTourStrings.a11y.offScreenIndicator.leftStringProperty
+      accessibleParagraph: TrigTourStrings.a11y.translatable.offScreenIndicator.leftStringProperty
     }, OFF_SCALE_INDICATOR_NODE_OPTIONS ) );
     const rightIndicator = new OffScaleIndicatorNode( 'right', combineOptions<OffScaleIndicatorNodeOptions>( {}, {
-      accessibleParagraph: TrigTourStrings.a11y.offScreenIndicator.rightStringProperty
+      accessibleParagraph: TrigTourStrings.a11y.translatable.offScreenIndicator.rightStringProperty
     }, OFF_SCALE_INDICATOR_NODE_OPTIONS ) );
 
     // Dynamic layout - reposition indicators if their bounds change due

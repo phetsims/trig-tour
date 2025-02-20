@@ -12,6 +12,7 @@ import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../../dot/js/Utils.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
@@ -39,7 +40,10 @@ export default class AngleReadoutValue {
 
     // The readout for angles in radians (decimalPrecisionProperty is only used for degrees).
     const angleInRadiansStringProperty = new DerivedProperty( [ model.fullAngleProperty ], () => {
-      return Utils.toFixed( model.getFullAngleInRadians(), 3 );
+
+      // TODO: Why do we need to wrap this with LTR? Without it the minus sign is in the wrong spot.
+      // See https://github.com/phetsims/trig-tour/issues/149
+      return StringUtils.wrapLTR( Utils.toFixed( model.getFullAngleInRadians(), 3 ) );
     } );
 
     // The readout value in radians.
@@ -51,7 +55,10 @@ export default class AngleReadoutValue {
     } );
 
     const angleInDegreesStringProperty = new DerivedProperty( [ model.fullAngleProperty, decimalPrecisionProperty ], ( ( fullAngle, decimalPrecision ) => {
-      return Utils.toFixed( model.getFullAngleInDegrees(), decimalPrecision );
+
+      // TODO: Why do we need to wrap this with LTR? Without it the minus sign is in the wrong spot.
+      // See https://github.com/phetsims/trig-tour/issues/149
+      return StringUtils.wrapLTR( Utils.toFixed( model.getFullAngleInDegrees(), decimalPrecision ) );
     } ) );
 
     // The value in degrees, with the correct number of decimal places.

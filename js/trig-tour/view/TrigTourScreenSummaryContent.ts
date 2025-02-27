@@ -9,6 +9,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import { toFixedNumber } from '../../../../dot/js/util/toFixedNumber.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
@@ -62,7 +63,9 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
         TrigTourStrings.a11y.translatable.screenSummary.details.clockwiseAngleStringProperty
       ],
       ( fullAngle, counterClockwiseString, clockwiseString ) => {
-        return fullAngle >= 0 ? counterClockwiseString : clockwiseString;
+
+        // Control precision so that negative numbers very close to 0 are treated as 0.
+        return toFixedNumber( fullAngle, 2 ) >= 0 ? counterClockwiseString : clockwiseString;
       }
     );
 

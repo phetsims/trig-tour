@@ -90,6 +90,8 @@ type StringsType = {
           'sinSelectedStringProperty': LocalizedStringProperty;
           'tanSelectedStringProperty': LocalizedStringProperty;
           'quadrantInfoPatternStringProperty': LocalizedStringProperty;
+          'pointOnXAxisStringProperty': LocalizedStringProperty;
+          'pointOnYAxisStringProperty': LocalizedStringProperty;
           'clockwiseAngleStringProperty': LocalizedStringProperty;
           'counterClockwiseAngleStringProperty': LocalizedStringProperty;
           'valuesDescriptionPatternStringProperty': LocalizedStringProperty;

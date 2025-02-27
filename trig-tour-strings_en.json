@@ -167,6 +167,12 @@
           "quadrantInfoPattern": {
             "value": "Point on circle is in quadrant {{n}}."
           },
+          "pointOnXAxis": {
+            "value": "Point on circle is on the x-axis."
+          },
+          "pointOnYAxis": {
+            "value": "Point on circle is on the y-axis."
+          },
           "clockwiseAngle": {
             "value": "A clockwise rotation of point on circle forms angle theta."
           },

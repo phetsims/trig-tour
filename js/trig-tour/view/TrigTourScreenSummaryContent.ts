@@ -30,10 +30,26 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
       }
     );
 
-    // Describes the current quadrant of the point in the unit circle.
+    // Describes the point quadrant in the unit circle.
     const quadrantInfoStringProperty = new PatternStringProperty(
       TrigTourStrings.a11y.translatable.screenSummary.details.quadrantInfoPatternStringProperty, {
         n: model.quadrantProperty
+      }
+    );
+
+    // Describes when the point is exactly on an axis. The value is null when the point is not on an axis.
+    const axisStringProperty = DerivedProperty.fromRecord( model.axisProperty, {
+      x: TrigTourStrings.a11y.translatable.screenSummary.details.pointOnXAxisStringProperty,
+      y: TrigTourStrings.a11y.translatable.screenSummary.details.pointOnYAxisStringProperty,
+      off: null
+    } );
+
+    // Information about the point - If the point is on an axis, that string will be used. Otherwise,
+    // the quadrant string will be used.
+    const pointInfoStringProperty = new DerivedStringProperty(
+      [ quadrantInfoStringProperty, axisStringProperty ],
+      ( quadrantString, axisString ) => {
+        return axisString ? axisString : quadrantString;
       }
     );
 
@@ -55,7 +71,7 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
       controlAreaContent: TrigTourStrings.a11y.translatable.screenSummary.controlAreaStringProperty,
       currentDetailsContent: [
         trigInfoStringProperty,
-        quadrantInfoStringProperty,
+        pointInfoStringProperty,
         rotationDirectionStringProperty
       ],
       interactionHintContent: TrigTourStrings.a11y.translatable.screenSummary.interactionHintStringProperty

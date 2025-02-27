@@ -11,6 +11,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { equalsEpsilon } from '../../../../dot/js/util/equalsEpsilon.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import trigTour from '../../trigTour.js';
@@ -23,6 +24,9 @@ const MAX_SMALL_ANGLE_LIMIT = 0.5 * Math.PI;
 
 // One of the quadrants in the unit circle.
 export type Quadrant = 1 | 2 | 3 | 4;
+
+// An axis that the value may be on depending on the angle. If not on an axis, the value is 'off'.
+export type Axis = 'x' | 'y' | 'off';
 
 // must be ( integer+0.5) number of full rotations
 const MAX_ANGLE_LIMIT = TrigTourQueryParameters.maxRotations * Math.PI + MAX_SMALL_ANGLE_LIMIT;
@@ -41,6 +45,9 @@ class TrigTourModel {
 
   // A value between 1 and 4, indicating the quadrant where the movable point on the circle is.
   public readonly quadrantProperty: TReadOnlyProperty<Quadrant>;
+
+  // A value of 'x', 'y', or null, indicating if the point is on an axis. Null unless the point is on an axis.
+  public readonly axisProperty: TReadOnlyProperty<Axis>;
 
   // True if the values are expanded in the accordion box.
   public readonly valuesExpandedProperty: Property<boolean>;
@@ -88,13 +95,35 @@ class TrigTourModel {
     this.quadrantProperty = new DerivedProperty( [ this.fullAngleProperty ], ( fullAngle: number ) => {
 
       // Normalizes angle to [0, 2π)
-      const fullAngleMod2Pi = ( fullAngle % ( 2 * Math.PI ) + 2 * Math.PI ) % ( 2 * Math.PI );
+      const fullAngleMod2Pi = this.getNormalizedAngle( fullAngle );
 
       // Quadrant is 1, 2, 3, or 4 based on the angle
       const quadrant = Math.floor( fullAngleMod2Pi / ( Math.PI / 2 ) ) + 1;
 
       return quadrant as Quadrant;
     } );
+
+    this.axisProperty = new DerivedProperty( [ this.fullAngleProperty ], ( fullAngle: number ) => {
+
+      // Normalizes angle to [0, 2π)
+      const fullAngleMod2Pi = this.getNormalizedAngle( fullAngle );
+
+      // If the angle is on an axis, return the axis. Otherwise, return null.
+      const eps = 1e-5; // Randomly chosen, but works with precision errors.
+      return equalsEpsilon( fullAngleMod2Pi, 0, eps ) ? 'x' :
+             equalsEpsilon( fullAngleMod2Pi, Math.PI / 2, eps ) ? 'y' :
+             equalsEpsilon( fullAngleMod2Pi, Math.PI, eps ) ? 'x' :
+             equalsEpsilon( fullAngleMod2Pi, 3 * Math.PI / 2, eps ) ? 'y' :
+             equalsEpsilon( fullAngleMod2Pi, 2 * Math.PI, eps ) ? 'x' : // Due to precision errors, we might be close to 2pi without wrapping to 0
+             'off';
+    } );
+  }
+
+  /**
+   * Normalizes angle to [0, 2π). Careful that it might be very close to 2PI due to precision errors.
+   */
+  private getNormalizedAngle( angle: number ): number {
+    return ( angle % ( 2 * Math.PI ) + 2 * Math.PI ) % ( 2 * Math.PI );
   }
 
   /**

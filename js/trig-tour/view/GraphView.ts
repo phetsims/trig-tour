@@ -141,7 +141,7 @@ class GraphView extends Node {
 
     // draw right and left border rectangles, which serve to hide indicator line when it is off the graph
     const borderWidth = 800;
-    const borderHeight = 1200;
+    const borderHeight = 2400;
     const rightBorder = new Rectangle(
       -backgroundWidth / 2 - borderWidth - 1,
       -0.8 * borderHeight, borderWidth,

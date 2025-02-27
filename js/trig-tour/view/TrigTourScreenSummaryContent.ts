@@ -62,7 +62,7 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
         TrigTourStrings.a11y.translatable.screenSummary.details.clockwiseAngleStringProperty
       ],
       ( fullAngle, counterClockwiseString, clockwiseString ) => {
-        return fullAngle > 0 ? counterClockwiseString : clockwiseString;
+        return fullAngle >= 0 ? counterClockwiseString : clockwiseString;
       }
     );
 

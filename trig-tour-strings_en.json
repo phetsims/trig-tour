@@ -113,7 +113,7 @@
           "value": "Point on Circle"
         },
         "accessibleHelpText": {
-          "value": "Move point on circle to change theta."
+          "value": "Move point clockwise or counterclockwise to change theta."
         }
       },
       "graphPoint": {

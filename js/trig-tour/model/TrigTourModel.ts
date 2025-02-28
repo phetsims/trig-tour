@@ -135,9 +135,6 @@ class TrigTourModel {
 
     // Reset through the function because this will also update other dependent fields.
     this.setFullAngleInRadians( 0 );
-
-    // So that computations for the small angle are correct after the reset.
-    this.previousAngle = 0;
   }
 
   /**
@@ -249,6 +246,7 @@ class TrigTourModel {
     remainderAngle = fullAngleInRads % ( Math.PI );
     this._halfTurnCount = Utils.roundSymmetric( ( fullAngleInRads - remainderAngle ) / ( Math.PI ) );
     this.fullAngleProperty.value = this.constrainFullAngle( fullAngleInRads );
+    this.previousAngle = this.smallAngle;
   }
 
   private constrainFullAngle( fullAngle: number ): number {

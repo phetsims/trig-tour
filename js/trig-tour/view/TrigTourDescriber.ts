@@ -52,7 +52,7 @@ export default class TrigTourDescriber {
     // "The angle is {{angle}}. For this angle, x equals {{xValue}}; y equals {{yValue}}; {{trigFunction}} equals {{trigValue}}."
     this.valuesDescriptionStringProperty = new PatternStringProperty(
       TrigTourStrings.a11y.translatable.screenSummary.details.valuesDescriptionPatternStringProperty, {
-        angle: angleReadout.angleReadoutWithUnitsStringProperty,
+        angle: angleReadout.naturalLanguageAngleReadoutWithUnitsStringProperty,
         xValue: model.cosValueStringProperty,
         yValue: model.sinValueStringProperty,
         trigFunction: trigFunctionStringProperty,

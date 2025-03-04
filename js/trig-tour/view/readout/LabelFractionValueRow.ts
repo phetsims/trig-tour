@@ -25,6 +25,7 @@ import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
+import TrigTourUtils from '../../TrigTourUtils.js';
 import TrigFunctionLabelText from '../TrigFunctionLabelText.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ViewProperties, { Graph } from '../ViewProperties.js';
@@ -191,7 +192,8 @@ class LabelFractionValueRow extends Node {
                                    TrigTourStrings.a11y.translatable.math.tanFunctionStringProperty;
 
       const trigValue = ( graphType === 'tan' && singularity ) ? TrigTourStrings.a11y.translatable.math.infinityStringProperty :
-                        specialAnglesVisible ? trigValueFractionString : trigValueNumberText.string;
+                        specialAnglesVisible ? trigValueFractionString :
+                        TrigTourUtils.getNaturalLanguageValueString( trigValueNumberText.string );
 
       return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.trigReadoutPatternStringProperty, {
         trigFunction: trigFunctionProperty,

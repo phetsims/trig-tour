@@ -1,12 +1,12 @@
 {
-  "comment": "# trig-tour 1.1.0-rc.1 Thu Feb 20 2025 15:20:33 GMT-0500 (Eastern Standard Time)",
+  "comment": "# trig-tour 1.1.0-rc.1 Tue Mar 04 2025 12:45:16 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
   },
   "axon": {
-    "sha": "d916fbcc270eefec9418c5ba0c69878c6923bcd8",
-    "branch": "HEAD"
+    "sha": "6650db2e7943ea8a5a27627239f8696171a131b7",
+    "branch": "trig-tour-1.1"
   },
   "brand": {
     "sha": "b7d7379fccdfd74affae1f7610bf6ebee5de1701",
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "573a85ecd319f22f329ca76d359b2138a79de4a5",
+    "sha": "3db34ae8cf51be3d099ed4d6704c61e2369396a8",
     "branch": "1.1"
   },
   "twixt": {

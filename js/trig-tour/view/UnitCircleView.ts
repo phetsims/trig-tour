@@ -252,6 +252,9 @@ class UnitCircleView extends Node {
             }
           }
 
+          // Check again after updating from input to see if the dizzy PhET girl should appear.
+          trigTourModel.checkMaxAngleExceeded();
+
           // After the new value has been computed, play the sound if the value has changed
           const newValue = trigTourModel.getFullAngleInRadians();
           if ( oldValue !== newValue ) {

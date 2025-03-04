@@ -325,6 +325,9 @@ class GraphView extends Node {
               angleSoundGenerator.playSoundIfThresholdReached( newValue, oldValue );
             }
           }
+
+          // Update after input to see if the dizzy PhET girl should be visible.
+          trigTourModel.checkMaxAngleExceeded();
         }
       } );
 

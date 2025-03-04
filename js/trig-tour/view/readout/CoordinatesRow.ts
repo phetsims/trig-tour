@@ -25,6 +25,7 @@ import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
 import TrigTourMathStrings from '../../TrigTourMathStrings.js';
+import TrigTourUtils from '../../TrigTourUtils.js';
 import TrigTourColors from '../TrigTourColors.js';
 import ViewProperties from '../ViewProperties.js';
 import FractionNode from './FractionNode.js';
@@ -149,8 +150,8 @@ class CoordinatesRow extends ReadingBlock( Node ) {
       }
       else {
         return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.coordinatesPatternStringProperty, {
-          xValue: cosValue,
-          yValue: sinValue
+          xValue: TrigTourUtils.getNaturalLanguageValueString( cosValue ),
+          yValue: TrigTourUtils.getNaturalLanguageValueString( sinValue )
         } );
       }
     } );

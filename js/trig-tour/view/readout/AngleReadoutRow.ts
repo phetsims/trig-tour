@@ -135,7 +135,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       this.angleReadoutFraction.absoluteValueDescriptionStringProperty,
       viewProperties.angleUnitsProperty,
       viewProperties.specialAnglesVisibleProperty,
-      this.readoutValue.angleReadoutStringProperty,
+      this.readoutValue.naturalLanguageAngleReadoutStringProperty,
       TrigTourStrings.a11y.translatable.math.valueMinusValuePatternStringProperty,
       TrigTourStrings.a11y.translatable.math.valuePlusValuePatternStringProperty,
       TrigTourStrings.a11y.translatable.math.angleEqualsSpecialAnglePatternStringProperty,
@@ -166,7 +166,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
    * @param absoluteValueAngleReadoutString - The angleReadoutFraction absolute value description string (no negative)
    * @param angleUnits - The selected units.
    * @param specialAnglesVisible - Are special angles visible?
-   * @param angleReadout - The angle readout string with the correct precision.
+   * @param naturalLanguageAngleReadout - The angle readout string with the correct precision in a natural-language format.
    */
   private createDescriptionString(
     fullAngleString: string,
@@ -174,7 +174,7 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     absoluteValueAngleReadoutString: string,
     angleUnits: AngleUnits,
     specialAnglesVisible: boolean,
-    angleReadout: string
+    naturalLanguageAngleReadout: string
   ): string {
     if ( specialAnglesVisible && angleUnits === 'radians' ) {
 
@@ -211,12 +211,12 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     else {
       if ( angleUnits === 'radians' ) {
         return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleRadiansPatternStringProperty, {
-          value: angleReadout
+          value: naturalLanguageAngleReadout
         } );
       }
       else {
         return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleDegreesPatternStringProperty, {
-          value: angleReadout
+          value: naturalLanguageAngleReadout
         } );
       }
     }

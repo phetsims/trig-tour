@@ -16,6 +16,7 @@ import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
+import TrigTourUtils from '../../TrigTourUtils.js';
 import ViewProperties, { AngleUnits } from '../ViewProperties.js';
 
 const radsStringProperty = TrigTourStrings.radsStringProperty;
@@ -28,6 +29,14 @@ export default class AngleReadoutValue {
 
   // The string representation of the angle, with correct decimal places but without units.
   public readonly angleReadoutStringProperty: TReadOnlyProperty<string>;
+
+  // The natural language representation of the angle, with units. Something like
+  // "45 degrees" or "negative 45 degrees".
+  public readonly naturalLanguageAngleReadoutWithUnitsStringProperty: TReadOnlyProperty<string>;
+
+  // The natural language representation of the angle, without units. Something like
+  // "45" or "negative 45".
+  public readonly naturalLanguageAngleReadoutStringProperty: TReadOnlyProperty<string>;
 
   public constructor( model: TrigTourModel, viewProperties: ViewProperties ) {
 
@@ -82,6 +91,20 @@ export default class AngleReadoutValue {
     ], ( units: AngleUnits, radiansString: string, degreesString: string ) => {
       return units === 'radians' ? radiansString : degreesString;
     } );
+
+    this.naturalLanguageAngleReadoutWithUnitsStringProperty = new DerivedProperty(
+      [ this.angleReadoutWithUnitsStringProperty ],
+      readoutWithUnits => {
+        return TrigTourUtils.getNaturalLanguageValueString( readoutWithUnits );
+      }
+    );
+
+    this.naturalLanguageAngleReadoutStringProperty = new DerivedProperty(
+      [ this.angleReadoutStringProperty ],
+      readout => {
+        return TrigTourUtils.getNaturalLanguageValueString( readout );
+      }
+    );
   }
 }
 

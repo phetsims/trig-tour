@@ -1,12 +1,12 @@
 {
-  "comment": "# trig-tour 1.1.0-rc.1 Tue Mar 04 2025 12:52:05 GMT-0500 (Eastern Standard Time)",
+  "comment": "# trig-tour 1.1.0-rc.1 Tue Mar 04 2025 19:11:37 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
   },
   "axon": {
     "sha": "6650db2e7943ea8a5a27627239f8696171a131b7",
-    "branch": "trig-tour-1.1"
+    "branch": "HEAD"
   },
   "brand": {
     "sha": "b7d7379fccdfd74affae1f7610bf6ebee5de1701",
@@ -21,8 +21,8 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "2f1aab8e59d7f9c2e08d8be86fc59806f1e64675",
-    "branch": "HEAD"
+    "sha": "f9d8b552dee4f98c29d4ff7448d5ad1d4c042110",
+    "branch": "trig-tour-1.1"
   },
   "kite": {
     "sha": "0f6bd61fe56f6af59ede1edb30c9e888a92bceb3",
@@ -62,7 +62,7 @@
   },
   "scenery": {
     "sha": "704d01b72f8981dc6ade5d1a29b323abfd999664",
-    "branch": "trig-tour-1.1"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "e5bea612413c7dce26601caa7f4d2b2e55333292",
@@ -77,8 +77,8 @@
     "branch": "HEAD"
   },
   "sun": {
-    "sha": "5635dc46e752a66bdf2af03a7c83d958a6188fbd",
-    "branch": "HEAD"
+    "sha": "9ecdfb1e17ae8c29f31673c674d6e69be0361857",
+    "branch": "trig-tour-1.1"
   },
   "tambo": {
     "sha": "88c05c4bf24b15bd21fe534b8c3d5b82f1c7dea9",
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "400009b41f46bd5696d32dc9499fa376a1ccd7d4",
+    "sha": "58956f9652f0dbcfbf8114336ced01b083c43756",
     "branch": "1.1"
   },
   "twixt": {

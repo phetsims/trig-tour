@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.1.0-rc.1 Tue Mar 04 2025 19:11:37 GMT-0500 (Eastern Standard Time)",
+  "comment": "# trig-tour 1.1.0-rc.1 Wed Mar 05 2025 17:43:35 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "f9d8b552dee4f98c29d4ff7448d5ad1d4c042110",
+    "sha": "8d199247a61cea8a00ab75fe922779e3b608a4b7",
     "branch": "trig-tour-1.1"
   },
   "kite": {
@@ -78,7 +78,7 @@
   },
   "sun": {
     "sha": "9ecdfb1e17ae8c29f31673c674d6e69be0361857",
-    "branch": "trig-tour-1.1"
+    "branch": "HEAD"
   },
   "tambo": {
     "sha": "88c05c4bf24b15bd21fe534b8c3d5b82f1c7dea9",
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "58956f9652f0dbcfbf8114336ced01b083c43756",
+    "sha": "ca1c151746438c15bd79945f5d3fe3bec1feac36",
     "branch": "1.1"
   },
   "twixt": {

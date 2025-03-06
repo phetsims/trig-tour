@@ -61,9 +61,9 @@ class ControlPanel extends Panel {
 
     // A cluster of 3 radio buttons for displaying either cos, sin or tan
     const radioButtonItems: AquaRadioButtonGroupItem<Graph>[] = [
-      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos' ), options: { accessibleName: TrigTourStrings.a11y.translatable.graphRadioButtons.cosButton.accessibleNameStringProperty } },
-      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin' ), options: { accessibleName: TrigTourStrings.a11y.translatable.graphRadioButtons.sinButton.accessibleNameStringProperty } },
-      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan' ), options: { accessibleName: TrigTourStrings.a11y.translatable.graphRadioButtons.tanButton.accessibleNameStringProperty } }
+      { value: 'cos', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'cos' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.cosButton.accessibleNameStringProperty } },
+      { value: 'sin', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'sin' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.sinButton.accessibleNameStringProperty } },
+      { value: 'tan', createNode: () => ControlPanel.createGraphRadioButtonIcon( 'tan' ), options: { accessibleName: TrigTourStrings.a11y.graphRadioButtons.tanButton.accessibleNameStringProperty } }
     ];
 
     const radioButtonGroup = new AquaRadioButtonGroup( viewProperties.graphProperty, radioButtonItems, {
@@ -73,20 +73,20 @@ class ControlPanel extends Panel {
       spacing: SPACING,
 
       // pdom
-      accessibleName: TrigTourStrings.a11y.translatable.graphRadioButtons.accessibleNameStringProperty,
-      accessibleHelpText: TrigTourStrings.a11y.translatable.graphRadioButtons.accessibleHelpTextStringProperty
+      accessibleName: TrigTourStrings.a11y.graphRadioButtons.accessibleNameStringProperty,
+      accessibleHelpText: TrigTourStrings.a11y.graphRadioButtons.accessibleHelpTextStringProperty
     } );
 
     // 3 checkboxes: Labels, Grid, Special Angles
     const checkboxOptions = { checkboxColorBackground: 'white' };
     const labelsCheckbox = new Checkbox( viewProperties.labelsVisibleProperty, labelsText, combineOptions<CheckboxOptions>( {
-      accessibleHelpText: TrigTourStrings.a11y.translatable.labelsCheckbox.accessibleHelpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.labelsCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
     const gridCheckbox = new Checkbox( viewProperties.gridVisibleProperty, gridText, combineOptions<CheckboxOptions>( {
-      accessibleHelpText: TrigTourStrings.a11y.translatable.gridCheckbox.accessibleHelpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.gridCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
     const specialAnglesCheckbox = new Checkbox( viewProperties.specialAnglesVisibleProperty, specialAnglesText, combineOptions<CheckboxOptions>( {
-      accessibleHelpText: TrigTourStrings.a11y.translatable.specialAnglesCheckbox.accessibleHelpTextStringProperty
+      accessibleHelpText: TrigTourStrings.a11y.specialAnglesCheckbox.accessibleHelpTextStringProperty
     }, checkboxOptions ) );
 
     const checkboxGroup = new VBox( {

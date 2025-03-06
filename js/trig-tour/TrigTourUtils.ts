@@ -35,7 +35,7 @@ const TrigTourUtils = {
   getNaturalLanguageValueString( valueString: string ): string {
     if ( TrigTourUtils.isNegativeValueString( valueString ) ) {
       const withoutMinus = TrigTourUtils.removeMinusSign( valueString );
-      return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.negativePatternStringProperty, {
+      return StringUtils.fillIn( TrigTourStrings.a11y.math.negativePatternStringProperty, {
         value: withoutMinus
       } );
     }

@@ -23,9 +23,9 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     const trigInfoStringProperty = new DerivedProperty(
       [
         viewProperties.graphProperty,
-        TrigTourStrings.a11y.translatable.screenSummary.details.cosSelectedStringProperty,
-        TrigTourStrings.a11y.translatable.screenSummary.details.sinSelectedStringProperty,
-        TrigTourStrings.a11y.translatable.screenSummary.details.tanSelectedStringProperty
+        TrigTourStrings.a11y.screenSummary.details.cosSelectedStringProperty,
+        TrigTourStrings.a11y.screenSummary.details.sinSelectedStringProperty,
+        TrigTourStrings.a11y.screenSummary.details.tanSelectedStringProperty
       ], ( graph, cosString, sinString, tanString ) => {
         return graph === 'cos' ? cosString : graph === 'sin' ? sinString : tanString;
       }
@@ -33,15 +33,15 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
 
     // Describes the point quadrant in the unit circle.
     const quadrantInfoStringProperty = new PatternStringProperty(
-      TrigTourStrings.a11y.translatable.screenSummary.details.quadrantInfoPatternStringProperty, {
+      TrigTourStrings.a11y.screenSummary.details.quadrantInfoPatternStringProperty, {
         n: model.quadrantProperty
       }
     );
 
     // Describes when the point is exactly on an axis. The value is null when the point is not on an axis.
     const axisStringProperty = DerivedProperty.fromRecord( model.axisProperty, {
-      x: TrigTourStrings.a11y.translatable.screenSummary.details.pointOnXAxisStringProperty,
-      y: TrigTourStrings.a11y.translatable.screenSummary.details.pointOnYAxisStringProperty,
+      x: TrigTourStrings.a11y.screenSummary.details.pointOnXAxisStringProperty,
+      y: TrigTourStrings.a11y.screenSummary.details.pointOnYAxisStringProperty,
       off: null
     } );
 
@@ -59,8 +59,8 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     const rotationDirectionStringProperty = new DerivedStringProperty(
       [
         model.fullAngleProperty,
-        TrigTourStrings.a11y.translatable.screenSummary.details.counterClockwiseAngleStringProperty,
-        TrigTourStrings.a11y.translatable.screenSummary.details.clockwiseAngleStringProperty
+        TrigTourStrings.a11y.screenSummary.details.counterClockwiseAngleStringProperty,
+        TrigTourStrings.a11y.screenSummary.details.clockwiseAngleStringProperty
       ],
       ( fullAngle, counterClockwiseString, clockwiseString ) => {
 
@@ -70,14 +70,14 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     );
 
     super( {
-      playAreaContent: TrigTourStrings.a11y.translatable.screenSummary.playAreaStringProperty,
-      controlAreaContent: TrigTourStrings.a11y.translatable.screenSummary.controlAreaStringProperty,
+      playAreaContent: TrigTourStrings.a11y.screenSummary.playAreaStringProperty,
+      controlAreaContent: TrigTourStrings.a11y.screenSummary.controlAreaStringProperty,
       currentDetailsContent: [
         trigInfoStringProperty,
         pointInfoStringProperty,
         rotationDirectionStringProperty
       ],
-      interactionHintContent: TrigTourStrings.a11y.translatable.screenSummary.interactionHintStringProperty
+      interactionHintContent: TrigTourStrings.a11y.screenSummary.interactionHintStringProperty
     } );
   }
 }

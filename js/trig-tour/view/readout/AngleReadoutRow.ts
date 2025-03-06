@@ -136,11 +136,11 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
       viewProperties.angleUnitsProperty,
       viewProperties.specialAnglesVisibleProperty,
       this.readoutValue.naturalLanguageAngleReadoutStringProperty,
-      TrigTourStrings.a11y.translatable.math.valueMinusValuePatternStringProperty,
-      TrigTourStrings.a11y.translatable.math.valuePlusValuePatternStringProperty,
-      TrigTourStrings.a11y.translatable.math.angleEqualsSpecialAnglePatternStringProperty,
-      TrigTourStrings.a11y.translatable.math.angleRadiansPatternStringProperty,
-      TrigTourStrings.a11y.translatable.math.angleDegreesPatternStringProperty
+      TrigTourStrings.a11y.math.valueMinusValuePatternStringProperty,
+      TrigTourStrings.a11y.math.valuePlusValuePatternStringProperty,
+      TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty,
+      TrigTourStrings.a11y.math.angleRadiansPatternStringProperty,
+      TrigTourStrings.a11y.math.angleDegreesPatternStringProperty
     ], (
       fullAngleString,
       angleReadoutString,
@@ -184,38 +184,38 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
 
         // The value is being displayed with a pattern like 4pi + pi / 3.
         // 4pi is the fullAngleString and pi / 3 is the angleReadoutString.
-        const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourStrings.a11y.translatable.math.valueMinusValuePatternStringProperty : TrigTourStrings.a11y.translatable.math.valuePlusValuePatternStringProperty;
+        const patternMessageProperty = this.angleReadoutFraction.isNegative() ? TrigTourStrings.a11y.math.valueMinusValuePatternStringProperty : TrigTourStrings.a11y.math.valuePlusValuePatternStringProperty;
         const terms = StringUtils.fillIn( patternMessageProperty, {
           value1: fullAngleString,
           value2: absoluteValueAngleReadoutString // "minus" is included by the pattern so use the absolute value
         } );
-        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleEqualsSpecialAnglePatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: terms
         } );
       }
       else if ( fullAngleString ) {
 
         // The full angle string is used to display the special angle at intervals of 0 or pi.
-        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleEqualsSpecialAnglePatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: fullAngleString
         } );
       }
       else {
 
         // The angle readout string is used to display the other special angles.
-        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleEqualsSpecialAnglePatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleEqualsSpecialAnglePatternStringProperty, {
           value: angleReadoutString
         } );
       }
     }
     else {
       if ( angleUnits === 'radians' ) {
-        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleRadiansPatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleRadiansPatternStringProperty, {
           value: naturalLanguageAngleReadout
         } );
       }
       else {
-        return StringUtils.fillIn( TrigTourStrings.a11y.translatable.math.angleDegreesPatternStringProperty, {
+        return StringUtils.fillIn( TrigTourStrings.a11y.math.angleDegreesPatternStringProperty, {
           value: naturalLanguageAngleReadout
         } );
       }

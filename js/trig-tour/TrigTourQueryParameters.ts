@@ -6,6 +6,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import trigTour from '../trigTour.js';
 
 const TrigTourQueryParameters = QueryStringMachine.getAll( {

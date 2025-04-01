@@ -16,7 +16,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import VoicingCircle from '../../../../scenery/js/accessibility/voicing/nodes/VoicingCircle.js';
+import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import VoicingActivationResponseListener from '../../../../scenery/js/accessibility/voicing/VoicingActivationResponseListener.js';
 import SceneryEvent from '../../../../scenery/js/input/SceneryEvent.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -153,7 +153,7 @@ class UnitCircleView extends Node {
 
     // Draw rotor arm with draggable red pin at end
     const rotorArm = new Line( 0, 0, radius, 0, { lineWidth: 4, stroke: TrigTourColors.LINE_COLOR } );
-    const rotorPin = new VoicingCircle( 7, combineOptions<CircleOptions>( {}, AccessibleDraggableOptions, {
+    const rotorPin = new ( Voicing( Circle ) )( 7, combineOptions<CircleOptions>( {}, AccessibleDraggableOptions, {
       stroke: LINE_COLOR,
       fill: 'red',
       cursor: 'pointer',

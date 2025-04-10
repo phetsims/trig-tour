@@ -17,7 +17,6 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
-import VoicingActivationResponseListener from '../../../../scenery/js/accessibility/voicing/VoicingActivationResponseListener.js';
 import SceneryEvent from '../../../../scenery/js/input/SceneryEvent.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
@@ -164,14 +163,12 @@ class UnitCircleView extends Node {
 
       // voicing
       voicingNameResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleNameStringProperty,
-      voicingHintResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleHelpTextStringProperty
+      voicingHintResponse: TrigTourStrings.a11y.unitCirclePoint.accessibleHelpTextStringProperty,
+      voicingPressable: true
     } ) );
     const hitBound = 25;
     rotorPin.mouseArea = rotorPin.bounds.dilated( hitBound );
     rotorPin.touchArea = rotorPin.mouseArea;
-
-    // Speak the name and hint response when the rotor pin is activated
-    rotorPin.addInputListener( new VoicingActivationResponseListener( rotorPin ) );
 
     // A custom focus highlight so it is easier to see, see https://github.com/phetsims/trig-tour/issues/101
     rotorPin.focusHighlight = Shape.circle( rotorPin.radius * 3 );

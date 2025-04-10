@@ -16,7 +16,6 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
-import VoicingActivationResponseListener from '../../../../scenery/js/accessibility/voicing/VoicingActivationResponseListener.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
 import trigTour from '../../trigTour.js';
 
@@ -92,9 +91,10 @@ type VoicingTrigIndicatorArrowNodeOptions = ArrowNodeOptions & VoicingOptions;
 
 class VoicingTrigIndicatorArrowNode extends Voicing( TrigIndicatorArrowNode ) {
   public constructor( defaultLength: number, orientation: Orientation, providedOptions: VoicingTrigIndicatorArrowNodeOptions ) {
-    const options = combineOptions<VoicingTrigIndicatorArrowNodeOptions>( {}, AccessibleDraggableOptions, providedOptions );
+    const options = combineOptions<VoicingTrigIndicatorArrowNodeOptions>( {
+      voicingPressable: true
+    }, AccessibleDraggableOptions, providedOptions );
     super( defaultLength, orientation, options );
-    this.addInputListener( new VoicingActivationResponseListener( this ) );
   }
 }
 

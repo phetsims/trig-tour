@@ -11,7 +11,6 @@
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import Utils from '../../../../../dot/js/Utils.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -48,27 +47,25 @@ export default class AngleReadoutValue {
     } );
 
     // The readout for angles in radians (decimalPrecisionProperty is only used for degrees).
-    const angleInRadiansStringProperty = new DerivedProperty( [ model.fullAngleProperty ], () => {
-
-      // TODO: Why do we need to wrap this with LTR? Without it the minus sign is in the wrong spot.
-      // See https://github.com/phetsims/trig-tour/issues/149
-      return StringUtils.wrapLTR( Utils.toFixed( model.getFullAngleInRadians(), 3 ) );
+    const angleInRadiansStringProperty = new DerivedProperty( [ model.fullAngleProperty ], angleInRadians => {
+      return StringUtils.toSafeFixed( angleInRadians, 3 );
     } );
 
     // The readout value in radians.
     const angleRadiansWithUnitsStringProperty = new PatternStringProperty( valueUnitPatternStringProperty, {
-      value: angleInRadiansStringProperty,
+      value: model.fullAngleProperty,
       unit: radsStringProperty
     }, {
-      formatNames: [ 'value', 'unit' ]
+      formatNames: [ 'value', 'unit' ],
+      decimalPlaces: 3
     } );
 
-    const angleInDegreesStringProperty = new DerivedProperty( [ model.fullAngleProperty, decimalPrecisionProperty ], ( ( fullAngle, decimalPrecision ) => {
-
-      // TODO: Why do we need to wrap this with LTR? Without it the minus sign is in the wrong spot.
-      // See https://github.com/phetsims/trig-tour/issues/149
-      return StringUtils.wrapLTR( Utils.toFixed( model.getFullAngleInDegrees(), decimalPrecision ) );
-    } ) );
+    const angleInDegreesStringProperty = new DerivedProperty(
+      [ model.fullAngleProperty, decimalPrecisionProperty ],
+      ( fullAngle, decimalPrecision ) => {
+        return StringUtils.toSafeFixed( model.getFullAngleInDegrees(), decimalPrecision );
+      }
+    );
 
     // The value in degrees, with the correct number of decimal places.
     const angleDegreesWithUnitsStringProperty = new DerivedProperty( [ angleInDegreesStringProperty ], angleInDegrees => {

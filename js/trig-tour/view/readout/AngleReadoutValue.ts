@@ -48,7 +48,7 @@ export default class AngleReadoutValue {
 
     // The readout for angles in radians (decimalPrecisionProperty is only used for degrees).
     const angleInRadiansStringProperty = new DerivedProperty( [ model.fullAngleProperty ], angleInRadians => {
-      return StringUtils.toSafeFixed( angleInRadians, 3 );
+      return StringUtils.toFixedLTR( angleInRadians, 3 );
     } );
 
     // The readout value in radians.
@@ -63,7 +63,7 @@ export default class AngleReadoutValue {
     const angleInDegreesStringProperty = new DerivedProperty(
       [ model.fullAngleProperty, decimalPrecisionProperty ],
       ( fullAngle, decimalPrecision ) => {
-        return StringUtils.toSafeFixed( model.getFullAngleInDegrees(), decimalPrecision );
+        return StringUtils.toFixedLTR( model.getFullAngleInDegrees(), decimalPrecision );
       }
     );
 

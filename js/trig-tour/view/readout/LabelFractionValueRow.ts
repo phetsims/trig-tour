@@ -13,7 +13,7 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../../axon/js/Emitter.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../../dot/js/Utils.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';

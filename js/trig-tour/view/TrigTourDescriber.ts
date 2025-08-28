@@ -8,7 +8,7 @@
 
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';

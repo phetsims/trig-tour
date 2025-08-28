@@ -9,7 +9,7 @@
 
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';

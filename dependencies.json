@@ -77,7 +77,7 @@
     "branch": "HEAD"
   },
   "sun": {
-    "sha": "9ecdfb1e17ae8c29f31673c674d6e69be0361857",
+    "sha": "4ef26db45a5cbb7a3bf4257dfc681f168d137df8",
     "branch": "HEAD"
   },
   "tambo": {
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "cdfc0c39b755aa5605ae1c82599f3ec7170cecde",
+    "sha": "bc0bd05dc40d142f1bc486dee7ec05fb84d336dd",
     "branch": "1.1"
   },
   "twixt": {

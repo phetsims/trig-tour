@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "chipper": {
-    "sha": "3a25a737a12f8bdf933ffca25d87987e741d7784",
+    "sha": "c5a7b9064dd494096ec0f3aec27f61bf89e33dd2",
     "branch": "HEAD"
   },
   "dot": {
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "71b1d2b650387a2ac8174a3279e2f95c933b6573",
+    "sha": "bd2c7eb308fbfe91b69c61afac9abeb5a5823cc5",
     "branch": "1.1"
   },
   "twixt": {

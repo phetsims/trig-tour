@@ -9,7 +9,7 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "c723ecab25f531ce445b8155d437a7f8cf972200",
+    "sha": "4d170576281ef547ded65218d054bcaf8e40f3c5",
     "branch": "HEAD"
   },
   "chipper": {
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "dc02a537ab2fa5fb71a53ffcebe41cb17e9c4952",
+    "sha": "902644e8538bb67eb79cee824e308b9c41b6e69c",
     "branch": "1.1"
   },
   "twixt": {

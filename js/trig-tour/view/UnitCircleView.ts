@@ -26,7 +26,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import SpecialAngles from '../SpecialAngles.js';
@@ -401,5 +400,4 @@ class UnitCircleView extends Node {
   }
 }
 
-trigTour.register( 'UnitCircleView', UnitCircleView );
 export default UnitCircleView;

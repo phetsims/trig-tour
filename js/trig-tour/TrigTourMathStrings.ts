@@ -8,8 +8,6 @@
  * @author Jesse Greenberg
  */
 
-import trigTour from '../trigTour.js';
-
 // strings
 const TrigTourMathStrings = {
   ONE_STRING: '1',
@@ -17,7 +15,5 @@ const TrigTourMathStrings = {
   MINUS_STRING: '-',
   EQUALS_STRING: ' = '
 };
-
-trigTour.register( 'TrigTourMathStrings', TrigTourMathStrings );
 
 export default TrigTourMathStrings;

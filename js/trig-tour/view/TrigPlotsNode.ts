@@ -13,7 +13,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
-import trigTour from '../../trigTour.js';
 import TriangleNode from './TriangleNode.js';
 import TrigTourColors from './TrigTourColors.js';
 import { Graph } from './ViewProperties.js';
@@ -180,7 +179,5 @@ class TrigPlotsNode extends Node {
     return this.localToGlobalPoint( Vector2.ZERO );
   }
 }
-
-trigTour.register( 'TrigPlotsNode', TrigPlotsNode );
 
 export default TrigPlotsNode;

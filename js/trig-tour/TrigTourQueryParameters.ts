@@ -7,7 +7,6 @@
  */
 
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import trigTour from '../trigTour.js';
 
 const TrigTourQueryParameters = QueryStringMachine.getAll( {
 
@@ -22,5 +21,4 @@ const TrigTourQueryParameters = QueryStringMachine.getAll( {
   }
 } );
 
-trigTour.register( 'TrigTourQueryParameters', TrigTourQueryParameters );
 export default TrigTourQueryParameters;

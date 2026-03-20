@@ -16,7 +16,6 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import ReadingBlock from '../../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import SpecialAngles, { SpecialAngle } from '../../SpecialAngles.js';
@@ -349,7 +348,5 @@ class AngleReadoutRow extends ReadingBlock( Node ) {
     }
   }
 }
-
-trigTour.register( 'AngleReadoutRow', AngleReadoutRow );
 
 export default AngleReadoutRow;

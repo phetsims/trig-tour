@@ -17,7 +17,6 @@ import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibilit
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
-import trigTour from '../../trigTour.js';
 
 class TrigIndicatorArrowNode extends ArrowNode {
 
@@ -98,6 +97,5 @@ class VoicingTrigIndicatorArrowNode extends Voicing( TrigIndicatorArrowNode ) {
   }
 }
 
-trigTour.register( 'TrigIndicatorArrowNode', TrigIndicatorArrowNode );
 export default TrigIndicatorArrowNode;
 export { VoicingTrigIndicatorArrowNode };

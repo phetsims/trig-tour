@@ -7,7 +7,6 @@
  */
 
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import trigTour from '../../trigTour.js';
 
 const TrigTourColors = {
   BACKGROUND_COLOR: '#fff6cc',
@@ -20,7 +19,5 @@ const TrigTourColors = {
   COS_COLOR: '#00D',     // normal blue
   TAN_COLOR: PhetColorScheme.RED_COLORBLIND
 };
-
-trigTour.register( 'TrigTourColors', TrigTourColors );
 
 export default TrigTourColors;

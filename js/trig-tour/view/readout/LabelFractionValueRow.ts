@@ -20,7 +20,6 @@ import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
@@ -244,7 +243,5 @@ class LabelFractionValueRow extends Node {
     }
   }
 }
-
-trigTour.register( 'LabelFractionValueRow', LabelFractionValueRow );
 
 export default LabelFractionValueRow;

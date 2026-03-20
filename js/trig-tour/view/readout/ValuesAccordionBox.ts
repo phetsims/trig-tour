@@ -9,7 +9,6 @@
 import { combineOptions } from '../../../../../phet-core/js/optionize.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../../sun/js/AccordionBox.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import TrigTourConstants from '../../TrigTourConstants.js';
@@ -42,5 +41,4 @@ class ValuesAccordionBox extends AccordionBox {
   }
 }
 
-trigTour.register( 'ValuesAccordionBox', ValuesAccordionBox );
 export default ValuesAccordionBox;

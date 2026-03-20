@@ -8,7 +8,6 @@
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import trigTour from '../trigTour.js';
 import TrigTourModel from './model/TrigTourModel.js';
 import TrigTourColors from './view/TrigTourColors.js';
 import TrigTourKeyboardHelpContent from './view/TrigTourKeyboardHelpContent.js';
@@ -28,5 +27,4 @@ class TrigTourScreen extends Screen<TrigTourModel, TrigTourScreenView> {
   }
 }
 
-trigTour.register( 'TrigTourScreen', TrigTourScreen );
 export default TrigTourScreen;

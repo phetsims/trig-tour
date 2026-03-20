@@ -18,7 +18,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
-import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourMathStrings from '../TrigTourMathStrings.js';
 import TrigFunctionLabelText from './TrigFunctionLabelText.js';
@@ -230,5 +229,4 @@ class TrigTourGraphAxesNode extends Node {
   }
 }
 
-trigTour.register( 'TrigTourGraphAxesNode', TrigTourGraphAxesNode );
 export default TrigTourGraphAxesNode;

@@ -9,7 +9,6 @@
  */
 
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
-import trigTour from '../trigTour.js';
 
 // constants
 const PI = MathSymbols.PI;
@@ -384,7 +383,5 @@ const SpecialAngles = {
     }
   } as SpecialAngleMap
 };
-
-trigTour.register( 'SpecialAngles', SpecialAngles );
 
 export default SpecialAngles;

@@ -16,7 +16,6 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import dizzyPhetGirl_png from '../../../mipmaps/dizzyPhetGirl_png.js';
-import trigTour from '../../trigTour.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import AngleSoundGenerator from './AngleSoundGenerator.js';
 import ControlPanel from './ControlPanel.js';
@@ -135,5 +134,4 @@ class TrigTourScreenView extends ScreenView {
   }
 }
 
-trigTour.register( 'TrigTourScreenView', TrigTourScreenView );
 export default TrigTourScreenView;

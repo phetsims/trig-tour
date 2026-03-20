@@ -14,7 +14,6 @@ import Node from '../../../../../scenery/js/nodes/Node.js';
 import Spacer from '../../../../../scenery/js/nodes/Spacer.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../../sun/js/AquaRadioButtonGroup.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import TrigTourColors from '../TrigTourColors.js';
@@ -104,7 +103,5 @@ class ReadoutNode extends Node {
     this.addChild( contentVBox );
   }
 }
-
-trigTour.register( 'ReadoutNode', ReadoutNode );
 
 export default ReadoutNode;

@@ -19,7 +19,6 @@ import TPaint from '../../../../scenery/js/util/TPaint.js';
 import AquaRadioButtonGroup, { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourColors from './TrigTourColors.js';
 import ViewProperties, { Graph } from './ViewProperties.js';
@@ -147,5 +146,4 @@ class ControlPanel extends Panel {
   }
 }
 
-trigTour.register( 'ControlPanel', ControlPanel );
 export default ControlPanel;

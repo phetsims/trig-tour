@@ -14,7 +14,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import { equalsEpsilon } from '../../../../dot/js/util/equalsEpsilon.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import trigTour from '../../trigTour.js';
 import SpecialAngles from '../SpecialAngles.js';
 import TrigTourConstants from '../TrigTourConstants.js';
 import TrigTourQueryParameters from '../TrigTourQueryParameters.js';
@@ -423,7 +422,5 @@ class TrigTourModel {
   public static readonly MAX_SMALL_ANGLE_LIMIT = MAX_SMALL_ANGLE_LIMIT;
   public static readonly MAX_ANGLE_LIMIT = MAX_ANGLE_LIMIT;
 }
-
-trigTour.register( 'TrigTourModel', TrigTourModel );
 
 export default TrigTourModel;

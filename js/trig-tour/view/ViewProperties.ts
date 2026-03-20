@@ -8,7 +8,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import trigTour from '../../trigTour.js';
 
 export type Graph = 'cos' | 'sin' | 'tan';
 export type AngleUnits = 'degrees' | 'radians';
@@ -42,7 +41,5 @@ class ViewProperties {
     this.specialAnglesVisibleProperty.reset();
   }
 }
-
-trigTour.register( 'ViewProperties', ViewProperties );
 
 export default ViewProperties;

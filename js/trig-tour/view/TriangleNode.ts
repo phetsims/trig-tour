@@ -15,7 +15,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
-import trigTour from '../../trigTour.js';
 
 class TriangleNode extends Node {
 
@@ -44,7 +43,5 @@ class TriangleNode extends Node {
 
   }
 }
-
-trigTour.register( 'TriangleNode', TriangleNode );
 
 export default TriangleNode;

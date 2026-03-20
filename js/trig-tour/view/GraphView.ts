@@ -35,7 +35,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigTourConstants from '../TrigTourConstants.js';
@@ -521,7 +520,5 @@ class GraphView extends Node {
     return this.accordionBox.leftTop.minus( this.leftTop );
   }
 }
-
-trigTour.register( 'GraphView', GraphView );
 
 export default GraphView;

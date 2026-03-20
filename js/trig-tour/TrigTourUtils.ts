@@ -7,7 +7,6 @@
  */
 
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import trigTour from '../trigTour.js';
 import TrigTourStrings from '../TrigTourStrings.js';
 import TrigTourMathStrings from './TrigTourMathStrings.js';
 
@@ -44,7 +43,5 @@ const TrigTourUtils = {
     }
   }
 };
-
-trigTour.register( 'TrigTourUtils', TrigTourUtils );
 
 export default TrigTourUtils;

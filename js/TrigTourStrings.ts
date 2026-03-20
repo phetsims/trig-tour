@@ -119,6 +119,4 @@ type StringsType = {
 
 const TrigTourStrings = getStringModule( 'TRIG_TOUR' ) as StringsType;
 
-trigTour.register( 'TrigTourStrings', TrigTourStrings );
-
 export default TrigTourStrings;

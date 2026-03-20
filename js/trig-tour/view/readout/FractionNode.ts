@@ -17,7 +17,6 @@ import Line from '../../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import Text, { TextOptions } from '../../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourColors from '../TrigTourColors.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
@@ -387,7 +386,5 @@ class FractionNode extends Node {
     return descriptionString;
   }
 }
-
-trigTour.register( 'FractionNode', FractionNode );
 
 export default FractionNode;

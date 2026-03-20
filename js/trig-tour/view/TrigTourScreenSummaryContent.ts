@@ -11,7 +11,6 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import { toFixedNumber } from '../../../../dot/js/util/toFixedNumber.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
-import trigTour from '../../trigTour.js';
 import TrigTourStrings from '../../TrigTourStrings.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 import TrigTourDescriber from './TrigTourDescriber.js';
@@ -81,5 +80,3 @@ export default class TrigTourScreenSummaryContent extends ScreenSummaryContent {
     } );
   }
 }
-
-trigTour.register( 'TrigTourScreenSummaryContent', TrigTourScreenSummaryContent );

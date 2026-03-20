@@ -14,7 +14,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import clockwiseSpiral_png from '../../../mipmaps/clockwiseSpiral_png.js';
 import counterClockwiseSpiral_png from '../../../mipmaps/counterClockwiseSpiral_png.js';
-import trigTour from '../../trigTour.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 
 class TrigTourSpiralNode extends Node {
@@ -261,7 +260,5 @@ class TrigTourSpiralNode extends Node {
     this.clipArea = clipShape;
   }
 }
-
-trigTour.register( 'TrigTourSpiralNode', TrigTourSpiralNode );
 
 export default TrigTourSpiralNode;

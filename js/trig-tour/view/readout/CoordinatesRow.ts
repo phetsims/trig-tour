@@ -20,7 +20,6 @@ import ReadingBlock from '../../../../../scenery/js/accessibility/voicing/Readin
 import HBox from '../../../../../scenery/js/layout/nodes/HBox.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../../trigTour.js';
 import TrigTourStrings from '../../../TrigTourStrings.js';
 import TrigTourModel from '../../model/TrigTourModel.js';
 import SpecialAngles, { SpecialAngle, SpecialAngleMap } from '../../SpecialAngles.js';
@@ -183,7 +182,5 @@ class CoordinatesRow extends ReadingBlock( Node ) {
     }
   }
 }
-
-trigTour.register( 'CoordinatesRow', CoordinatesRow );
 
 export default CoordinatesRow;

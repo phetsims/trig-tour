@@ -10,7 +10,6 @@
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import trigTour from '../../trigTour.js';
 import TrigTourModel from '../model/TrigTourModel.js';
 
 class AngleSoundGenerator extends ValueChangeSoundPlayer {
@@ -27,7 +26,5 @@ class AngleSoundGenerator extends ValueChangeSoundPlayer {
     } );
   }
 }
-
-trigTour.register( 'AngleSoundGenerator', AngleSoundGenerator );
 
 export default AngleSoundGenerator;

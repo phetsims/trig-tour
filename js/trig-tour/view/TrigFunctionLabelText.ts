@@ -15,7 +15,6 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox, { HBoxOptions } from '../../../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import trigTour from '../../trigTour.js';
 
 // constants
 const DISPLAY_FONT = new PhetFont( { size: 20 } );
@@ -69,7 +68,5 @@ class TrigFunctionLabelText extends HBox {
     super.dispose();
   }
 }
-
-trigTour.register( 'TrigFunctionLabelText', TrigFunctionLabelText );
 
 export default TrigFunctionLabelText;

@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2026, University of Colorado Boulder
 
 /**
  * AngleSoundGenerator is a sound generator specifically designed to produce sounds for the

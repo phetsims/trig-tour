@@ -17,7 +17,7 @@ const simOptions: SimOptions = {
   credits: {
     leadDesign: 'Michael Dubson, Amanda McGarry',
     softwareDevelopment: 'Michael Dubson, Jesse Greenberg',
-    team: 'Ariel Paul, Kathy Perkins',
+    team: 'Ariel Paul, Kathy Perkins, Taliesin Smith',
     qualityAssurance: 'Steele Dalton, Matthew Moore, Elise Morgan,  Ashton Morris, Oliver Orejola, Nancy Salpepi, Kathryn Woessner, Bryan Yoelin'
   }
 };

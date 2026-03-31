@@ -105,6 +105,7 @@ class TrigTourScreenView extends ScreenView {
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     const resetAllButton = new ResetAllButton( {
+      accessibleName: null,
       listener: () => {
         viewProperties.reset();
         graphView.expandedProperty.value = true;

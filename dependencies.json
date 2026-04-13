@@ -1,5 +1,5 @@
 {
-  "comment": "# trig-tour 1.1.8-rc.1 Mon Apr 13 2026 19:00:18 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# trig-tour 1.1.8 Mon Apr 13 2026 19:07:51 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "trig-tour": {
-    "sha": "bb1313e5b0ebb0f900ae88065aaee16b9b653b4a",
+    "sha": "18d1aed68d80ab8a07c090ca93d0774a808051a8",
     "branch": "1.1"
   },
   "twixt": {
